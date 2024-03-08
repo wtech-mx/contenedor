@@ -201,6 +201,29 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-12">
+                                        <h6>Datos Tecnicos</h6>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="name">Tipo *</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/tools.png.webp') }}" alt="" width="35px">
+                                                </span>
+                                                <select name="tipo" id="tipo" class="form-select d-inline-block" required>
+                                                    <option value="">Seleccione una opción</option>
+                                                    <option value="B9 40P">B9 40P</option>
+                                                    <option value="B10 20P">B10 20P</option>
+                                                    <option value="B11 20/40P">B11 20/40P</option>
+                                                    <option value="B12 Abatible">B12 Abatible</option>
+                                                    <option value="B13 Retractil">B13 Retractil</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 

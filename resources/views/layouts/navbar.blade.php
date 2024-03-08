@@ -43,7 +43,7 @@
                 <li class="">
 
                   {{-- <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"> --}}
-                  <a class="dropdown-item" href="" onclick="">
+                  <a class="dropdown-item" href="{{ route('signout') }}" onclick="">
                     <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center" style="display: inline-block!important;">
                      <i class="fa fa-arrow-right text-dark" style="color: {{$configuracion->color_iconos_sidebar}}"></i>
                     </div>

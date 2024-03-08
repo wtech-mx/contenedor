@@ -24,6 +24,16 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+// =============== M O D U L O   login custom ===============================
+
+// Route::get('dashboard', [App\Http\Controllers\CustomAuthController::class, 'dashboard']);
+Route::get('login', [App\Http\Controllers\CustomAuthController::class, 'index'])->name('login');
+Route::post('custom-login', [App\Http\Controllers\CustomAuthController::class, 'customLogin'])->name('login.custom');
+Route::get('registration', [App\Http\Controllers\CustomAuthController::class, 'registration'])->name('register-user');
+Route::post('custom-registration', [App\Http\Controllers\CustomAuthController::class, 'customRegistration'])->name('register.custom');
+Route::get('signout', [App\Http\Controllers\CustomAuthController::class, 'signOut'])->name('signout');
+
+
 Auth::routes();
 
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
