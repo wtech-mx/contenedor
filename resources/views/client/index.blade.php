@@ -17,9 +17,9 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('clients.create') }}" class="btn btn-sm float-right"  data-placement="left" style="background: {{$configuracion->color_boton_add}}; color: #ffff">
-                                  {{ __('Create New') }}
-                                </a>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background: {{$configuracion->color_boton_add}}; color: #ffff">
+                                    Crear
+                                  </button>
                               </div>
                         </div>
                     </div>
@@ -77,4 +77,5 @@
             </div>
         </div>
     </div>
+@include('client.modal_create')
 @endsection

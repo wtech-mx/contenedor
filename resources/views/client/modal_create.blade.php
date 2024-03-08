@@ -61,6 +61,16 @@
                         </div>
                     </div>
 
+                    <div class="col-12 form-group">
+                        <label for="name">Nombre de Empresa</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                                <img src="{{ asset('img/icon/edificios_ciudad.webp') }}" alt="" width="25px">
+                            </span>
+                            <input name="nombre_empresa" id="nombre_empresa" type="number" class="form-control">
+                        </div>
+                    </div>
+
 
                 </div>
             </div>
