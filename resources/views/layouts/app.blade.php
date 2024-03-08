@@ -2,143 +2,129 @@
 <html lang="{{ app()->getLocale() }}">
 
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
-  <meta name="author" content="Creative Tim">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('favicon/'. $configuracion->favicon) }}">
+  <link rel="icon" type="image/png" href="{{ asset('favicon/'. $configuracion->favicon) }}">
   <title>
-       @yield('template_title') - {{$configuracion->nombre_sistema}}
+    @yield('template_title') - {{$configuracion->nombre_sistema}}
   </title>
-  {{-- <title>@hasSection('title') @yield('title') | @endif {{ config('app.name', 'Laravel') }}</title> --}}
 
-  <!-- Favicon -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="{{ asset('assets/css/nucleo-icons.css')}}" rel="stylesheet" />
+  <link href="{{ asset('assets/css/nucleo-svg.css')}}" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="{{ asset('assets/css/nucleo-svg.css')}}" rel="stylesheet" />
+  @yield('css')
+   <!-- Select2  -->
+   <link rel="stylesheet" href="{{ asset('assets/vendor/select2/dist/css/select2.min.css')}}">
 
-  <link rel="icon" href="{{ asset('favicon/'. $configuracion->favicon) }}" type="image/png">
-  <!-- Fonts -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-  <!-- Icons -->
-  <link rel="stylesheet" href="{{ asset('assets/vendor/nucleo/css/nucleo.css') }}" type="text/css">
-  <link rel="stylesheet" href="{{ asset('assets/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" type="text/css">
-  <!-- Page plugins -->
-  <!-- Argon CSS -->
-  <link rel="stylesheet" href="{{ asset('assets/css/argon.css?v=1.1.0') }}" type="text/css">
+  <!-- CSS Files -->
+  <link id="pagestyle" href="{{ asset('assets/css/argon-dashboard.css?v=2.0.4')}}" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ asset('assets/css/preloader.css')}}">
 
-    <!-- sweetalert2 JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-    <!-- Datatable -->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.1/css/bootstrap.min.css">
-    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+   {{-- <link src="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+  <link src="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css" rel="stylesheet" />
+--}}
+
+
+  <style>
+        input:before {
+            content: attr(data-date);
+            display: inline-block;
+            color: black;
+        }
+    </style>
 
 </head>
 
-<body style="overflow-x: hidden">
-@auth
-    <!-- Sidenav -->
+<body class="g-sidenav-show   bg-gray-100">
+  <div class="min-height-300  position-absolute w-100" style="background-color: {{$configuracion->color_principal}}!important;"></div>
+  <div id="page-loader"><span class="preloader-interior"></span></div>
+
+   <!-- Sidenav -->
     @include('layouts.sidebar')
 
-    <!-- Main content -->
-    <div class="main-content" id="panel">
+  <main class="main-content position-relative border-radius-lg ">
+    <!-- Navbar -->
+    @include('layouts.navbar')
 
-        <!-- header -->
-        @include('layouts.header')
-        <!-- header -->
+    <!-- End Navbar -->
 
-        <!-- Breadgrum -->
-        <div class="header pb-6" style="background-color: {{$configuracion->color_principal}}">
-          <div class="container-fluid">
-            <div class="header-body">
-              <div class="row align-items-center py-4">
-                <div class="col-lg-6 col-7">
-                  <h6 class="h2 text-white d-inline-block mb-0">Default</h6>
-                  <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                      <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                      <li class="breadcrumb-item"><a href="#">Dashboards</a></li>
-                      <li class="breadcrumb-item active" aria-current="page">Default</li>
-                    </ol>
-                  </nav>
-                </div>
-              </div>
-                @yield('breadcrumb')
-            </div>
-          </div>
-        </div>
-        <!-- Breadgrum -->
+    <div class="container-fluid">
 
-        <!-- Page content -->
+        {{-- @include('layouts.header') --}}
+        @include('layouts.simple_alert')
+        @yield('breadcrumb')
+        @yield('content')
 
-        <div class="container-fluid mt--6">
-          <div class="row">
-               @yield('content')
-          </div>
-        </div>
+       <!-- Modal lateral Congif -->
+        @include('layouts.footer')
+      <!-- End Modal lateral Congif -->
 
-
-        <!-- Footer -->
-        <footer class="footer pt-0">
-            <div class="row align-items-center justify-content-lg-between">
-              <div class="col-lg-6">
-                <div class="copyright text-center text-lg-left text-muted">
-                  &copy; 2019 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Power By WebTech</a>
-                </div>
-              </div>
-            </div>
-          </footer>
-        <!-- Footer -->
-@endauth
     </div>
+  </main>
 
-    @include('layouts.alertas')
+  @yield('js_custom')
 
-    <!--livewire -->
+   <!-- Modal lateral Congif -->
+    {{-- @include('layouts.modal_config') --}}
+  <!-- End Modal lateral Congif -->
 
-    {{-- <script type="text/javascript">
-        window.livewire.on('closeModal', () => {
-            $('#createDataModal').modal('hide');
+
+
+  <!--   Core JS Files   -->
+  {{-- <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js')}}"></script> --}}
+
+  <script src="{{ asset('assets/js/core/popper.min.js')}}"></script>
+
+  <script src="{{ asset('assets/js/core/bootstrap.min.js')}}"></script>
+  <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
+  <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
+
+  <script src="{{ asset('assets/js/plugins/datatables.js')}}"></script>
+
+  {{-- <script src="{{ asset('assets/js/plugins/fullcalendar.min.js')}}"></script> --}}
+  <!-- Kanban scripts -->
+
+  <script src="{{ asset('assets/js/plugins/dragula/dragula.min.js')}}"></script>
+  <script src="{{ asset('assets/js/plugins/jkanban/jkanban.js')}}"></script>
+  <script src="{{ asset('assets/js/plugins/chartjs.min.js')}}"></script>
+  <script src="{{ asset('assets/js/argon-dashboard.min.js')}}"></script>
+  <script src="{{ asset('assets/js/ConectorJavaScript.js')}}"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="{{ asset('assets/js/preloader.js')}}"></script>
+
+    <script>
+        const formContainer = document.getElementById('form-container');
+        const openFormButton = document.getElementById('open-form');
+
+        openFormButton.addEventListener('click', () => {
+            formContainer.style.display = 'block';
         });
-    </script> --}}
 
-   {{-- <script>
-    $(document).ready(function () {
-        $.noConflict();
-        var table = $('#table_id').DataTable({
-            "ordering": false,
-            autoFill: true,
-            responsive: true,
-            fixedHeader: true,
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
+        formContainer.addEventListener('click', (event) => {
+            if (event.target === formContainer) {
+                formContainer.style.display = 'none';
             }
         });
-    });
-    </script> --}}
-  <!-- Argon Scripts -->
-  <!-- Core -->
-  <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/js-cookie/js.cookie.js') }}"></script>
-  <script src="{{ asset('assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"></script>
-  <!-- Optional JS -->
-  <script src="{{ asset('assets/vendor/chart.js/dist/Chart.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/chart.js/dist/Chart.extension.js') }}"></script>
-  <!-- Optional JS -->
-  <script src="{{ asset('assets/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/datatables.net-select/js/dataTables.select.min.js') }}"></script>
+    </script>
+  @yield('datatable')
 
-  <!-- Argon JS -->
-  <script src="{{ asset('assets/js/argon.js?v=1.1.0') }}"></script>
-  <!-- Demo JS - remove this in your project -->
-  <script src="{{ asset('assets/js/demo.min.js') }}"></script>
+  @yield('fullcalendar')
 
 
+  <!-- Github buttons -->
+  {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
+
+  @yield('select2')
 
 </body>
 
