@@ -8,6 +8,6 @@ class OperadorController extends Controller
 {
     public function index(){
 
-        return view('operadpres.index');
+        return view('operadores.index');
     }
 }

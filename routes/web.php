@@ -45,6 +45,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('operadores', [App\Http\Controllers\OperadorController::class, 'index'])->name('index.operadores');
     Route::patch('operadores/update/{id}', [App\Http\Controllers\OperadorController::class, 'update'])->name('update.operadores');
 
+
+
 });
 
 //Route Hooks - Do not delete//

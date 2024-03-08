@@ -34,6 +34,6 @@
         </div>
     </div>
 
-@include('proveedores.modal_create')
+@include('operadores.modal_create')
 
 @endsection
