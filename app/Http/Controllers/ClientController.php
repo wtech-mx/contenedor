@@ -46,15 +46,30 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        request()->validate(Client::$rules);
+    public function store(Request $request){
+        $this->validate($request, [
+            'nombre' => 'required',
+            'correo' => 'required',
+            'telefono' => 'required'
+        ]);
 
-        $client = Client::create($request->all());
+        $fechaActual = date('Y-m-d');
+
+        $client = new Client;
+        $client->nombre = $request->get('nombre');
+        $client->correo = $request->get('correo');
+        $client->telefono = $request->get('telefono');
+        $client->direccion = $request->get('direccion');
+        $client->regimen_fiscal = $request->get('regimen_fiscal');
+        $client->rfc = $request->get('rfc');
+        $client->nombre_empresa = $request->get('nombre_empresa');
+        $client->fecha = $fechaActual;
+        $client->save();
 
         Session::flash('success', 'Se ha guardado sus datos con exito');
-        return redirect()->route('clients.index')
-            ->with('success', 'Client created successfully.');
+        return redirect()->back()
+            ->with('success', 'Cliente created successfully.');
+
     }
 
     /**

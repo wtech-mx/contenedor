@@ -61,13 +61,22 @@
                         </div>
                     </div>
 
+                    <div class="col-12 form-group">
+                        <label for="name">RFC *</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                                <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
+                            </span>
+                            <input name="rfc" id="rfc" type="text" class="form-control">
+                        </div>
+                    </div>
 
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
               </div>
         </form>
       </div>

@@ -42,17 +42,26 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);
     Route::resource('permisos', PermisosController::class);
     Route::resource('users', UserController::class);
+
+
+    // ==================== C L I E N T E S ====================
     Route::resource('clients', ClientController::class);
+    Route::post('clients/create', [App\Http\Controllers\ClientController::class, 'store'])->name('store.clients');
 
-
+    // ==================== P R O V E E D O R E S ====================
     Route::get('proveedores', [App\Http\Controllers\ProveedorController::class, 'index'])->name('index.proveedores');
     Route::post('proveedores/create', [App\Http\Controllers\ProveedorController::class, 'store'])->name('store.proveedores');
+    Route::post('proveedores/create/cuenta', [App\Http\Controllers\ProveedorController::class, 'cuenta'])->name('cuenta.proveedores');
     Route::patch('proveedores/update/{id}', [App\Http\Controllers\ProveedorController::class, 'update'])->name('update.proveedores');
 
-    Route::get('equipos', [App\Http\Controllers\EquiposController::class, 'index'])->name('index.equipos');
+    // ==================== E Q U I P O S ====================
+    Route::get('equipos/index', [App\Http\Controllers\EquiposController::class, 'index'])->name('index.equipos');
+    Route::post('equipos/create', [App\Http\Controllers\EquiposController::class, 'store'])->name('store.equipos');
     Route::patch('equipos/update/{id}', [App\Http\Controllers\EquiposController::class, 'update'])->name('update.equipos');
 
+    // ==================== O P E R A D O R E S ====================
     Route::get('operadores', [App\Http\Controllers\OperadorController::class, 'index'])->name('index.operadores');
+    Route::post('operadores/create', [App\Http\Controllers\OperadorController::class, 'store'])->name('store.operadores');
     Route::patch('operadores/update/{id}', [App\Http\Controllers\OperadorController::class, 'update'])->name('update.operadores');
 
 

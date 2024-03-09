@@ -10,12 +10,13 @@ use Session;
 class ProveedorController extends Controller
 {
     public function index(){
+        $proveedores = Proveedor::get();
+        $cuentas = CuentasBancarias::get();
 
-        return view('proveedores.index');
+        return view('proveedores.index', compact('proveedores', 'cuentas'));
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $this->validate($request, [
             'nombre' => 'required',
             'correo' => 'required',
@@ -28,20 +29,22 @@ class ProveedorController extends Controller
         $proveedor->nombre = $request->get('nombre');
         $proveedor->correo = $request->get('correo');
         $proveedor->telefono = $request->get('telefono');
+        $proveedor->regimen = $request->get('regimen');
+        $proveedor->direccion = $request->get('direccion');
+        $proveedor->rfc = $request->get('rfc');
         $proveedor->fecha = $fechaActual;
-
-        if ($request->hasFile("regimen")) {
-            $file = $request->file('regimen');
-            $path = public_path() . '/regimen_proveedores';
-            $fileName = uniqid() . $file->getClientOriginalName();
-            $file->move($path, $fileName);
-            $proveedor->regimen = $fileName;
-        }
-
         $proveedor->save();
 
+        Session::flash('success', 'Se ha guardado sus datos con exito');
+        return redirect()->route('index.proveedores')
+            ->with('success', 'Proveedor created successfully.');
+
+    }
+
+    public function cuenta(Request $request){
+
         $banco = new CuentasBancarias;
-        $banco->id_proveedores = $proveedor->id;
+        $banco->id_proveedores = $request->get('id_proveedores');
         $banco->cuenta_bancaria = $request->get('cuenta_bancaria');
         $banco->nombre_banco = $request->get('nombre_banco');
         $banco->cuenta_clabe = $request->get('cuenta_clabe');

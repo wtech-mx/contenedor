@@ -1,19 +1,17 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="equipoModal" tabindex="-1" aria-labelledby="equipoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Crear Usuario</h5>
+          <h5 class="modal-title">Crear Equipo</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form method="POST" action="{{ route('store.proveedores') }}" id="" enctype="multipart/form-data" role="form">
+        <form method="POST" action="{{ route('store.equipos') }}" id="" enctype="multipart/form-data" role="form">
             @csrf
 
             <div class="modal-body">
                 <div class="row">
 
                     <div class="col-12">
-
-
 
                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
@@ -43,7 +41,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
                                             </span>
-                                            <input name="fecha" id="fecha" type="text" class="form-control">
+                                            <input name="fecha" id="fecha" type="date" class="form-control" value="{{$fechaActual}}">
                                         </div>
                                     </div>
 
@@ -75,7 +73,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
                                             </span>
-                                            <input name="year" id="year" type="number" class="form-control">
+                                            <input name="year" id="year" type="date" class="form-control">
                                         </div>
                                     </div>
 
@@ -95,7 +93,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/iniciar-sesion.png') }}" alt="" width="25px">
                                             </span>
-                                            <input name="year" id="year" type="text" class="form-control">
+                                            <input name="acceso" id="acceso" type="text" class="form-control">
                                         </div>
                                     </div>
 
@@ -126,83 +124,7 @@
                                 <div class="row">
 
                                     <div class="col-12">
-                                        <h6>Datos del Vehiculo</h6>
-                                    </div>
-
-                                    <div class="col-6 form-group">
-                                        <label for="name">Fecha de alta *</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="fecha" id="fecha" type="text" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6"></div>
-
-                                    <div class="col-6 form-group">
-                                        <label for="name">Marca *</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/marca.webp') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="marca" id="marca" type="text" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6 form-group">
-                                        <label for="name">Modelo *</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/coche.png') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="modelo" id="modelo" type="text" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6 form-group">
-                                        <label for="name">Año *</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="year" id="year" type="number" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6 form-group">
-                                        <label for="name">Acceso *</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/iniciar-sesion.png') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="year" id="year" type="text" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6 form-group">
-                                        <label for="name">Tarjeta de Circulacion *</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/business-card-design.webp') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="tarjeta_circulacion" id="tarjeta_circulacion" type="file" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6 form-group">
-                                        <label for="name">Poliza de Seguro *</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/factura.png.webp') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="poliza_seguro" id="poliza_seguro" type="file" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <h6>Datos Tecnicos</h6>
+                                        <h6>Sin Motor</h6>
                                     </div>
 
                                     <div class="col-12">
@@ -212,7 +134,7 @@
                                                 <span class="input-group-text" id="basic-addon1">
                                                     <img src="{{ asset('img/icon/tools.png.webp') }}" alt="" width="35px">
                                                 </span>
-                                                <select name="tipo" id="tipo" class="form-select d-inline-block" required>
+                                                <select name="tipo" id="tipo" class="form-select d-inline-block" >
                                                     <option value="">Seleccione una opción</option>
                                                     <option value="B9 40P">B9 40P</option>
                                                     <option value="B10 20P">B10 20P</option>
@@ -235,8 +157,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
               </div>
         </form>
       </div>

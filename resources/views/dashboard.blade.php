@@ -12,7 +12,7 @@
                   <div class="numbers">
                     <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Citas</p>
                     <h5 class="font-weight-bolder">
-                     # {{$t_citas_contador}}
+
                     </h5>
                     <p class="mb-0">
                       <span class="text-success text-sm font-weight-bolder">+55%</span>
@@ -38,7 +38,7 @@
                   <div class="numbers">
                     <p class="text-sm mb-0 text-uppercase font-weight-bold">Proximas Citas</p>
                     <h5 class="font-weight-bolder">
-                       # {{$p_citas_contador}}
+
                     </h5>
                     <p class="mb-0">
                       <span class="text-success text-sm font-weight-bolder">+3%</span>
@@ -65,7 +65,7 @@
                     <div class="numbers">
                         <p class="text-sm mb-0 text-uppercase font-weight-bold">Servicios</p>
                         <h5 class="font-weight-bolder">
-                        # {{$servicios_contador}}
+                        #
                         </h5>
                     </div>
                     </div>
@@ -90,7 +90,7 @@
                   <div class="numbers">
                     <p class="text-sm mb-0 text-uppercase font-weight-bold">Estatus</p>
                     <h5 class="font-weight-bolder">
-                      # {{$estatus_contador}}
+                      #
                     </h5>
                   </div>
                 </div>
@@ -108,14 +108,4 @@
     </div>
   </div>
 
-  @include('layouts.estatus')
-  @include('layouts.colores')
-
-@endsection
-
-
-@section('content')
-    {{--calednarioi--}}
-    @include('alerts.calendar');
-    {{--calednarioi--}}
 @endsection

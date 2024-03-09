@@ -32,30 +32,19 @@
                                         <th>No</th>
 
 										<th>Nombre</th>
-										<th>Apellido</th>
-										<th>Edad</th>
-										<th>Sanguineo</th>
-										<th>Ocupacion</th>
 										<th>Telefono</th>
-										<th>Fecha Nacimiento</th>
-										<th>Email</th>
-
-                                        <th></th>
+										<th>Correo</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($clients as $client)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
+                                            <td>{{ $client->id }}</td>
 
 											<td>{{ $client->nombre }}</td>
-											<td>{{ $client->apellido }}</td>
-											<td>{{ $client->edad }}</td>
-											<td>{{ $client->sanguineo }}</td>
-											<td>{{ $client->ocupacion }}</td>
 											<td>{{ $client->telefono }}</td>
-											<td>{{ $client->fecha_nacimiento }}</td>
-											<td>{{ $client->email }}</td>
+											<td>{{ $client->correo }}</td>
 
                                             <td>
                                                 <form action="{{ route('clients.destroy',$client->id) }}" method="POST">

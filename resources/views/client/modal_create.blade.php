@@ -5,7 +5,7 @@
           <h5 class="modal-title">Crear Usuario</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form method="POST" action="{{ route('store.proveedores') }}" id="" enctype="multipart/form-data" role="form">
+        <form method="POST" action="{{ route('store.clients') }}" id="" enctype="multipart/form-data" role="form">
             @csrf
 
             <div class="modal-body">
@@ -57,7 +57,17 @@
                             <span class="input-group-text" id="basic-addon1">
                                 <img src="{{ asset('img/icon/gear.webp') }}" alt="" width="25px">
                             </span>
-                            <input name="regimen" id="regimen" type="text" class="form-control">
+                            <input name="regimen_fiscal" id="regimen_fiscal" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-12 form-group">
+                        <label for="name">RFC*</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                                <img src="{{ asset('img/icon/gear.webp') }}" alt="" width="25px">
+                            </span>
+                            <input name="rfc" id="rfc" type="text" class="form-control">
                         </div>
                     </div>
 
@@ -67,17 +77,16 @@
                             <span class="input-group-text" id="basic-addon1">
                                 <img src="{{ asset('img/icon/edificios_ciudad.webp') }}" alt="" width="25px">
                             </span>
-                            <input name="nombre_empresa" id="nombre_empresa" type="number" class="form-control">
+                            <input name="nombre_empresa" id="nombre_empresa" type="text" class="form-control">
                         </div>
                     </div>
-
 
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
               </div>
         </form>
       </div>
