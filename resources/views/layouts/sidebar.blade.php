@@ -25,7 +25,7 @@
             <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
              <i class="ni ni-circle-08 text-sm opacity-10" style="color: {{$configuracion->color_iconos_sidebar}}"></i>
             </div>
-            <span class="nav-link-text ms-1">Clientes</span>
+            <span class="nav-link-text ms-1"><b>I</b> Clientes</span>
           </a>
         </li>
 
@@ -34,7 +34,7 @@
               <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
                <i class="ni ni-circle-08 text-sm opacity-10" style="color: {{$configuracion->color_iconos_sidebar}}"></i>
               </div>
-              <span class="nav-link-text ms-1">Proveedores</span>
+              <span class="nav-link-text ms-1"><b>II</b> Proveedores</span>
             </a>
           </li>
 
@@ -43,7 +43,7 @@
               <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
                <i class="ni ni-circle-08 text-sm opacity-10" style="color: {{$configuracion->color_iconos_sidebar}}"></i>
               </div>
-              <span class="nav-link-text ms-1">Equipos</span>
+              <span class="nav-link-text ms-1"><b>III</b> Equipos</span>
             </a>
           </li>
 
@@ -52,7 +52,7 @@
               <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
                <i class="ni ni-circle-08 text-sm opacity-10" style="color: {{$configuracion->color_iconos_sidebar}}"></i>
               </div>
-              <span class="nav-link-text ms-1">Operadores</span>
+              <span class="nav-link-text ms-1"><b>IV</b> Operadores</span>
             </a>
           </li>
 

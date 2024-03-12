@@ -19,7 +19,7 @@
                              <div class="float-right">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background: {{$configuracion->color_boton_add}}; color: #ffff">
                                     Crear
-                                  </button>
+                                </button>
                               </div>
                         </div>
                     </div>
@@ -48,21 +48,20 @@
 
                                             <td>
                                                 <form action="{{ route('clients.destroy',$client->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('clients.show',$client->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('clients.edit',$client->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
                                                 </form>
+                                                <a class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editModal-{{ $client->id }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
                                             </td>
                                         </tr>
+                                        @include('client.edit')
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                {!! $clients->links() !!}
             </div>
         </div>
     </div>

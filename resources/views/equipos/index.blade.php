@@ -48,7 +48,6 @@
                                                     </button>
                                                 </td>
                                             </tr>
-                                            @include('equipos.modal_edit')
                                         @endforeach
                                     </tbody>
 

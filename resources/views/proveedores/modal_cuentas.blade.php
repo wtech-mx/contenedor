@@ -9,17 +9,17 @@
 
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-3">Nombre</div>
-                    <div class="col-3">Cuenta</div>
-                    <div class="col-3">Clabe</div>
-                    <div class="col-3">Borrar</div>
+                    <div class="col-3"><b>Beneficiario</b></div>
+                    <div class="col-3"><b>Banco</b></div>
+                    <div class="col-3"><b>Cuenta</b></div>
+                    <div class="col-3"><b>Clabe</b></div>
 
                     @foreach ($cuentas as $cuentas)
                         @if ($cuentas->id_proveedores == $proveedor->id)
+                            <div class="col-3">{{$cuentas->nombre_beneficiario}}</div>
                             <div class="col-3">{{$cuentas->nombre_banco}}</div>
                             <div class="col-3">{{$cuentas->cuenta_bancaria}}</div>
                             <div class="col-3">{{$cuentas->cuenta_clabe}}</div>
-                            <div class="col-3"></div>
                         @endif
                     @endforeach
 

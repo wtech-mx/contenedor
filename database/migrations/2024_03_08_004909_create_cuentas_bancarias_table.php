@@ -20,6 +20,7 @@ return new class extends Migration
                 ->references('id')->on('proveedores')
                 ->inDelete('set null');
 
+            $table->string('nombre_beneficiario')->nullable();
             $table->text('cuenta_bancaria')->nullable();
             $table->text('nombre_banco')->nullable();
             $table->text('cuenta_clabe')->nullable();

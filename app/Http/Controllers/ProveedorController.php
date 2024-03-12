@@ -44,6 +44,7 @@ class ProveedorController extends Controller
     public function cuenta(Request $request){
 
         $banco = new CuentasBancarias;
+        $banco->nombre_beneficiario = $request->get('nombre_beneficiario');
         $banco->id_proveedores = $request->get('id_proveedores');
         $banco->cuenta_bancaria = $request->get('cuenta_bancaria');
         $banco->nombre_banco = $request->get('nombre_banco');

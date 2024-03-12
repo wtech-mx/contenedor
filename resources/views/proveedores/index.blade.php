@@ -54,9 +54,13 @@
                                                     <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#editarModal{{$proveedor->id}}">
                                                         <img src="{{ asset('img/icon/t credito.png.webp') }}" alt="" width="25px">
                                                     </button>
+                                                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#editModal{{$proveedor->id}}">
+                                                        <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
+                                                    </button>
                                                 </td>
                                             </tr>
                                             @include('proveedores.modal_edit')
+                                            @include('proveedores.modal_crear_cuenta')
                                             @include('proveedores.modal_cuentas')
                                         @endforeach
                                     </tbody>

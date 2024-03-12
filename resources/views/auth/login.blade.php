@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/img/apple-icon.png')}}">
   <link rel="icon" type="image/png" href="https://paradisus.mx/favicon/639893ee3d1ff63891f2fbd91b277248048_670190130923536_7018383830884135385_n__1_-removebg-preview.png">
   <title>
-    SGM
+    SGT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -33,9 +33,9 @@
               <div class="card-header bg-transparent">
                 <h5 class="text-dark text-center mt-2 mb-3">¡Bienvenido!</h5>
 
-                <h6 class="text-dark text-center mt-2 mb-3">
-                    <img class="text-center" src="{{ asset('img/logo.jpg') }}" alt="" style="width: 200px;border-radius: 9px;">
-                </h6>
+                <h1 class="text-dark text-center mt-2 mb-3">
+                    SGT
+                </h1>
 
               </div>
               <div class="card-body px-lg-5 pt-0">
