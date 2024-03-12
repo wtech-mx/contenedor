@@ -43,11 +43,12 @@
                                                 <td>{{$equipo->tipo}}</td>
                                                 <td>{{$equipo->fecha}}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#editarModal{{$equipo->id}}">
-                                                        <img src="{{ asset('img/icon/t credito.png.webp') }}" alt="" width="25px">
+                                                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#equipoEditModal-{{$equipo->id}}">
+                                                        <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
                                                     </button>
                                                 </td>
                                             </tr>
+                                            @include('equipos.modal_edit')
                                         @endforeach
                                     </tbody>
 

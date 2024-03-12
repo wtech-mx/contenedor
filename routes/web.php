@@ -48,6 +48,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('clients', ClientController::class);
     Route::post('clients/create', [App\Http\Controllers\ClientController::class, 'store'])->name('store.clients');
 
+    Route::post('clients/subclientes/create', [App\Http\Controllers\ClientController::class, 'store_subclientes'])->name('store_subclientes.clients');
+
     // ==================== P R O V E E D O R E S ====================
     Route::get('proveedores', [App\Http\Controllers\ProveedorController::class, 'index'])->name('index.proveedores');
     Route::post('proveedores/create', [App\Http\Controllers\ProveedorController::class, 'store'])->name('store.proveedores');

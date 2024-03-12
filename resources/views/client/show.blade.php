@@ -1,61 +1,31 @@
-@extends('layouts.app')
+<div class="modal fade" id="subclienteShowModal-{{$client->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-lg">
+      <div class="modal-content">
 
-@section('template_title')
-    {{ $client->name ?? 'Show Client' }}
-@endsection
+        <div class="modal-header">
+          <h5 class="modal-title">Subclientes</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
 
-@section('content')
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="float-left">
-                            <span class="card-title">Show Client</span>
-                        </div>
-                        <div class="float-right">
-                            <a class="btn" href="{{ route('clients.index') }}" style="background: {{$configuracion->color_boton_close}}; color: #ffff"> Back</a>
-                        </div>
-                    </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-3"><b>Nombre</b></div>
+                    <div class="col-3"><b>Telefono</b></div>
+                    <div class="col-3"><b>Correo</b></div>
+                    <div class="col-3"><b>RFC</b></div>
 
-                    <div class="card-body">
+                    @foreach ($subclientes as $subcliente)
+                        @if ($subcliente->id_cliente == $client->id)
+                            <div class="col-3">{{$subcliente->nombre}}</div>
+                            <div class="col-3">{{$subcliente->telefono}}</div>
+                            <div class="col-3">{{$subcliente->correo}}</div>
+                            <div class="col-3">{{$subcliente->rfc}}</div>
+                        @endif
+                    @endforeach
 
-                        <div class="form-group">
-                            <strong>Nombre:</strong>
-                            {{ $client->nombre }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Apellido:</strong>
-                            {{ $client->apellido }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Edad:</strong>
-                            {{ $client->edad }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Sanguineo:</strong>
-                            {{ $client->sanguineo }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Ocupacion:</strong>
-                            {{ $client->ocupacion }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Telefono:</strong>
-                            {{ $client->telefono }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Fecha Nacimiento:</strong>
-                            {{ $client->fecha_nacimiento }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Email:</strong>
-                            {{ $client->email }}
-                        </div>
-
-                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-@endsection
+
+      </div>
+    </div>
+  </div>

@@ -34,6 +34,7 @@
 										<th>Nombre</th>
 										<th>Telefono</th>
 										<th>Correo</th>
+                                        <th>Subclientes</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -45,17 +46,21 @@
 											<td>{{ $client->nombre }}</td>
 											<td>{{ $client->telefono }}</td>
 											<td>{{ $client->correo }}</td>
-
                                             <td>
-                                                <form action="{{ route('clients.destroy',$client->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
-                                                </form>
+                                                <a type="btn" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#subclienteShowModal-{{$client->id}}">
+                                                    Ver
+                                                </a>
+                                            </td>
+                                            <td>
                                                 <a class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editModal-{{ $client->id }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
+                                                <a type="btn" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#subclienteModal-{{$client->id}}">
+                                                    Subclientes
+                                                </a>
                                             </td>
                                         </tr>
                                         @include('client.edit')
+                                        @include('client.modal_subclientes')
+                                        @include('client.show')
                                     @endforeach
                                 </tbody>
                             </table>

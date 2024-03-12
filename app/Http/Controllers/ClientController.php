@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Subclientes;
 use Illuminate\Http\Request;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\NumberColumn;
@@ -24,8 +25,9 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::get();
+        $subclientes = Subclientes::get();
 
-        return view('client.index', compact('clients'));
+        return view('client.index', compact('clients', 'subclientes'));
     }
 
     /**
@@ -55,6 +57,33 @@ class ClientController extends Controller
         $fechaActual = date('Y-m-d');
 
         $client = new Client;
+        $client->nombre = $request->get('nombre');
+        $client->correo = $request->get('correo');
+        $client->telefono = $request->get('telefono');
+        $client->direccion = $request->get('direccion');
+        $client->regimen_fiscal = $request->get('regimen_fiscal');
+        $client->rfc = $request->get('rfc');
+        $client->nombre_empresa = $request->get('nombre_empresa');
+        $client->fecha = $fechaActual;
+        $client->save();
+
+        Session::flash('success', 'Se ha guardado sus datos con exito');
+        return redirect()->back()
+            ->with('success', 'Cliente created successfully.');
+
+    }
+
+    public function store_subclientes(Request $request){
+        $this->validate($request, [
+            'nombre' => 'required',
+            'correo' => 'required',
+            'telefono' => 'required'
+        ]);
+
+        $fechaActual = date('Y-m-d');
+
+        $client = new Subclientes;
+        $client->id_cliente = $request->get('id_client');
         $client->nombre = $request->get('nombre');
         $client->correo = $request->get('correo');
         $client->telefono = $request->get('telefono');

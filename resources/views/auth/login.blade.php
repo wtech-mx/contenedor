@@ -33,9 +33,9 @@
               <div class="card-header bg-transparent">
                 <h5 class="text-dark text-center mt-2 mb-3">¡Bienvenido!</h5>
 
-                <h1 class="text-dark text-center mt-2 mb-3">
-                    SGT
-                </h1>
+                <h4 class="text-dark text-center mt-2 mb-3">
+                    Sistema de Gestion de Transporte
+                </h4>
 
               </div>
               <div class="card-body px-lg-5 pt-0">
