@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class CuentasBancarias extends Model
 {
     use HasFactory;
-    public $timestamps = false;
-
     protected $table = 'cuentas_bancarias';
 
     protected $fillable = [

@@ -32,6 +32,7 @@
                                         <th>No</th>
                                         <th>Nombre</th>
                                         <th>Telefono</th>
+                                        <th>Tipo</th>
                                         <th>RFC</th>
                                         <th>Cuentas Bancarias</th>
                                         <th>Acciones</th>
@@ -44,6 +45,7 @@
                                                 <td>{{$proveedor->id}}</td>
                                                 <td>{{$proveedor->nombre}}</td>
                                                 <td>{{$proveedor->telefono}}</td>
+                                                <td>{{$proveedor->tipo}}</td>
                                                 <td>{{$proveedor->rfc}}</td>
                                                 <td>
                                                     <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#cuentasModal{{$proveedor->id}}">

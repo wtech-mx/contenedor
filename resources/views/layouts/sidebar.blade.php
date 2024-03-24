@@ -56,6 +56,23 @@
             </a>
           </li>
 
+          <li class="nav-item">
+            <a class="nav-link {{ (Request::is('cotizaciones*') ? 'active' : '') }}" href="{{ route('index.cotizaciones') }}" target="">
+              <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
+               <i class="ni ni-circle-08 text-sm opacity-10" style="color: {{$configuracion->color_iconos_sidebar}}"></i>
+              </div>
+              <span class="nav-link-text ms-1"><b>V</b> Cotizaciones</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {{ (Request::is('planeaciones*') ? 'active' : '') }}" href="{{ route('index.planeaciones') }}" target="">
+              <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
+               <i class="ni ni-circle-08 text-sm opacity-10" style="color: {{$configuracion->color_iconos_sidebar}}"></i>
+              </div>
+              <span class="nav-link-text ms-1"><b>VI</b> Planeación</span>
+            </a>
+          </li>
 
           <a data-bs-toggle="collapse" href="#pagesExamples" class="nav-link {{ (Request::is('users*') ? 'active' : '') }}{{ (Request::is('roles*') ? 'active' : '') }}" aria-controls="pagesExamples" role="button" aria-expanded="false">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">

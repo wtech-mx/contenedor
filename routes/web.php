@@ -66,7 +66,19 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('operadores/create', [App\Http\Controllers\OperadorController::class, 'store'])->name('store.operadores');
     Route::patch('operadores/update/{id}', [App\Http\Controllers\OperadorController::class, 'update'])->name('update.operadores');
 
+    // ==================== C O T I Z A C I O N E S ====================
+    Route::get('/cotizaciones/index', [App\Http\Controllers\CotizacionesController::class, 'index'])->name('index.cotizaciones');
+    Route::get('cotizaciones/create', [App\Http\Controllers\CotizacionesController::class, 'create'])->name('create.cotizaciones');
+    Route::post('cotizaciones/store', [App\Http\Controllers\CotizacionesController::class, 'store'])->name('store.cotizaciones');
+    Route::get('cotizaciones/edit/{id}', [App\Http\Controllers\CotizacionesController::class, 'edit'])->name('edit.cotizaciones');
+    Route::patch('cotizaciones/update/{id}', [App\Http\Controllers\CotizacionesController::class, 'update'])->name('update.cotizaciones');
 
+    Route::patch('cotizaciones/update/estatus/{id}', [App\Http\Controllers\CotizacionesController::class, 'update_estatus'])->name('update_estatus.cotizaciones');
+
+    // ==================== P L A N E A C I O N ====================
+    Route::get('planeaciones', [App\Http\Controllers\PlaneacionController::class, 'index'])->name('index.planeaciones');
+    Route::post('planeaciones/create', [App\Http\Controllers\PlaneacionController::class, 'store'])->name('store.planeaciones');
+    Route::patch('planeaciones/update/{id}', [App\Http\Controllers\PlaneacionController::class, 'update'])->name('update.planeaciones');
 
 });
 
