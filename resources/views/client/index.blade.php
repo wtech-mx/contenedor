@@ -12,13 +12,13 @@
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
-                            <span id="card_title">
+                            <h2 id="card_title">
                                 {{ __('Client') }}
-                            </span>
+                            </h2>
 
                              <div class="float-right">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background: {{$configuracion->color_boton_add}}; color: #ffff">
-                                    Crear
+                                    <i class="fa fa-fw fa-plus"></i>  Crear
                                 </button>
                               </div>
                         </div>
@@ -26,7 +26,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover table_id">
+                            <table class="table table-striped table-hover table_id" id="datatable-search">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -47,12 +47,13 @@
 											<td>{{ $client->telefono }}</td>
 											<td>{{ $client->correo }}</td>
                                             <td>
-                                                <a type="btn" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#subclienteShowModal-{{$client->id}}">
-                                                    Ver
+                                                <a type="btn" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#subclienteShowModal-{{$client->id}}">
+                                                    <i class="fa fa-fw fa-eye"></i> Ver
                                                 </a>
                                             </td>
                                             <td>
-                                                <a class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editModal-{{ $client->id }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
+                                                <a class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editModal-{{ $client->id }}">
+                                                    <i class="fa fa-fw fa-edit"></i> Editar</a>
                                                 <a type="btn" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#subclienteModal-{{$client->id}}">
                                                     Subclientes
                                                 </a>
@@ -71,4 +72,15 @@
         </div>
     </div>
 @include('client.modal_create')
+@endsection
+
+@section('datatable')
+
+<script>
+    const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
+      searchable: true,
+      fixedHeight: false
+    });
+</script>
+
 @endsection

@@ -18,7 +18,7 @@
 
                              <div class="float-right">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background: {{$configuracion->color_boton_add}}; color: #ffff">
-                                    Crear
+                                    <i class="fa fa-fw fa-plus"></i>  Crear
                                   </button>
                               </div>
                         </div>
@@ -48,16 +48,16 @@
                                                 <td>{{$proveedor->tipo}}</td>
                                                 <td>{{$proveedor->rfc}}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#cuentasModal{{$proveedor->id}}">
-                                                        Ver cuentas registradas
+                                                    <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#cuentasModal{{$proveedor->id}}">
+                                                        Ver cuentas registradas <img src="{{ asset('img/icon/business-card-design.webp') }}" alt="" width="20px">
                                                     </button>
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#editModal{{$proveedor->id}}">
-                                                        <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editModal{{$proveedor->id}}">
+                                                        <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="20px">
                                                     </button>
-                                                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#editarModal{{$proveedor->id}}">
-                                                        <img src="{{ asset('img/icon/t credito.png.webp') }}" alt="" width="25px">
+                                                    <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#editarModal{{$proveedor->id}}">
+                                                        <img src="{{ asset('img/icon/t credito.png.webp') }}" alt="" width="20px">
                                                     </button>
                                                 </td>
                                             </tr>
@@ -80,11 +80,12 @@
 @endsection
 
 @section('datatable')
-    <script type="text/javascript">
-        const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
-        searchable: true,
-        fixedHeight: false
-        });
 
-    </script>
+<script>
+    const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
+      searchable: true,
+      fixedHeight: false
+    });
+</script>
+
 @endsection

@@ -2,110 +2,72 @@
 
 @section('breadcrumb')
 <div class="row">
-    <div class="col-lg-12">
-      <div class="row">
-        <div class="col-lg-3 col-md-6 col-12">
-          <div class="card  mb-4">
-            <div class="card-body p-3">
-              <div class="row">
-                <div class="col-8">
-                  <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Citas</p>
-                    <h5 class="font-weight-bolder">
 
-                    </h5>
-                    <p class="mb-0">
-                      <span class="text-success text-sm font-weight-bolder">+55%</span>
-                      since yesterday
-                    </p>
-                  </div>
-                </div>
-                <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-12">
-          <div class="card  mb-4">
-            <div class="card-body p-3">
-              <div class="row">
-                <div class="col-8">
-                  <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Proximas Citas</p>
-                    <h5 class="font-weight-bolder">
-
-                    </h5>
-                    <p class="mb-0">
-                      <span class="text-success text-sm font-weight-bolder">+3%</span>
-                      since last week
-                    </p>
-                  </div>
-                </div>
-                <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
-                    <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-12">
-          <div class="card  mb-4">
-            <a type="button" class="" data-bs-toggle="modal" data-bs-target="#coloresModal" style="">
-                <div class="card-body p-3">
+    <div class="col-4">
+        <a href="{{ route('clients.index') }}">
+            <div class="card p-3 mb-4">
                 <div class="row">
-                    <div class="col-8">
-                    <div class="numbers">
-                        <p class="text-sm mb-0 text-uppercase font-weight-bold">Servicios</p>
-                        <h5 class="font-weight-bolder">
-                        #
-                        </h5>
+                    <div class="col-2">
+                        <img src="{{ asset('img/icon/empleados.webp') }}" alt="" width="35px">
                     </div>
-                    </div>
-                    <div class="col-4 text-end">
-                    <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                        <i class="fa fa-area-chart text-lg opacity-10" aria-hidden="true"></i>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </a>
 
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-12">
-          <div class="card  mb-4">
-            <a type="button" class="" data-bs-toggle="modal" data-bs-target="#estatusModal" style="">
-            <div class="card-body p-3">
-              <div class="row">
-                <div class="col-8">
-                  <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Estatus</p>
-                    <h5 class="font-weight-bolder">
-                      #
-                    </h5>
-                  </div>
+                    <div class="col-10">
+                        <h5>I - Clients</h5>
+                    </div>
                 </div>
-                <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
-                    <i class="fa fa-cogs text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                </div>
-              </div>
             </div>
-            </a>
-          </div>
-        </div>
-      </div>
+        </a>
     </div>
-  </div>
+
+    <div class="col-4">
+        <a href="{{ route('index.proveedores') }}">
+        <div class="card p-3 mb-4">
+            <div class="row">
+                <div class="col-2">
+                    <img src="{{ asset('img/icon/edificios_ciudad.webp') }}" alt="" width="35px">
+                </div>
+
+                <div class="col-10">
+                    <h5>II - Proveedores</h5>
+                </div>
+            </div>
+        </div>
+        </a>
+    </div>
+
+    <div class="col-4">
+        <a href="{{ route('index.equipos') }}">
+        <div class="card p-3 mb-4">
+            <div class="row">
+                <div class="col-2">
+                    <img src="{{ asset('img/icon/referencia.webp') }}" alt="" width="35px">
+                </div>
+
+                <div class="col-10">
+                    <h5>III - Equipos</h5>
+                </div>
+            </div>
+        </div>
+         </a>
+    </div>
+
+    <div class="col-4">
+        <a href="{{ route('index.operadores') }}">
+        <div class="card p-3 mb-4">
+            <div class="row">
+                <div class="col-2">
+                    <img src="{{ asset('img/icon/camion.png') }}" alt="" width="35px">
+                </div>
+
+                <div class="col-10">
+                    <h5>IV - Operadores</h5>
+                </div>
+            </div>
+        </div>
+         </a>
+    </div>
+
+
+</div>
 
 @endsection

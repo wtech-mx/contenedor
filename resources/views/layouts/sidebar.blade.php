@@ -21,18 +21,18 @@
 
 
         <li class="nav-item">
-          <a class="nav-link {{ (Request::is('clients*') ? 'active' : '') }}" href="{{ route('clients.index') }}" target="">
-            <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
-             <i class="ni ni-circle-08 text-sm opacity-10" style="color: {{$configuracion->color_iconos_sidebar}}"></i>
-            </div>
-            <span class="nav-link-text ms-1"><b>I</b> Clientes</span>
-          </a>
-        </li>
+            <a class="nav-link {{ (Request::is('clients*') ? 'active' : '') }}" href="{{ route('clients.index') }}" target="">
+              <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
+                  <img src="{{ asset('img/icon/empleados.webp') }}" alt="" width="20px">
+              </div>
+              <span class="nav-link-text ms-1"><b>I</b> Clientes</span>
+            </a>
+          </li>
 
-        <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link {{ (Request::is('proveedores*') ? 'active' : '') }}" href="{{ route('index.proveedores') }}" target="">
               <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
-               <i class="ni ni-circle-08 text-sm opacity-10" style="color: {{$configuracion->color_iconos_sidebar}}"></i>
+                <img src="{{ asset('img/icon/edificios_ciudad.webp') }}" alt="" width="20px">
               </div>
               <span class="nav-link-text ms-1"><b>II</b> Proveedores</span>
             </a>
@@ -41,7 +41,7 @@
           <li class="nav-item">
             <a class="nav-link {{ (Request::is('equipos*') ? 'active' : '') }}" href="{{ route('index.equipos') }}" target="">
               <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
-               <i class="ni ni-circle-08 text-sm opacity-10" style="color: {{$configuracion->color_iconos_sidebar}}"></i>
+                <img src="{{ asset('img/icon/referencia.webp') }}" alt="" width="20px">
               </div>
               <span class="nav-link-text ms-1"><b>III</b> Equipos</span>
             </a>
@@ -50,11 +50,12 @@
           <li class="nav-item">
             <a class="nav-link {{ (Request::is('operadores*') ? 'active' : '') }}" href="{{ route('index.operadores') }}" target="">
               <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
-               <i class="ni ni-circle-08 text-sm opacity-10" style="color: {{$configuracion->color_iconos_sidebar}}"></i>
+                <img src="{{ asset('img/icon/camion.png') }}" alt="" width="20px">
               </div>
               <span class="nav-link-text ms-1"><b>IV</b> Operadores</span>
             </a>
           </li>
+
 
           <li class="nav-item">
             <a class="nav-link {{ (Request::is('cotizaciones*') ? 'active' : '') }}" href="{{ route('index.cotizaciones') }}" target="">

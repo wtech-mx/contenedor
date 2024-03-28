@@ -18,7 +18,7 @@
 
                              <div class="float-right">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#equipoModal" style="background: {{$configuracion->color_boton_add}}; color: #ffff">
-                                    Crear
+                                    <i class="fa fa-fw fa-plus"></i> Crear
                                   </button>
                               </div>
                         </div>
@@ -43,7 +43,7 @@
                                                 <td>{{$equipo->tipo}}</td>
                                                 <td>{{$equipo->fecha}}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#equipoEditModal-{{$equipo->id}}">
+                                                    <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipoEditModal-{{$equipo->id}}">
                                                         <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
                                                     </button>
                                                 </td>
@@ -62,4 +62,14 @@
 
 @include('equipos.modal_create')
 
+@endsection
+
+@section('datatable')
+    <script type="text/javascript">
+        const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
+        searchable: true,
+        fixedHeight: false
+        });
+
+    </script>
 @endsection
