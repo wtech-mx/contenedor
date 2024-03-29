@@ -64,6 +64,12 @@
         @yield('breadcrumb')
         @yield('content')
 
+        @include('client.modal_create')
+        @include('operadores.modal_create')
+        @include('proveedores.modal_create')
+        @include('equipos.modal_create')
+
+
        <!-- Modal lateral Congif -->
         @include('layouts.footer')
       <!-- End Modal lateral Congif -->
@@ -119,7 +125,6 @@
   @yield('datatable')
 
   @yield('fullcalendar')
-
 
   <!-- Github buttons -->
   {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}

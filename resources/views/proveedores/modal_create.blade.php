@@ -1,11 +1,12 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="proveedores" tabindex="-1" aria-labelledby="proveedoresLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Crear Usuario</h5>
+          <h5 class="modal-title">Crear Proveedor</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form method="POST" action="{{ route('store.proveedores') }}" id="" enctype="multipart/form-data" role="form">
+
             @csrf
 
             <div class="modal-body">
@@ -57,7 +58,7 @@
                             <span class="input-group-text" id="basic-addon1">
                                 <img src="{{ asset('img/icon/gear.webp') }}" alt="" width="25px">
                             </span>
-                            <input name="regimen" id="regimen" type="text" class="form-control">
+                            <input name="regimen_fiscal" id="regimen_fiscal" type="text" class="form-control">
                         </div>
                     </div>
 

@@ -29,7 +29,7 @@ class ProveedorController extends Controller
         $proveedor->nombre = $request->get('nombre');
         $proveedor->correo = $request->get('correo');
         $proveedor->telefono = $request->get('telefono');
-        $proveedor->regimen = $request->get('regimen');
+        $proveedor->regimen_fiscal = $request->get('regimen_fiscal');
         $proveedor->direccion = $request->get('direccion');
         $proveedor->rfc = $request->get('rfc');
         $proveedor->fecha = $fechaActual;
@@ -39,6 +39,15 @@ class ProveedorController extends Controller
         return redirect()->route('index.proveedores')
             ->with('success', 'Proveedor created successfully.');
 
+    }
+
+    public function update(Request $request, Proveedor $id)
+    {
+
+        $id->update($request->all());
+
+        Session::flash('edit', 'Se ha editado sus datos con exito');
+        return redirect()->back()->with('success', 'Client updated successfully');
     }
 
     public function cuenta(Request $request){

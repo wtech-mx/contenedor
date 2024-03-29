@@ -12,9 +12,11 @@ class Proveedor extends Model
 
     protected $fillable = [
         'nombre',
+        'direccion',
+        'rfc',
         'correo',
         'telefono',
-        'regimen',
+        'regimen_fiscal',
         'fecha',
     ];
 }

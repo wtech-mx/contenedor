@@ -45,8 +45,8 @@
                                                 <td>{{$operador->telefono}}</td>
                                                 <td>{{$operador->tipo_sangre}}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarModal{{$operador->id}}">
-                                                        <img src="{{ asset('img/icon/t credito.png.webp') }}" alt="" width="25px">
+                                                    <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#operadoresModal_Edit{{$operador->id}}">
+                                                        <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
                                                     </button>
                                                 </td>
                                             </tr>

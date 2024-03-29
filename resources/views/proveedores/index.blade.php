@@ -17,7 +17,7 @@
                             </span>
 
                              <div class="float-right">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background: {{$configuracion->color_boton_add}}; color: #ffff">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#proveedores" style="background: {{$configuracion->color_boton_add}}; color: #ffff">
                                     <i class="fa fa-fw fa-plus"></i>  Crear
                                   </button>
                               </div>

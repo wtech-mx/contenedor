@@ -133,11 +133,10 @@ class ClientController extends Controller
      * @param  Client $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Client $client)
+    public function update(Request $request, Client $id)
     {
-        request()->validate(Client::$rules);
 
-        $client->update($request->all());
+        $id->update($request->all());
 
         Session::flash('edit', 'Se ha editado sus datos con exito');
         return redirect()->route('clients.index')

@@ -5,7 +5,8 @@
           <h5 class="modal-title">Editar #{{$client->id}}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form method="POST" action="{{ route('store.clients') }}" id="" enctype="multipart/form-data" role="form">
+        <form method="POST" action="{{ route('update.clients',$client->id ) }}" id="" enctype="multipart/form-data" role="form">
+            <input type="hidden" name="_method" value="PATCH">
             @csrf
 
             <div class="modal-body">

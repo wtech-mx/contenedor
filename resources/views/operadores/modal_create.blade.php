@@ -55,7 +55,7 @@
                         <label for="name">Fecha nacimiento *</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                                <img src="{{ asset('img/icon/mapa-de-la-ciudad.webp') }}" alt="" width="25px">
+                                <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
                             </span>
                             <input name="fecha_nacimiento" id="fecha_nacimiento" type="date" class="form-control">
                         </div>
@@ -65,7 +65,7 @@
                         <label for="name">Acceso *</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                                <img src="{{ asset('img/icon/mapa-de-la-ciudad.webp') }}" alt="" width="25px">
+                                <img src="{{ asset('img/icon/iniciar-sesion.png') }}" alt="" width="25px">
                             </span>
                             <input name="acceso" id="acceso" type="text" class="form-control">
                         </div>
@@ -85,7 +85,7 @@
                         <label for="name">NNS *</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                                <img src="{{ asset('img/icon/mapa-de-la-ciudad.webp') }}" alt="" width="25px">
+                                <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
                             </span>
                             <input name="nss" id="nss" type="text" class="form-control">
                         </div>
@@ -95,7 +95,7 @@
                         <label for="name">Recomendacion *</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                                <img src="{{ asset('img/icon/mapa-de-la-ciudad.webp') }}" alt="" width="25px">
+                                <img src="{{ asset('img/icon/megafono.webp') }}" alt="" width="25px">
                             </span>
                             <input name="recomendacion" id="recomendacion" type="text" class="form-control">
                         </div>
@@ -105,7 +105,7 @@
                         <label for="name">Comprobante Domicilio *</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                                <img src="{{ asset('img/icon/factura.png.webp') }}" alt="" width="25px">
+                                <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
                             </span>
                             <input name="comprobante_domicilio" id="comprobante_domicilio" type="file" class="form-control">
                         </div>
@@ -115,7 +115,7 @@
                         <label for="name">INE *</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                                <img src="{{ asset('img/icon/factura.png.webp') }}" alt="" width="25px">
+                                <img src="{{ asset('img/icon/business-card-design.webp') }}" alt="" width="25px">
                             </span>
                             <input name="ine" id="ine" type="file" class="form-control">
                         </div>
@@ -125,7 +125,7 @@
                         <label for="name">Cedula Fiscal *</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                                <img src="{{ asset('img/icon/factura.png.webp') }}" alt="" width="25px">
+                                <img src="{{ asset('img/icon/catalogo.webp') }}" alt="" width="25px">
                             </span>
                             <input name="cedula_fiscal" id="cedula_fiscal" type="file" class="form-control">
                         </div>
@@ -145,7 +145,7 @@
                         <label for="name">Foto *</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                                <img src="{{ asset('img/icon/factura.png.webp') }}" alt="" width="25px">
+                                <img src="{{ asset('img/icon/imagen.webp') }}" alt="" width="25px">
                             </span>
                             <input name="foto" id="foto" type="file" class="form-control">
                         </div>

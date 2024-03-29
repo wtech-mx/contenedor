@@ -205,7 +205,7 @@
                                         <label for="name">Fecha modulación</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                                <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
                                             </span>
                                             <input name="fecha_modulacion" id="fecha_modulacion" type="date" class="form-control">
                                         </div>
@@ -215,7 +215,7 @@
                                         <label for="name">Fecha entrega</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                                <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
                                             </span>
                                             <input name="fecha_entrega" id="fecha_entrega" type="date" class="form-control">
                                         </div>

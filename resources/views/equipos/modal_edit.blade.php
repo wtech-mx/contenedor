@@ -5,7 +5,9 @@
           <h5 class="modal-title">Editar Equipo #{{$equipo->id}} </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form method="POST" action="{{ route('store.equipos') }}" id="" enctype="multipart/form-data" role="form">
+        <form method="POST" action="{{ route('update.equipos', $equipo->id) }}" id="" enctype="multipart/form-data" role="form">
+            <input type="hidden" name="_method" value="PATCH">
+
             @csrf
 
             <div class="modal-body">
@@ -74,6 +76,8 @@
                             <input name="acceso" id="acceso" type="text" class="form-control" value="{{$equipo->acceso}}">
                         </div>
                     </div>
+
+                    <div class="col-6"></div>
 
                     <div class="col-6 form-group">
                         <label for="name">Tarjeta de Circulacion *</label>

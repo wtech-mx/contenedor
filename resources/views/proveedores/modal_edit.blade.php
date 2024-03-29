@@ -5,7 +5,9 @@
           <h5 class="modal-title">Crear Usuario</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form method="POST" action="{{ route('store.proveedores') }}" id="" enctype="multipart/form-data" role="form">
+        <form method="POST" action="{{ route('update.proveedores',$proveedor->id) }}" id="" enctype="multipart/form-data" role="form">
+            <input type="hidden" name="_method" value="PATCH">
+
             @csrf
 
             <div class="modal-body">
@@ -57,7 +59,7 @@
                             <span class="input-group-text" id="basic-addon1">
                                 <img src="{{ asset('img/icon/gear.webp') }}" alt="" width="25px">
                             </span>
-                            <input name="regimen" id="regimen" type="text" class="form-control" value="{{$proveedor->regimen}}">
+                            <input name="regimen_fiscal" id="regimen_fiscal" type="text" class="form-control" value="{{$proveedor->regimen_fiscal}}">
                         </div>
                     </div>
 

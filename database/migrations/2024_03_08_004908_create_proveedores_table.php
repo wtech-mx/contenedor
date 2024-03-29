@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('correo')->nullable();
             $table->text('telefono')->nullable();
             $table->text('regimen_fiscal')->nullable();
+            $table->date('fecha')->nullable();
             $table->timestamps();
         });
     }

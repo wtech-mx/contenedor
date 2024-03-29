@@ -47,7 +47,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
                                             </span>
-                                            <input name="fecha" id="fecha" type="date" class="form-control" value="{{$fechaActual}}">
+                                            <input name="fecha" id="fecha" type="date" class="form-control" value="{{date('Y-m-d')}}">
                                         </div>
                                     </div>
 
@@ -136,7 +136,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
                                             </span>
-                                            <input name="fecha_chasis" id="fecha_chasis" type="date" class="form-control" value="{{$fechaActual}}">
+                                            <input name="fecha_chasis" id="fecha_chasis" type="date" class="form-control" value="{{date('Y-m-d')}}">
                                         </div>
                                     </div>
 
@@ -248,7 +248,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
                                             </span>
-                                            <input name="fecha_doly" id="fecha_doly" type="date" class="form-control" value="{{$fechaActual}}">
+                                            <input name="fecha_doly" id="fecha_doly" type="date" class="form-control" value="{{date('Y-m-d')}}">
                                         </div>
                                     </div>
 

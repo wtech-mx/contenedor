@@ -102,4 +102,30 @@ class EquiposController extends Controller
             ->with('success', 'Proveedor created successfully.');
 
     }
+
+    public function update(Request $request, Equipo $id)
+    {
+
+        if ($request->hasFile("tarjeta_circulacion")) {
+            $file = $request->file('tarjeta_circulacion');
+            $path = public_path() . '/equipos';
+            $fileName = uniqid() . $file->getClientOriginalName();
+            $file->move($path, $fileName);
+            $request->tarjeta_circulacion = $fileName;
+        }
+
+        if ($request->hasFile("poliza_seguro")) {
+            $file = $request->file('poliza_seguro');
+            $path = public_path() . '/equipos';
+            $fileName = uniqid() . $file->getClientOriginalName();
+            $file->move($path, $fileName);
+            $request->poliza_seguro = $fileName;
+        }
+
+        $id->update($request->all());
+
+        Session::flash('edit', 'Se ha editado sus datos con exito');
+        return redirect()->back()->with('success', 'Equipo actualizado exitosamente');
+
+    }
 }
