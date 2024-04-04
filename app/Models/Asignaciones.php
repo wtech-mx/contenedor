@@ -18,6 +18,8 @@ class Asignaciones extends Model
         'id_operador',
         'fecha_inicio',
         'fecha_fin',
+        'id_proveedor',
+        'precio',
     ];
 
     public function Camion()
@@ -39,5 +41,9 @@ class Asignaciones extends Model
     public function Operador()
     {
         return $this->belongsTo(Operador::class, 'id_operador');
+    }
+    public function Proveedor()
+    {
+        return $this->belongsTo(Proveedor::class, 'id_proveedor');
     }
 }

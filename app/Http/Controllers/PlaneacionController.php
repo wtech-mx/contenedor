@@ -15,7 +15,7 @@ use Session;
 class PlaneacionController extends Controller
 {
     public function index(){
-        $cotizaciones = Cotizaciones::where('estatus', '=', 'Aprobada')->get();
+        $cotizaciones = Cotizaciones::where('estatus', '=', 'Aprobada')->where('estatus_planeacion', '=', NULL)->get();
         $proveedores = Proveedor::where('tipo', 'Burreo')->get();
 
         $equipos = Equipo::all();
@@ -25,7 +25,12 @@ class PlaneacionController extends Controller
         $appointments = Asignaciones::get();
 
         foreach ($appointments as $appointment) {
-            $description = 'Operador: ' . $appointment->Operador->nombre . ' - ' . $appointment->Operador->telefono . '<br>' . 'Camion: ' . $appointment->Camion->num_serie . ' - ' . $appointment->Camion->modelo . '<br>' . 'Chasis: ' . $appointment->Chasis->num_serie . ' - ' . $appointment->Chasis->modelo . '<br>';
+            if($appointment->id_operador == NULL){
+                $description = 'Proveedor: ' . $appointment->Proveedor->nombre . ' - ' . $appointment->Proveedor->telefono . '<br>' . 'Costo viaje: ' . $appointment->precio;
+            }else{
+                $description = 'Operador: ' . $appointment->Operador->nombre . ' - ' . $appointment->Operador->telefono . '<br>' . 'Camion: ' . $appointment->Camion->num_serie . ' - ' . $appointment->Camion->modelo . '<br>' . 'Chasis: ' . $appointment->Chasis->num_serie . ' - ' . $appointment->Chasis->modelo . '<br>';
+            }
+
             $description = str_replace('<br>', "\n", $description);
 
             $events[] = [
@@ -36,7 +41,7 @@ class PlaneacionController extends Controller
             ];
 
             // Define la URL de la ruta dentro del bucle para evitar errores cuando no hay asignaciones
-            $urlCotizaciones = route('edit.cotizaciones', ['id' => $appointment->Contenedor->id_cotizacion]);
+            $urlCotizaciones = route('edit.cotizaciones',  $appointment->Contenedor->id_cotizacion);
         }
 
         // Verifica si hay algún $appointment antes de asignar $urlCotizaciones
@@ -96,7 +101,7 @@ class PlaneacionController extends Controller
         }
     }
 
-    public function store(Request $request){
+    public function asignacion(Request $request){
 
         $asignaciones = new Asignaciones;
         $asignaciones->fecha_inicio = $request->get('fecha_inicio');
@@ -105,7 +110,13 @@ class PlaneacionController extends Controller
         $asignaciones->id_camion = $request->get('camion');
         $asignaciones->id_contenedor = $request->get('num_contenedor');
         $asignaciones->id_operador = $request->get('operador');
+        $asignaciones->id_proveedor = $request->get('id_proveedor');
+        $asignaciones->precio = $request->get('precio');
         $asignaciones->save();
+
+        $cotizacion = Cotizaciones::where('id', '=',  $request->get('cotizacion'))->first();
+        $cotizacion->estatus_planeacion = 1;
+        $cotizacion->update();
 
         Session::flash('success', 'Se ha guardado sus datos con exito');
         return redirect()->back()
