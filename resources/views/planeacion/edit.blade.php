@@ -16,25 +16,40 @@
                         <input name="num_contenedor" value="{{$cotizacion->DocCotizacion->id}}" type="hidden">
                         <input name="cotizacion" value="{{$cotizacion->DocCotizacion->id_cotizacion}}" type="hidden">
 
-                        <div class="form-group col-6">
-                                <label for="name">Num. Contenedor</label>
+
+                        <div class="col-6 form-group">
+                            <label for="name">Num. Contenedor</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="25px">
+                                </span>
                                 <input id="num_contenedor" value="{{$cotizacion->DocCotizacion->num_contenedor}}" type="text" class="form-control" readonly>
+                            </div>
                         </div>
 
-                        <div class="form-group col-6">
+                        <div class="col-6 form-group">
                             <label for="name">Num. autorización</label>
-                            <input id="num_contenedor" value="{{$cotizacion->DocCotizacion->num_autorizacion}}" type="text" class="form-control" readonly>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <img src="{{ asset('img/icon/persona-clave.png') }}" alt="" width="25px">
+                                </span>
+                                <input id="num_contenedor" value="{{$cotizacion->DocCotizacion->num_autorizacion}}" type="text" class="form-control" readonly>
+                            </div>
                         </div>
 
-                        <div class="form-group col-12">
-                            <label for="name">Viaje</label>
-                            <select class="form-select d-inline-block" id="viaje{{$cotizacion->id}}" name="viaje" value="{{ old('viaje') }}" onchange="mostrarDiv('{{$cotizacion->id}}')">
-                                <option>Seleccionar tipo</option>
-                                <option value="Camion Propio">Camion Propio</option>
-                                <option value="Camion Subcontratado">Camion Subcontratado</option>
-                            </select>
+                        <div class="col-12 form-group">
+                            <label for="name">Selecione Unidad</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <img src="{{ asset('img/icon/camion.png') }}" alt="" width="25px">
+                                </span>
+                                <select class="form-select d-inline-block" id="viaje{{$cotizacion->id}}" name="viaje" value="{{ old('viaje') }}" onchange="mostrarDiv('{{$cotizacion->id}}')">
+                                    <option>Seleccionar tipo</option>
+                                    <option value="Camion Propio">Camion Propio</option>
+                                    <option value="Camion Subcontratado">Camion Subcontratado</option>
+                                </select>
+                            </div>
                         </div>
-
 
                         <div class="col-6 form-group">
                             <label for="name">Fecha inicio</label>
