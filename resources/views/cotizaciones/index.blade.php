@@ -52,16 +52,16 @@
                                                         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
                                                             {{$cotizacion->estatus}}
                                                         </button>
-                                                    @elseif ($cotizacion->estatus == 'Aprovada')
+                                                    @elseif ($cotizacion->estatus == 'Aprobada')
                                                         <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
                                                             {{$cotizacion->estatus}}
                                                         </button>
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if ($cotizacion->estatus == 'Aprovada')
+                                                    @if ($cotizacion->estatus == 'Aprobada')
                                                         <a type="button" class="btn" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
-                                                            <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
+                                                            <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
                                                         </a>
                                                     @endif
                                                 </td>

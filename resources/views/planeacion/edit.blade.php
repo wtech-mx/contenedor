@@ -14,17 +14,17 @@
                     <div class="row">
                         <div class="form-group">
                             <label for="name">Viaje</label>
-                            <select class="form-select d-inline-block" id="viaje" name="viaje" value="{{ old('viaje') }}" onchange="mostrarDiv()">
+                            <select class="form-select d-inline-block" id="viaje{{$cotizacion->id}}" name="viaje" value="{{ old('viaje') }}" onchange="mostrarDiv('{{$cotizacion->id}}')">
                                 <option>Seleccionar Estatus</option>
                                 <option value="Camion Propio">Camion Propio</option>
                                 <option value="Camion Subcontratado">Camion Subcontratado</option>
                             </select>
                         </div>
 
-                        <div id="camionPropioDiv" style="display: none;">
+                        <div id="camionPropioDiv{{$cotizacion->id}}" style="display: none;">
                             <div class="col-12 form-group">
                                 <label for="name">Chasis</label>
-                                <select class="form-select d-inline-block" id="viaje" name="viaje" value="{{ old('viaje') }}" onchange="mostrarDiv()">
+                                <select class="form-select d-inline-block" id="chasis" name="chasis" value="{{ old('chasis') }}" >
                                     <option>Seleccionar Chasis</option>
                                     @foreach ($equipo_chasis as $item)
                                         <option value="{{$item->id}}">{{$item->marca}} / {{$item->modelo}}</option>
@@ -34,7 +34,7 @@
 
                             <div class="col-12 form-group">
                                 <label for="name">Camion</label>
-                                <select class="form-select d-inline-block" id="viaje" name="viaje" value="{{ old('viaje') }}" onchange="mostrarDiv()">
+                                <select class="form-select d-inline-block" id="camion" name="camion" value="{{ old('camion') }}" >
                                     <option>Seleccionar Camion</option>
                                     @foreach ($equipo_camion as $item)
                                         <option value="{{$item->id}}">{{$item->marca}} / {{$item->modelo}}</option>
@@ -43,10 +43,10 @@
                             </div>
                         </div>
 
-                        <div id="camionSubcontratadoDiv" style="display: none;">
+                        <div id="camionSubcontratadoDiv{{$cotizacion->id}}" style="display: none;">
                             <div class="col-12 form-group">
                                 <label for="name">Proveedor</label>
-                                <select class="form-select d-inline-block" id="viaje" name="viaje" value="{{ old('viaje') }}" onchange="mostrarDiv()">
+                                <select class="form-select d-inline-block" id="proveedor" name="proveedor" value="{{ old('proveedor') }}" >
                                     <option>Seleccionar Proveedor</option>
                                     @foreach ($proveedores as $item)
                                         <option value="{{$item->id}}">{{$item->nombre}}</option>
@@ -78,22 +78,22 @@
   </div>
 
 @section('datatable')
-  <script type="text/javascript">
-    function mostrarDiv() {
-        var viajeSelect = document.getElementById("viaje");
-        var camionPropioDiv = document.getElementById("camionPropioDiv");
-        var camionSubcontratadoDiv = document.getElementById("camionSubcontratadoDiv");
+    <script type="text/javascript">
+        function mostrarDiv(cotizacionId) {
+            var viajeSelect = document.getElementById("viaje" + cotizacionId);
+            var camionPropioDiv = document.getElementById("camionPropioDiv" + cotizacionId);
+            var camionSubcontratadoDiv = document.getElementById("camionSubcontratadoDiv" + cotizacionId);
 
-        if (viajeSelect.value === "Camion Propio") {
-            camionPropioDiv.style.display = "block";
-            camionSubcontratadoDiv.style.display = "none";
-        } else if (viajeSelect.value === "Camion Subcontratado") {
-            camionPropioDiv.style.display = "none";
-            camionSubcontratadoDiv.style.display = "block";
-        } else {
-            camionPropioDiv.style.display = "none";
-            camionSubcontratadoDiv.style.display = "none";
+            if (viajeSelect.value === "Camion Propio") {
+                camionPropioDiv.style.display = "block";
+                camionSubcontratadoDiv.style.display = "none";
+            } else if (viajeSelect.value === "Camion Subcontratado") {
+                camionPropioDiv.style.display = "none";
+                camionSubcontratadoDiv.style.display = "block";
+            } else {
+                camionPropioDiv.style.display = "none";
+                camionSubcontratadoDiv.style.display = "none";
+            }
         }
-    }
-  </script>
+    </script>
 @endsection
