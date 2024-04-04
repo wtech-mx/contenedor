@@ -20,20 +20,20 @@ return new class extends Migration
                 ->references('id')->on('clients')
                 ->inDelete('set null');
 
-            $table->text('origen');
-            $table->text('destino');
-            $table->text('tamano');
-            $table->text('peso_contenedor');
-            $table->float('precio_viaje');
-            $table->text('burreo');
-            $table->text('maniobra');
-            $table->text('estadia');
-            $table->text('otro');
-            $table->date('fecha_modulacion');
-            $table->date('fecha_entrega');
-            $table->float('iva');
-            $table->text('retencion');
-            $table->text('estatus');
+            $table->text('origen')->nullable();
+            $table->text('destino')->nullable();
+            $table->text('tamano')->nullable();
+            $table->text('peso_contenedor')->nullable();
+            $table->float('precio_viaje')->nullable();
+            $table->text('burreo')->nullable();
+            $table->text('maniobra')->nullable();
+            $table->text('estadia')->nullable();
+            $table->text('otro')->nullable();
+            $table->date('fecha_modulacion')->nullable();
+            $table->date('fecha_entrega')->nullable();
+            $table->float('iva')->nullable();
+            $table->text('retencion')->nullable();
+            $table->text('estatus')->nullable();
             $table->timestamps();
         });
     }

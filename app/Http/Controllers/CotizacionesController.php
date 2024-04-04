@@ -13,9 +13,13 @@ use Session;
 class CotizacionesController extends Controller
 {
     public function index(){
-        $cotizaciones = Cotizaciones::get();
 
-        return view('cotizaciones.index', compact('cotizaciones'));
+        $cotizaciones = Cotizaciones::where('estatus','=','Pendiente')->get();
+        $cotizaciones_aprovadas = Cotizaciones::where('estatus','=','Aprobada')->get();
+        $cotizaciones_canceladas = Cotizaciones::where('estatus','=','Cancelada')->get();
+
+
+        return view('cotizaciones.index', compact('cotizaciones','cotizaciones_aprovadas','cotizaciones_canceladas'));
     }
 
     public function create(){

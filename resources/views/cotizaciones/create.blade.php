@@ -95,7 +95,7 @@
                                         <label for="name">Origen</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                                <img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">
                                             </span>
                                             <input name="origen" id="origen" type="text" class="form-control">
                                         </div>
@@ -105,7 +105,7 @@
                                         <label for="name">Destino</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                                <img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px">
                                             </span>
                                             <input name="destino" id="destino" type="text" class="form-control">
                                         </div>
@@ -115,7 +115,7 @@
                                         <label for="name">Tamaño Contenedor</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                                <img src="{{ asset('img/icon/escala.png') }}" alt="" width="25px">
                                             </span>
                                             <input name="tamano" id="tamano" type="text" class="form-control">
                                         </div>
@@ -125,7 +125,7 @@
                                         <label for="name">Peso Contenedor</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                                <img src="{{ asset('img/icon/peso.png') }}" alt="" width="25px">
                                             </span>
                                             <input name="peso_contenedor" id="peso_contenedor" type="text" class="form-control">
                                         </div>
@@ -135,7 +135,7 @@
                                         <label for="name">Precio Viaje</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                                <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px">
                                             </span>
                                             <input name="precio_viaje" id="precio_viaje" type="number" class="form-control">
                                         </div>
@@ -145,7 +145,7 @@
                                         <label for="name">Burreo</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                                <img src="{{ asset('img/icon/burro.png') }}" alt="" width="25px">
                                             </span>
                                             <input name="burreo" id="burreo" type="text" class="form-control">
                                         </div>
@@ -155,7 +155,7 @@
                                         <label for="name">Maniobra</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                                <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px">
                                             </span>
                                             <input name="maniobra" id="maniobra" type="text" class="form-control">
                                         </div>
@@ -165,7 +165,7 @@
                                         <label for="name">Estadia</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                                <img src="{{ asset('img/icon/servidor-en-la-nube.png') }}" alt="" width="25px">
                                             </span>
                                             <input name="estadia" id="estadia" type="text" class="form-control">
                                         </div>
@@ -175,7 +175,7 @@
                                         <label for="name">Otros</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                                <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
                                             </span>
                                             <input name="otro" id="otro" type="text" class="form-control">
                                         </div>
@@ -185,7 +185,7 @@
                                         <label for="name">IVA</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                                <img src="{{ asset('img/icon/impuesto.png') }}" alt="" width="25px">
                                             </span>
                                             <input name="iva" id="iva" type="number" class="form-control">
                                         </div>
@@ -195,7 +195,7 @@
                                         <label for="name">Retención</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                                <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
                                             </span>
                                             <input name="retencion" id="retencion" type="text" class="form-control">
                                         </div>
