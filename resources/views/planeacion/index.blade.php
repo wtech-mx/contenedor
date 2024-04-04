@@ -22,15 +22,17 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4">
-                                <h3>Faltantes de Planeación</h3>
-                                @foreach ($cotizaciones as $cotizacion)
-
-                                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#planeacionModal{{$cotizacion->id}}">
-                                       Num. Contenedor: {{$cotizacion->DocCotizacion->num_contenedor}}
-                                    </button>
-
-                                    @include('planeacion.edit')
-                                @endforeach
+                                <h4>Faltantes de Planeación</h4>
+                                <div class="row">
+                                    @foreach ($cotizaciones as $cotizacion)
+                                        <div class="col-6">
+                                            <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#planeacionModal{{$cotizacion->id}}">
+                                                Contenedor # {{$cotizacion->DocCotizacion->num_contenedor}}
+                                            </button>
+                                        </div>
+                                        @include('planeacion.edit')
+                                    @endforeach
+                                </div>
                             </div>
 
                             <div class="col-8">
@@ -122,7 +124,7 @@
                 var cotizacionId = $(this).data('cotizacion-id'); // Obtener el ID de la cotización del atributo data
                 buscar_clientes(cotizacionId);
             });
-            
+
             function buscar_clientes(cotizacionId) {
                 $('#loadingSpinner').show();
 
