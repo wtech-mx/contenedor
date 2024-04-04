@@ -32,4 +32,9 @@ class Cotizaciones extends Model
     {
         return $this->belongsTo(Client::class, 'id_cliente');
     }
+
+    public function DocCotizacion()
+    {
+        return $this->hasOne(DocumCotizacion::class, 'id_cotizacion');
+    }
 }

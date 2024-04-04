@@ -122,6 +122,10 @@
             }
         });
     </script>
+    
+    <script>
+        var token = $('meta[name="csrf-token"]').attr('content');
+    </script>
   @yield('datatable')
 
   @yield('fullcalendar')

@@ -12,36 +12,59 @@
                 <input type="hidden" name="_method" value="PATCH">
                 <div class="modal-body">
                     <div class="row">
+                        <input name="num_contenedor" value="{{$cotizacion->DocCotizacion->id}}" type="text" style="display: none">
+                        <div class="form-group">
+                            <label for="name">Num. Contenedor</label>
+                            <input id="num_contenedor" value="{{$cotizacion->DocCotizacion->num_contenedor}}" type="text" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Num. autorización</label>
+                            <input id="num_contenedor" value="{{$cotizacion->DocCotizacion->num_autorizacion}}" type="text" class="form-control" readonly>
+                        </div>
+
                         <div class="form-group">
                             <label for="name">Viaje</label>
                             <select class="form-select d-inline-block" id="viaje{{$cotizacion->id}}" name="viaje" value="{{ old('viaje') }}" onchange="mostrarDiv('{{$cotizacion->id}}')">
-                                <option>Seleccionar Estatus</option>
+                                <option>Seleccionar tipo</option>
                                 <option value="Camion Propio">Camion Propio</option>
                                 <option value="Camion Subcontratado">Camion Subcontratado</option>
                             </select>
                         </div>
 
-                        <div id="camionPropioDiv{{$cotizacion->id}}" style="display: none;">
-                            <div class="col-12 form-group">
-                                <label for="name">Chasis</label>
-                                <select class="form-select d-inline-block" id="chasis" name="chasis" value="{{ old('chasis') }}" >
-                                    <option>Seleccionar Chasis</option>
-                                    @foreach ($equipo_chasis as $item)
-                                        <option value="{{$item->id}}">{{$item->marca}} / {{$item->modelo}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
 
-                            <div class="col-12 form-group">
-                                <label for="name">Camion</label>
-                                <select class="form-select d-inline-block" id="camion" name="camion" value="{{ old('camion') }}" >
-                                    <option>Seleccionar Camion</option>
-                                    @foreach ($equipo_camion as $item)
-                                        <option value="{{$item->id}}">{{$item->marca}} / {{$item->modelo}}</option>
-                                    @endforeach
-                                </select>
+                        <div class="col-4 form-group">
+                            <label for="name">Fecha inicio</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
+                                </span>
+                                <input name="fecha_inicio" id="fecha_inicio_{{$cotizacion->id}}" type="date" class="form-control">
                             </div>
                         </div>
+
+
+                        <div class="col-4 form-group">
+                            <label for="name">Fecha fin</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
+                                </span>
+                                <input name="fecha_fin" id="fecha_fin_{{$cotizacion->id}}" type="date" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-4 form-group">
+                            <label for="name">.</label>
+                            <div class="input-group mb-3">
+                                <button class="btn" type="button" id="btn_clientes_search{{$cotizacion->id}}" style="">
+                                    Buscar Disponibilidad
+                                </button>
+                            </div>
+                        </div>
+
+                            <div id="resultado_equipos{{$cotizacion->id}}" class="row"></div>
+
 
                         <div id="camionSubcontratadoDiv{{$cotizacion->id}}" style="display: none;">
                             <div class="col-12 form-group">
@@ -64,6 +87,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -75,25 +99,56 @@
 
       </div>
     </div>
-  </div>
+</div>
 
 @section('datatable')
     <script type="text/javascript">
         function mostrarDiv(cotizacionId) {
             var viajeSelect = document.getElementById("viaje" + cotizacionId);
-            var camionPropioDiv = document.getElementById("camionPropioDiv" + cotizacionId);
             var camionSubcontratadoDiv = document.getElementById("camionSubcontratadoDiv" + cotizacionId);
 
-            if (viajeSelect.value === "Camion Propio") {
-                camionPropioDiv.style.display = "block";
-                camionSubcontratadoDiv.style.display = "none";
-            } else if (viajeSelect.value === "Camion Subcontratado") {
-                camionPropioDiv.style.display = "none";
+            if (viajeSelect.value === "Camion Subcontratado") {
                 camionSubcontratadoDiv.style.display = "block";
-            } else {
-                camionPropioDiv.style.display = "none";
-                camionSubcontratadoDiv.style.display = "none";
             }
         }
+
+        $(document).ready(function() {
+
+            $('[id^="btn_clientes_search"]').click(function() {
+                var cotizacionId = $(this).data('cotizacion-id');
+                buscar_clientes(cotizacionId);
+            });
+
+            function buscar_clientes(cotizacionId) {
+                var fecha_inicio = $('#fecha_inicio_' + cotizacionId).val();
+                console.log('fecha_inicio:', fecha_inicio);
+                var fecha_fin = $('#fecha_fin_' + cotizacionId).val();
+
+                $.ajax({
+                    url: '{{ route('equipos.planeaciones') }}',
+                    type: 'get',
+                    data: {
+                        'fecha_inicio': fecha_inicio,
+                        'fecha_fin': fecha_fin,
+                        '_token': token // Agregar el token CSRF a los datos enviados
+                    },
+                    success: function(data) {
+                        console.log('fecha_inicio:', fecha_inicio);
+                        $('#resultado_equipos' + cotizacionId).html(data); // Actualiza la sección con los datos del servicio
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    },
+                    complete: function() {
+                        // Ocultar el spinner cuando la búsqueda esté completa
+                        console.log(`clear = ${result}`);
+                    }
+
+                });
+
+            }
+
+        });
+
     </script>
 @endsection

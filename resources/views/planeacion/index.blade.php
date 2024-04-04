@@ -24,8 +24,9 @@
                             <div class="col-4">
                                 <h3>Faltantes de Planeación</h3>
                                 @foreach ($cotizaciones as $cotizacion)
+
                                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#planeacionModal{{$cotizacion->id}}">
-                                        <img src="{{ asset('img/icon/camion.png') }}" alt="" width="25px">
+                                       Num. Contenedor: {{$cotizacion->DocCotizacion->num_contenedor}}
                                     </button>
 
                                     @include('planeacion.edit')
