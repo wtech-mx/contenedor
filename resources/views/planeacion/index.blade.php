@@ -104,3 +104,62 @@
         }
     </script>
 @endsection
+
+@section('datatable')
+    <script type="text/javascript">
+
+        function mostrarDiv(cotizacionId) {
+            var viajeSelect = document.getElementById("viaje" + cotizacionId);
+            var camionSubcontratadoDiv = document.getElementById("camionSubcontratadoDiv" + cotizacionId);
+
+            if (viajeSelect.value === "Camion Subcontratado") {
+                camionSubcontratadoDiv.style.display = "block";
+            }
+        }
+
+        $(document).ready(function() {
+            $('[id^="btn_clientes_search"]').click(function() {
+                var cotizacionId = $(this).data('cotizacion-id'); // Obtener el ID de la cotización del atributo data
+                buscar_clientes(cotizacionId);
+            });
+
+
+
+
+            function buscar_clientes(cotizacionId) {
+                console.log(cotizacionId);
+
+                var fecha_inicio = $('#fecha_inicio_' + cotizacionId).val();
+                console.log('fecha_inicio:', fecha_inicio);
+                var fecha_fin = $('#fecha_fin_' + cotizacionId).val();
+                console.log('fecha_fin_:', fecha_fin);
+
+                $.ajax({
+                    url: '{{ route('equipos.planeaciones') }}',
+                    type: 'get',
+                    data: {
+                        'fecha_inicio': fecha_inicio,
+                        'fecha_fin': fecha_fin,
+                        '_token': token // Agregar el token CSRF a los datos enviados
+                    },
+                    success: function(data) {
+                        $('#resultado_equipos' + cotizacionId).html(data); // Actualiza la sección con los datos del servicio
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    },
+                    complete: function() {
+                        // Ocultar el spinner cuando la búsqueda esté completa
+                        console.log(`clear = ${result}`);
+                    }
+
+                });
+
+            }
+
+
+
+        });
+
+    </script>
+@endsection

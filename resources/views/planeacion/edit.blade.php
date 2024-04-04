@@ -39,7 +39,7 @@
                                 <span class="input-group-text" id="basic-addon1">
                                     <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
                                 </span>
-                                <input name="fecha_inicio" id="fecha_inicio" type="date" class="form-control">
+                                <input name="fecha_inicio" id="fecha_inicio_{{$cotizacion->id}}" type="date" class="form-control">
                             </div>
                         </div>
 
@@ -50,16 +50,17 @@
                                 <span class="input-group-text" id="basic-addon1">
                                     <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
                                 </span>
-                                <input name="fecha_fin" id="fecha_fin" type="date" class="form-control">
+                                <input name="fecha_fin" id="fecha_fin_{{$cotizacion->id}}" type="date" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-4 form-group">
                             <label for="name">.</label>
                             <div class="input-group mb-3">
-                                <button class="btn" type="button" id="btn_clientes_search" style="">
+                                <button class="btn" type="button" id="btn_clientes_search{{$cotizacion->id}}" data-cotizacion-id="{{$cotizacion->id}}" style="">
                                     Buscar Disponibilidad
                                 </button>
+
                             </div>
                         </div>
 
@@ -100,54 +101,3 @@
       </div>
     </div>
 </div>
-
-@section('datatable')
-    <script type="text/javascript">
-        function mostrarDiv(cotizacionId) {
-            var viajeSelect = document.getElementById("viaje" + cotizacionId);
-            var camionSubcontratadoDiv = document.getElementById("camionSubcontratadoDiv" + cotizacionId);
-
-            if (viajeSelect.value === "Camion Subcontratado") {
-                camionSubcontratadoDiv.style.display = "block";
-            }
-        }
-
-        $(document).ready(function() {
-
-            $('#btn_clientes_search').click(function() {
-                var cotizacionId = $(this).data('cotizacion-id');
-                buscar_clientes(cotizacionId);
-            });
-
-            function buscar_clientes(cotizacionId) {
-                var fecha_inicio = $('#fecha_inicio').val();
-                console.log('fecha_inicio:', fecha_inicio);
-                var fecha_fin = $('#fecha_fin').val();
-
-                $.ajax({
-                    url: '{{ route('equipos.planeaciones') }}',
-                    type: 'get',
-                    data: {
-                        'fecha_inicio': fecha_inicio,
-                        'fecha_fin': fecha_fin,
-                        '_token': token // Agregar el token CSRF a los datos enviados
-                    },
-                    success: function(data) {
-                        console.log('fecha_inicio:', fecha_inicio);
-                        $('#resultado_equipos').html(data); // Actualiza la sección con los datos del servicio
-                    },
-                    error: function(error) {
-                    console.log(error);
-                },
-                    complete: function() {
-                        // Ocultar el spinner cuando la búsqueda esté completa
-                        console.log(`clear = ${result}`);
-                    }
-
-                });
-
-            }
-
-        });
-    </script>
-@endsection
