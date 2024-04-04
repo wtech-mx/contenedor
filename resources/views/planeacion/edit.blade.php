@@ -11,19 +11,22 @@
                 @csrf
                 <div class="modal-body">
                     <div class="row">
-                        <input name="num_contenedor" value="{{$cotizacion->DocCotizacion->id}}" type="text" style="display: none">
-                        <input name="cotizacion" value="{{$cotizacion->DocCotizacion->id_cotizacion}}" type="text" style="display: none">
-                        <div class="form-group">
-                            <label for="name">Num. Contenedor</label>
-                            <input id="num_contenedor" value="{{$cotizacion->DocCotizacion->num_contenedor}}" type="text" class="form-control" readonly>
+
+
+                        <input name="num_contenedor" value="{{$cotizacion->DocCotizacion->id}}" type="hidden">
+                        <input name="cotizacion" value="{{$cotizacion->DocCotizacion->id_cotizacion}}" type="hidden">
+
+                        <div class="form-group col-6">
+                                <label for="name">Num. Contenedor</label>
+                                <input id="num_contenedor" value="{{$cotizacion->DocCotizacion->num_contenedor}}" type="text" class="form-control" readonly>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group col-6">
                             <label for="name">Num. autorización</label>
                             <input id="num_contenedor" value="{{$cotizacion->DocCotizacion->num_autorizacion}}" type="text" class="form-control" readonly>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group col-12">
                             <label for="name">Viaje</label>
                             <select class="form-select d-inline-block" id="viaje{{$cotizacion->id}}" name="viaje" value="{{ old('viaje') }}" onchange="mostrarDiv('{{$cotizacion->id}}')">
                                 <option>Seleccionar tipo</option>
@@ -33,28 +36,28 @@
                         </div>
 
 
-                        <div class="col-4 form-group">
+                        <div class="col-6 form-group">
                             <label for="name">Fecha inicio</label>
-                            <div class="input-group mb-3">
+                            <div class="input-group">
                                 <span class="input-group-text" id="basic-addon1">
                                     <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
                                 </span>
-                                <input name="fecha_inicio" id="fecha_inicio_{{$cotizacion->id}}" type="date" class="form-control">
+                                <input name="fecha_inicio" id="fecha_inicio_{{$cotizacion->id}}" type="date" class="form-control" value="{{ date('Y-m-d')}}">
                             </div>
                         </div>
 
 
-                        <div class="col-4 form-group">
+                        <div class="col-6 form-group">
                             <label for="name">Fecha fin</label>
-                            <div class="input-group mb-3">
+                            <div class="input-group">
                                 <span class="input-group-text" id="basic-addon1">
                                     <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
                                 </span>
-                                <input name="fecha_fin" id="fecha_fin_{{$cotizacion->id}}" type="date" class="form-control">
+                                <input name="fecha_fin" id="fecha_fin_{{$cotizacion->id}}" type="date" class="form-control" value="{{ date('Y-m-d')}}">
                             </div>
                         </div>
 
-                        <div class="col-4 form-group">
+                        <div class="col-12 form-group">
                             <label for="name">.</label>
                             <div class="input-group mb-3">
                                 <button class="btn" type="button" id="btn_clientes_search{{$cotizacion->id}}" data-cotizacion-id="{{$cotizacion->id}}" style="">
@@ -64,7 +67,15 @@
                             </div>
                         </div>
 
-                            <div id="resultado_equipos" class="row"></div>
+                        <div class="form-group col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3 px-4 w-100">
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border" role="status" id="loadingSpinner" style="display:none">
+                                     <span class="visually-hidden">Loading...</span>
+                                 </div>
+                             </div>
+                         </div>
+
+                            <div id="resultado_equipos{{ $cotizacion->id }}" class="row"></div>
 
 
                         <div id="camionSubcontratadoDiv{{$cotizacion->id}}" style="display: none;">

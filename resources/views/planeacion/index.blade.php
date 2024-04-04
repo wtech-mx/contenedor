@@ -122,12 +122,9 @@
                 var cotizacionId = $(this).data('cotizacion-id'); // Obtener el ID de la cotización del atributo data
                 buscar_clientes(cotizacionId);
             });
-
-
-
-
+            
             function buscar_clientes(cotizacionId) {
-                console.log(cotizacionId);
+                $('#loadingSpinner').show();
 
                 var fecha_inicio = $('#fecha_inicio_' + cotizacionId).val();
                 console.log('fecha_inicio:', fecha_inicio);
@@ -150,7 +147,8 @@
                     },
                     complete: function() {
                         // Ocultar el spinner cuando la búsqueda esté completa
-                        console.log(`clear = ${result}`);
+                        $('#loadingSpinner').hide();
+
                     }
 
                 });
