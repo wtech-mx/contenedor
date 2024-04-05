@@ -11,12 +11,10 @@
           <p id="eventoDescripcion"></p>
           <p id="eventoFechaStart"></p>
           <p id="eventoFechaEnd"></p>
+          <a id="urlId" class="btn btn-primary" target="_blank">Ver Detalles</a>
+
         </div>
         <div class="modal-footer">
-            <a type="button" class="btn" id="btnCotizaciones">
-                <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
-            </a>
-
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         </div>
       </div>

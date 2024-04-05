@@ -26,7 +26,7 @@
 
   <!-- CSS Files -->
   <link id="pagestyle" href="{{ asset('assets/css/argon-dashboard.css?v=2.0.4')}}" rel="stylesheet" />
-  <link rel="stylesheet" href="{{ asset('assets/css/preloader.css')}}">
+  {{-- <link rel="stylesheet" href="{{ asset('assets/css/preloader.css')}}"> --}}
 
 
    {{-- <link src="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -103,26 +103,26 @@
   <script src="{{ asset('assets/js/plugins/jkanban/jkanban.js')}}"></script>
   <script src="{{ asset('assets/js/plugins/chartjs.min.js')}}"></script>
   <script src="{{ asset('assets/js/argon-dashboard.min.js')}}"></script>
-  <script src="{{ asset('assets/js/ConectorJavaScript.js')}}"></script>
+  {{-- <script src="{{ asset('assets/js/ConectorJavaScript.js')}}"></script> --}}
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src="{{ asset('assets/js/preloader.js')}}"></script>
+  {{-- <script src="{{ asset('assets/js/preloader.js')}}"></script> --}}
 
     <script>
-        const formContainer = document.getElementById('form-container');
-        const openFormButton = document.getElementById('open-form');
+        // const formContainer = document.getElementById('form-container');
+        // const openFormButton = document.getElementById('open-form');
 
-        openFormButton.addEventListener('click', () => {
-            formContainer.style.display = 'block';
-        });
+        // openFormButton.addEventListener('click', () => {
+        //     formContainer.style.display = 'block';
+        // });
 
-        formContainer.addEventListener('click', (event) => {
-            if (event.target === formContainer) {
-                formContainer.style.display = 'none';
-            }
-        });
+        // formContainer.addEventListener('click', (event) => {
+        //     if (event.target === formContainer) {
+        //         formContainer.style.display = 'none';
+        //     }
+        // });
     </script>
-    
+
     <script>
         var token = $('meta[name="csrf-token"]').attr('content');
     </script>

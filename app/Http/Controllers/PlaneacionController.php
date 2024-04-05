@@ -25,6 +25,7 @@ class PlaneacionController extends Controller
         $appointments = Asignaciones::get();
 
         foreach ($appointments as $appointment) {
+
             if($appointment->id_operador == NULL){
                 $description = 'Proveedor: ' . $appointment->Proveedor->nombre . ' - ' . $appointment->Proveedor->telefono . '<br>' . 'Costo viaje: ' . $appointment->precio;
             }else{
@@ -38,18 +39,12 @@ class PlaneacionController extends Controller
                 'description' => $description,
                 'start' => $appointment->fecha_inicio,
                 'end' => $appointment->fecha_fin,
+                'urlId' => $appointment->Contenedor->id_cotizacion,
             ];
 
-            // Define la URL de la ruta dentro del bucle para evitar errores cuando no hay asignaciones
-            $urlCotizaciones = route('edit.cotizaciones',  $appointment->Contenedor->id_cotizacion);
         }
 
-        // Verifica si hay algún $appointment antes de asignar $urlCotizaciones
-        if (!isset($urlCotizaciones)) {
-            $urlCotizaciones = null; // O asigna un valor predeterminado si prefieres
-        }
-
-        return view('planeacion.index', compact('equipos', 'operadores', 'events', 'urlCotizaciones', 'cotizaciones', 'proveedores'));
+        return view('planeacion.index', compact('equipos', 'operadores', 'events',  'cotizaciones', 'proveedores'));
     }
 
     public function equipos(Request $request){

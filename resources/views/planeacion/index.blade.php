@@ -21,7 +21,8 @@
 
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-4">
+
+                            <div class="col-12 col-md-12 col-lg-4">
                                 <h4>Faltantes de Planeación</h4>
                                 <div class="row">
                                     @foreach ($cotizaciones as $cotizacion)
@@ -35,7 +36,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-8">
+                            <div class="col-12 col-md-12 col-lg-8">
                                 <h3>Calendario</h3>
                                 <div id="calendar"></div>
                             </div>
@@ -46,7 +47,9 @@
             </div>
         </div>
     </div>
+
     @include('planeacion.modal')
+
 @endsection
 
 @section('fullcalendar')
@@ -78,14 +81,7 @@
                     document.getElementById('eventoDescripcion').innerText = info.event.extendedProps.description;
                     document.getElementById('eventoFechaStart').innerText = 'Fecha inicio: ' + formatDate(info.event.start);
                     document.getElementById('eventoFechaEnd').innerText = 'Fecha fin: ' + formatDate(info.event.end);
-
-                    // Agregar el botón de cotizaciones al modal
-                    var btnCotizaciones = document.createElement('a');
-                    btnCotizaciones.setAttribute('type', 'button');
-                    btnCotizaciones.setAttribute('class', 'btn');
-                    btnCotizaciones.setAttribute('href', '{{ $urlCotizaciones }}'); // Usar la variable PHP
-                    btnCotizaciones.innerHTML = '<img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px"> Cotizaciones';
-                    document.querySelector('#eventoModal .modal-body').appendChild(btnCotizaciones);
+                    document.getElementById('urlId').setAttribute('href', 'cotizaciones/edit/' + info.event.extendedProps.urlId);
 
                     // Mostrar el modal
                     var eventoModal = new bootstrap.Modal(document.getElementById('eventoModal'));
