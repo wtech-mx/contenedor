@@ -26,27 +26,34 @@
                                 <h3 class="mb-5">Datos de cotizacion</h3>
                                 <div class="row">
                                     <div class="col-6">
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/pausa.png') }}" alt="" width="25px"> <b>Cliente: </b>{{$cotizacion->Cliente->nombre}}</p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px"> <b>Origen: </b>{{$cotizacion->origen}}</p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px"> <b>Destino: </b>{{$cotizacion->destino}}</p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/burro.png') }}" alt="" width="25px"> <b>Burreo: </b>{{$cotizacion->burreo}}</p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/servidor-en-la-nube.png') }}" alt="" width="25px"> <b>Estadia: </b>{{$cotizacion->estadia}}</p>
+                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/pausa.png') }}" alt="" width="25px"> <b>Cliente: </b>
+                                            <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_cliente" name="id_cliente" value="{{ old('id_cliente') }}">
+                                                <option value="{{$cotizacion->id_cliente}}">{{$cotizacion->Cliente->nombre}} / {{$cotizacion->Cliente->telefono}}</option>
+                                                @foreach ($clientes as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->nombre }} / {{ $item->telefono }}</option>
+                                                @endforeach
+                                            </select>
+                                        </p>
+                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px"> <b>Origen: </b><input name="cot_origen" id="cot_origen" type="text" class="form-control" value="{{$cotizacion->origen}}"></p>
+                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px"> <b>Destino: </b><input name="cot_destino" id="cot_destino" type="text" class="form-control" value="{{$cotizacion->destino}}"></p>
+                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/burro.png') }}" alt="" width="25px"> <b>Burreo: </b><input name="cot_burreo" id="cot_burreo" type="text" class="form-control" value="{{$cotizacion->burreo}}"></p>
+                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/servidor-en-la-nube.png') }}" alt="" width="25px"> <b>Estadia: </b><input name="cot_estadia" id="cot_estadia" type="text" class="form-control" value="{{$cotizacion->estadia}}"></p>
                                         <p for="name" class="mb-4"> <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px"> <b>Fecha Modulación: </b>
-                                            {{ \Carbon\Carbon::parse($cotizacion->fecha_modulacion)->isoFormat('D MMMM YYYY') }}
+                                            <input name="cot_fecha_modulacion" id="cot_fecha_modulacion" type="date" class="form-control" value="{{$cotizacion->fecha_modulacion}}">
                                         </p>
                                         <p for="name" class="mb-4"> <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px"> <b>Fecha Entrega: </b>
-                                            {{ \Carbon\Carbon::parse($cotizacion->fecha_entrega)->isoFormat('D MMMM YYYY') }}
+                                            <input name="cot_fecha_entrega" id="cot_fecha_entrega" type="date" class="form-control" value="{{$cotizacion->fecha_entrega}}">
                                         </p>
                                     </div>
 
                                     <div class="col-6">
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/escala.png') }}" alt="" width="25px"> <b>Tamaño Contenedor: </b>{{$cotizacion->tamano}}</p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/peso.png') }}" alt="" width="25px"> <b>Peso Contenedor: </b>{{$cotizacion->peso_contenedor}}</p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px"> <b>Maniobra: </b>{{$cotizacion->maniobra}}</p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px"> <b>Otro: </b>{{$cotizacion->otro}}</p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px"> <b>Precio Viaje: </b>$ {{ number_format($cotizacion->precio_viaje, 2, '.', ','); }} </p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/impuesto.png') }}" alt="" width="25px"> <b>IVA: </b>$ {{ number_format($cotizacion->iva, 2, '.', ','); }}</p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/pausa.png') }}" alt="" width="25px"> <b>Retencion: </b>{{$cotizacion->retencion}}</p>
+                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/escala.png') }}" alt="" width="25px"> <b>Tamaño Contenedor: </b><input name="cot_tamano" id="cot_tamano" type="text" class="form-control" value="{{$cotizacion->tamano}}"></p>
+                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/peso.png') }}" alt="" width="25px"> <b>Peso Contenedor: </b><input name="cot_peso_contenedor" id="cot_peso_contenedor" type="text" class="form-control" value="{{$cotizacion->peso_contenedor}}"></p>
+                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px"> <b>Maniobra: </b><input name="cot_maniobra" id="cot_maniobra" type="text" class="form-control" value="{{$cotizacion->maniobra}}"></p>
+                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px"> <b>Otro: </b><input name="cot_otro" id="cot_otro" type="text" class="form-control" value="{{$cotizacion->otro}}"></p>
+                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px"> <b>Precio Viaje: </b><input name="cot_precio_viaje" id="cot_precio_viaje" type="text" class="form-control" value="{{$cotizacion->precio_viaje}}"></p>
+                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/impuesto.png') }}" alt="" width="25px"> <b>IVA: </b><input name="cot_iva" id="cot_iva" type="text" class="form-control" value="{{$cotizacion->iva}}"></p>
+                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/pausa.png') }}" alt="" width="25px"> <b>Retencion: </b><input name="cot_retencion" id="cot_retencion" type="text" class="form-control" value="{{$cotizacion->retencion}}"></p>
                                     </div>
                                 </div>
 

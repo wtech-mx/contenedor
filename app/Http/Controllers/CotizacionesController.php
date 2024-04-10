@@ -92,8 +92,9 @@ class CotizacionesController extends Controller
     public function edit($id){
         $cotizacion = Cotizaciones::where('id', '=', $id)->first();
         $documentacion = DocumCotizacion::where('id_cotizacion', '=', $cotizacion->id)->first();
+        $clientes = Client::get();
 
-        return view('cotizaciones.edit', compact('cotizacion', 'documentacion'));
+        return view('cotizaciones.edit', compact('cotizacion', 'documentacion', 'clientes'));
     }
 
     public function update(Request $request, $id){
@@ -119,6 +120,22 @@ class CotizacionesController extends Controller
             $cotizaciones->doda = $fileName;
         }
 
+        $cotizaciones->update();
+
+        $cotizaciones = Cotizaciones::where('id', '=', $id)->first();
+        $cotizaciones->id_cliente = $request->get('id_cliente');
+        $cotizaciones->origen = $request->get('cot_origen');
+        $cotizaciones->destino = $request->get('cot_destino');
+        $cotizaciones->burreo = $request->get('cot_burreo');
+        $cotizaciones->estadia = $request->get('cot_estadia');
+        $cotizaciones->fecha_modulacion = $request->get('cot_fecha_modulacion');
+        $cotizaciones->fecha_entrega = $request->get('cot_fecha_entrega');
+        $cotizaciones->tamano = $request->get('cot_tamano');
+        $cotizaciones->peso_contenedor = $request->get('cot_peso_contenedor');
+        $cotizaciones->maniobra = $request->get('cot_maniobra');
+        $cotizaciones->otro = $request->get('cot_otro');
+        $cotizaciones->iva = $request->get('cot_iva');
+        $cotizaciones->retencion = $request->get('cot_retencion');
         $cotizaciones->update();
 
         Session::flash('edit', 'Se ha editado sus datos con exito');

@@ -122,6 +122,16 @@
                                     </div>
 
                                     <div class="col-3 form-group">
+                                        <label for="name">Peso Reglamentario</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/perdida-de-peso.png') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="peso_reglamentario" id="peso_reglamentario" type="number" class="form-control" value="22">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3 form-group">
                                         <label for="name">Peso Contenedor</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
@@ -137,17 +147,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/pesa-rusa.png') }}" alt="" width="25px">
                                             </span>
-                                            <input name="sobrepeso" id="sobrepeso" type="text" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-3 form-group">
-                                        <label for="name">peso Reglamentario</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/perdida-de-peso.png') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="peso_reglamentario" id="peso_reglamentario" type="text" class="form-control">
+                                            <input name="sobrepeso" id="sobrepeso" type="text" class="form-control" readonly>
                                         </div>
                                     </div>
 
@@ -292,7 +292,31 @@
             document.getElementById('total').value = totalFormateado;
         }
 
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtener elementos del DOM
+            var pesoReglamentarioInput = document.getElementById('peso_reglamentario');
+            var pesoContenedorInput = document.getElementById('peso_contenedor');
+            var sobrepesoInput = document.getElementById('sobrepeso');
 
+            // Agregar evento de cambio a los inputs
+            pesoReglamentarioInput.addEventListener('input', calcularSobrepeso);
+            pesoContenedorInput.addEventListener('input', calcularSobrepeso);
+
+            // Función para calcular el sobrepeso
+            function calcularSobrepeso() {
+                var pesoReglamentario = parseInt(pesoReglamentarioInput.value) || 0;
+                var pesoContenedor = parseInt(pesoContenedorInput.value) || 0;
+
+                // Calcular sobrepeso
+                var sobrepeso = Math.max(pesoContenedor - pesoReglamentario, 0);
+
+                // Mostrar sobrepeso en el input correspondiente
+                sobrepesoInput.value = sobrepeso;
+            }
+
+            // Calcular sobrepeso inicialmente al cargar la página
+            calcularSobrepeso();
+        });
     </script>
 
 @endsection
