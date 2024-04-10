@@ -111,7 +111,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-6 form-group">
+                                    <div class="col-3 form-group">
                                         <label for="name">Tamaño Contenedor</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
@@ -121,7 +121,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-6 form-group">
+                                    <div class="col-3 form-group">
                                         <label for="name">Peso Contenedor</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
@@ -132,12 +132,32 @@
                                     </div>
 
                                     <div class="col-3 form-group">
+                                        <label for="name">Sobrepeso</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/pesa-rusa.png') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="sobrepeso" id="sobrepeso" type="text" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3 form-group">
+                                        <label for="name">peso Reglamentario</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/perdida-de-peso.png') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="peso_reglamentario" id="peso_reglamentario" type="text" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3 form-group">
                                         <label for="name">Precio Viaje</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px">
                                             </span>
-                                            <input name="precio_viaje" id="precio_viaje" type="number" class="form-control">
+                                            <input name="precio_viaje" id="precio_viaje" type="text" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()">
                                         </div>
                                     </div>
 
@@ -147,7 +167,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/burro.png') }}" alt="" width="25px">
                                             </span>
-                                            <input name="burreo" id="burreo" type="text" class="form-control">
+                                            <input name="burreo" id="burreo" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()">
                                         </div>
                                     </div>
 
@@ -157,7 +177,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px">
                                             </span>
-                                            <input name="maniobra" id="maniobra" type="text" class="form-control">
+                                            <input name="maniobra" id="maniobra" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()">
                                         </div>
                                     </div>
 
@@ -167,7 +187,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/servidor-en-la-nube.png') }}" alt="" width="25px">
                                             </span>
-                                            <input name="estadia" id="estadia" type="text" class="form-control">
+                                            <input name="estadia" id="estadia" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()">
                                         </div>
                                     </div>
 
@@ -177,7 +197,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
                                             </span>
-                                            <input name="otro" id="otro" type="text" class="form-control">
+                                            <input name="otro" id="otro" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()">
                                         </div>
                                     </div>
 
@@ -187,7 +207,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/impuesto.png') }}" alt="" width="25px">
                                             </span>
-                                            <input name="iva" id="iva" type="number" class="form-control">
+                                            <input name="iva" id="iva" type="number" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()">
                                         </div>
                                     </div>
 
@@ -197,7 +217,16 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
                                             </span>
-                                            <input name="retencion" id="retencion" type="text" class="form-control">
+                                            <input name="retencion" id="retencion" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()">
+                                        </div>
+                                    </div>
+                                    <div class="col-4 form-group">
+                                        <label for="name">Total</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="total" id="total" type="float" class="form-control">
                                         </div>
                                     </div>
 
@@ -235,6 +264,7 @@
         </div>
     </div>
 @endsection
+
 @section('select2')
     <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js')}}"></script>
     <script src="{{ asset('assets/vendor/select2/dist/js/select2.min.js')}}"></script>
@@ -243,5 +273,26 @@
         $(document).ready(function() {
             $('.cliente').select2();
         });
+
+        function calcularTotal() {
+            const precio_viaje = parseFloat(document.getElementById('precio_viaje').value.replace(/,/g, '')) || 0;
+            const burreo = parseFloat(document.getElementById('burreo').value.replace(/,/g, '')) || 0;
+            const retencion = parseFloat(document.getElementById('retencion').value.replace(/,/g, '')) || 0;
+            const iva = parseFloat(document.getElementById('iva').value.replace(/,/g, '')) || 0;
+            const otro = parseFloat(document.getElementById('otro').value.replace(/,/g, '')) || 0;
+            const estadia = parseFloat(document.getElementById('estadia').value.replace(/,/g, '')) || 0;
+            const maniobra = parseFloat(document.getElementById('maniobra').value.replace(/,/g, '')) || 0;
+
+            // Otros campos de entrada
+            const total = precio_viaje + burreo + retencion + iva + otro + estadia + maniobra ; // Suma de todos los campos
+
+            // Formatear el total con comas
+            const totalFormateado = total.toLocaleString('en-US');
+
+            document.getElementById('total').value = totalFormateado;
+        }
+
+
     </script>
+
 @endsection

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-   Crear
+   Editar Cotizacion
 @endsection
 
 @section('content')
@@ -44,8 +44,8 @@
                                         <p for="name" class="mb-4"> <img src="{{ asset('img/icon/peso.png') }}" alt="" width="25px"> <b>Peso Contenedor: </b>{{$cotizacion->peso_contenedor}}</p>
                                         <p for="name" class="mb-4"> <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px"> <b>Maniobra: </b>{{$cotizacion->maniobra}}</p>
                                         <p for="name" class="mb-4"> <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px"> <b>Otro: </b>{{$cotizacion->otro}}</p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/bolsa-de-dinero.png') }}" alt="" width="25px"> <b>Precio Viaje: </b>{{$cotizacion->precio_viaje}}</p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/impuesto.png') }}" alt="" width="25px"> <b>IVA: </b>{{$cotizacion->iva}}</p>
+                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px"> <b>Precio Viaje: </b>$ {{ number_format($cotizacion->precio_viaje, 2, '.', ','); }} </p>
+                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/impuesto.png') }}" alt="" width="25px"> <b>IVA: </b>$ {{ number_format($cotizacion->iva, 2, '.', ','); }}</p>
                                         <p for="name" class="mb-4"> <img src="{{ asset('img/icon/pausa.png') }}" alt="" width="25px"> <b>Retencion: </b>{{$cotizacion->retencion}}</p>
                                     </div>
                                 </div>

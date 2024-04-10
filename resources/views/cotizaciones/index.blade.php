@@ -63,7 +63,7 @@
                                                         <td>{{$cotizacion->Cliente->nombre}}</td>
                                                         <td>{{$cotizacion->origen}}</td>
                                                         <td>{{$cotizacion->destino}}</td>
-                                                        <td>${{$cotizacion->precio_viaje}}</td>
+                                                        <td> ${{ number_format($cotizacion->precio_viaje, 2, '.', ','); }} </td>
                                                         <td>
                                                             @if ($cotizacion->estatus == 'Pendiente')
                                                                 <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
@@ -102,6 +102,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px">Cliente</th>
+                                            <th><img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="25px">Contenedor</th>
                                             <th><img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">Origen</th>
                                             <th><img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px">Destino</th>
                                             <th><img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px">Precio Viaje</th>
@@ -115,9 +116,11 @@
                                                 <tr>
                                                     <td>{{$cotizacion->id}}</td>
                                                     <td>{{$cotizacion->Cliente->nombre}}</td>
+                                                    <td>#{{$cotizacion->DocCotizacion->num_contenedor}}</td>
+
                                                     <td>{{$cotizacion->origen}}</td>
                                                     <td>{{$cotizacion->destino}}</td>
-                                                    <td>${{$cotizacion->precio_viaje}}</td>
+                                                    <td> ${{ number_format($cotizacion->precio_viaje, 2, '.', ','); }} </td>
                                                     <td>
                                                         @if ($cotizacion->estatus == 'Pendiente')
                                                             <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
@@ -171,7 +174,7 @@
                                                     <td>{{$cotizacion->Cliente->nombre}}</td>
                                                     <td>{{$cotizacion->origen}}</td>
                                                     <td>{{$cotizacion->destino}}</td>
-                                                    <td>${{$cotizacion->precio_viaje}}</td>
+                                                    <td> ${{ number_format($cotizacion->precio_viaje, 2, '.', ','); }} </td>
                                                     <td>
                                                         @if ($cotizacion->estatus == 'Pendiente')
                                                             <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">

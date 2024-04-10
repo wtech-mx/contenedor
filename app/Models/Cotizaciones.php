@@ -26,6 +26,9 @@ class Cotizaciones extends Model
         'iva',
         'retencion',
         'estatus',
+        'sobrepeso',
+        'peso_reglamentario',
+        'peso_kg',
     ];
 
     public function Cliente()
