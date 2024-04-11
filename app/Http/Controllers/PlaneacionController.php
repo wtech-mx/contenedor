@@ -24,27 +24,26 @@ class PlaneacionController extends Controller
 
         $appointments = Asignaciones::get();
 
-        if($events){
-            foreach ($appointments as $appointment) {
+        foreach ($appointments as $appointment) {
 
-                if($appointment->id_operador == NULL){
-                    $description = 'Proveedor: ' . $appointment->Proveedor->nombre . ' - ' . $appointment->Proveedor->telefono . '<br>' . 'Costo viaje: ' . $appointment->precio;
-                }else{
-                    $description = 'Operador: ' . $appointment->Operador->nombre . ' - ' . $appointment->Operador->telefono . '<br>' . 'Camion: ' . $appointment->Camion->num_serie . ' - ' . $appointment->Camion->modelo . '<br>' . 'Chasis: ' . $appointment->Chasis->num_serie . ' - ' . $appointment->Chasis->modelo . '<br>';
-                }
-
-                $description = str_replace('<br>', "\n", $description);
-
-                $events[] = [
-                    'title' => 'Num contenedor: #' . $appointment->Contenedor->num_contenedor,
-                    'description' => $description,
-                    'start' => $appointment->fecha_inicio,
-                    'end' => $appointment->fecha_fin,
-                    'urlId' => $appointment->Contenedor->id_cotizacion,
-                ];
-
+            if($appointment->id_operador == NULL){
+                $description = 'Proveedor: ' . $appointment->Proveedor->nombre . ' - ' . $appointment->Proveedor->telefono . '<br>' . 'Costo viaje: ' . $appointment->precio;
+            }else{
+                $description = 'Operador: ' . $appointment->Operador->nombre . ' - ' . $appointment->Operador->telefono . '<br>' . 'Camion: ' . $appointment->Camion->num_serie . ' - ' . $appointment->Camion->modelo . '<br>' . 'Chasis: ' . $appointment->Chasis->num_serie . ' - ' . $appointment->Chasis->modelo . '<br>';
             }
+
+            $description = str_replace('<br>', "\n", $description);
+
+            $events[] = [
+                'title' => 'Num contenedor: #' . $appointment->Contenedor->num_contenedor,
+                'description' => $description,
+                'start' => $appointment->fecha_inicio,
+                'end' => $appointment->fecha_fin,
+                'urlId' => $appointment->Contenedor->id_cotizacion,
+            ];
+
         }
+
         return view('planeacion.index', compact('equipos', 'operadores', 'events',  'cotizaciones', 'proveedores'));
     }
 
