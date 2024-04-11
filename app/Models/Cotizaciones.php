@@ -29,6 +29,8 @@ class Cotizaciones extends Model
         'sobrepeso',
         'peso_reglamentario',
         'peso_kg',
+        'precio_sobre_peso',
+        'precio_tonelada',
     ];
 
     public function Cliente()

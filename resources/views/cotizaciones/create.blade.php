@@ -152,6 +152,28 @@
                                     </div>
 
                                     <div class="col-3 form-group">
+                                        <label for="name">Precio Sobre Peso</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/tonelada.png') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="precio_sobre_peso" id="precio_sobre_peso" type="text" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3 form-group">
+                                        <label for="name">Precio Tonelada</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/tonelada.png') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="precio_tonelada" id="precio_tonelada" type="text" class="form-control" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6"></div>
+
+                                    <div class="col-3 form-group">
                                         <label for="name">Precio Viaje</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
@@ -220,6 +242,7 @@
                                             <input name="retencion" id="retencion" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()">
                                         </div>
                                     </div>
+
                                     <div class="col-4 form-group">
                                         <label for="name">Total</label>
                                         <div class="input-group mb-3">
@@ -257,6 +280,7 @@
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Guardar</button>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -283,11 +307,18 @@
             const estadia = parseFloat(document.getElementById('estadia').value.replace(/,/g, '')) || 0;
             const maniobra = parseFloat(document.getElementById('maniobra').value.replace(/,/g, '')) || 0;
 
-            // Otros campos de entrada
-            const total = precio_viaje + burreo + retencion + iva + otro + estadia + maniobra ; // Suma de todos los campos
+            // Restar el valor de Retención del total
+            const totalSinRetencion = precio_viaje + burreo + iva + otro + estadia + maniobra;
+            const totalConRetencion = totalSinRetencion - retencion;
+
+            // Obtener el valor de Precio Tonelada
+            const precioTonelada = parseFloat(document.getElementById('precio_tonelada').value.replace(/,/g, '')) || 0;
+
+            // Sumar el valor de Precio Tonelada al total
+            const totalFinal = totalConRetencion + precioTonelada;
 
             // Formatear el total con comas
-            const totalFormateado = total.toLocaleString('en-US');
+            const totalFormateado = totalFinal.toLocaleString('en-US');
 
             document.getElementById('total').value = totalFormateado;
         }
@@ -297,6 +328,9 @@
             var pesoReglamentarioInput = document.getElementById('peso_reglamentario');
             var pesoContenedorInput = document.getElementById('peso_contenedor');
             var sobrepesoInput = document.getElementById('sobrepeso');
+
+            var precioSobrePesoInput = document.getElementById('precio_sobre_peso');
+            var precioToneladaInput = document.getElementById('precio_tonelada');
 
             // Agregar evento de cambio a los inputs
             pesoReglamentarioInput.addEventListener('input', calcularSobrepeso);
@@ -314,9 +348,28 @@
                 sobrepesoInput.value = sobrepeso;
             }
 
+            // Agregar evento de entrada al campo "Precio Sobre Peso"
+            precioSobrePesoInput.addEventListener('input', function () {
+                // Obtener el valor de Sobrepeso
+                var sobrepeso = parseFloat(sobrepesoInput.value.replace(/,/g, '')) || 0;
+
+                // Obtener el valor de Precio Sobre Peso
+                var precioSobrePeso = parseFloat(precioSobrePesoInput.value.replace(/,/g, '')) || 0;
+
+                // Calcular el resultado de la multiplicación
+                var resultado = sobrepeso * precioSobrePeso;
+
+                // Mostrar el resultado en el campo "Precio Tonelada"
+                precioToneladaInput.value = resultado.toLocaleString('en-US');
+
+                // Calcular el total
+                calcularTotal();
+            });
+
             // Calcular sobrepeso inicialmente al cargar la página
             calcularSobrepeso();
         });
     </script>
+
 
 @endsection

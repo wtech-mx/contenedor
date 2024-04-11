@@ -62,6 +62,8 @@ class CotizacionesController extends Controller
         $cotizaciones->fecha_entrega = $request->get('fecha_entrega');
         $cotizaciones->iva = $request->get('iva');
         $cotizaciones->retencion = $request->get('retencion');
+        $cotizaciones->precio_sobre_peso = $request->get('precio_sobre_peso');
+        $cotizaciones->precio_tonelada = $request->get('precio_tonelada');
         $cotizaciones->estatus = 'Pendiente';
         $cotizaciones->save();
 
