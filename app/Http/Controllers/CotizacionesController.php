@@ -15,7 +15,7 @@ class CotizacionesController extends Controller
     public function index(){
 
         $cotizaciones = Cotizaciones::where('estatus','=','Pendiente')->get();
-        $cotizaciones_aprovadas = Cotizaciones::where('estatus','=','Aprobada')->get();
+        $cotizaciones_aprovadas = Cotizaciones::where('estatus','=','Aprobada')->where('estatus_planeacion','=', NULL)->get();
         $cotizaciones_canceladas = Cotizaciones::where('estatus','=','Cancelada')->get();
 
 
