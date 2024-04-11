@@ -16,6 +16,7 @@ class PlaneacionController extends Controller
 {
     public function index(){
         $cotizaciones = Cotizaciones::where('estatus', '=', 'Aprobada')->where('estatus_planeacion', '=', NULL)->get();
+        $numCotizaciones = $cotizaciones->count();
         $proveedores = Proveedor::where('tipo', 'Burreo')->get();
 
         $equipos = Equipo::all();
@@ -44,7 +45,7 @@ class PlaneacionController extends Controller
 
         }
 
-        return view('planeacion.index', compact('equipos', 'operadores', 'events',  'cotizaciones', 'proveedores'));
+        return view('planeacion.index', compact('equipos', 'operadores', 'events',  'cotizaciones', 'proveedores', 'numCotizaciones'));
     }
 
     public function equipos(Request $request){

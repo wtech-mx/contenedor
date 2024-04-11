@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Client
+Cliente
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <h2 id="card_title">
-                                {{ __('Client') }}
+                               Cliente
                             </h2>
 
                              <div class="float-right">

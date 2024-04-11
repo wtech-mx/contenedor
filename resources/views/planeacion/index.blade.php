@@ -26,9 +26,9 @@
                                 <h4>Faltantes de Planeación</h4>
                                 <div class="row">
                                     @foreach ($cotizaciones as $cotizacion)
-                                        <div class="col-6">
-                                            <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#planeacionModal{{$cotizacion->id}}">
-                                                Contenedor # {{$cotizacion->DocCotizacion->num_contenedor}}
+                                        <div class="col-{{$numCotizaciones <= 15 ? '12' : '6'}}">
+                                            <button type="button" class="btn btn-xs btn-primary w-100" data-bs-toggle="modal" data-bs-target="#planeacionModal{{$cotizacion->id}}">
+                                                Cliente: {{$cotizacion->Cliente->nombre}}
                                             </button>
                                         </div>
                                         @include('planeacion.edit')

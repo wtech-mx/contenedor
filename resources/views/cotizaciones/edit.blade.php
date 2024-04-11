@@ -54,6 +54,7 @@
                                         <p for="name" class="mb-4"> <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px"> <b>Precio Viaje: </b><input name="cot_precio_viaje" id="cot_precio_viaje" type="text" class="form-control" value="{{$cotizacion->precio_viaje}}"></p>
                                         <p for="name" class="mb-4"> <img src="{{ asset('img/icon/impuesto.png') }}" alt="" width="25px"> <b>IVA: </b><input name="cot_iva" id="cot_iva" type="text" class="form-control" value="{{$cotizacion->iva}}"></p>
                                         <p for="name" class="mb-4"> <img src="{{ asset('img/icon/pausa.png') }}" alt="" width="25px"> <b>Retencion: </b><input name="cot_retencion" id="cot_retencion" type="text" class="form-control" value="{{$cotizacion->retencion}}"></p>
+                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/pausa.png') }}" alt="" width="25px"> <b>Total: </b><input type="text" class="form-control" value="{{$cotizacion->total}}" readonly></p>
                                     </div>
                                 </div>
 
@@ -90,7 +91,7 @@
                                         </div>
                                     </div>
 
-                                    <h3 class="mt-3 mb-5">Documentacion</h3>
+                                    <h3 class="mt-3 mb-5">Documentación</h3>
 
                                     <div class="col-6 form-group">
                                         <label for="name">Boleta de Liberación</label>
@@ -160,6 +161,40 @@
                                         @endif
                                     </div>
 
+                                    <h3 class="mt-3 mb-5">Gastos Extras</h3>
+                                    @foreach ($gastos_extras as $gasto_extra)
+                                        <input type="hidden" name="ticket_id[]" value="{{ $gasto_extra->id }}">
+                                        <div class="col-6 form-group">
+                                            <p for="name" class="mb-4"> <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px"> <b>
+                                                Descripción: </b><input name="gasto_descripcion[]" id="gasto_descripcion[]" type="text" class="form-control" value="{{$gasto_extra->descripcion}}">
+                                            </p>
+                                        </div>
+
+                                        <div class="col-6 form-group">
+                                            <p for="name" class="mb-4"> <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px"> <b>
+                                                Monto: </b><input name="gasto_monto[]" id="gasto_monto[]" type="text" class="form-control" value="{{$gasto_extra->monto}}">
+                                            </p>
+                                        </div>
+                                    @endforeach
+                                    <div id="formulario" class="mt-4">
+                                        <button type="button" class="clonar btn btn-secondary btn-sm">Agregar</button>
+                                        <div class="clonars">
+                                            <div class="row">
+                                                <div class="col-6 form-group">
+                                                    <p for="name" class="mb-4"> <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px"> <b>
+                                                        Descripción: </b><input name="gasto_descripcion[]" id="gasto_descripcion[]" type="text" class="form-control">
+                                                    </p>
+                                                </div>
+
+                                                <div class="col-6 form-group">
+                                                    <p for="name" class="mb-4"> <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px"> <b>
+                                                        Monto: </b><input name="gasto_monto[]" id="gasto_monto[]" type="text" class="form-control">
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -184,5 +219,25 @@
     $(document).ready(function() {
     $('.cliente').select2();
     });
+    </script>
+
+    <script type="text/javascript">
+        // ============= Agregar mas inputs dinamicamente =============
+        $('.clonar').click(function() {
+        // Clona el .input-group
+        var $clone = $('#formulario .clonars').last().clone();
+
+        // Borra los valores de los inputs clonados
+        $clone.find(':input').each(function () {
+            if ($(this).is('select')) {
+            this.selectedIndex = 0;
+            } else {
+            this.value = '';
+            }
+        });
+
+        // Agrega lo clonado al final del #formulario
+        $clone.appendTo('#formulario');
+        });
     </script>
 @endsection

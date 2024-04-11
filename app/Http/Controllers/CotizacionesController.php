@@ -94,9 +94,10 @@ class CotizacionesController extends Controller
     public function edit($id){
         $cotizacion = Cotizaciones::where('id', '=', $id)->first();
         $documentacion = DocumCotizacion::where('id_cotizacion', '=', $cotizacion->id)->first();
+        $gastos_extras = GastosExtras::where('id_cotizacion', '=', $cotizacion->id)->get();
         $clientes = Client::get();
 
-        return view('cotizaciones.edit', compact('cotizacion', 'documentacion', 'clientes'));
+        return view('cotizaciones.edit', compact('cotizacion', 'documentacion', 'clientes','gastos_extras'));
     }
 
     public function update(Request $request, $id){
@@ -132,12 +133,44 @@ class CotizacionesController extends Controller
         $cotizaciones->estadia = $request->get('cot_estadia');
         $cotizaciones->fecha_modulacion = $request->get('cot_fecha_modulacion');
         $cotizaciones->fecha_entrega = $request->get('cot_fecha_entrega');
+        $cotizaciones->precio_viaje = $request->get('cot_precio_viaje');
         $cotizaciones->tamano = $request->get('cot_tamano');
         $cotizaciones->peso_contenedor = $request->get('cot_peso_contenedor');
         $cotizaciones->maniobra = $request->get('cot_maniobra');
         $cotizaciones->otro = $request->get('cot_otro');
         $cotizaciones->iva = $request->get('cot_iva');
         $cotizaciones->retencion = $request->get('cot_retencion');
+        $cotizaciones->update();
+
+        $gasto_descripcion = $request->input('gasto_descripcion');
+        $gasto_monto = $request->input('gasto_monto');
+        $ticket_ids = $request->input('ticket_id');
+
+        for ($count = 0; $count < count($gasto_descripcion); $count++) {
+            $data = array(
+                'id_cotizacion' => $cotizaciones->id,
+                'descripcion' => $gasto_descripcion[$count],
+                'monto' => $gasto_monto[$count],
+            );
+
+            if (isset($ticket_ids[$count])) {
+                // Actualizar el ticket existente
+                $ticket = GastosExtras::findOrFail($ticket_ids[$count]);
+                $ticket->update($data);
+            } elseif($gasto_descripcion[$count] != NULL) {
+                // Crear un nuevo ticket
+                GastosExtras::create($data);
+            }
+        }
+
+        // SUMA TOTAL DE COTIZACION
+        $suma = $cotizaciones->maniobra + $cotizaciones->burreo + $cotizaciones->otro + $cotizaciones->estadia + $cotizaciones->precio_viaje + $cotizaciones->iva;
+
+        foreach ($gasto_monto as $monto) {
+            $suma += $monto;
+        }
+        $resta = $suma - $cotizaciones->retencion;
+        $cotizaciones->total = $resta;
         $cotizaciones->update();
 
         Session::flash('edit', 'Se ha editado sus datos con exito');
