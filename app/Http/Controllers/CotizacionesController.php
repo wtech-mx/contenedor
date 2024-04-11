@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Models\Cotizaciones;
 use App\Models\DocumCotizacion;
 use App\Models\Equipo;
+use App\Models\GastosExtras;
 use App\Models\Proveedor;
 use Illuminate\Http\Request;
 use Session;
