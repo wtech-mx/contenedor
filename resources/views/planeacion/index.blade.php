@@ -163,14 +163,32 @@
 @section('datatable')
     <script type="text/javascript">
 
-        function mostrarDiv(cotizacionId) {
-            var viajeSelect = document.getElementById("viaje" + cotizacionId);
-            var camionSubcontratadoDiv = document.getElementById("camionSubcontratadoDiv" + cotizacionId);
-
-            if (viajeSelect.value === "Camion Subcontratado") {
-                camionSubcontratadoDiv.style.display = "block";
+    $(document).ready(function() {
+        $('#tipo').change(function() {
+            var tipo = $(this).val();
+            if (tipo === 'Sencillo') {
+                $('#chasisAdicional1Group').hide();
+                $('#nuevoCampoDolyGroup').hide();
+            } else if (tipo === 'Full') {
+                $('#chasisAdicional1Group').show();
+                $('#nuevoCampoDolyGroup').show();
             }
+        });
+    });
+
+    function mostrarDiv(cotizacionId) {
+        var viajeSelect = document.getElementById("viaje" + cotizacionId);
+        var camionSubcontratadoDiv = document.getElementById("camionSubcontratadoDiv" + cotizacionId);
+        var camionPropioDiv = document.getElementById("camionPropioDiv" + cotizacionId);
+
+        if (viajeSelect.value === "Camion Subcontratado") {
+            camionSubcontratadoDiv.style.display = "block";
+            camionPropioDiv.style.display = "none";
+        }else if(viajeSelect.value === "Camion Propio"){
+            camionPropioDiv.style.display = "block";
+            camionSubcontratadoDiv.style.display = "none";
         }
+    }
 
         $(document).ready(function() {
             $('[id^="btn_clientes_search"]').click(function() {
