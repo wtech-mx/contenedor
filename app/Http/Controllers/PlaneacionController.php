@@ -40,7 +40,7 @@ class PlaneacionController extends Controller
                 'description' => $description,
                 'start' => $appointment->fecha_inicio,
                 'end' => $appointment->fecha_fin,
-                'urlId' => $appointment->Contenedor->id_cotizacion,
+                'urlId' => $appointment->id,
             ];
 
         }
@@ -119,5 +119,20 @@ class PlaneacionController extends Controller
             ->with('success', 'Asignacion created successfully.');
 
     }
+
+    public function edit_fecha(Request $request)
+    {
+        $id = $request->get('urlId');
+
+        $asignaciones = Asignaciones::find($id);
+
+        $asignaciones->fecha_inicio = $request->get('nuevaFechaInicio');
+        $asignaciones->fecha_fin = $request->get('nuevaFechaFin');
+        $asignaciones->update();
+
+        // Devuelve una respuesta, por ejemplo:
+        return response()->json(['message' => 'Fechas actualizadas correctamente']);
+    }
+
 
 }
