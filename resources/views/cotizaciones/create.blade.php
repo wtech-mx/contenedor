@@ -338,14 +338,14 @@
 
             // Función para calcular el sobrepeso
             function calcularSobrepeso() {
-                var pesoReglamentario = parseInt(pesoReglamentarioInput.value) || 0;
-                var pesoContenedor = parseInt(pesoContenedorInput.value) || 0;
+                var pesoReglamentario = parseFloat(pesoReglamentarioInput.value) || 0;
+                var pesoContenedor = parseFloat(pesoContenedorInput.value) || 0;
 
                 // Calcular sobrepeso
                 var sobrepeso = Math.max(pesoContenedor - pesoReglamentario, 0);
 
-                // Mostrar sobrepeso en el input correspondiente
-                sobrepesoInput.value = sobrepeso;
+                // Mostrar sobrepeso en el input correspondiente con dos decimales
+                sobrepesoInput.value = sobrepeso.toFixed(2);
             }
 
             // Agregar evento de entrada al campo "Precio Sobre Peso"
