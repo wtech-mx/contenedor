@@ -66,6 +66,8 @@ class CotizacionesController extends Controller
         $cotizaciones->precio_sobre_peso = $request->get('precio_sobre_peso');
         $cotizaciones->precio_tonelada = $request->get('precio_tonelada');
         $cotizaciones->estatus = 'Pendiente';
+        $cotizaciones->total = $request->get('total');
+
         $cotizaciones->save();
 
         $docucotizaciones = new DocumCotizacion;
@@ -164,15 +166,31 @@ class CotizacionesController extends Controller
             }
         }
 
-        // SUMA TOTAL DE COTIZACION
-        $suma = $cotizaciones->maniobra + $cotizaciones->burreo + $cotizaciones->otro + $cotizaciones->estadia + $cotizaciones->precio_viaje + $cotizaciones->iva;
+            // Convertir los valores a números si son cadenas
+            $maniobra = is_numeric($cotizaciones->maniobra) ? $cotizaciones->maniobra : 0;
+            $burreo = is_numeric($cotizaciones->burreo) ? $cotizaciones->burreo : 0;
+            $otro = is_numeric($cotizaciones->otro) ? $cotizaciones->otro : 0;
+            $estadia = is_numeric($cotizaciones->estadia) ? $cotizaciones->estadia : 0;
+            $precio_viaje = is_numeric($cotizaciones->precio_viaje) ? $cotizaciones->precio_viaje : 0;
+            $iva = is_numeric($cotizaciones->iva) ? $cotizaciones->iva : 0;
 
-        foreach ($gasto_monto as $monto) {
-            $suma += $monto;
-        }
-        $resta = $suma - $cotizaciones->retencion;
-        $cotizaciones->total = $resta;
-        $cotizaciones->update();
+            // SUMA TOTAL DE COTIZACION
+            $suma = $maniobra + $burreo + $otro + $estadia + $precio_viaje + $iva;
+
+            foreach ($gasto_monto as $monto) {
+                // Convertir el valor a número si es una cadena
+                $monto = is_numeric($monto) ? $monto : 0; // Si $monto no es numérico, se asume 0
+                $suma += $monto;
+            }
+
+            // Convertir retencion a número si es una cadena
+            $retencion = is_numeric($cotizaciones->retencion) ? $cotizaciones->retencion : 0;
+
+            $resta = $suma - $retencion;
+            $cotizaciones->total = $resta;
+            $cotizaciones->update();
+
+
 
         Session::flash('edit', 'Se ha editado sus datos con exito');
         return redirect()->back()

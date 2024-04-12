@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Cotizaciones Aprobadas
+    Planeacion
 @endsection
 
 @section('content')
@@ -28,7 +28,7 @@
                                     @foreach ($cotizaciones as $cotizacion)
                                         <div class="col-{{$numCotizaciones <= 15 ? '12' : '6'}}">
                                             <button type="button" class="btn btn-xs btn-primary w-100" data-bs-toggle="modal" data-bs-target="#planeacionModal{{$cotizacion->id}}">
-                                                Cliente: {{$cotizacion->Cliente->nombre}}
+                                                 Contenedor #{{ $cotizacion->DocCotizacion->num_contenedor }} / {{$cotizacion->Cliente->nombre}}
                                             </button>
                                         </div>
                                         @include('planeacion.edit')
