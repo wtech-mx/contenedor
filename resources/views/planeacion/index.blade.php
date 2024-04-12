@@ -95,6 +95,7 @@
                 // Colocar los detalles del evento en el modal
                 document.getElementById('eventoTitulo').innerText = info.event.title;
                 document.getElementById('eventoDescripcion').innerText = info.event.extendedProps.description;
+                document.getElementById('cliiente').innerText = info.event.extendedProps.cliiente;
 
                 // Formatear las fechas para los inputs y ajustarlas
                 var fechaInicio = formatDate(info.event.start);

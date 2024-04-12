@@ -8,6 +8,8 @@ use App\Models\Equipo;
 use App\Models\Operador;
 use App\Models\Planeacion;
 use App\Models\Proveedor;
+use App\Models\Client;
+use App\Models\Subclientes;
 use Illuminate\Http\Request;
 use DB;
 use Session;
@@ -34,14 +36,14 @@ class PlaneacionController extends Controller
             }
 
             $description = str_replace('<br>', "\n", $description);
-
             $events[] = [
-                'title' => 'Num contenedor: #' . $appointment->Contenedor->num_contenedor,
+                'title' => 'Número de contenedor: #' . $appointment->Contenedor->num_contenedor,
                 'description' => $description,
                 'start' => $appointment->fecha_inicio,
                 'end' => $appointment->fecha_fin,
                 'urlId' => $appointment->id,
                 'idCotizacion' => $appointment->Contenedor->id_cotizacion,
+                'cliiente' => 'Cliente: ' .$appointment->Contenedor->Cotizacion->Cliente->nombre,
             ];
 
         }

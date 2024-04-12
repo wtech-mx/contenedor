@@ -16,7 +16,6 @@
                         <input name="num_contenedor" value="{{$cotizacion->DocCotizacion->id}}" type="hidden">
                         <input name="cotizacion" value="{{$cotizacion->DocCotizacion->id_cotizacion}}" type="hidden">
 
-
                         <div class="col-6 form-group">
                             <label for="name">Num. Contenedor</label>
                             <div class="input-group mb-3">

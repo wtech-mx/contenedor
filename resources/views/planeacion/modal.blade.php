@@ -7,6 +7,7 @@
             </div>
 
             <div class="modal-body">
+                <p id="cliiente"></p>
                 <p id="eventoTitulo"></p>
                 <p id="eventoDescripcion"></p>
                 <!-- Cambiar los inputs a tipo date -->
