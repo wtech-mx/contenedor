@@ -54,19 +54,32 @@ class CotizacionesController extends Controller
         $cotizaciones->destino = $request->get('destino');
         $cotizaciones->tamano = $request->get('tamano');
         $cotizaciones->peso_contenedor = $request->get('peso_contenedor');
-        $cotizaciones->precio_viaje = $request->get('precio_viaje');
-        $cotizaciones->burreo = $request->get('burreo');
-        $cotizaciones->maniobra = $request->get('maniobra');
-        $cotizaciones->estadia = $request->get('estadia');
+
         $cotizaciones->otro = $request->get('otro');
         $cotizaciones->fecha_modulacion = $request->get('fecha_modulacion');
         $cotizaciones->fecha_entrega = $request->get('fecha_entrega');
         $cotizaciones->iva = $request->get('iva');
         $cotizaciones->retencion = $request->get('retencion');
         $cotizaciones->precio_sobre_peso = $request->get('precio_sobre_peso');
-        $cotizaciones->precio_tonelada = $request->get('precio_tonelada');
         $cotizaciones->estatus = 'Pendiente';
-        $cotizaciones->total = $request->get('total');
+
+        $precio_viaje = str_replace(',', '.', $request->get('precio_viaje'));
+        $cotizaciones->precio_viaje = $precio_viaje;
+
+        $burreo = str_replace(',', '.', $request->get('burreo'));
+        $cotizaciones->burreo = $burreo;
+
+        $maniobra = str_replace(',', '.', $request->get('maniobra'));
+        $cotizaciones->maniobra = $maniobra;
+
+        $estadia = str_replace(',', '.', $request->get('estadia'));
+        $cotizaciones->estadia = $estadia;
+
+        $precio_tonelada = str_replace(',', '.', $request->get('precio_tonelada'));
+        $cotizaciones->precio_tonelada = $precio_tonelada;
+
+        $total = str_replace(',', '.', $request->get('total'));
+        $cotizaciones->total = $total;
 
         $cotizaciones->save();
 
