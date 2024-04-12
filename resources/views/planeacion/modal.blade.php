@@ -13,11 +13,13 @@
                 <input type="date" id="eventoFechaStart" class="form-control mb-3">
                 <input type="date" id="eventoFechaEnd" class="form-control">
                 <input type="hidden" id="urlId" class="form-control">
+                <a id="idCotizacion" class="btn btn-sm btn-primary mt-2" target="_blank">Ver Cotizacion</a>
+
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="actualizarFechaBtn">Actualizar Fecha</button>
+                <button type="button" class="btn btn-success" id="actualizarFechaBtn">Actualizar Fecha</button>
             </div>
         </div>
     </div>

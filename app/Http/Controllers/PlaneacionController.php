@@ -41,6 +41,7 @@ class PlaneacionController extends Controller
                 'start' => $appointment->fecha_inicio,
                 'end' => $appointment->fecha_fin,
                 'urlId' => $appointment->id,
+                'idCotizacion' => $appointment->Contenedor->id_cotizacion,
             ];
 
         }
