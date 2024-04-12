@@ -80,6 +80,19 @@ class PlaneacionController extends Controller
                 ->whereNotIn('id', $chasisAsignados)
                 ->get();
 
+            $dolysAsignados = Asignaciones::
+            where(function ($query) use ($fechaInicio, $fechaFin) {
+                $query->where('fecha_inicio', '<=', $fechaFin)
+                    ->where('fecha_fin', '>=', $fechaInicio);
+            })
+            ->pluck('id_camion')
+            ->toArray();
+
+            $dolysNoAsignados = Equipo::
+                where('tipo', 'LIKE', '%Dolys%')
+                ->whereNotIn('id', $dolysAsignados)
+                ->get();
+
             $operadorAsignados = Asignaciones::
             where(function ($query) use ($fechaInicio, $fechaFin) {
                 $query->where('fecha_inicio', '<=', $fechaFin)
@@ -93,7 +106,7 @@ class PlaneacionController extends Controller
                 ->get();
 
 
-            return view('planeacion.resultado_equipos', ['camionesNoAsignados' => $camionesNoAsignados, 'chasisNoAsignados' => $chasisNoAsignados, 'operadorNoAsignados' => $operadorNoAsignados]);
+            return view('planeacion.resultado_equipos', ['dolysNoAsignados' => $dolysNoAsignados, 'camionesNoAsignados' => $camionesNoAsignados, 'chasisNoAsignados' => $chasisNoAsignados, 'operadorNoAsignados' => $operadorNoAsignados]);
 
         }
     }
@@ -113,6 +126,7 @@ class PlaneacionController extends Controller
 
         $cotizacion = Cotizaciones::where('id', '=',  $request->get('cotizacion'))->first();
         $cotizacion->estatus_planeacion = 1;
+        $cotizacion->tipo_viaje = $request->get('tipo');
         $cotizacion->update();
 
         Session::flash('success', 'Se ha guardado sus datos con exito');

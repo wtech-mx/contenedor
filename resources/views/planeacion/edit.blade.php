@@ -52,42 +52,44 @@
                         </div>
 
                         <div id="camionPropioDiv{{$cotizacion->id}}" style="display: none;">
-                            <div class="col-12 form-group">
-                                <label for="name">Tipo</label>
-                                <select class="form-select d-inline-block" id="tipo" name="tipo" value="{{ old('tipo') }}" >
-                                    <option  value="Sencillo">Sencillo</option>
-                                    <option  value="Full">Full</option>
-                                </select>
-                            </div>
-
-                            <div class="col-6 form-group">
-                                <label for="name">Fecha inicio</label>
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1">
-                                        <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
-                                    </span>
-                                    <input name="fecha_inicio" id="fecha_inicio_{{$cotizacion->id}}" type="date" class="form-control" value="{{ date('Y-m-d')}}">
+                            <div class="row">
+                                <div class="col-12 form-group">
+                                    <label for="name">Tipo</label>
+                                    <select class="form-select d-inline-block" id="tipo{{$cotizacion->id}}" name="tipo" value="{{ old('tipo') }}" >
+                                        <option  value="Sencillo">Sencillo</option>
+                                        <option  value="Full">Full</option>
+                                    </select>
                                 </div>
-                            </div>
 
-
-                            <div class="col-6 form-group">
-                                <label for="name">Fecha fin</label>
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1">
-                                        <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
-                                    </span>
-                                    <input name="fecha_fin" id="fecha_fin_{{$cotizacion->id}}" type="date" class="form-control" value="{{ date('Y-m-d')}}">
+                                <div class="col-12 form-group">
+                                    <label for="name">Fecha inicio</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
+                                        </span>
+                                        <input name="fecha_inicio" id="fecha_inicio_{{$cotizacion->id}}" type="date" class="form-control" value="{{ date('Y-m-d')}}">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col-12 form-group">
-                                <label for="name">.</label>
-                                <div class="input-group mb-3">
-                                    <button class="btn" type="button" id="btn_clientes_search{{$cotizacion->id}}" data-cotizacion-id="{{$cotizacion->id}}" style="">
-                                        Buscar Disponibilidad
-                                    </button>
 
+                                <div class="col-12 form-group">
+                                    <label for="name">Fecha fin</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
+                                        </span>
+                                        <input name="fecha_fin" id="fecha_fin_{{$cotizacion->id}}" type="date" class="form-control" value="{{ date('Y-m-d')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 form-group">
+                                    <label for="name">.</label>
+                                    <div class="input-group mb-3">
+                                        <button class="btn" type="button" id="btn_clientes_search{{$cotizacion->id}}" data-cotizacion-id="{{$cotizacion->id}}" style="">
+                                            Buscar Disponibilidad
+                                        </button>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>

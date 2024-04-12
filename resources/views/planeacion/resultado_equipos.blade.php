@@ -43,8 +43,8 @@
         <label for="name">Doly</label>
         <select class="form-select d-inline-block" id="nuevoCampoDoly" name="nuevoCampoDoly" value="{{ old('nuevoCampoDoly') }}">
             <option value="">Seleccionar Operador</option>
-            @foreach ($operadorNoAsignados as $item)
-                <option value="{{$item->id}}">{{$item->nombre}} / {{$item->telefono}}</option>
+            @foreach ($dolysNoAsignados as $item)
+                <option value="{{$item->id}}">{{$item->marca}} / {{$item->modelo}}</option>
             @endforeach
         </select>
     </div>
