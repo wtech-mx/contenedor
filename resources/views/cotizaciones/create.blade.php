@@ -167,7 +167,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/tonelada.png') }}" alt="" width="25px">
                                             </span>
-                                            <input name="precio_tonelada" id="precio_tonelada" type="text" class="form-control" readonly>
+                                            <input name="precio_tonelada" id="precio_tonelada" type="text" class="form-control" value="0" readonly>
                                         </div>
                                     </div>
 
