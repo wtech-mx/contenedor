@@ -115,6 +115,7 @@ class PlaneacionController extends Controller
     }
 
     public function asignacion(Request $request){
+
         $validator = Validator::make($request->all(), [
             'id_proveedor' => 'required_if:viaje,Camion Subcontratado',
             'precio' => 'required_if:viaje,Camion Subcontratado',

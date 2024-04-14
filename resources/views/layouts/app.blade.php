@@ -26,13 +26,7 @@
 
   <!-- CSS Files -->
   <link id="pagestyle" href="{{ asset('assets/css/argon-dashboard.css?v=2.0.4')}}" rel="stylesheet" />
-  {{-- <link rel="stylesheet" href="{{ asset('assets/css/preloader.css')}}"> --}}
-
-
-   {{-- <link src="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
-  <link src="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css" rel="stylesheet" />
---}}
-
+  <link rel="stylesheet" href="{{ asset('assets/css/sweetalert2.css') }}">
 
   <style>
         input:before {
@@ -93,39 +87,20 @@
   <script src="{{ asset('assets/js/core/bootstrap.min.js')}}"></script>
   <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
   <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
+  <script type="text/javascript" src="{{ asset('assets/js/jquery-3.7.0.js') }}"></script>
 
   <script src="{{ asset('assets/js/plugins/datatables.js')}}"></script>
 
-  {{-- <script src="{{ asset('assets/js/plugins/fullcalendar.min.js')}}"></script> --}}
-  <!-- Kanban scripts -->
-
-  <script src="{{ asset('assets/js/plugins/dragula/dragula.min.js')}}"></script>
-  <script src="{{ asset('assets/js/plugins/jkanban/jkanban.js')}}"></script>
-  <script src="{{ asset('assets/js/plugins/chartjs.min.js')}}"></script>
   <script src="{{ asset('assets/js/argon-dashboard.min.js')}}"></script>
-  {{-- <script src="{{ asset('assets/js/ConectorJavaScript.js')}}"></script> --}}
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  {{-- <script src="{{ asset('assets/js/preloader.js')}}"></script> --}}
 
-    <script>
-        // const formContainer = document.getElementById('form-container');
-        // const openFormButton = document.getElementById('open-form');
+  <script type="text/javascript" src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>
 
-        // openFormButton.addEventListener('click', () => {
-        //     formContainer.style.display = 'block';
-        // });
-
-        // formContainer.addEventListener('click', (event) => {
-        //     if (event.target === formContainer) {
-        //         formContainer.style.display = 'none';
-        //     }
-        // });
-    </script>
 
     <script>
         var token = $('meta[name="csrf-token"]').attr('content');
     </script>
+
   @yield('datatable')
 
   @yield('fullcalendar')
