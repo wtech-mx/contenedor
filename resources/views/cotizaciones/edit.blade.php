@@ -59,6 +59,38 @@
                                 </div>
 
                                 <div class="row">
+                                    <h3 class="mb-5 mt-3">Bloque de Entrada</h3>
+
+                                    <div class="col-4 form-group">
+                                        <label for="name">Block</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/contenedores.png') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="bloque" id="bloque" type="text" class="form-control" value="{{$cotizacion->bloque}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4 form-group">
+                                        <label for="name">Horario Inicio</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="bloque_hora_i" id="bloque_hora_i" type="time" class="form-control" value="{{$cotizacion->bloque_hora_i}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4 form-group">
+                                        <label for="name">Horario Fin</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="bloque_hora_f" id="bloque_hora_f" type="time" class="form-control" value="{{$cotizacion->bloque_hora_f}}">
+                                        </div>
+                                    </div>
+
                                     <h3 class="mb-5 mt-3    ">Registrar Documentación</h3>
 
                                     <div class="col-6 form-group">

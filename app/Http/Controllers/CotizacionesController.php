@@ -156,6 +156,9 @@ class CotizacionesController extends Controller
         $cotizaciones->otro = $request->get('cot_otro');
         $cotizaciones->iva = $request->get('cot_iva');
         $cotizaciones->retencion = $request->get('cot_retencion');
+        $cotizaciones->bloque = $request->get('bloque');
+        $cotizaciones->bloque_hora_i = $request->get('bloque_hora_i');
+        $cotizaciones->bloque_hora_f = $request->get('bloque_hora_f');
         $cotizaciones->update();
 
         $gasto_descripcion = $request->input('gasto_descripcion');

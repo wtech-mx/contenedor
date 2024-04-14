@@ -13,6 +13,7 @@ use App\Models\Subclientes;
 use Illuminate\Http\Request;
 use DB;
 use Session;
+use Illuminate\Support\Facades\Validator;
 
 class PlaneacionController extends Controller
 {
@@ -37,7 +38,7 @@ class PlaneacionController extends Controller
 
             $description = str_replace('<br>', "\n", $description);
             $events[] = [
-                'title' => 'Número de contenedor: #' . $appointment->Contenedor->num_contenedor,
+                'title' => $appointment->Contenedor->Cotizacion->Cliente->nombre . '/ #' . $appointment->Contenedor->Cotizacion->DocCotizacion->num_contenedor,
                 'description' => $description,
                 'start' => $appointment->fecha_inicio,
                 'end' => $appointment->fecha_fin,
@@ -114,11 +115,25 @@ class PlaneacionController extends Controller
     }
 
     public function asignacion(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id_proveedor' => 'required_if:viaje,Camion Subcontratado',
+            'precio' => 'required_if:viaje,Camion Subcontratado',
+
+            'camion' => 'required_if:viaje,Camion Propio',
+            'operador' => 'required_if:viaje,Camion Propio',
+            'chasis' => 'required_if:viaje,Camion Propio',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
         $asignaciones = new Asignaciones;
         $asignaciones->fecha_inicio = $request->get('fecha_inicio');
         $asignaciones->fecha_fin = $request->get('fecha_fin');
         $asignaciones->id_chasis = $request->get('chasis');
+        $asignaciones->id_chasis2 = $request->get('chasisAdicional1');
+        $asignaciones->id_dolys = $request->get('nuevoCampoDoly');
         $asignaciones->id_camion = $request->get('camion');
         $asignaciones->id_contenedor = $request->get('num_contenedor');
         $asignaciones->id_operador = $request->get('operador');
@@ -131,10 +146,11 @@ class PlaneacionController extends Controller
         $cotizacion->tipo_viaje = $request->get('tipo');
         $cotizacion->update();
 
-        Session::flash('success', 'Se ha guardado sus datos con exito');
-        return redirect()->back()
-            ->with('success', 'Asignacion created successfully.');
+        $cotizacion_data = [
+            "tipo_viaje" => $cotizacion->tipo_viaje,
+        ];
 
+        return response()->json(['success' => true, 'cotizacion_data' => $cotizacion_data]);
     }
 
     public function edit_fecha(Request $request)

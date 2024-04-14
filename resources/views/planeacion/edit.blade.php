@@ -7,7 +7,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
-            <form method="POST" action="{{ route('asignacion.planeaciones') }}" enctype="multipart/form-data" role="form">
+            <form method="POST" action="{{ route('asignacion.planeaciones') }}" id="miFormulario" enctype="multipart/form-data" role="form">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
