@@ -79,7 +79,10 @@
                                 <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
                             </span>
                             <select class="form-select d-inline-block" id="tipo" name="tipo" value="{{ old('tipo') }}">
-                                <option value="Burreo">Burreo</option>
+                                <option value="servicio mecánico">1) servicio mecánico</option>
+                                <option value="servicio de burreo">2) servicio de burreo</option>
+                                <option value="servicio de viaje">3) servicio de viaje</option>
+                                <option value="servicio de patio">4) servicio de patio</option>
                                 <option value="Otro">Otro</option>
                             </select>
                         </div>
