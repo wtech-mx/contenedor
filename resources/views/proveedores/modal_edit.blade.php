@@ -73,6 +73,19 @@
                         </div>
                     </div>
 
+                    <div class="col-12 form-group">
+                        <label for="name">Tipo *</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                                <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
+                            </span>
+                            <select class="form-select d-inline-block" id="tipo" name="tipo" value="{{$proveedor->tipo}}">
+                                <option value="Burreo">Burreo</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 

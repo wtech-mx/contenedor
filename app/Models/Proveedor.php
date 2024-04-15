@@ -18,5 +18,6 @@ class Proveedor extends Model
         'telefono',
         'regimen_fiscal',
         'fecha',
+        'tipo',
     ];
 }

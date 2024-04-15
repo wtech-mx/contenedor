@@ -32,6 +32,7 @@ class ProveedorController extends Controller
         $proveedor->regimen_fiscal = $request->get('regimen_fiscal');
         $proveedor->direccion = $request->get('direccion');
         $proveedor->rfc = $request->get('rfc');
+        $proveedor->tipo = $request->get('tipo');
         $proveedor->fecha = $fechaActual;
         $proveedor->save();
 
