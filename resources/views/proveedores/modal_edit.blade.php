@@ -79,8 +79,12 @@
                             <span class="input-group-text" id="basic-addon1">
                                 <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
                             </span>
-                            <select class="form-select d-inline-block" id="tipo" name="tipo" value="{{$proveedor->tipo}}">
-                                <option value="Burreo">Burreo</option>
+                            <select class="form-select d-inline-block" id="tipo" name="tipo" >
+                                <option value="{{$proveedor->tipo}}" selected>{{$proveedor->tipo}}</option>
+                                <option value="servicio mecánico">1) servicio mecánico</option>
+                                <option value="servicio de burreo">2) servicio de burreo</option>
+                                <option value="servicio de viaje">3) servicio de viaje</option>
+                                <option value="servicio de patio">4) servicio d
                                 <option value="Otro">Otro</option>
                             </select>
                         </div>
