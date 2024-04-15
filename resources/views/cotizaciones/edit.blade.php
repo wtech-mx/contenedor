@@ -25,37 +25,196 @@
                             <div class="modal-body">
                                 <h3 class="mb-5">Datos de cotizacion</h3>
                                 <div class="row">
-                                    <div class="col-6">
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/pausa.png') }}" alt="" width="25px"> <b>Cliente: </b>
+                                        <div class="form-group">
+                                            <label for="name">Cliente *</label>
                                             <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_cliente" name="id_cliente" value="{{ old('id_cliente') }}">
                                                 <option value="{{$cotizacion->id_cliente}}">{{$cotizacion->Cliente->nombre}} / {{$cotizacion->Cliente->telefono}}</option>
                                                 @foreach ($clientes as $item)
                                                     <option value="{{ $item->id }}">{{ $item->nombre }} / {{ $item->telefono }}</option>
                                                 @endforeach
                                             </select>
-                                        </p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px"> <b>Origen: </b><input name="cot_origen" id="cot_origen" type="text" class="form-control" value="{{$cotizacion->origen}}"></p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px"> <b>Destino: </b><input name="cot_destino" id="cot_destino" type="text" class="form-control" value="{{$cotizacion->destino}}"></p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/burro.png') }}" alt="" width="25px"> <b>Burreo: </b><input name="cot_burreo" id="cot_burreo" type="text" class="form-control" value="{{$cotizacion->burreo}}"></p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/servidor-en-la-nube.png') }}" alt="" width="25px"> <b>Estadia: </b><input name="cot_estadia" id="cot_estadia" type="text" class="form-control" value="{{$cotizacion->estadia}}"></p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px"> <b>Fecha Modulación: </b>
-                                            <input name="cot_fecha_modulacion" id="cot_fecha_modulacion" type="date" class="form-control" value="{{$cotizacion->fecha_modulacion}}">
-                                        </p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px"> <b>Fecha Entrega: </b>
-                                            <input name="cot_fecha_entrega" id="cot_fecha_entrega" type="date" class="form-control" value="{{$cotizacion->fecha_entrega}}">
-                                        </p>
-                                    </div>
+                                        </div>
 
-                                    <div class="col-6">
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/escala.png') }}" alt="" width="25px"> <b>Tamaño Contenedor: </b><input name="cot_tamano" id="cot_tamano" type="text" class="form-control" value="{{$cotizacion->tamano}}"></p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/peso.png') }}" alt="" width="25px"> <b>Peso Contenedor: </b><input name="cot_peso_contenedor" id="cot_peso_contenedor" type="text" class="form-control" value="{{$cotizacion->peso_contenedor}}"></p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px"> <b>Maniobra: </b><input name="cot_maniobra" id="cot_maniobra" type="text" class="form-control" value="{{$cotizacion->maniobra}}"></p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px"> <b>Otro: </b><input name="cot_otro" id="cot_otro" type="text" class="form-control" value="{{$cotizacion->otro}}"></p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px"> <b>Precio Viaje: </b><input name="cot_precio_viaje" id="cot_precio_viaje" type="text" class="form-control" value="{{$cotizacion->precio_viaje}}"></p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/impuesto.png') }}" alt="" width="25px"> <b>IVA: </b><input name="cot_iva" id="cot_iva" type="text" class="form-control" value="{{$cotizacion->iva}}"></p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/pausa.png') }}" alt="" width="25px"> <b>Retencion: </b><input name="cot_retencion" id="cot_retencion" type="text" class="form-control" value="{{$cotizacion->retencion}}"></p>
-                                        <p for="name" class="mb-4"> <img src="{{ asset('img/icon/pausa.png') }}" alt="" width="25px"> <b>Total: </b><input type="text" class="form-control" value="{{$cotizacion->total}}" readonly></p>
-                                    </div>
+                                        <div class="col-6 form-group">
+                                            <label for="name">Origen</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="cot_origen" id="cot_origen" type="text" class="form-control" value="{{$cotizacion->origen}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 form-group">
+                                            <label for="name">Destino</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="cot_destino" id="cot_destino" type="text" class="form-control" value="{{$cotizacion->destino}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 form-group">
+                                            <label for="name">Fecha modulación</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="cot_fecha_modulacion" id="cot_fecha_modulacion" type="date" class="form-control" value="{{$cotizacion->fecha_modulacion}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 form-group">
+                                            <label for="name">Fecha entrega</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="cot_fecha_entrega" id="cot_fecha_entrega" type="date" class="form-control" value="{{$cotizacion->fecha_entrega}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3 form-group">
+                                            <label for="name">Tamaño Contenedor</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/escala.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="cot_tamano" id="cot_tamano" type="text" class="form-control"  value="{{$cotizacion->tamano}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3 form-group">
+                                            <label for="name">Peso Reglamentario</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/perdida-de-peso.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="peso_reglamentario" id="peso_reglamentario" type="number" class="form-control"  value="{{$cotizacion->peso_reglamentario}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3 form-group">
+                                            <label for="name">Peso Contenedor</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/peso.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="cot_peso_contenedor" id="cot_peso_contenedor" type="text" class="form-control" value="{{$cotizacion->peso_contenedor}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3 form-group">
+                                            <label for="name">Sobrepeso</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/pesa-rusa.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="sobrepeso" id="sobrepeso" type="text" class="form-control" readonly value="{{$cotizacion->sobrepeso}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3 form-group">
+                                            <label for="name">Precio Sobre Peso</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/tonelada.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="precio_sobre_peso" id="precio_sobre_peso" type="text" class="form-control" value="{{$cotizacion->precio_sobre_peso}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3 form-group">
+                                            <label for="name">Precio Tonelada</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/tonelada.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="precio_tonelada" id="precio_tonelada" type="text" class="form-control" value="{{$cotizacion->precio_tonelada}}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-6"></div>
+
+                                        <div class="col-3 form-group">
+                                            <label for="name">Precio Viaje</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="cot_precio_viaje" id="cot_precio_viaje" type="text" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->precio_viaje}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3 form-group">
+                                            <label for="name">Burreo</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/burro.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="cot_burreo" id="cot_burreo" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->burreo}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3 form-group">
+                                            <label for="name">Maniobra</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="cot_maniobra" id="cot_maniobra" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->maniobra}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3 form-group">
+                                            <label for="name">Estadia</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/servidor-en-la-nube.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="cot_estadia" id="cot_estadia" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->estadia}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4 form-group">
+                                            <label for="name">Otros</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="cot_otro" id="cot_otro" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()"  value="{{$cotizacion->otro}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4 form-group">
+                                            <label for="name">IVA</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/impuesto.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="cot_iva" id="cot_iva" type="number" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->iva}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4 form-group">
+                                            <label for="name">Retención</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="cot_retencion" id="cot_retencion" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->retencion}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4 form-group">
+                                            <label for="name">Total Cotización</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="total" id="total" type="float" class="form-control" readonly>
+                                            </div>
+                                        </div>
                                 </div>
 
                                 <div class="row">
@@ -227,6 +386,15 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-4 form-group">
+                                        <label for="name">Total con gastos</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input type="float" class="form-control" value="{{$cotizacion->total}}" readonly>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -270,6 +438,86 @@
 
         // Agrega lo clonado al final del #formulario
         $clone.appendTo('#formulario');
+        });
+
+        function calcularTotal() {
+            const precio_viaje = parseFloat(document.getElementById('cot_precio_viaje').value.replace(/,/g, '')) || 0;
+            const burreo = parseFloat(document.getElementById('cot_burreo').value.replace(/,/g, '')) || 0;
+            const retencion = parseFloat(document.getElementById('cot_retencion').value.replace(/,/g, '')) || 0;
+            const iva = parseFloat(document.getElementById('cot_iva').value.replace(/,/g, '')) || 0;
+            const otro = parseFloat(document.getElementById('cot_otro').value.replace(/,/g, '')) || 0;
+            const estadia = parseFloat(document.getElementById('cot_estadia').value.replace(/,/g, '')) || 0;
+            const maniobra = parseFloat(document.getElementById('cot_maniobra').value.replace(/,/g, '')) || 0;
+
+            // Restar el valor de Retención del total
+            const totalSinRetencion = precio_viaje + burreo + iva + otro + estadia + maniobra;
+            const totalConRetencion = totalSinRetencion - retencion;
+
+            // Obtener el valor de Precio Tonelada
+            const precioTonelada = parseFloat(document.getElementById('precio_tonelada').value.replace(/,/g, '')) || 0;
+
+            // Sumar el valor de Precio Tonelada al total
+            const totalFinal = totalConRetencion + precioTonelada;
+
+            // Formatear el total con comas
+            const totalFormateado = totalFinal.toLocaleString('en-US');
+
+            document.getElementById('total').value = totalFormateado;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtener elementos del DOM
+            var pesoReglamentarioInput = document.getElementById('peso_reglamentario');
+            var pesoContenedorInput = document.getElementById('cot_peso_contenedor');
+            var sobrepesoInput = document.getElementById('sobrepeso');
+            var precioSobrePesoInput = document.getElementById('precio_sobre_peso');
+            var precioToneladaInput = document.getElementById('precio_tonelada');
+
+            // Agregar evento de cambio a los inputs
+            pesoReglamentarioInput.addEventListener('input', calcularSobrepeso);
+            pesoContenedorInput.addEventListener('input', calcularSobrepeso);
+
+            // Función para calcular el sobrepeso
+            function calcularSobrepeso() {
+                var pesoReglamentario = parseFloat(pesoReglamentarioInput.value) || 0;
+                var pesoContenedor = parseFloat(pesoContenedorInput.value) || 0;
+
+                // Calcular sobrepeso
+                var sobrepeso = Math.max(pesoContenedor - pesoReglamentario, 0);
+
+                // Mostrar sobrepeso en el input correspondiente con dos decimales
+                sobrepesoInput.value = sobrepeso.toFixed(2);
+
+                // Obtener el valor de Precio Sobre Peso
+                var precioSobrePeso = parseFloat(precioSobrePesoInput.value.replace(/,/g, '')) || 0;
+
+                // Calcular el resultado de la multiplicación
+                var resultado = sobrepeso * precioSobrePeso;
+
+                // Mostrar el resultado en el campo "Precio Tonelada"
+                precioToneladaInput.value = resultado.toLocaleString('en-US');
+
+                // Calcular el total
+                calcularTotal();
+            }
+
+            // Agregar evento de entrada al campo "Precio Sobre Peso"
+            precioSobrePesoInput.addEventListener('input', function () {
+                // Obtener el valor de Precio Sobre Peso
+                var precioSobrePeso = parseFloat(precioSobrePesoInput.value.replace(/,/g, '')) || 0;
+
+                // Calcular el resultado de la multiplicación
+                var resultado = parseFloat(sobrepesoInput.value) * precioSobrePeso;
+
+                // Mostrar el resultado en el campo "Precio Tonelada"
+                precioToneladaInput.value = resultado.toLocaleString('en-US');
+
+                // Calcular el total
+                calcularTotal();
+            });
+
+            // Calcular sobrepeso inicialmente al cargar la página
+            calcularSobrepeso();
         });
     </script>
 @endsection

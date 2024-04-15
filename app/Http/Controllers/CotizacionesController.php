@@ -60,7 +60,9 @@ class CotizacionesController extends Controller
         $cotizaciones->fecha_entrega = $request->get('fecha_entrega');
         $cotizaciones->iva = $request->get('iva');
         $cotizaciones->retencion = $request->get('retencion');
+        $cotizaciones->peso_reglamentario = $request->get('peso_reglamentario');
         $cotizaciones->precio_sobre_peso = $request->get('precio_sobre_peso');
+        $cotizaciones->sobrepeso = $request->get('sobrepeso');
         $cotizaciones->estatus = 'Pendiente';
 
         $precio_viaje = str_replace(',', '.', $request->get('precio_viaje'));
@@ -159,6 +161,17 @@ class CotizacionesController extends Controller
         $cotizaciones->bloque = $request->get('bloque');
         $cotizaciones->bloque_hora_i = $request->get('bloque_hora_i');
         $cotizaciones->bloque_hora_f = $request->get('bloque_hora_f');
+        $cotizaciones->peso_reglamentario = $request->get('peso_reglamentario');
+        if($request->get('cot_peso_contenedor') > $request->get('peso_reglamentario')){
+            $sobrepeso = $request->get('cot_peso_contenedor') - $request->get('peso_reglamentario');
+        }else{
+            $sobrepeso = 0;
+        }
+        $cotizaciones->sobrepeso = $sobrepeso;
+        $cotizaciones->precio_sobre_peso = $request->get('precio_sobre_peso');
+        $cotizaciones->precio_tonelada = $request->get('precio_sobre_peso') * $sobrepeso;
+        $total = ($cotizaciones->precio_tonelada + $request->get('cot_precio_viaje') + $request->get('cot_burreo') + $request->get('cot_maniobra') + $request->get('cot_estadia') + $request->get('cot_otro') + $request->get('cot_iva')) - $request->get('cot_retencion');
+        $cotizaciones->total = $total;
         $cotizaciones->update();
 
         $gasto_descripcion = $request->input('gasto_descripcion');
@@ -183,27 +196,22 @@ class CotizacionesController extends Controller
         }
 
             // Convertir los valores a números si son cadenas
-            $maniobra = is_numeric($cotizaciones->maniobra) ? $cotizaciones->maniobra : 0;
-            $burreo = is_numeric($cotizaciones->burreo) ? $cotizaciones->burreo : 0;
-            $otro = is_numeric($cotizaciones->otro) ? $cotizaciones->otro : 0;
-            $estadia = is_numeric($cotizaciones->estadia) ? $cotizaciones->estadia : 0;
-            $precio_viaje = is_numeric($cotizaciones->precio_viaje) ? $cotizaciones->precio_viaje : 0;
-            $iva = is_numeric($cotizaciones->iva) ? $cotizaciones->iva : 0;
+            // $maniobra = is_numeric($cotizaciones->maniobra) ? $cotizaciones->maniobra : 0;
+            // $burreo = is_numeric($cotizaciones->burreo) ? $cotizaciones->burreo : 0;
+            // $otro = is_numeric($cotizaciones->otro) ? $cotizaciones->otro : 0;
+            // $estadia = is_numeric($cotizaciones->estadia) ? $cotizaciones->estadia : 0;
+            // $precio_viaje = is_numeric($cotizaciones->precio_viaje) ? $cotizaciones->precio_viaje : 0;
+            // $iva = is_numeric($cotizaciones->iva) ? $cotizaciones->iva : 0;
 
             // SUMA TOTAL DE COTIZACION
-            $suma = $maniobra + $burreo + $otro + $estadia + $precio_viaje + $iva;
+            $suma =  $cotizaciones->total;
 
             foreach ($gasto_monto as $monto) {
                 // Convertir el valor a número si es una cadena
                 $monto = is_numeric($monto) ? $monto : 0; // Si $monto no es numérico, se asume 0
                 $suma += $monto;
             }
-
-            // Convertir retencion a número si es una cadena
-            $retencion = is_numeric($cotizaciones->retencion) ? $cotizaciones->retencion : 0;
-
-            $resta = $suma - $retencion;
-            $cotizaciones->total = $resta;
+            $cotizaciones->total = $suma;
             $cotizaciones->update();
 
 
