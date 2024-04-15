@@ -20,6 +20,7 @@ class Asignaciones extends Model
         'fecha_fin',
         'id_proveedor',
         'precio',
+        'id_chasis2',
     ];
 
     public function Camion()
@@ -29,6 +30,10 @@ class Asignaciones extends Model
     public function Chasis()
     {
         return $this->belongsTo(Equipo::class, 'id_chasis');
+    }
+    public function Chasis2()
+    {
+        return $this->belongsTo(Equipo::class, 'id_chasis2');
     }
     public function Doly()
     {

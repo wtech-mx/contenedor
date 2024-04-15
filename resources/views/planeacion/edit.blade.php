@@ -106,6 +106,27 @@
 
                         <div id="camionSubcontratadoDiv{{$cotizacion->id}}" style="display: none;">
                             <div class="col-12 form-group">
+                                <label for="name">Fecha inicio</label>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
+                                    </span>
+                                    <input name="fecha_inicio_proveedor" type="date" class="form-control" value="{{ date('Y-m-d')}}">
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 form-group">
+                                <label for="name">Fecha fin</label>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
+                                    </span>
+                                    <input name="fecha_fin_proveedor" type="date" class="form-control" value="{{ date('Y-m-d')}}">
+                                </div>
+                            </div>
+
+                            <div class="col-12 form-group">
                                 <label for="name">Proveedor</label>
                                 <select class="form-select d-inline-block" id="id_proveedor" name="id_proveedor" value="{{ old('id_proveedor') }}" >
                                     <option  value="">Seleccionar Proveedor</option>

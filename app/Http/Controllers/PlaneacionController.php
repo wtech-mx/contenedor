@@ -29,11 +29,22 @@ class PlaneacionController extends Controller
         $appointments = Asignaciones::get();
 
         foreach ($appointments as $appointment) {
-
             if($appointment->id_operador == NULL){
                 $description = 'Proveedor: ' . $appointment->Proveedor->nombre . ' - ' . $appointment->Proveedor->telefono . '<br>' . 'Costo viaje: ' . $appointment->precio;
             }else{
-                $description = 'Operador: ' . $appointment->Operador->nombre . ' - ' . $appointment->Operador->telefono . '<br>' . 'Camion: ' . $appointment->Camion->num_serie . ' - ' . $appointment->Camion->modelo . '<br>' . 'Chasis: ' . $appointment->Chasis->num_serie . ' - ' . $appointment->Chasis->modelo . '<br>';
+                if($appointment->Contenedor->Cotizacion->tipo_viaje == 'Sencillo'){
+                    $description = 'Tipo viaje: ' . $appointment->Contenedor->Cotizacion->tipo_viaje . '<br> <br>' .
+                    'Operador: ' . $appointment->Operador->nombre . ' - ' . $appointment->Operador->telefono . '<br>' .
+                    'Camion: ' . $appointment->Camion->num_serie . ' - ' . $appointment->Camion->modelo . '<br>' .
+                    'Chasis: ' . $appointment->Chasis->num_serie . ' - ' . $appointment->Chasis->modelo . '<br>';
+                }elseif($appointment->Contenedor->Cotizacion->tipo_viaje == 'Full'){
+                    $description = 'Tipo viaje: ' . $appointment->Contenedor->Cotizacion->tipo_viaje . '<br> <br>' .
+                    'Operador: ' . $appointment->Operador->nombre . ' - ' . $appointment->Operador->telefono . '<br>' .
+                    'Camion: ' . $appointment->Camion->num_serie . ' - ' . $appointment->Camion->modelo . '<br>' .
+                    'Chasis: ' . $appointment->Chasis->num_serie . ' - ' . $appointment->Chasis->modelo . '<br>' .
+                    'Chasis 2: ' . $appointment->Chasis2->num_serie . ' - ' . $appointment->Chasis2->modelo . '<br>' .
+                    'Doly: ' . $appointment->Doly->num_serie . ' - ' . $appointment->Doly->modelo . '<br>';
+                }
             }
 
             $description = str_replace('<br>', "\n", $description);
@@ -44,7 +55,6 @@ class PlaneacionController extends Controller
                 'end' => $appointment->fecha_fin,
                 'urlId' => $appointment->id,
                 'idCotizacion' => $appointment->Contenedor->id_cotizacion,
-                'cliiente' => 'Cliente: ' .$appointment->Contenedor->Cotizacion->Cliente->nombre,
             ];
 
         }
@@ -130,8 +140,6 @@ class PlaneacionController extends Controller
         }
 
         $asignaciones = new Asignaciones;
-        $asignaciones->fecha_inicio = $request->get('fecha_inicio');
-        $asignaciones->fecha_fin = $request->get('fecha_fin');
         $asignaciones->id_chasis = $request->get('chasis');
         $asignaciones->id_chasis2 = $request->get('chasisAdicional1');
         $asignaciones->id_dolys = $request->get('nuevoCampoDoly');
@@ -139,6 +147,13 @@ class PlaneacionController extends Controller
         $asignaciones->id_contenedor = $request->get('num_contenedor');
         $asignaciones->id_operador = $request->get('operador');
         $asignaciones->id_proveedor = $request->get('id_proveedor');
+        if($request->get('id_proveedor') == NULL){
+            $asignaciones->fecha_inicio = $request->get('fecha_inicio');
+            $asignaciones->fecha_fin = $request->get('fecha_fin');
+        }else{
+            $asignaciones->fecha_inicio = $request->get('fecha_inicio_proveedor');
+            $asignaciones->fecha_fin = $request->get('fecha_fin_proveedor');
+        }
         $asignaciones->precio = $request->get('precio');
         $asignaciones->save();
 
