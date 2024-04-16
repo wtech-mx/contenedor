@@ -180,17 +180,18 @@
                     data: new FormData(this),
                     contentType: false,
                     processData: false,
-                    success: async function(response) { // Agrega "async" aquí
+                    success: function(response) { // Agrega "async" aquí
                         // El formulario se ha enviado correctamente, ahora realiza la impresión
-                        console.log(response);
+                        console.log('OK');
                         Swal.fire({
                             title: "Planeacion Guardada <strong>¡Exitosamente!</strong>",
                             icon: "success",
                             showCloseButton: true,
                             showCancelButton: true,
                             focusConfirm: false,
-                            cancelButtonText: `<a  class="btn_swalater_cancel" style="text-decoration: none;color: #fff;" href="" >Cerrar</a>`,
+                            cancelButtonText: `<a  class="btn_swalater_cancel" style="text-decoration: none;color: #fff;" href="{{ route('index.planeaciones') }}" >Cerrar</a>`,
                         });
+                        location.reload();
 
                     },
                     error: function (xhr, status, error) {
