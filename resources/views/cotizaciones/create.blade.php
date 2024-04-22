@@ -39,7 +39,7 @@
                                                 <div class="form-group">
                                                     <label for="name">Cliente *</label>
                                                     <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_cliente" name="id_cliente" value="{{ old('id_cliente') }}">
-                                                        <option>Seleccionar cliente</option>
+                                                        <option value="">Seleccionar cliente</option>
                                                         @foreach ($clientes as $item)
                                                             <option value="{{ $item->id }}">{{ $item->nombre }} / {{ $item->telefono }}</option>
                                                         @endforeach

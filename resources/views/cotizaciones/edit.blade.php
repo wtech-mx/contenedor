@@ -121,7 +121,7 @@
                                                 <span class="input-group-text" id="basic-addon1">
                                                     <img src="{{ asset('img/icon/tonelada.png') }}" alt="" width="25px">
                                                 </span>
-                                                <input name="precio_sobre_peso" id="precio_sobre_peso" type="text" class="form-control" value="{{$cotizacion->precio_sobre_peso}}">
+                                                <input name="precio_sobre_peso" id="precio_sobre_peso" type="text" class="form-control" value="{{ number_format($cotizacion->precio_sobre_peso, 2, '.', ',') }}">
                                             </div>
                                         </div>
 
@@ -352,6 +352,42 @@
                                         @endif
                                     </div>
 
+                                    <div class="col-6 form-group">
+                                        <label for="name">Carta Porte</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="carta_porte" id="carta_porte" type="file" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6"></div>
+
+                                    <div class="col-6">
+                                        @if (pathinfo($cotizacion->carta_porte, PATHINFO_EXTENSION) == 'pdf')
+                                        <p class="text-center ">
+                                            <iframe class="mt-2" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte)}}" style="width: 80%; height: 250px;"></iframe>
+                                        </p>
+                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
+                                        @elseif (pathinfo($cotizacion->carta_porte, PATHINFO_EXTENSION) == 'doc')
+                                        <p class="text-center ">
+                                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                        </p>
+                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                        @elseif (pathinfo($cotizacion->carta_porte, PATHINFO_EXTENSION) == 'docx')
+                                        <p class="text-center ">
+                                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                        </p>
+                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                        @else
+                                            <p class="text-center mt-2">
+                                                <img id="blah" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
+                                            </p>
+                                                <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
+                                        @endif
+                                    </div>
+
                                     <h3 class="mt-3 mb-5">Gastos Extras</h3>
                                     @foreach ($gastos_extras as $gasto_extra)
                                         <input type="hidden" name="ticket_id[]" value="{{ $gasto_extra->id }}">
@@ -392,7 +428,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
                                             </span>
-                                            <input type="float" class="form-control" value="{{$cotizacion->total}}" readonly>
+                                            <input type="float" class="form-control" value="{{ number_format($cotizacion->total, 2, '.', ',') }}" readonly>
                                         </div>
                                     </div>
                                 </div>

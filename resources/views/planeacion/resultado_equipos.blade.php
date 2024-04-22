@@ -4,7 +4,7 @@
         <select class="form-select d-inline-block" id="camion" name="camion" value="{{ old('camion') }}">
             <option value="">Seleccionar Camion</option>
             @foreach ($camionesNoAsignados as $item)
-                <option value="{{$item->id}}">{{$item->marca}} / {{$item->modelo}}</option>
+                <option value="{{$item->id}}">{{$item->id_equipo}}</option>
             @endforeach
         </select>
     </div>
@@ -24,7 +24,7 @@
         <select class="form-select d-inline-block" id="chasis" name="chasis" value="{{ old('chasis') }}">
             <option value="">Seleccionar Chasis</option>
             @foreach ($chasisNoAsignados as $item)
-                <option value="{{$item->id}}">{{$item->marca}} / {{$item->modelo}}</option>
+                <option value="{{$item->id}}">{{$item->id_equipo}}</option>
             @endforeach
         </select>
     </div>
@@ -34,7 +34,7 @@
         <select class="form-select d-inline-block" id="chasisAdicional1" name="chasisAdicional1" value="{{ old('chasisAdicional1') }}">
             <option value="">Seleccionar Chasis</option>
             @foreach ($chasisNoAsignados as $item)
-                <option value="{{$item->id}}">{{$item->marca}} / {{$item->modelo}}</option>
+                <option value="{{$item->id}}">{{$item->id_equipo}}</option>
             @endforeach
         </select>
     </div>
@@ -44,7 +44,7 @@
         <select class="form-select d-inline-block" id="nuevoCampoDoly" name="nuevoCampoDoly" value="{{ old('nuevoCampoDoly') }}">
             <option value="">Seleccionar Doly</option>
             @foreach ($dolysNoAsignados as $item)
-                <option value="{{$item->id}}">{{$item->marca}} / {{$item->modelo}}</option>
+                <option value="{{$item->id}}">{{$item->id_equipo}}</option>
             @endforeach
         </select>
     </div>

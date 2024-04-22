@@ -64,25 +64,18 @@ class CotizacionesController extends Controller
         $cotizaciones->precio_sobre_peso = $request->get('precio_sobre_peso');
         $cotizaciones->sobrepeso = $request->get('sobrepeso');
         $cotizaciones->estatus = 'Pendiente';
+        $cotizaciones->precio_viaje = $request->get('precio_viaje');
+        $cotizaciones->burreo = $request->get('burreo');
+        $cotizaciones->maniobra = $request->get('maniobra');
+        $cotizaciones->estadia = $request->get('estadia');
 
-        $precio_viaje = str_replace(',', '.', $request->get('precio_viaje'));
-        $cotizaciones->precio_viaje = $precio_viaje;
-
-        $burreo = str_replace(',', '.', $request->get('burreo'));
-        $cotizaciones->burreo = $burreo;
-
-        $maniobra = str_replace(',', '.', $request->get('maniobra'));
-        $cotizaciones->maniobra = $maniobra;
-
-        $estadia = str_replace(',', '.', $request->get('estadia'));
-        $cotizaciones->estadia = $estadia;
-
-        $precio_tonelada = str_replace(',', '.', $request->get('precio_tonelada'));
+        $precio_tonelada = str_replace(',', '', $request->get('precio_tonelada'));
         $cotizaciones->precio_tonelada = $precio_tonelada;
 
-        $total = str_replace(',', '.', $request->get('total'));
+        $total = str_replace(',', '', $request->get('total'));
         $cotizaciones->total = $total;
-
+        $cotizaciones->restante = $total;
+        $cotizaciones->estatus_pago = '0';
         $cotizaciones->save();
 
         $docucotizaciones = new DocumCotizacion;
@@ -172,6 +165,15 @@ class CotizacionesController extends Controller
         $cotizaciones->precio_tonelada = $request->get('precio_sobre_peso') * $sobrepeso;
         $total = ($cotizaciones->precio_tonelada + $request->get('cot_precio_viaje') + $request->get('cot_burreo') + $request->get('cot_maniobra') + $request->get('cot_estadia') + $request->get('cot_otro') + $request->get('cot_iva')) - $request->get('cot_retencion');
         $cotizaciones->total = $total;
+
+        if ($request->hasFile("carta_porte")) {
+            $file = $request->file('carta_porte');
+            $path = public_path() . '/cotizaciones/cotizacion'. $id;
+            $fileName = uniqid() . $file->getClientOriginalName();
+            $file->move($path, $fileName);
+            $cotizaciones->carta_porte = $fileName;
+        }
+
         $cotizaciones->update();
 
         $gasto_descripcion = $request->input('gasto_descripcion');

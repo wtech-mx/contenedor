@@ -23,5 +23,6 @@ class Equipo extends Model
         'poliza_seguro',
         'folio',
         'fecha',
+        'id_equipo',
     ];
 }

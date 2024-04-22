@@ -19,7 +19,8 @@ class EquiposController extends Controller
 
         $proveedor = new Equipo;
         if($request->get('marca') != NULL){
-            $proveedor->tipo = '3.A Tractos / Camiones';
+            $proveedor->tipo = 'Tractos / Camiones';
+            $proveedor->id_equipo = $request->get('id_equipo');
             $proveedor->marca = $request->get('marca');
             $proveedor->year = $request->get('year');
             $proveedor->num_serie = $request->get('num_serie');
@@ -45,7 +46,8 @@ class EquiposController extends Controller
             $proveedor->fecha = $request->get('fecha');
             $proveedor->save();
         }else if($request->get('marca_chasis') != NULL){
-            $proveedor->tipo = '3.B Chasis / Plataforma';
+            $proveedor->tipo = 'Chasis / Plataforma';
+            $proveedor->id_equipo = $request->get('id_equipo_chasis');
             $proveedor->marca = $request->get('marca_chasis');
             $proveedor->year = $request->get('year_chasis');
             $proveedor->num_serie = $request->get('num_serie_chasis');
@@ -73,6 +75,7 @@ class EquiposController extends Controller
             $proveedor->save();
         }else if($request->get('marca_doly') != NULL){
             $proveedor->tipo = 'Dolys';
+            $proveedor->id_equipo = $request->get('id_equipo_doly');
             $proveedor->year = $request->get('year_doly');
             $proveedor->marca = $request->get('marca_doly');
             $proveedor->num_serie = $request->get('num_serie_doly');

@@ -75,6 +75,24 @@
             </a>
           </li>
 
+          <li class="nav-item">
+            <a class="nav-link {{ (Request::is('cuentas/cobrar*') ? 'active' : '') }}" href="{{ route('index.cobrar') }}" target="">
+              <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
+                <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="20px">
+              </div>
+              <span class="nav-link-text ms-1"><b>VII</b> Cuentas por cobrar</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {{ (Request::is('cuentas/cobrar*') ? 'active' : '') }}" href="{{ route('index.pagar') }}" target="">
+              <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
+                <img src="{{ asset('img/icon/gastos.png.webp') }}" alt="" width="20px">
+              </div>
+              <span class="nav-link-text ms-1"><b>VIII</b> Cuentas por pagar</span>
+            </a>
+          </li>
+
           <a data-bs-toggle="collapse" href="#pagesExamples" class="nav-link {{ (Request::is('users*') ? 'active' : '') }}{{ (Request::is('roles*') ? 'active' : '') }}" aria-controls="pagesExamples" role="button" aria-expanded="false">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
               <i class="ni ni-settings text-sm opacity-10" style="color: {{$configuracion->color_iconos_sidebar}}"></i>

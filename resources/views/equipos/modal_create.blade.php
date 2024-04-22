@@ -42,6 +42,16 @@
                                     </div>
 
                                     <div class="col-6 form-group">
+                                        <label for="name">Folio *</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="id_equipo" id="id_equipo" type="text" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 form-group">
                                         <label for="name">Fecha de alta *</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
@@ -128,6 +138,16 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <h6>Datos del Vehiculo</h6>
+                                    </div>
+
+                                    <div class="col-6 form-group">
+                                        <label for="name">Folio *</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="id_equipo_chasis" id="id_equipo_chasis" type="text" class="form-control">
+                                        </div>
                                     </div>
 
                                     <div class="col-6 form-group">
@@ -240,6 +260,16 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <h6>Dolys</h6>
+                                    </div>
+
+                                    <div class="col-6 form-group">
+                                        <label for="name">ID Interno *</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="id_equipo_doly" id="id_equipo_doly" type="text" class="form-control">
+                                        </div>
                                     </div>
 
                                     <div class="col-6 form-group">

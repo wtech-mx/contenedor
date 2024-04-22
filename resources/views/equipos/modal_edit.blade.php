@@ -18,6 +18,16 @@
                     </div>
 
                     <div class="col-6 form-group">
+                        <label for="name">Folio *</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                                <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
+                            </span>
+                            <input name="id_equipo" id="id_equipo" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-6 form-group">
                         <label for="name">Fecha de alta *</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">

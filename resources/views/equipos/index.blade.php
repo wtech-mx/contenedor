@@ -30,7 +30,7 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        <th>Tipo</th>
+                                        <th>ID Interno</th>
                                         <th>Fecha Alta</th>
                                         <th>Acciones</th>
                                     </tr>
@@ -40,7 +40,7 @@
                                         @foreach ($equipos as $equipo)
                                             <tr>
                                                 <td>{{$equipo->id}}</td>
-                                                <td>{{$equipo->tipo}}</td>
+                                                <td>{{$equipo->id_equipo}}</td>
                                                 <td>{{$equipo->fecha}}</td>
                                                 <td>
                                                     <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipoEditModal-{{$equipo->id}}">
