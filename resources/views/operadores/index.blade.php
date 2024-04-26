@@ -30,10 +30,10 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        <th>Nombre</th>
-                                        <th>Telefono</th>
-                                        <th>Tipo Sangre</th>
-                                        <th>Acciones</th>
+                                        <th>Nombre <img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px"></th>
+                                        <th>Telefono <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px"></th>
+                                        <th>Tipo Sangre <img src="{{ asset('img/icon/sangre.png') }}" alt="" width="25px"></th>
+                                        <th>Acciones <img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px"></th>
                                     </tr>
                                 </thead>
 

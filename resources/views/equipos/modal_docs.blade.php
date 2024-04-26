@@ -1,12 +1,12 @@
-<div class="modal fade" id="documenotsdigitales-{{$equipo->id}}" tabindex="-1" aria-labelledby="equipoModalLabel" aria-hidden="true">
+<div class="modal fade" id="documenotsdigitales-{{$item->id}}" tabindex="-1" aria-labelledby="equipoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Editar Equipo #{{$equipo->id}} </h5>
+          <h5 class="modal-title">Editar Equipo #{{$item->id}} </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
-        <form method="POST" action="{{ route('update.equipos', $equipo->id) }}" id="" enctype="multipart/form-data" role="form">
+        <form method="POST" action="{{ route('update.equipos', $item->id) }}" id="" enctype="multipart/form-data" role="form">
             <input type="hidden" name="_method" value="PATCH">
 
             @csrf
@@ -20,20 +20,20 @@
 
                     <div class="col-6 text-center">
                         <h5>Tarjeta de Circulacion</h5>
-                        @if($equipo->tarjeta_circulacion == NULL)
+                        @if($item->tarjeta_circulacion == NULL)
 
                         <label for="name">Tarjeta de Circulacion *</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
                                 <img src="{{ asset('img/icon/business-card-design.webp') }}" alt="" width="25px">
                             </span>
-                            <input name="tarjeta_circulacion" id="tarjeta_circulacion" type="file" class="form-control" value="{{$equipo->acceso}}">
+                            <input name="tarjeta_circulacion" id="tarjeta_circulacion" type="file" class="form-control" value="{{$item->acceso}}">
                         </div>
 
                         @else
 
                         <p class="text-center">
-                            <img src="{{ asset('equipos/'.$equipo->tarjeta_circulacion) }}" alt="" width="100%">
+                            <img src="{{ asset('equipos/'.$item->tarjeta_circulacion) }}" alt="" width="100%">
                         </p>
 
                         @endif
@@ -42,7 +42,7 @@
                     <div class="col-6 text-center">
                         <h5>Poliza de Seguro</h5>
 
-                        @if($equipo->poliza_seguro == NULL)
+                        @if($item->poliza_seguro == NULL)
                         <label for="name">Poliza de Seguro *</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
@@ -53,7 +53,7 @@
                         @else
 
                         <p class="text-center">
-                            <img src="{{ asset('equipos/'.$equipo->poliza_seguro) }}" alt="" width="100%">
+                            <img src="{{ asset('equipos/'.$item->poliza_seguro) }}" alt="" width="100%">
                         </p>
 
                         @endif

@@ -24,42 +24,190 @@
                         </div>
                     </div>
 
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-flush" id="datatable-search">
-                                <thead class="thead">
-                                    <tr>
-                                        <th>No</th>
-                                        <th>ID Interno</th>
-                                        <th>Fecha Alta</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
+                    <nav class="mx-auto">
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                          <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
+                            <img src="{{ asset('img/icon/chasis.png') }}" alt="" width="40px">  Dollys
+                          </button>
 
-                                    <tbody>
-                                        @foreach ($equipos as $equipo)
-                                            <tr>
-                                                <td>{{$equipo->id}}</td>
-                                                <td>{{$equipo->id_equipo}}</td>
-                                                <td>{{$equipo->fecha}}</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipoEditModal-{{$equipo->id}}">
-                                                        <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
-                                                    </button>
-                                                    <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#documenotsdigitales-{{$equipo->id}}">
-                                                        <img src="{{ asset('img/icon/galeria-de-imagenes.webp') }}" alt="" width="25px">
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            @include('equipos.modal_edit')
-                                            @include('equipos.modal_docs')
+                          <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
+                            <img src="{{ asset('img/icon/troca.png') }}" alt="" width="40px">  Chasis Plataforma
+                          </button>
 
-                                        @endforeach
-                                    </tbody>
-
-                            </table>
+                          <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
+                            <img src="{{ asset('img/icon/camion.png') }}" alt="" width="40px">  Tractos / Camiones
+                          </button>
                         </div>
-                    </div>
+                      </nav>
+
+                      <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-flush" id="datatable-search">
+                                        <thead class="thead">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Folio  <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px"></th>
+                                                <th>Vehiculo <img src="{{ asset('img/icon/coche.png') }}" alt="" width="25px"></th>
+                                                <th>Acceso <img src="{{ asset('img/icon/iniciar-sesion.png') }}" alt="" width="25px"></th>
+                                                <th>ID Interno <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px"></th>
+                                                <th>Fecha Alta <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px"></th>
+                                                <th>Acciones <img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px"></th>
+                                            </tr>
+                                        </thead>
+
+                                            <tbody>
+                                                @foreach ($equipos_dolys as $item)
+                                                    <tr>
+                                                        <td>{{$item->id}}</td>
+                                                        <td>{{$item->folio}}</td>
+                                                        <td>
+                                                            <ul>
+                                                                <li>Marca : {{$item->folio}}</li>
+                                                                <li>Año : {{$item->year}}</li>
+                                                                <li>Modelo : {{$item->modelo}}</li>
+                                                                <li>Motor : {{$item->folio}}</li>
+                                                                <li>Marca : {{$item->motor}}</li>
+                                                                <li>Num Serie : {{$item->num_serie}}</li>
+
+                                                            </ul>
+                                                        </td>
+                                                        <td>{{$item->acceso}}</td>
+                                                        <td>{{$item->id_equipo}}</td>
+                                                        <td>{{$item->fecha}}</td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipoEditModal-{{$item->id}}">
+                                                                <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
+                                                            </button>
+                                                            <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#documenotsdigitales-{{$item->id}}">
+                                                                <img src="{{ asset('img/icon/galeria-de-imagenes.webp') }}" alt="" width="25px">
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    @include('equipos.modal_edit')
+                                                    @include('equipos.modal_docs')
+
+                                                @endforeach
+                                            </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-flush" id="datatable-search">
+                                        <thead class="thead">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Folio  <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px"></th>
+                                                <th>Vehiculo <img src="{{ asset('img/icon/coche.png') }}" alt="" width="25px"></th>
+                                                <th>Acceso <img src="{{ asset('img/icon/iniciar-sesion.png') }}" alt="" width="25px"></th>
+                                                <th>ID Interno <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px"></th>
+                                                <th>Fecha Alta <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px"></th>
+                                                <th>Acciones <img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px"></th>
+                                            </tr>
+                                        </thead>
+
+                                            <tbody>
+                                                @foreach ($equipos_chasis as $item)
+                                                    <tr>
+                                                        <td>{{$item->id}}</td>
+                                                        <td>{{$item->folio}}</td>
+                                                        <td>
+                                                            <ul>
+                                                                <li>Marca : {{$item->folio}}</li>
+                                                                <li>Año : {{$item->year}}</li>
+                                                                <li>Modelo : {{$item->modelo}}</li>
+                                                                <li>Motor : {{$item->folio}}</li>
+                                                                <li>Marca : {{$item->motor}}</li>
+                                                                <li>Num Serie : {{$item->num_serie}}</li>
+
+                                                            </ul>
+                                                        </td>
+                                                        <td>{{$item->acceso}}</td>
+                                                        <td>{{$item->id_equipo}}</td>
+                                                        <td>{{$item->fecha}}</td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipoEditModal-{{$item->id}}">
+                                                                <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
+                                                            </button>
+                                                            <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#documenotsdigitales-{{$item->id}}">
+                                                                <img src="{{ asset('img/icon/galeria-de-imagenes.webp') }}" alt="" width="25px">
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    @include('equipos.modal_edit')
+                                                    @include('equipos.modal_docs')
+
+                                                @endforeach
+                                            </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                            <div class="table-responsive">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-flush" id="datatable-search">
+                                            <thead class="thead">
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Folio  <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px"></th>
+                                                    <th>Vehiculo <img src="{{ asset('img/icon/coche.png') }}" alt="" width="25px"></th>
+                                                    <th>Acceso <img src="{{ asset('img/icon/iniciar-sesion.png') }}" alt="" width="25px"></th>
+                                                    <th>ID Interno <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px"></th>
+                                                    <th>Fecha Alta <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px"></th>
+                                                    <th>Acciones <img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px"></th>
+                                                </tr>
+                                            </thead>
+
+                                                <tbody>
+                                                    @foreach ($equipos_camiones as $item)
+                                                        <tr>
+                                                            <td>{{$item->id}}</td>
+                                                            <td>{{$item->folio}}</td>
+                                                            <td>
+                                                                <ul>
+                                                                    <li>Marca : {{$item->folio}}</li>
+                                                                    <li>Año : {{$item->year}}</li>
+                                                                    <li>Modelo : {{$item->modelo}}</li>
+                                                                    <li>Motor : {{$item->folio}}</li>
+                                                                    <li>Marca : {{$item->motor}}</li>
+                                                                    <li>Num Serie : {{$item->num_serie}}</li>
+
+                                                                </ul>
+                                                            </td>
+                                                            <td>{{$item->acceso}}</td>
+                                                            <td>{{$item->id_equipo}}</td>
+                                                            <td>{{$item->fecha}}</td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipoEditModal-{{$item->id}}">
+                                                                    <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
+                                                                </button>
+                                                                <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#documenotsdigitales-{{$item->id}}">
+                                                                    <img src="{{ asset('img/icon/galeria-de-imagenes.webp') }}" alt="" width="25px">
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        @include('equipos.modal_edit')
+                                                        @include('equipos.modal_docs')
+
+                                                    @endforeach
+                                                </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+
                 </div>
             </div>
         </div>

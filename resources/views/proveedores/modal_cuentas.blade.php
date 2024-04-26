@@ -9,10 +9,10 @@
 
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-3"><b>Beneficiario</b></div>
-                    <div class="col-3"><b>Banco</b></div>
-                    <div class="col-3"><b>Cuenta</b></div>
-                    <div class="col-3"><b>Clabe</b></div>
+                    <div class="col-3  mb-3"><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="20px"><strong>Beneficiario</strong></div>
+                    <div class="col-3  mb-3"><img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="20px"><strong>Banco</strong></div>
+                    <div class="col-3  mb-3"><img src="{{ asset('img/icon/t debito.webp') }}" alt="" width="20px"><strong>Cuenta</strong></div>
+                    <div class="col-3  mb-3"><img src="{{ asset('img/icon/t credito.png.webp') }}" alt="" width="20px"><strong>Clabe</strong></div>
 
                     @foreach ($cuentas as $cuentas)
                         @if ($cuentas->id_proveedores == $proveedor->id)

@@ -10,15 +10,20 @@ class EquiposController extends Controller
 {
     public function index(){
         $fechaActual = date('Y-m-d');
-        $equipos = Equipo::get();
 
-        return view('equipos.index', compact('equipos', 'fechaActual'));
+        $equipos_dolys = Equipo::where('tipo','=','Dolys')->get();
+        $equipos_chasis = Equipo::where('tipo','=','Chasis / Plataforma')->get();
+        $equipos_camiones = Equipo::where('tipo','=','Tractos / Camiones')->get();
+
+        return view('equipos.index', compact('equipos_dolys','equipos_chasis','equipos_camiones', 'fechaActual'));
     }
 
     public function store(Request $request){
 
         $proveedor = new Equipo;
+
         if($request->get('marca') != NULL){
+            $proveedor->folio = $request->get('folio');
             $proveedor->tipo = 'Tractos / Camiones';
             $proveedor->id_equipo = $request->get('id_equipo');
             $proveedor->marca = $request->get('marca');
@@ -45,7 +50,9 @@ class EquiposController extends Controller
 
             $proveedor->fecha = $request->get('fecha');
             $proveedor->save();
+
         }else if($request->get('marca_chasis') != NULL){
+
             $proveedor->tipo = 'Chasis / Plataforma';
             $proveedor->id_equipo = $request->get('id_equipo_chasis');
             $proveedor->marca = $request->get('marca_chasis');
@@ -73,8 +80,10 @@ class EquiposController extends Controller
             $proveedor->folio = $request->get('folio');
             $proveedor->fecha = $request->get('fecha_chasis');
             $proveedor->save();
+
         }else if($request->get('marca_doly') != NULL){
             $proveedor->tipo = 'Dolys';
+            $proveedor->folio = $request->get('folio');
             $proveedor->id_equipo = $request->get('id_equipo_doly');
             $proveedor->year = $request->get('year_doly');
             $proveedor->marca = $request->get('marca_doly');

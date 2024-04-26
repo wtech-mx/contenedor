@@ -390,34 +390,55 @@
 
                                     <h3 class="mt-3 mb-5">Gastos Extras</h3>
                                     @foreach ($gastos_extras as $gasto_extra)
+
                                         <input type="hidden" name="ticket_id[]" value="{{ $gasto_extra->id }}">
+
                                         <div class="col-6 form-group">
-                                            <p for="name" class="mb-4"> <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px"> <b>
-                                                Descripción: </b><input name="gasto_descripcion[]" id="gasto_descripcion[]" type="text" class="form-control" value="{{$gasto_extra->descripcion}}">
-                                            </p>
+                                            <label for="name">Descripción:</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="gasto_descripcion[]" id="gasto_descripcion[]" type="text" class="form-control" value="{{$gasto_extra->descripcion}}">
+                                            </div>
                                         </div>
 
                                         <div class="col-6 form-group">
-                                            <p for="name" class="mb-4"> <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px"> <b>
-                                                Monto: </b><input name="gasto_monto[]" id="gasto_monto[]" type="text" class="form-control" value="{{$gasto_extra->monto}}">
-                                            </p>
+                                            <label for="name">Monto:</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="gasto_monto[]" id="gasto_monto[]" type="text" class="form-control" value="{{$gasto_extra->monto}}">
+                                            </div>
                                         </div>
+
                                     @endforeach
                                     <div id="formulario" class="mt-4">
                                         <button type="button" class="clonar btn btn-secondary btn-sm">Agregar</button>
                                         <div class="clonars">
                                             <div class="row">
+
                                                 <div class="col-6 form-group">
-                                                    <p for="name" class="mb-4"> <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px"> <b>
-                                                        Descripción: </b><input name="gasto_descripcion[]" id="gasto_descripcion[]" type="text" class="form-control">
-                                                    </p>
+                                                    <label for="name">Descripción:</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                                        </span>
+                                                        <input name="gasto_descripcion[]" id="gasto_descripcion[]" type="text" class="form-control" >
+                                                    </div>
                                                 </div>
 
                                                 <div class="col-6 form-group">
-                                                    <p for="name" class="mb-4"> <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px"> <b>
-                                                        Monto: </b><input name="gasto_monto[]" id="gasto_monto[]" type="text" class="form-control">
-                                                    </p>
+                                                    <label for="name">Monto:</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                                        </span>
+                                                        <input name="gasto_monto[]" id="gasto_monto[]" type="text" class="form-control" >
+                                                    </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>

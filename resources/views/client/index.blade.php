@@ -81,6 +81,7 @@ Cliente
       searchable: true,
       fixedHeight: false
     });
+
 </script>
 
 @endsection

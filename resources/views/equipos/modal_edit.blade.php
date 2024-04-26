@@ -1,11 +1,11 @@
-<div class="modal fade" id="equipoEditModal-{{$equipo->id}}" tabindex="-1" aria-labelledby="equipoModalLabel" aria-hidden="true">
+<div class="modal fade" id="equipoEditModal-{{$item->id}}" tabindex="-1" aria-labelledby="equipoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Editar Equipo #{{$equipo->id}} </h5>
+          <h5 class="modal-title">Editar Equipo #{{$item->id}} </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form method="POST" action="{{ route('update.equipos', $equipo->id) }}" id="" enctype="multipart/form-data" role="form">
+        <form method="POST" action="{{ route('update.equipos', $item->id) }}" id="" enctype="multipart/form-data" role="form">
             <input type="hidden" name="_method" value="PATCH">
 
             @csrf
@@ -33,7 +33,7 @@
                             <span class="input-group-text" id="basic-addon1">
                                 <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
                             </span>
-                            <input name="fecha" id="fecha" type="date" class="form-control" value="{{$equipo->fecha}}">
+                            <input name="fecha" id="fecha" type="date" class="form-control" value="{{$item->fecha}}">
                         </div>
                     </div>
 
@@ -43,7 +43,7 @@
                             <span class="input-group-text" id="basic-addon1">
                                 <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
                             </span>
-                            <input name="year" id="year" type="number" class="form-control" value="{{$equipo->year}}">
+                            <input name="year" id="year" type="number" class="form-control" value="{{$item->year}}">
                         </div>
                     </div>
 
@@ -53,7 +53,7 @@
                             <span class="input-group-text" id="basic-addon1">
                                 <img src="{{ asset('img/icon/marca.webp') }}" alt="" width="25px">
                             </span>
-                            <input name="marca" id="marca" type="text" class="form-control" value="{{$equipo->marca}}">
+                            <input name="marca" id="marca" type="text" class="form-control" value="{{$item->marca}}">
                         </div>
                     </div>
 
@@ -63,7 +63,7 @@
                             <span class="input-group-text" id="basic-addon1">
                                 <img src="{{ asset('img/icon/coche.png') }}" alt="" width="25px">
                             </span>
-                            <input name="modelo" id="modelo" type="text" class="form-control" value="{{$equipo->modelo}}">
+                            <input name="modelo" id="modelo" type="text" class="form-control" value="{{$item->modelo}}">
                         </div>
                     </div>
 
@@ -73,7 +73,7 @@
                             <span class="input-group-text" id="basic-addon1">
                                 <img src="{{ asset('img/icon/sku.webp') }}" alt="" width="25px">
                             </span>
-                            <input name="num_serie" id="num_serie" type="number" class="form-control" value="{{$equipo->num_serie}}">
+                            <input name="num_serie" id="num_serie" type="number" class="form-control" value="{{$item->num_serie}}">
                         </div>
                     </div>
 
@@ -83,7 +83,7 @@
                             <span class="input-group-text" id="basic-addon1">
                                 <img src="{{ asset('img/icon/iniciar-sesion.png') }}" alt="" width="25px">
                             </span>
-                            <input name="acceso" id="acceso" type="text" class="form-control" value="{{$equipo->acceso}}">
+                            <input name="acceso" id="acceso" type="text" class="form-control" value="{{$item->acceso}}">
                         </div>
                     </div>
 
@@ -95,7 +95,7 @@
                             <span class="input-group-text" id="basic-addon1">
                                 <img src="{{ asset('img/icon/business-card-design.webp') }}" alt="" width="25px">
                             </span>
-                            <input name="tarjeta_circulacion" id="tarjeta_circulacion" type="file" class="form-control" value="{{$equipo->acceso}}">
+                            <input name="tarjeta_circulacion" id="tarjeta_circulacion" type="file" class="form-control" value="{{$item->acceso}}">
                         </div>
                     </div>
 

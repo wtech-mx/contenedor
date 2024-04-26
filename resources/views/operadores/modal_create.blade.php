@@ -75,7 +75,7 @@
                         <label for="name">Tipo Sangre *</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                                <img src="{{ asset('img/icon/mapa-de-la-ciudad.webp') }}" alt="" width="25px">
+                                <img src="{{ asset('img/icon/sangre.png') }}" alt="" width="25px">
                             </span>
                             <input name="tipo_sangre" id="tipo_sangre" type="text" class="form-control">
                         </div>

@@ -52,12 +52,19 @@
 
                         <div id="camionPropioDiv{{$cotizacion->id}}" style="display: none;">
                             <div class="row">
+
                                 <div class="col-12 form-group">
-                                    <label for="name">Tipo</label>
-                                    <select class="form-select d-inline-block" id="tipo{{$cotizacion->id}}" name="tipo" value="{{ old('tipo') }}" >
-                                        <option  value="Sencillo">Sencillo</option>
-                                        <option  value="Full">Full</option>
-                                    </select>
+                                    <label for="name">Selecione el tipo de Unidad</label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <img src="{{ asset('img/icon/camion.webp') }}" alt="" width="25px">
+                                        </span>
+                                        <select class="form-select d-inline-block" id="tipo{{$cotizacion->id}}" name="tipo"  value="{{ old('tipo') }}" onchange="mostrarDiv('{{$cotizacion->id}}')">
+                                            <option>Seleccionar Opcion</option>
+                                            <option  value="Sencillo">Sencillo</option>
+                                            <option  value="Full">Full</option>
+                                        </select>
+                                    </div>
                                 </div>
 
                                 <div class="col-12 form-group">
