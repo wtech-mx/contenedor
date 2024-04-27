@@ -13,7 +13,7 @@
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <a class="btn"  href="{{ route('index.cobrar') }}" style="background: {{$configuracion->color_boton_close}}; color: #ffff;margin-right: 3rem;">
-                                Regresar
+                                <img src="{{ asset('img/icon/izquierda_white.png') }}" alt="" width="25px"> Regresar
                             </a>
                         </div>
                     </div>
@@ -22,12 +22,12 @@
                         <table class="table table-striped table-hover table_id" id="datatable-search">
                             <thead class="thead">
                                 <tr>
-                                    <th>No</th>
-                                    <th># Contenedor</th>
-                                    <th>Total a pagar</th>
-                                    <th>Tipo de viaje</th>
-                                    <th>Restante</th>
-                                    <th>Acciones</th>
+                                    <th><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px">No</th>
+                                    <th><img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="25px"># Contenedor</th>
+                                    <th><img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px">Total a pagar</th>
+                                    <th><img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">Tipo de viaje</th>
+                                    <th><img src="{{ asset('img/icon/gastos.png.webp') }}" alt="" width="25px">Restante</th>
+                                    <th><img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,9 +35,9 @@
                                     <tr>
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->DocCotizacion->num_contenedor }}</td>
-                                        <td>{{ number_format($item->total, 2, '.', ',') }}</td>
+                                        <td>$ {{ number_format($item->total, 2, '.', ',') }}</td>
                                         <td>{{ $item->tipo_viaje }}</td>
-                                        <td>{{ number_format($item->restante, 2, '.', ',') }}</td>
+                                        <td>$ {{ number_format($item->restante, 2, '.', ',') }}</td>
                                         <td>
                                             <a class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#cobrarModal{{ $item->id }}">
                                                 <i class="fa fa-fw fa-edit"></i> Ver
@@ -57,3 +57,13 @@
 @endsection
 
 
+@section('datatable')
+
+<script>
+    const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
+      searchable: true,
+      fixedHeight: false
+    });
+</script>
+
+@endsection

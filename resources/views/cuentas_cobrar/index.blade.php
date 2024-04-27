@@ -29,10 +29,10 @@ Cuentas Cobrar
                                     <tr>
                                         <th>No</th>
 
-										<th>Nombre</th>
-										<th>Telefono</th>
-										<th>Viajes por cobrar</th>
-                                        <th>Acciones</th>
+										<th><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px"> Nombre</th>
+										<th><img src="{{ asset('img/icon/phone.webp') }}" alt="" width="25px"> Telefono</th>
+										<th><img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px"> Viajes por cobrar</th>
+                                        <th><img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px"> Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>

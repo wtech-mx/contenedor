@@ -16,7 +16,7 @@
                             <label for="name">Total a cobrar *</label>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">
-                                    <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                    <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px">
                                 </span>
                                 <input type="float" class="form-control" id="total_{{ $item->id }}" name="total" value=" ${{ number_format($item->total, 2, '.', ',') }}" readonly>
                             </div>
@@ -39,7 +39,7 @@
                                 <label for="name">Metodo de pago 1 *</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">
-                                        <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                        <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
                                     </span>
                                     <select class="form-select cliente d-inline-block"  data-toggle="select" id="metodo_pago1" name="metodo_pago1" value="{{ old('metodo_pago1') }}">
                                         @if ($item->metodo_pago1 == NULL)
@@ -60,7 +60,7 @@
                                 <label for="name">Comprobante de pago 1 *</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">
-                                        <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                        <img src="{{ asset('img/icon/validando-billete.webp') }}" alt="" width="25px">
                                     </span>
                                     <input type="file" id="comprobante1" name="comprobante1" class="form-control">
                                 </div>
@@ -86,7 +86,7 @@
                                 <label for="name">Metodo de pago 1 *</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">
-                                        <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                        <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
                                     </span>
                                     <select class="form-select cliente d-inline-block"  data-toggle="select" id="metodo_pago2" name="metodo_pago2" value="{{ old('metodo_pago2') }}">
                                         @if ($item->metodo_pago2 == NULL)
@@ -107,7 +107,7 @@
                                 <label for="name">Comprobante de pago 2 *</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">
-                                        <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                        <img src="{{ asset('img/icon/validando-billete.webp') }}" alt="" width="25px">
                                     </span>
                                     <input type="file" id="comprobante2" name="comprobante2" class="form-control">
                                 </div>
@@ -118,7 +118,7 @@
                             <label for="name">Restante</label>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">
-                                    <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                    <img src="{{ asset('img/icon/coins.webp') }}" alt="" width="25px">
                                 </span>
                                 <input type="float" class="form-control restante" id="restante_{{ $item->id }}" name="restante" readonly>
                             </div>
