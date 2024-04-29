@@ -26,7 +26,11 @@
 
                     <nav class="mx-auto">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                          <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
+                        <button class="nav-link active" id="nav-planeadas-tab" data-bs-toggle="tab" data-bs-target="#nav-planeadas" type="button" role="tab" aria-controls="nav-planeadas" aria-selected="false">
+                            <img src="{{ asset('img/icon/resultado.webp') }}" alt="" width="40px">  Planeadas
+                            </button>
+
+                          <button class="nav-link" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
                             <img src="{{ asset('img/icon/pausa.png') }}" alt="" width="40px">  En espera
                           </button>
 
@@ -42,7 +46,46 @@
 
 
                       <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                        <div class="tab-pane fade show active" id="nav-planeadas" role="tabpanel" aria-labelledby="nav-planeadas-tab" tabindex="0">
+                            <div class="table-responsive">
+                                    <table class="table table-flush" id="datatable-planeadas">
+                                        <thead class="thead">
+                                            <tr>
+                                                <th>No</th>
+                                                <th><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px">Cliente</th>
+                                                <th><img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">Origen</th>
+                                                <th><img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px">Destino</th>
+                                                <th><img src="{{ asset('img/icon/semaforos.webp') }}" alt="" width="25px">Estatus</th>
+                                                <th><img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">Acciones</th>
+                                            </tr>
+                                        </thead>
+                                            <tbody>
+                                                @foreach ($cotizaciones_planeadas as $cotizacion)
+                                                    <tr>
+                                                        <td>{{$cotizacion->id}}</td>
+                                                        <td>{{$cotizacion->Cliente->nombre}}</td>
+                                                        <td>{{$cotizacion->origen}}</td>
+                                                        <td>{{$cotizacion->destino}}</td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
+                                                                {{$cotizacion->estatus}}
+                                                            </button>
+                                                        </td>
+                                                        <td>
+                                                            <a type="button" class="btn" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
+                                                                <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    @include('cotizaciones.modal_estatus')
+                                                @endforeach
+                                            </tbody>
+
+                                    </table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                             <div class="table-responsive">
                                     <table class="table table-flush" id="datatable-search">
                                         <thead class="thead">
@@ -145,7 +188,7 @@
                                         </tbody>
 
                                 </table>
-                        </div>
+                            </div>
                         </div>
 
                         <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
@@ -197,7 +240,7 @@
                                         </tbody>
 
                                 </table>
-                        </div>
+                            </div>
                         </div>
                       </div>
 
@@ -209,6 +252,11 @@
 
 @section('datatable')
     <script type="text/javascript">
+        const dataTableSearch4 = new simpleDatatables.DataTable("#datatable-planeadas", {
+        searchable: true,
+        fixedHeight: false
+        });
+
         const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
         searchable: true,
         fixedHeight: false

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Asignaciones;
 use App\Models\Client;
 use App\Models\Cotizaciones;
 use App\Models\DocumCotizacion;
@@ -18,9 +19,10 @@ class CotizacionesController extends Controller
         $cotizaciones = Cotizaciones::where('estatus','=','Pendiente')->get();
         $cotizaciones_aprovadas = Cotizaciones::where('estatus','=','Aprobada')->where('estatus_planeacion','=', NULL)->get();
         $cotizaciones_canceladas = Cotizaciones::where('estatus','=','Cancelada')->get();
+        $cotizaciones_planeadas = Cotizaciones::where('estatus','=','Aprobada')->where('estatus_planeacion','=', 1)->get();
 
 
-        return view('cotizaciones.index', compact('cotizaciones','cotizaciones_aprovadas','cotizaciones_canceladas'));
+        return view('cotizaciones.index', compact('cotizaciones','cotizaciones_aprovadas','cotizaciones_canceladas', 'cotizaciones_planeadas'));
     }
 
     public function create(){
@@ -93,9 +95,24 @@ class CotizacionesController extends Controller
             'estatus' => 'required',
         ]);
 
-        $cotizaciones = Cotizaciones::find($id);
-        $cotizaciones->estatus = $request->get('estatus');
-        $cotizaciones->update();
+        if($request->get('estatus') == 'Cancelada'){
+            $doc_cotizaciones = DocumCotizacion::where('id_cotizacion', '=', $id)->first();
+
+            $asignaciones = Asignaciones::where('id_contenedor', '=', $doc_cotizaciones->id)->first();
+            $asignaciones->delete();
+
+            $doc_cotizaciones->delete();
+
+            $gastos_extras = GastosExtras::where('id_cotizacion', '=', $id)->delete();
+
+            $cot = Cotizaciones::findOrFail($id);
+            $cot->delete();
+
+        }else{
+            $cotizaciones = Cotizaciones::find($id);
+            $cotizaciones->estatus = $request->get('estatus');
+            $cotizaciones->update();
+        }
 
         Session::flash('edit', 'Se ha editado sus datos con exito');
         return redirect()->route('index.cotizaciones')
@@ -117,6 +134,20 @@ class CotizacionesController extends Controller
         $cotizaciones->num_contenedor = $request->get('num_contenedor');
         $cotizaciones->terminal = $request->get('terminal');
         $cotizaciones->num_autorizacion = $request->get('num_autorizacion');
+        $cotizaciones->num_boleta_liberacion = $request->get('num_boleta_liberacion');
+        $cotizaciones->num_doda = $request->get('num_doda');
+        $cotizaciones->num_carta_porte = $request->get('num_carta_porte');
+        $cotizaciones->boleta_vacio = $request->get('boleta_vacio');
+        $cotizaciones->fecha_boleta_vacio = $request->get('fecha_boleta_vacio');
+        $cotizaciones->eir = $request->get('eir');
+
+        if ($request->hasFile("doc_eir")) {
+            $file = $request->file('doc_eir');
+            $path = public_path() . '/cotizaciones/cotizacion'. $id;
+            $fileName = uniqid() . $file->getClientOriginalName();
+            $file->move($path, $fileName);
+            $cotizaciones->doc_eir = $fileName;
+        }
 
         if ($request->hasFile("boleta_liberacion")) {
             $file = $request->file('boleta_liberacion');
@@ -161,8 +192,9 @@ class CotizacionesController extends Controller
             $sobrepeso = 0;
         }
         $cotizaciones->sobrepeso = $sobrepeso;
-        $cotizaciones->precio_sobre_peso = $request->get('precio_sobre_peso');
-        $cotizaciones->precio_tonelada = $request->get('precio_sobre_peso') * $sobrepeso;
+        $precio_tonelada = str_replace(',', '', $request->get('precio_sobre_peso'));
+        $cotizaciones->precio_sobre_peso = $precio_tonelada;
+        $cotizaciones->precio_tonelada = $precio_tonelada * $sobrepeso;
         $total = ($cotizaciones->precio_tonelada + $request->get('cot_precio_viaje') + $request->get('cot_burreo') + $request->get('cot_maniobra') + $request->get('cot_estadia') + $request->get('cot_otro') + $request->get('cot_iva')) - $request->get('cot_retencion');
         $cotizaciones->total = $total;
 

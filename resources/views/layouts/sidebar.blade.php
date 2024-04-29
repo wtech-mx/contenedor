@@ -76,11 +76,20 @@
           </li>
 
           <li class="nav-item">
+            <a class="nav-link {{ (Request::is('bancos*') ? 'active' : '') }}" href="{{ route('index.bancos') }}" target="">
+              <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
+                <img src="{{ asset('img/icon/gastos.png.webp') }}" alt="" width="20px">
+              </div>
+              <span class="nav-link-text ms-1"><b>VII</b> Bancos</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
             <a class="nav-link {{ (Request::is('cuentas/cobrar*') ? 'active' : '') }}" href="{{ route('index.cobrar') }}" target="">
               <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
                 <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="20px">
               </div>
-              <span class="nav-link-text ms-1"><b>VII</b> Cuentas por cobrar</span>
+              <span class="nav-link-text ms-1"><b>VIII</b> Cuentas por cobrar</span>
             </a>
           </li>
 
@@ -89,7 +98,7 @@
               <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
                 <img src="{{ asset('img/icon/gastos.png.webp') }}" alt="" width="20px">
               </div>
-              <span class="nav-link-text ms-1"><b>VIII</b> Cuentas por pagar</span>
+              <span class="nav-link-text ms-1"><b>IX</b> Cuentas por pagar</span>
             </a>
           </li>
 

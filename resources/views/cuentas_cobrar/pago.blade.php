@@ -12,15 +12,101 @@
                 <input type="hidden" name="_method" value="PATCH">
                 <div class="modal-body">
                     <div class="row">
+                        @if ($item->precio_viaje != NULL)
+                            <div class="col-6 form-group">
+                                <label for="name">Precio Viaje</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px">
+                                    </span>
+                                    <input type="text" class="form-control" value="${{ number_format($item->precio_viaje, 2, '.', ',')}}" readonly>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if ($item->burreo != NULL)
+                            <div class="col-6 form-group">
+                                <label for="name">Burreo</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/burro.png') }}" alt="" width="25px">
+                                    </span>
+                                    <input type="text" class="form-control" value="${{ number_format($item->burreo, 2, '.', ',')}}" readonly>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if ($item->maniobra != NULL)
+                            <div class="col-6 form-group">
+                                <label for="name">Maniobra</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px">
+                                    </span>
+                                    <input type="text" class="form-control" value="${{ number_format($item->maniobra, 2, '.', ',')}}" readonly>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if ($item->estadia != NULL)
+                            <div class="col-6 form-group">
+                                <label for="name">Estadia</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/servidor-en-la-nube.png') }}" alt="" width="25px">
+                                    </span>
+                                    <input type="text" class="form-control" value="${{ number_format($item->estadia, 2, '.', ',')}}" readonly>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if ($item->otro != NULL)
+                            <div class="col-6 form-group">
+                                <label for="name">Otros</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
+                                    </span>
+                                    <input type="text" class="form-control"  value="${{ number_format($item->otro, 2, '.', ',')}}" readonly>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if ($item->iva != NULL)
+                            <div class="col-6 form-group">
+                                <label for="name">IVA</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/impuesto.png') }}" alt="" width="25px">
+                                    </span>
+                                    <input type="text" class="form-control" value="${{ number_format($item->iva, 2, '.', ',')}}" readonly>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if ($item->retencion != NULL)
+                            <div class="col-6 form-group">
+                                <label for="name">Retención</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                    </span>
+                                    <input type="text" class="form-control" value="${{ number_format($item->retencion, 2, '.', ',')}}" readonly>
+                                </div>
+                            </div>
+                        @endif
+
                         <div class="form-group">
                             <label for="name">Total a cobrar *</label>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">
-                                    <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px">
+                                    <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
                                 </span>
-                                <input type="float" class="form-control" id="total_{{ $item->id }}" name="total" value=" ${{ number_format($item->total, 2, '.', ',') }}" readonly>
+                                <input type="text" class="form-control" value=" ${{ number_format($item->total, 2, '.', ',') }}" readonly>
                             </div>
                         </div>
+
+                        <h5 class="modal-title mt-3">Metodo de pago 1</h5>
 
                         <div class="col-6">
                             <div class="form-group">
@@ -55,7 +141,23 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name">Banco</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                    </span>
+                                    <select class="form-select cliente d-inline-block"  data-toggle="select" id="metodo_pago1" name="metodo_pago1" value="{{ old('metodo_pago1') }}">
+                                        @foreach ($bancos as $item)
+                                            <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
                             <div class="form-group">
                                 <label for="name">Comprobante de pago 1 *</label>
                                 <div class="input-group mb-3">
@@ -102,7 +204,23 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name">Banco</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                    </span>
+                                    <select class="form-select cliente d-inline-block"  data-toggle="select" id="metodo_pago1" name="metodo_pago1" value="{{ old('metodo_pago1') }}">
+                                        @foreach ($bancos as $item)
+                                            <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
                             <div class="form-group">
                                 <label for="name">Comprobante de pago 2 *</label>
                                 <div class="input-group mb-3">

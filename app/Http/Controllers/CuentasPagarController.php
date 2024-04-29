@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bancos;
 use App\Models\Cotizaciones;
 use Illuminate\Http\Request;
 use DB;
@@ -33,7 +34,9 @@ class CuentasPagarController extends Controller
         ->select('cotizaciones.*', 'asignaciones.precio')
         ->get();
 
-        return view('cuentas_pagar.show', compact('cotizacionesPorPagar'));
+        $bancos = Bancos::get();
+
+        return view('cuentas_pagar.show', compact('cotizacionesPorPagar', 'bancos'));
     }
 
     public function update(Request $request, $id){

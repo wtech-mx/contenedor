@@ -285,6 +285,16 @@
                                     <h3 class="mt-3 mb-5">Documentación</h3>
 
                                     <div class="col-6 form-group">
+                                        <label for="name">Num. Boleta de Liberación</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/9.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="num_boleta_liberacion" id="num_boleta_liberacion" type="text" class="form-control" value="{{$documentacion->num_boleta_liberacion}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 form-group">
                                         <label for="name">Boleta de Liberación</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
@@ -294,16 +304,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-6 form-group">
-                                        <label for="name">Doda</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/documento.png') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="doda" id="doda" type="file" class="form-control">
-                                        </div>
-                                    </div>
-
+                                    <div class="col-6"></div>
                                     <div class="col-6">
                                         @if (pathinfo($documentacion->boleta_liberacion, PATHINFO_EXTENSION) == 'pdf')
                                         <p class="text-center ">
@@ -328,6 +329,27 @@
                                         @endif
                                     </div>
 
+                                    <div class="col-6 form-group">
+                                        <label for="name">Num. Doda</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/cero.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="num_doda" id="num_doda" type="text" class="form-control" value="{{$documentacion->num_doda}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 form-group">
+                                        <label for="name">Doda</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/documento.png') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="doda" id="doda" type="file" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6"></div>
                                     <div class="col-6">
                                         @if (pathinfo($documentacion->doda, PATHINFO_EXTENSION) == 'pdf')
                                         <p class="text-center ">
@@ -350,6 +372,16 @@
                                             </p>
                                                 <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doda) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
                                         @endif
+                                    </div>
+
+                                    <div class="col-6 form-group">
+                                        <label for="name">Num. Carta Porte</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/9.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="num_carta_porte" id="num_carta_porte" type="text" class="form-control" value="{{$documentacion->num_carta_porte}}">
+                                        </div>
                                     </div>
 
                                     <div class="col-6 form-group">
@@ -388,11 +420,92 @@
                                         @endif
                                     </div>
 
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label>¿Boleta Vacio?</label><br>
+                                            @if ($documentacion->boleta_vacio == 'si')
+                                                <input class="form-check-input" type="radio" name="boleta_vacio" value="si" id="option_si" checked> Sí<br>
+                                                <input class="form-check-input" type="radio" name="boleta_vacio" value="no" id="option_no"> No
+                                            @else
+                                                <input class="form-check-input" type="radio" name="boleta_vacio" value="si" id="option_si"> Sí<br>
+                                                <input class="form-check-input" type="radio" name="boleta_vacio" value="no" id="option_no" checked> No
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4">
+                                        @if ($documentacion->boleta_vacio == 'si')
+                                            <div class="form-group" id="inputField">
+                                        @else
+                                            <div class="form-group" id="inputField" style="display: none;">
+                                        @endif
+                                            <label for="input">Fecha Boleta Vacio:</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="fecha_boleta_vacio" id="fecha_boleta_vacio" type="date" class="form-control" value="{{$documentacion->fecha_boleta_vacio}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6"></div>
+
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label>¿EIR?</label><br>
+                                            @if ($documentacion->eir == 'si')
+                                                <input class="form-check-input" type="radio" name="eir" value="si" id="eir_si" checked> Sí<br>
+                                                <input class="form-check-input" type="radio" name="eir" value="no" id="eir_no"> No
+                                            @else
+                                                <input class="form-check-input" type="radio" name="eir" value="si" id="eir_si"> Sí<br>
+                                                <input class="form-check-input" type="radio" name="eir" value="no" id="eir_no" checked> No
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4">
+                                        @if ($documentacion->eir == 'si')
+                                            <div class="form-group" id="inputEir">
+                                        @else
+                                            <div class="form-group" id="inputEir" style="display: none;">
+                                        @endif
+                                            <label for="input">Doc EIR:</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="doc_eir" id="doc_eir" type="file" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6">
+                                        @if (pathinfo($documentacion->doc_eir, PATHINFO_EXTENSION) == 'pdf')
+                                        <p class="text-center ">
+                                            <iframe class="mt-2" src="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir)}}" style="width: 80%; height: 250px;"></iframe>
+                                        </p>
+                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
+                                        @elseif (pathinfo($documentacion->doc_eir, PATHINFO_EXTENSION) == 'doc')
+                                        <p class="text-center ">
+                                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                        </p>
+                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                        @elseif (pathinfo($documentacion->doc_eir, PATHINFO_EXTENSION) == 'docx')
+                                        <p class="text-center ">
+                                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                        </p>
+                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                        @else
+                                            <p class="text-center mt-2">
+                                                <img id="blah" src="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
+                                            </p>
+                                                <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
+                                        @endif
+                                    </div>
+
                                     <h3 class="mt-3 mb-5">Gastos Extras</h3>
                                     @foreach ($gastos_extras as $gasto_extra)
-
                                         <input type="hidden" name="ticket_id[]" value="{{ $gasto_extra->id }}">
-
                                         <div class="col-6 form-group">
                                             <label for="name">Descripción:</label>
                                             <div class="input-group mb-3">
@@ -412,13 +525,11 @@
                                                 <input name="gasto_monto[]" id="gasto_monto[]" type="text" class="form-control" value="{{$gasto_extra->monto}}">
                                             </div>
                                         </div>
-
                                     @endforeach
                                     <div id="formulario" class="mt-4">
                                         <button type="button" class="clonar btn btn-secondary btn-sm">Agregar</button>
                                         <div class="clonars">
                                             <div class="row">
-
                                                 <div class="col-6 form-group">
                                                     <label for="name">Descripción:</label>
                                                     <div class="input-group mb-3">
@@ -438,7 +549,6 @@
                                                         <input name="gasto_monto[]" id="gasto_monto[]" type="text" class="form-control" >
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -577,4 +687,55 @@
             calcularSobrepeso();
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtener referencias a los elementos
+            var optionSi = document.getElementById('option_si');
+            var optionNo = document.getElementById('option_no');
+            var inputField = document.getElementById('inputField');
+
+            // Función para controlar la visibilidad del campo de entrada
+            function toggleInputField() {
+                // Si el radio button "Sí" está seleccionado, mostrar el campo de entrada
+                if (optionSi.checked) {
+                    inputField.style.display = 'block';
+                } else {
+                    inputField.style.display = 'none';
+                }
+            }
+
+            // Agregar eventos change a los radio buttons
+            optionSi.addEventListener('change', toggleInputField);
+            optionNo.addEventListener('change', toggleInputField);
+
+            // Llamar a la función inicialmente para asegurarse de que el campo se oculte o muestre correctamente
+            toggleInputField();
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtener referencias a los elementos
+            var eirSi = document.getElementById('eir_si');
+            var eirNo = document.getElementById('eir_no');
+            var inputEir = document.getElementById('inputEir');
+
+            // Función para controlar la visibilidad del campo de entrada
+            function toggleInputEir() {
+                // Si el radio button "Sí" está seleccionado, mostrar el campo de entrada
+                if (eirSi.checked) {
+                    inputEir.style.display = 'block';
+                } else {
+                    inputEir.style.display = 'none';
+                }
+            }
+
+            // Agregar eventos change a los radio buttons
+            eirSi.addEventListener('change', toggleInputEir);
+            eirNo.addEventListener('change', toggleInputEir);
+
+            // Llamar a la función inicialmente para asegurarse de que el campo se oculte o muestre correctamente
+            toggleInputEir();
+        });
+    </script>
+
+
 @endsection

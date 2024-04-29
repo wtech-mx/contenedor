@@ -55,7 +55,23 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name">Banco</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                    </span>
+                                    <select class="form-select cliente d-inline-block"  data-toggle="select" id="metodo_pago1" name="metodo_pago1">
+                                        @foreach ($bancos as $item)
+                                            <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
                             <div class="form-group">
                                 <label for="name">Comprobante de pago 1 *</label>
                                 <div class="input-group mb-3">
@@ -102,7 +118,23 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name">Banco</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                    </span>
+                                    <select class="form-select cliente d-inline-block"  data-toggle="select" id="metodo_pago1" name="metodo_pago1">
+                                        @foreach ($bancos as $item)
+                                            <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
                             <div class="form-group">
                                 <label for="name">Comprobante de pago 2 *</label>
                                 <div class="input-group mb-3">

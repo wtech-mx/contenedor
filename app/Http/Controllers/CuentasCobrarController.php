@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bancos;
 use App\Models\Client;
 use App\Models\Cotizaciones;
 use App\Models\Subclientes;
@@ -33,7 +34,9 @@ class CuentasCobrarController extends Controller
         ->select('cotizaciones.*')
         ->get();
 
-        return view('cuentas_cobrar.show', compact('cotizacionesPorPagar'));
+        $bancos = Bancos::get();
+
+        return view('cuentas_cobrar.show', compact('cotizacionesPorPagar', 'bancos'));
     }
 
     public function update(Request $request, $id){
