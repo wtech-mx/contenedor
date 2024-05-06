@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Asignaciones;
 use App\Models\Bancos;
+use App\Models\Cotizaciones;
 use Session;
 use Illuminate\Http\Request;
 
@@ -21,11 +23,29 @@ class BancosController extends Controller
         $banco->nombre_banco = $request->get('nombre_banco');
         $banco->cuenta_bancaria = $request->get('cuenta_bancaria');
         $banco->clabe = $request->get('clabe');
+        $banco->saldo_inicial = $request->get('saldo_inicial');
         $banco->save();
 
         return redirect()->route('index.bancos')
             ->with('success', 'Banco creado exitosamente.');
 
+    }
+
+    public function edit($id){
+        $banco = Bancos::where('id', '=', $id)->first();
+        $cotizaciones = Cotizaciones::where('id_banco1', '=', $id)->orwhere('id_banco2', '=', $id)->get();
+        $proveedores = Cotizaciones::where('id_banco1', '=', $id)
+                    ->orWhere('id_banco2', '=', $id)
+                    ->whereHas('DocCotizacion', function ($query) {
+                        $query->whereHas('Asignaciones', function ($subQuery) {
+                            $subQuery->whereNull('id_camion');
+                        });
+                    })
+                    ->get();
+
+                    dd($proveedores);
+
+        return view('bancos.edit', compact('banco', 'cotizaciones', 'proveedores'));
     }
 
     public function update(Request $request, Bancos $id)

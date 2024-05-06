@@ -43,6 +43,7 @@ class CuentasCobrarController extends Controller
         $cotizacion = Cotizaciones::where('id', '=', $id)->first();
         $cotizacion->monto1 = $request->get('monto1');
         $cotizacion->metodo_pago1 = $request->get('metodo_pago1');
+        $cotizacion->id_banco1 = $request->get('id_banco1');
         if ($request->hasFile("comprobante1")) {
             $file = $request->file('comprobante1');
             $path = public_path() . '/pagos';
@@ -53,6 +54,7 @@ class CuentasCobrarController extends Controller
 
         $cotizacion->monto2 = $request->get('monto2');
         $cotizacion->metodo_pago2 = $request->get('metodo_pago2');
+        $cotizacion->id_banco2 = $request->get('id_banco2');
         if ($request->hasFile("comprobante2")) {
             $file = $request->file('comprobante2');
             $path = public_path() . '/pagos';

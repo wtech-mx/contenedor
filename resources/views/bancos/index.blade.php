@@ -25,34 +25,35 @@ Bancos
                     </div>
 
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover table_id" id="datatable-search">
-                                <thead class="thead">
-                                    <tr>
-                                        <th>No</th>
-
-										<th><img src="{{ asset('img/icon/t credito.png.webp') }}" alt="" width="25px">Nombre Banco</th>
-										<th><img src="{{ asset('img/icon/t debito.webp') }}" alt="" width="25px"> Clabe</th>
-                                        <th><img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px"> Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($bancos as $item)
-                                        <tr>
-                                            <td>{{ $item->id }}</td>
-
-											<td>{{ $item->nombre_banco }}</td>
-											<td>{{ $item->clabe }}</td>
-                                            <td>
-                                                <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#editarModal{{$item->id}}">
-                                                    <img src="{{ asset('img/icon/t credito.png.webp') }}" alt="" width="20px">
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        @include('bancos.edit')
-                                    @endforeach
-                                </tbody>
-                            </table>
+                        <div class="row">
+                            @foreach ($bancos as $item)
+                                <a class="col-lg-4 mt-lg-0 mt-4" href="{{ route('edit.bancos', $item->id) }}">
+                                    <div class="card bg-transparent shadow-xl">
+                                        <div class="overflow-hidden position-relative border-radius-xl" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/card-visa.jpg');">
+                                            <span class="mask bg-gradient-dark"></span>
+                                            <div class="card-body position-relative z-index-1 p-3">
+                                                <h4 class="text-white mb-0">{{ $item->nombre_beneficiario }}</h4>
+                                                <h5 class="text-white mt-4 mb-5 pb-2">{{ chunk_split($item->clabe, 4, ' ') }}</h5>
+                                                <div class="d-flex">
+                                                    <div class="d-flex">
+                                                        <div class="me-4">
+                                                            <p class="text-white text-sm opacity-8 mb-0">Nombre Banco</p>
+                                                            <h6 class="text-white mb-0">{{ $item->nombre_banco }}</h6>
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-white text-sm opacity-8 mb-0">Saldo</p>
+                                                            <h6 class="text-white mb-0">${{ $item->clabe }}</h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ms-auto w-20 d-flex align-items-end justify-content-end">
+                                                        <img class="w-60 mt-2" src="../../assets/img/logos/mastercard.png" alt="logo">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            @endforeach
                         </div>
                     </div>
                 </div>

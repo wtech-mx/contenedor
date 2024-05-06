@@ -31,6 +31,8 @@ class Cotizaciones extends Model
         'peso_kg',
         'precio_sobre_peso',
         'precio_tonelada',
+        'id_banco1',
+        'id_banco2',
     ];
 
     public function Cliente()
@@ -41,5 +43,15 @@ class Cotizaciones extends Model
     public function DocCotizacion()
     {
         return $this->hasOne(DocumCotizacion::class, 'id_cotizacion');
+    }
+
+    public function Bancos1()
+    {
+        return $this->hasOne(Bancos::class, 'id_banco1');
+    }
+
+    public function Bancos2()
+    {
+        return $this->hasOne(Bancos::class, 'id_banco2');
     }
 }

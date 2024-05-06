@@ -148,7 +148,12 @@
                                     <span class="input-group-text" id="basic-addon1">
                                         <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
                                     </span>
-                                    <select class="form-select cliente d-inline-block"  data-toggle="select" id="metodo_pago1" name="metodo_pago1" value="{{ old('metodo_pago1') }}">
+                                    <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_banco1" name="id_banco1" value="{{ old('id_banco1') }}">
+                                        @if ($item->id_banco1 == NULL)
+                                            <option value="">Selecciona</option>
+                                        @else
+                                            <option value="{{$item->id_banco1}}">{{$item->Bancos->nombre_banco}}</option>
+                                        @endif
                                         @foreach ($bancos as $item)
                                             <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
                                         @endforeach
@@ -211,7 +216,12 @@
                                     <span class="input-group-text" id="basic-addon1">
                                         <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
                                     </span>
-                                    <select class="form-select cliente d-inline-block"  data-toggle="select" id="metodo_pago1" name="metodo_pago1" value="{{ old('metodo_pago1') }}">
+                                    <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_banco2" name="id_banco2" value="{{ old('id_banco2') }}">
+                                        @if ($item->id_banco2 == NULL)
+                                            <option value="">Selecciona</option>
+                                        @else
+                                            <option value="{{$item->id_banco2}}">{{$item->Bancos->nombre_banco}}</option>
+                                        @endif
                                         @foreach ($bancos as $item)
                                             <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
                                         @endforeach

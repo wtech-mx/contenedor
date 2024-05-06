@@ -87,6 +87,7 @@ Route::group(['middleware' => ['auth']], function() {
     // ==================== B A N C O S ====================
     Route::get('bancos', [App\Http\Controllers\BancosController::class, 'index'])->name('index.bancos');
     Route::post('bancos/create', [App\Http\Controllers\BancosController::class, 'store'])->name('store.bancos');
+    Route::get('bancos/edit/{id}', [App\Http\Controllers\BancosController::class, 'edit'])->name('edit.bancos');
     Route::patch('bancos/update/{id}', [App\Http\Controllers\BancosController::class, 'update'])->name('update.bancos');
 
     // ==================== C U E N T A S  P O R  C O B R A R ====================

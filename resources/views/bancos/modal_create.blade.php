@@ -41,6 +41,16 @@
                         </div>
                     </div>
 
+                    <div class="col-6 form-group">
+                        <label for="name">Saldo inicial *</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                                <img src="{{ asset('img/icon/billetera.png') }}" alt="" width="25px">
+                            </span>
+                            <input name="saldo_inicial" id="saldo_inicial" type="number" class="form-control">
+                        </div>
+                    </div>
+
                     <div class="col-12 form-group">
                         <label for="name">Clabe *</label>
                         <div class="input-group mb-3">
