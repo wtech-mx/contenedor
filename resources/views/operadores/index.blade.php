@@ -5,6 +5,20 @@
 @endsection
 
 @section('content')
+
+<style>
+    .estilos_equipo{
+        background: #ccc;
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        box-shadow: 6px 6px 15px -10px rgb(0 0 0 / 50%);
+    }
+
+    .titulos_bitacora{
+        font-size: 12px;
+    }
+</style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
