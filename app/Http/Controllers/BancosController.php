@@ -34,16 +34,13 @@ class BancosController extends Controller
     public function edit($id){
         $banco = Bancos::where('id', '=', $id)->first();
         $cotizaciones = Cotizaciones::where('id_banco1', '=', $id)->orwhere('id_banco2', '=', $id)->get();
-        $proveedores = Cotizaciones::where('id_banco1', '=', $id)
-                    ->orWhere('id_banco2', '=', $id)
-                    ->whereHas('DocCotizacion', function ($query) {
-                        $query->whereHas('Asignaciones', function ($subQuery) {
-                            $subQuery->whereNull('id_camion');
-                        });
-                    })
+        $proveedores = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
+                    ->join('asignaciones', 'docum_cotizacion.id', '=', 'asignaciones.id_contenedor')
+                    ->where('asignaciones.id_camion', '=', NULL)
+                    ->where('cotizaciones.id_prove_banco1', '=', $id)
+                    ->orWhere('cotizaciones.id_prove_banco2', '=', $id)
+                    ->select('cotizaciones.*')
                     ->get();
-
-                    dd($proveedores);
 
         return view('bancos.edit', compact('banco', 'cotizaciones', 'proveedores'));
     }

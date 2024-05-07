@@ -16,5 +16,6 @@ class Bancos extends Model
         'nombre_banco',
         'cuenta_bancaria',
         'clabe',
+        'saldo_inicial',
     ];
 }

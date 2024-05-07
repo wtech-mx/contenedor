@@ -7,7 +7,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
-            <form method="POST" action="{{ route('update.cobrar', $item->id) }}" enctype="multipart/form-data" role="form">
+            <form method="POST" action="{{ route('update.pagar', $item->id) }}" enctype="multipart/form-data" role="form">
                 @csrf
                 <input type="hidden" name="_method" value="PATCH">
                 <div class="modal-body">
@@ -29,7 +29,7 @@
                                     <span class="input-group-text" id="basic-addon1">
                                         <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
                                     </span>
-                                    <input type="float" id="monto1_{{ $item->id }}" name="monto1" class="form-control" value="{{ $item->monto1 }}" oninput="calcularRestante({{ $item->id }})">
+                                    <input type="float" id="monto1_{{ $item->id }}" name="monto1" class="form-control" value="{{ $item->prove_monto1 }}" oninput="calcularRestante({{ $item->id }})">
                                 </div>
                             </div>
                         </div>
@@ -42,10 +42,10 @@
                                         <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
                                     </span>
                                     <select class="form-select cliente d-inline-block"  data-toggle="select" id="metodo_pago1" name="metodo_pago1" value="{{ old('metodo_pago1') }}">
-                                        @if ($item->metodo_pago1 == NULL)
+                                        @if ($item->prove_metodo_pago1 == NULL)
                                             <option value="">Seleccionar Metodo</option>
                                         @else
-                                            <option value="{{$item->metodo_pago1}}">{{$item->metodo_pago1}}</option>
+                                            <option value="{{$item->prove_metodo_pago1}}">{{$item->prove_metodo_pago1}}</option>
                                         @endif
                                         <option value="Efectivo">Efectivo</option>
                                         <option value="Tarjeta C/D">Tarjeta C/D</option>
@@ -62,7 +62,7 @@
                                     <span class="input-group-text" id="basic-addon1">
                                         <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
                                     </span>
-                                    <select class="form-select cliente d-inline-block"  data-toggle="select" id="metodo_pago1" name="metodo_pago1">
+                                    <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_banco1" name="id_banco1">
                                         @foreach ($bancos as $item)
                                             <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
                                         @endforeach
@@ -92,7 +92,7 @@
                                     <span class="input-group-text" id="basic-addon1">
                                         <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
                                     </span>
-                                    <input type="float" id="monto2_{{ $item->id }}" name="monto2" class="form-control" value="{{ $item->monto2 }}" oninput="calcularRestante({{ $item->id }})">
+                                    <input type="float" id="monto2_{{ $item->id }}" name="monto2" class="form-control" value="{{ $item->prove_monto2 }}" oninput="calcularRestante({{ $item->id }})">
                                 </div>
                             </div>
                         </div>
@@ -105,10 +105,10 @@
                                         <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
                                     </span>
                                     <select class="form-select cliente d-inline-block"  data-toggle="select" id="metodo_pago2" name="metodo_pago2" value="{{ old('metodo_pago2') }}">
-                                        @if ($item->metodo_pago2 == NULL)
+                                        @if ($item->prove_metodo_pago2 == NULL)
                                             <option value="">Seleccionar Metodo</option>
                                         @else
-                                            <option value="{{$item->metodo_pago2}}">{{$item->metodo_pago2}}</option>
+                                            <option value="{{$item->prove_metodo_pago2}}">{{$item->prove_metodo_pago2}}</option>
                                         @endif
                                         <option value="Efectivo">Efectivo</option>
                                         <option value="Tarjeta C/D">Tarjeta C/D</option>
@@ -125,7 +125,7 @@
                                     <span class="input-group-text" id="basic-addon1">
                                         <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
                                     </span>
-                                    <select class="form-select cliente d-inline-block"  data-toggle="select" id="metodo_pago1" name="metodo_pago1">
+                                    <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_banco2" name="id_banco2">
                                         @foreach ($bancos as $item)
                                             <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
                                         @endforeach

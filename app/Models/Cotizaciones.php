@@ -33,6 +33,7 @@ class Cotizaciones extends Model
         'precio_tonelada',
         'id_banco1',
         'id_banco2',
+        'prove_restante',
     ];
 
     public function Cliente()
