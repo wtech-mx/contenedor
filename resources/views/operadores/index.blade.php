@@ -8,7 +8,7 @@
 
 <style>
     .estilos_equipo{
-        background: #ccc;
+        background: #f5f5f5;
         padding: 30px;
         border-radius: 12px;
         margin-bottom: 30px;
@@ -53,6 +53,7 @@
 
                                     <tbody>
                                         @foreach ($operadores as $operador)
+
                                             <tr>
                                                 <td>{{$operador->id}}</td>
                                                 <td>{{$operador->nombre}}</td>
@@ -68,9 +69,10 @@
                                                     </a>
                                                 </td>
                                             </tr>
-                                            @include('operadores.modal_bitacora')
 
-                                            @include('operadores.modal_edit')
+                                                @include('operadores.modal_bitacora')
+                                                @include('operadores.modal_edit')
+
                                         @endforeach
                                     </tbody>
 

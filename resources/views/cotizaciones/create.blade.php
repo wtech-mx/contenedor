@@ -107,7 +107,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px">
                                             </span>
-                                            <input name="destino" id="destino" type="text" class="form-control" value="PRUEBA">
+                                            <input name="destino" id="destino" type="text" class="form-control" value="APARTADO">
                                         </div>
                                     </div>
 

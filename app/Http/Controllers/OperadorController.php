@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Operador;
 use Illuminate\Http\Request;
+
+use App\Models\Cotizaciones;
+use App\Models\DocumCotizacion;
+use App\Models\Asignaciones;
+
 use Session;
 
 class OperadorController extends Controller
@@ -11,7 +16,10 @@ class OperadorController extends Controller
     public function index(){
         $operadores = Operador::get();
 
-        return view('operadores.index', compact('operadores'));
+        $asignaciones = Asignaciones::get();
+        $appointments = Asignaciones::get();
+
+        return view('operadores.index', compact('operadores','asignaciones'));
     }
 
     public function show($id){
