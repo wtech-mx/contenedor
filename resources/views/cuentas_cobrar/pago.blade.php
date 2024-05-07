@@ -149,11 +149,7 @@
                                         <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
                                     </span>
                                     <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_banco1" name="id_banco1" value="{{ old('id_banco1') }}">
-                                        @if ($item->id_banco1 == NULL)
                                             <option value="">Selecciona</option>
-                                        @else
-                                            <option value="{{$item->id_banco1}}">{{$item->Bancos->nombre_banco}}</option>
-                                        @endif
                                         @foreach ($bancos as $item)
                                             <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
                                         @endforeach
@@ -217,11 +213,9 @@
                                         <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
                                     </span>
                                     <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_banco2" name="id_banco2" value="{{ old('id_banco2') }}">
-                                        @if ($item->id_banco2 == NULL)
+
                                             <option value="">Selecciona</option>
-                                        @else
-                                            <option value="{{$item->id_banco2}}">{{$item->Bancos->nombre_banco}}</option>
-                                        @endif
+
                                         @foreach ($bancos as $item)
                                             <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
                                         @endforeach
