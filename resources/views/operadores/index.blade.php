@@ -45,15 +45,17 @@
                                                 <td>{{$operador->telefono}}</td>
                                                 <td>{{$operador->tipo_sangre}}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#operadoresModal_Edit{{$operador->id}}">
+                                                    <a type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#operadoresModal_Edit{{$operador->id}}">
                                                         <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
-                                                    </button>
+                                                    </a>
 
-                                                    <a type="button" class="btn btn-sm btn-outline-primary" href="{{ route('show.operadores', $operador->id) }}">
-                                                        show
+                                                    <a type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#operadoresModal_bitacora{{$operador->id}}">
+                                                        <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px"> Bitacora
                                                     </a>
                                                 </td>
                                             </tr>
+                                            @include('operadores.modal_bitacora')
+
                                             @include('operadores.modal_edit')
                                         @endforeach
                                     </tbody>

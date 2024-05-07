@@ -1,32 +1,52 @@
-
     <div class="col-12 form-group" id="camionGroup">
-        <label for="name">Camion</label>
-        <select class="form-select d-inline-block" id="camion" name="camion" value="{{ old('camion') }}">
-            <option value="">Seleccionar Camion</option>
-            @foreach ($camionesNoAsignados as $item)
-                <option value="{{$item->id}}">{{$item->id_equipo}}</option>
-            @endforeach
-        </select>
+        <div class="form-group">
+            <label for="name">Camion</label>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">
+                    <img src="{{ asset('img/icon/camion.png') }}" alt="" width="35px">
+                </span>
+                <select class="form-select d-inline-block" id="camion" name="camion" value="{{ old('camion') }}">
+                    <option value="">Seleccionar Camion</option>
+                    @foreach ($camionesNoAsignados as $item)
+                        <option value="{{$item->id}}">{{$item->id_equipo}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
     </div>
 
     <div class="col-12 form-group" id="operadorGroup">
-        <label for="name">Operador</label>
-        <select class="form-select d-inline-block" id="operador" name="operador" value="{{ old('operador') }}">
-            <option value="">Seleccionar Operador</option>
-            @foreach ($operadorNoAsignados as $item)
-                <option value="{{$item->id}}">{{$item->nombre}} / {{$item->telefono}}</option>
-            @endforeach
-        </select>
+        <div class="form-group">
+            <label for="name">Operador</label>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">
+                    <img src="{{ asset('img/icon/chofer.png') }}" alt="" width="35px">
+                </span>
+                <select class="form-select d-inline-block" id="operador" name="operador" value="{{ old('operador') }}">
+                    <option value="">Seleccionar Operador</option>
+                    @foreach ($operadorNoAsignados as $item)
+                        <option value="{{$item->id}}">{{$item->nombre}} / {{$item->telefono}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
     </div>
 
     <div class="col-12 form-group" id="chasisGroup">
-        <label for="name">Chasis</label>
-        <select class="form-select d-inline-block" id="chasis" name="chasis" value="{{ old('chasis') }}">
-            <option value="">Seleccionar Chasis</option>
-            @foreach ($chasisNoAsignados as $item)
-                <option value="{{$item->id}}">{{$item->id_equipo}}</option>
-            @endforeach
-        </select>
+        <div class="form-group">
+            <label for="name">Chasis</label>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">
+                    <img src="{{ asset('img/icon/troca.png') }}" alt="" width="35px">
+                </span>
+                <select class="form-select d-inline-block" id="chasis" name="chasis" value="{{ old('chasis') }}">
+                    <option value="">Seleccionar Chasis</option>
+                    @foreach ($chasisNoAsignados as $item)
+                        <option value="{{$item->id}}">{{$item->id_equipo}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
     </div>
 
     <div class="col-12 form-group" id="chasisAdicional1Group" style="display:none;">
@@ -50,11 +70,29 @@
     </div>
 
     <div class="col-6 form-group" id="operadorGroup">
-        <label for="name">Sueldo Viaje</label>
-        <input name="sueldo_viaje" id="sueldo_viaje" type="text" class="form-control">
+        <div class="form-group">
+            <label for="name">Sueldo del operador</label>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">
+                    <img src="{{ asset('img/icon/depositar.png') }}" alt="" width="35px">
+                </span>
+                <input name="sueldo_viaje" id="sueldo_viaje" type="text" class="form-control">
+            </div>
+        </div>
+
     </div>
 
     <div class="col-6 form-group" id="operadorGroup">
-        <label for="name">Dinero Viaje</label>
-        <input name="dinero_viaje" id="dinero_viaje" type="text" class="form-control">
+        <div class="form-group">
+            <label for="name">Dinero para el viaje</label>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">
+                    <img src="{{ asset('img/icon/billetera.png') }}" alt="" width="35px">
+                </span>
+                <input name="dinero_viaje" id="dinero_viaje" type="text" class="form-control">
+            </div>
+        </div>
+
+
+
     </div>

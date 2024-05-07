@@ -2,7 +2,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Crear Operadores</h5>
+          <h5 class="modal-title">Editar Operadores</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form method="POST" action="{{ route('update.operadores',$operador->id) }}" id="" enctype="multipart/form-data" role="form">
