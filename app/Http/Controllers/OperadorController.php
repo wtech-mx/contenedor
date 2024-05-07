@@ -14,6 +14,12 @@ class OperadorController extends Controller
         return view('operadores.index', compact('operadores'));
     }
 
+    public function show($id){
+        $operador = Operador::where('id', '=', $id)->first();
+
+        return view('operadores.show', compact('operador'));
+    }
+
     public function store(Request $request){
 
         $operador = new Operador;

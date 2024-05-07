@@ -21,6 +21,8 @@ class Asignaciones extends Model
         'id_proveedor',
         'precio',
         'id_chasis2',
+        'sueldo_viaje',
+        'dinero_viaje',
     ];
 
     public function Camion()

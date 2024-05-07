@@ -48,6 +48,10 @@
                                                     <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#operadoresModal_Edit{{$operador->id}}">
                                                         <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
                                                     </button>
+
+                                                    <a type="button" class="btn btn-sm btn-outline-primary" href="{{ route('show.operadores', $operador->id) }}">
+                                                        show
+                                                    </a>
                                                 </td>
                                             </tr>
                                             @include('operadores.modal_edit')

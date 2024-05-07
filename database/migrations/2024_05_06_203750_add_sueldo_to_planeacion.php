@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('planeacion', function (Blueprint $table) {
+        Schema::table('asignaciones', function (Blueprint $table) {
             $table->float('sueldo_viaje')->nullable();
             $table->float('dinero_viaje')->nullable();
         });

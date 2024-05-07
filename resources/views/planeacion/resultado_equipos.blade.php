@@ -48,3 +48,13 @@
             @endforeach
         </select>
     </div>
+
+    <div class="col-6 form-group" id="operadorGroup">
+        <label for="name">Sueldo Viaje</label>
+        <input name="sueldo_viaje" id="sueldo_viaje" type="text" class="form-control">
+    </div>
+
+    <div class="col-6 form-group" id="operadorGroup">
+        <label for="name">Dinero Viaje</label>
+        <input name="dinero_viaje" id="dinero_viaje" type="text" class="form-control">
+    </div>

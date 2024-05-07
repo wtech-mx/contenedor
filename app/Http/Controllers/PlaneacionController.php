@@ -147,6 +147,8 @@ class PlaneacionController extends Controller
         $asignaciones->id_contenedor = $request->get('num_contenedor');
         $asignaciones->id_operador = $request->get('operador');
         $asignaciones->id_proveedor = $request->get('id_proveedor');
+        $asignaciones->sueldo_viaje = $request->get('sueldo_viaje');
+        $asignaciones->dinero_viaje = $request->get('dinero_viaje');
         if($request->get('id_proveedor') == NULL){
             $asignaciones->fecha_inicio = $request->get('fecha_inicio');
             $asignaciones->fecha_fin = $request->get('fecha_fin');
