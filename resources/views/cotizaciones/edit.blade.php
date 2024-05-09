@@ -448,6 +448,47 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="col-6">
+                                        @if ($documentacion->boleta_vacio == 'si')
+                                            <div class="form-group" id="inputFieldIMG">
+                                        @else
+                                            <div class="form-group" id="inputFieldIMG" style="display: none;">
+                                        @endif
+                                            <label for="input">IMG Boleta Vacio:</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="img_boleta" id="img_boleta" type="file" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6">
+                                        @if (pathinfo($cotizacion->img_boleta, PATHINFO_EXTENSION) == 'pdf')
+                                        <p class="text-center ">
+                                            <iframe class="mt-2" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta)}}" style="width: 80%; height: 250px;"></iframe>
+                                        </p>
+                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
+                                        @elseif (pathinfo($cotizacion->img_boleta, PATHINFO_EXTENSION) == 'doc')
+                                        <p class="text-center ">
+                                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                        </p>
+                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                        @elseif (pathinfo($cotizacion->img_boleta, PATHINFO_EXTENSION) == 'docx')
+                                        <p class="text-center ">
+                                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                        </p>
+                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                        @else
+                                            <p class="text-center mt-2">
+                                                <img id="blah" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
+                                            </p>
+                                                <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
+                                        @endif
+                                    </div>
+
                                     <div class="col-6"></div>
 
                                     <div class="col-2">
@@ -475,6 +516,22 @@
                                                     <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
                                                 </span>
                                                 <input name="doc_eir" id="doc_eir" type="file" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4">
+                                        @if ($documentacion->eir == 'si')
+                                            <div class="form-group" id="inputEirFecha">
+                                        @else
+                                            <div class="form-group" id="inputEirFecha" style="display: none;">
+                                        @endif
+                                            <label for="input">Fecha EIR:</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="fecha_eir" id="fecha_eir" type="date" class="form-control" value="{{$cotizacion->fecha_eir}}">
                                             </div>
                                         </div>
                                     </div>
@@ -693,14 +750,17 @@
             var optionSi = document.getElementById('option_si');
             var optionNo = document.getElementById('option_no');
             var inputField = document.getElementById('inputField');
+            var inputFieldIMG = document.getElementById('inputFieldIMG');
 
             // Función para controlar la visibilidad del campo de entrada
             function toggleInputField() {
                 // Si el radio button "Sí" está seleccionado, mostrar el campo de entrada
                 if (optionSi.checked) {
                     inputField.style.display = 'block';
+                    inputFieldIMG.style.display = 'block';
                 } else {
                     inputField.style.display = 'none';
+                    inputFieldIMG.style.display = 'none';
                 }
             }
 
@@ -717,14 +777,17 @@
             var eirSi = document.getElementById('eir_si');
             var eirNo = document.getElementById('eir_no');
             var inputEir = document.getElementById('inputEir');
+            var inputEirFecha = document.getElementById('inputEirFecha');
 
             // Función para controlar la visibilidad del campo de entrada
             function toggleInputEir() {
                 // Si el radio button "Sí" está seleccionado, mostrar el campo de entrada
                 if (eirSi.checked) {
                     inputEir.style.display = 'block';
+                    inputEirFecha.style.display = 'block';
                 } else {
                     inputEir.style.display = 'none';
+                    inputEirFecha.style.display = 'none';
                 }
             }
 

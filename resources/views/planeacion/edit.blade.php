@@ -143,13 +143,75 @@
                                 </select>
                             </div>
 
-                            <div class="col-12 form-group">
-                                <label for="name">Costo viaje</label>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">
-                                        <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
-                                    </span>
-                                    <input name="precio" id="precio" type="number" class="form-control" value="0">
+                            <div class="row">
+                                <div class="col-3 form-group">
+                                    <label for="name">Costo viaje</label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                        </span>
+                                        <input name="precio" id="precio" type="number" class="form-control" value="0">
+                                    </div>
+                                </div>
+
+                                <div class="col-3 form-group">
+                                    <label for="name">Burreo</label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <img src="{{ asset('img/icon/burro.png') }}" alt="" width="25px">
+                                        </span>
+                                        <input name="cot_burreo" id="cot_burreo" type="float" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-3 form-group">
+                                    <label for="name">Maniobra</label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px">
+                                        </span>
+                                        <input name="cot_maniobra" id="cot_maniobra" type="float" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-3 form-group">
+                                    <label for="name">Estadia</label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <img src="{{ asset('img/icon/servidor-en-la-nube.png') }}" alt="" width="25px">
+                                        </span>
+                                        <input name="cot_estadia" id="cot_estadia" type="float" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-4 form-group">
+                                    <label for="name">Otros</label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
+                                        </span>
+                                        <input name="cot_otro" id="cot_otro" type="float" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-4 form-group">
+                                    <label for="name">IVA</label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <img src="{{ asset('img/icon/impuesto.png') }}" alt="" width="25px">
+                                        </span>
+                                        <input name="cot_iva" id="cot_iva" type="number" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-4 form-group">
+                                    <label for="name">Retención</label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                        </span>
+                                        <input name="cot_retencion" id="cot_retencion" type="float" class="form-control">
+                                    </div>
                                 </div>
                             </div>
                         </div>

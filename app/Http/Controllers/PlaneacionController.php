@@ -20,7 +20,7 @@ class PlaneacionController extends Controller
     public function index(){
         $cotizaciones = Cotizaciones::where('estatus', '=', 'Aprobada')->where('estatus_planeacion', '=', NULL)->get();
         $numCotizaciones = $cotizaciones->count();
-        $proveedores = Proveedor::where('tipo', 'servicio de burreo')->get();
+        $proveedores = Proveedor::where('tipo', 'servicio de burreo')->orwhere('tipo', 'servicio de viaje')->get();
 
         $equipos = Equipo::all();
         $operadores = Operador::all();

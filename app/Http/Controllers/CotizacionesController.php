@@ -186,6 +186,8 @@ class CotizacionesController extends Controller
         $cotizaciones->bloque_hora_i = $request->get('bloque_hora_i');
         $cotizaciones->bloque_hora_f = $request->get('bloque_hora_f');
         $cotizaciones->peso_reglamentario = $request->get('peso_reglamentario');
+        $cotizaciones->fecha_eir = $request->get('fecha_eir');
+
         if($request->get('cot_peso_contenedor') > $request->get('peso_reglamentario')){
             $sobrepeso = $request->get('cot_peso_contenedor') - $request->get('peso_reglamentario');
         }else{
@@ -206,6 +208,14 @@ class CotizacionesController extends Controller
             $cotizaciones->carta_porte = $fileName;
         }
 
+        if ($request->hasFile("img_boleta")) {
+            $file = $request->file('img_boleta');
+            $path = public_path() . '/cotizaciones/cotizacion'. $id;
+            $fileName = uniqid() . $file->getClientOriginalName();
+            $file->move($path, $fileName);
+            $cotizaciones->img_boleta = $fileName;
+        }
+        
         $cotizaciones->update();
 
         $gasto_descripcion = $request->input('gasto_descripcion');
