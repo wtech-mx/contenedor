@@ -13,6 +13,10 @@
                     @if($item->id_operador == $operador->id)
                     <form method="POST" action="{{ route('update_pago.operadores', $item->id) }}" id="" enctype="multipart/form-data" role="form">
                         <input type="hidden" name="_method" value="PATCH">
+                        <!-- Pasar los valores de dinero_viaje y sueldo_viaje a JavaScript -->
+                        <input type="hidden" id="dinero_viaje_{{ $item->id }}" value="{{ $item->dinero_viaje }}">
+                        <input type="hidden" id="sueldo_viaje_{{ $item->id }}" value="{{ $item->sueldo_viaje }}">
+
                         @csrf
                         <div class="row estilos_equipo">
                             <div class="col-12">
@@ -87,7 +91,7 @@
                                                     <label for="name">Faltante / Restante</label>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon1">
-                                                            <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
+                                                            <img src="{{ asset('img/icon/depositar.png') }}" alt="" width="25px">
                                                         </span>
                                                         <input name="resta" id="resta_{{ $item->id }}" type="text" class="form-control" value="{{ $item->dinero_viaje - $item->sueldo_viaje }}" readonly>
                                                     </div>
@@ -97,7 +101,7 @@
                                                     <label for="name">Gasolina</label>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon1">
-                                                            <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
+                                                            <img src="{{ asset('img/icon/bomba-de-gas.png') }}" alt="" width="25px">
                                                         </span>
                                                         <input name="gasolina" id="gasolina_{{ $item->id }}" type="text" class="form-control">
                                                     </div>
@@ -107,7 +111,7 @@
                                                     <label for="name">Casetas</label>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon1">
-                                                            <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
+                                                            <img src="{{ asset('img/icon/guardia.png') }}" alt="" width="25px">
                                                         </span>
                                                         <input name="casetas" id="casetas_{{ $item->id }}" type="text" class="form-control">
                                                     </div>
@@ -117,7 +121,7 @@
                                                     <label for="name">Otros</label>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon1">
-                                                            <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
+                                                            <img src="{{ asset('img/icon/menu.png') }}" alt="" width="25px">
                                                         </span>
                                                         <input name="otros" id="otros_{{ $item->id }}" type="text" class="form-control">
                                                     </div>
@@ -127,7 +131,7 @@
                                                     <label for="name">Comprobante gasolina</label>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon1">
-                                                            <img src="{{ asset('img/icon/business-card-design.webp') }}" alt="" width="25px">
+                                                            <img src="{{ asset('img/icon/factura.png') }}" alt="" width="25px">
                                                         </span>
                                                         <input name="comprobante_gasolina[]" id="comprobante_gasolina" type="file" class="form-control" multiple>
                                                     </div>
@@ -137,7 +141,7 @@
                                                     <label for="name">Comprobante casetas</label>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon1">
-                                                            <img src="{{ asset('img/icon/business-card-design.webp') }}" alt="" width="25px">
+                                                            <img src="{{ asset('img/icon/factura.png') }}" alt="" width="25px">
                                                         </span>
                                                         <input name="comprobante_casetas[]" id="comprobante_casetas" type="file" class="form-control" multiple>
                                                     </div>
@@ -147,7 +151,7 @@
                                                     <label for="name">Comprobante otros</label>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon1">
-                                                            <img src="{{ asset('img/icon/business-card-design.webp') }}" alt="" width="25px">
+                                                            <img src="{{ asset('img/icon/factura.png') }}" alt="" width="25px">
                                                         </span>
                                                         <input name="comprobante_otros[]" id="comprobante_otros" type="file" class="form-control" multiple>
                                                     </div>
@@ -158,18 +162,19 @@
                                 </div>
 
                             </div>
-                        </div>
-                         <!-- Pasar los valores de dinero_viaje y sueldo_viaje a JavaScript -->
-                        <input type="hidden" id="dinero_viaje_{{ $item->id }}" value="{{ $item->dinero_viaje }}">
-                        <input type="hidden" id="sueldo_viaje_{{ $item->id }}" value="{{ $item->sueldo_viaje }}">
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-success">Guardar</button>
+                            </div>
                         </div>
+
                     </form>
                     @endif
                 @endforeach
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
       </div>
     </div>

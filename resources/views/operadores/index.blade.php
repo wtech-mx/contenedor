@@ -60,7 +60,9 @@
                                                 <td>{{$operador->id}}</td>
                                                 <td>{{$operador->nombre}}</td>
                                                 <td>{{$operador->telefono}}</td>
-                                                <td>{{$registrosPendientes}}</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-danger">{{$registrosPendientes}}</button>
+                                                </td>
                                                 <td>
                                                     <a type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#operadoresModal_Edit{{$operador->id}}">
                                                         <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">

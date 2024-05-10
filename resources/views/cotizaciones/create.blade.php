@@ -49,7 +49,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="name">Subcliente *</label>
-                                                    <select class="form-select subcliente d-inline-block" id="id_subcliente" name="id_subcliente" required>
+                                                    <select class="form-select subcliente d-inline-block" id="id_subcliente" name="id_subcliente">
                                                         <option value="">Seleccionar subcliente</option>
                                                     </select>
                                                 </div>

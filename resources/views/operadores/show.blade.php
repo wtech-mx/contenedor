@@ -85,48 +85,48 @@
                                                 <h5 class="titulos_bitacora mb-4"><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px"><strong> Comprobantes de Pago</strong></h5>
                                                 <div class="row">
 
-                                                    <div class="col-12 form-group">
+                                                    <div class="col-3 form-group">
                                                         <label for="name">Faltante / Restante</label>
                                                         <div class="input-group mb-3">
                                                             <span class="input-group-text" id="basic-addon1">
-                                                                <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
+                                                                <img src="{{ asset('img/icon/depositar.png') }}" alt="" width="25px">
                                                             </span>
                                                             <input name="resta" id="resta_{{ $item->id }}" type="text" class="form-control" value="{{ $item->dinero_viaje - $item->sueldo_viaje - $item->gasolina - $item->casetas -$item->otros }}" readonly>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-4 form-group">
+                                                    <div class="col-3 form-group">
                                                         <label for="name">Gasolina</label>
                                                         <div class="input-group mb-3">
                                                             <span class="input-group-text" id="basic-addon1">
-                                                                <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
+                                                                <img src="{{ asset('img/icon/bomba-de-gas.png') }}" alt="" width="25px">
                                                             </span>
                                                             <input name="gasolina" type="text" class="form-control" value="{{ $item->gasolina }}" disabled>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-4 form-group">
+                                                    <div class="col-3 form-group">
                                                         <label for="name">Casetas</label>
                                                         <div class="input-group mb-3">
                                                             <span class="input-group-text" id="basic-addon1">
-                                                                <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
+                                                                <img src="{{ asset('img/icon/guardia.png') }}" alt="" width="25px">
                                                             </span>
                                                             <input name="casetas" type="text" class="form-control" value="{{ $item->casetas }}" disabled>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-4 form-group">
+                                                    <div class="col-3 form-group">
                                                         <label for="name">Otros</label>
                                                         <div class="input-group mb-3">
                                                             <span class="input-group-text" id="basic-addon1">
-                                                                <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
+                                                                <img src="{{ asset('img/icon/menu.png') }}" alt="" width="25px">
                                                             </span>
                                                             <input name="otros" type="text" class="form-control" value="{{ $item->otros }}" disabled>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-4 form-group">
-                                                        <label for="name">Comprobante gasolina</label><br>
+                                                        <h5 for="name">Comprobante gasolina</h5><br>
                                                         @foreach ($comprobantes_gasolina as $comprobante)
                                                             @if ($item->id == $comprobante->id_asignacion)
                                                                 <a  href="{{asset('comprobantes/'.$comprobante->imagen) }}" data-lightbox="example-2" data-title="{{$comprobante->tipo}}" target="_blank">
@@ -137,7 +137,7 @@
                                                     </div>
 
                                                     <div class="col-4 form-group">
-                                                        <label for="name">Comprobante casetas</label><br>
+                                                        <h5 for="name">Comprobante casetas</h5><br>
                                                         @foreach ($comprobantes_casetas as $comprobante)
                                                             @if ($item->id == $comprobante->id_asignacion)
                                                                 <a  href="{{asset('comprobantes/'.$comprobante->imagen) }}" data-lightbox="example-2" data-title="{{$comprobante->tipo}}" target="_blank">
@@ -148,7 +148,7 @@
                                                     </div>
 
                                                     <div class="col-4 form-group">
-                                                        <label for="name">Comprobante otros</label><br>
+                                                        <h5 for="name">Comprobante otros</h5><br>
                                                         @foreach ($comprobantes_otros as $comprobante)
                                                             @if ($item->id == $comprobante->id_asignacion)
                                                                 <a  href="{{asset('comprobantes/'.$comprobante->imagen) }}" data-lightbox="example-2" data-title="{{$comprobante->tipo}}" target="_blank">
