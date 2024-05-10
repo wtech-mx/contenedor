@@ -55,14 +55,6 @@
 
 @section('fullcalendar')
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
-    <script type="text/javascript">
-
-        const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
-        searchable: true,
-        fixedHeight: false
-        });
-
-    </script>
 
     <script type="text/javascript">
 
@@ -141,10 +133,111 @@
                                 location.reload();
                             }
                         });
+
+
                     });
                 }
+
+            });
+
+            $("#miFormulario").on("submit", function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: $(this).attr("action"),
+                    type: "POST",
+                    data: new FormData(this),
+                    contentType: false,
+                    processData: false,
+                    success: function(response) { // Agrega "async" aquí
+                        // El formulario se ha enviado correctamente, ahora realiza la impresión
+                        console.log('OK');
+                        Swal.fire({
+                            title: "Planeacion Guardada <strong>¡Exitosamente!</strong>",
+                            icon: "success",
+                            showCloseButton: true,
+                            showCancelButton: true,
+                            focusConfirm: false,
+                            cancelButtonText: `<a  class="btn_swalater_cancel" style="text-decoration: none;color: #fff;" href="{{ route('index.planeaciones') }}" >Cerrar</a>`,
+                        });
+                        location.reload();
+
+                    },
+                    error: function (xhr, status, error) {
+                            var errors = xhr.responseJSON.errors;
+                            var errorMessage = '';
+
+                            // Itera a través de los errores y agrega cada mensaje de error al mensaje final
+                            for (var key in errors) {
+                                if (errors.hasOwnProperty(key)) {
+                                    var errorMessages = errors[key].join('<br>'); // Usamos <br> para separar los mensajes
+                                    errorMessage += '<strong>' + key + ':</strong><br>' + errorMessages + '<br>';
+                                }
+                            }
+                            console.log(errorMessage);
+                            // Muestra el mensaje de error en una SweetAlert
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Faltan Campos',
+                                html: errorMessage, // Usa "html" para mostrar el mensaje con formato HTML
+                            });
+                    }
+                });
             });
             calendar.render();
+
+            $('[id^="tipo"]').change(function() {
+            // Obtén el valor seleccionado del elemento actual
+            var tipo = $(this).val();
+            // Obtén el número de ID eliminando 'tipo' del ID del elemento actual
+            var idNum = $(this).attr('id').replace('tipo', '');
+            // Construye los selectores de los grupos de elementos adicionales utilizando el número de ID
+            var chasisAdicional1Group = $('#chasisAdicional1Group');
+            var nuevoCampoDolyGroup = $('#nuevoCampoDolyGroup');
+
+            if (tipo === 'Sencillo') {
+                chasisAdicional1Group.hide();
+                nuevoCampoDolyGroup.hide();
+            } else if (tipo === 'Full') {
+                chasisAdicional1Group.show();
+                nuevoCampoDolyGroup.show();
+            }
+        });
+
+        $('[id^="btn_clientes_search"]').click(function() {
+            var cotizacionId = $(this).data('cotizacion-id'); // Obtener el ID de la cotización del atributo data
+            buscar_clientes(cotizacionId);
+        });
+
+        function buscar_clientes(cotizacionId) {
+            $('#loadingSpinner').show();
+
+            var fecha_inicio = $('#fecha_inicio_' + cotizacionId).val();
+            var fecha_fin = $('#fecha_fin_' + cotizacionId).val();
+
+            $.ajax({
+                url: '{{ route('equipos.planeaciones') }}',
+                type: 'get',
+                data: {
+                    'fecha_inicio': fecha_inicio,
+                    'fecha_fin': fecha_fin,
+                    '_token': token // Agregar el token CSRF a los datos enviados
+                },
+                success: function(data) {
+                    $('#resultado_equipos' + cotizacionId).html(data); // Actualiza la sección con los datos del servicio
+                },
+                error: function(error) {
+                    console.log(error);
+                },
+                complete: function() {
+                    // Ocultar el spinner cuando la búsqueda esté completa
+                    $('#loadingSpinner').hide();
+
+                }
+
+            });
+
+        }
+
         });
 
         function formatDate(date) {
@@ -169,35 +262,6 @@
             return number;
         }
 
-    </script>
-@endsection
-
-
-
-@section('datatable')
-    <script type="text/javascript">
-
-        $(document).ready(function() {
-            // Cambia el selector de jQuery para que coincida con el ID dinámico generado en el HTML
-            $('[id^="tipo"]').change(function() {
-                // Obtén el valor seleccionado del elemento actual
-                var tipo = $(this).val();
-                // Obtén el número de ID eliminando 'tipo' del ID del elemento actual
-                var idNum = $(this).attr('id').replace('tipo', '');
-                // Construye los selectores de los grupos de elementos adicionales utilizando el número de ID
-                var chasisAdicional1Group = $('#chasisAdicional1Group');
-                var nuevoCampoDolyGroup = $('#nuevoCampoDolyGroup');
-
-                if (tipo === 'Sencillo') {
-                    chasisAdicional1Group.hide();
-                    nuevoCampoDolyGroup.hide();
-                } else if (tipo === 'Full') {
-                    chasisAdicional1Group.show();
-                    nuevoCampoDolyGroup.show();
-                }
-            });
-        });
-
         function mostrarDiv(cotizacionId) {
             var viajeSelect = document.getElementById("viaje" + cotizacionId);
             var camionSubcontratadoDiv = document.getElementById("camionSubcontratadoDiv" + cotizacionId);
@@ -212,45 +276,10 @@
             }
         }
 
-        $(document).ready(function() {
-            $('[id^="btn_clientes_search"]').click(function() {
-                var cotizacionId = $(this).data('cotizacion-id'); // Obtener el ID de la cotización del atributo data
-                buscar_clientes(cotizacionId);
-            });
-
-            function buscar_clientes(cotizacionId) {
-                $('#loadingSpinner').show();
-
-                var fecha_inicio = $('#fecha_inicio_' + cotizacionId).val();
-                var fecha_fin = $('#fecha_fin_' + cotizacionId).val();
-
-                $.ajax({
-                    url: '{{ route('equipos.planeaciones') }}',
-                    type: 'get',
-                    data: {
-                        'fecha_inicio': fecha_inicio,
-                        'fecha_fin': fecha_fin,
-                        '_token': token // Agregar el token CSRF a los datos enviados
-                    },
-                    success: function(data) {
-                        $('#resultado_equipos' + cotizacionId).html(data); // Actualiza la sección con los datos del servicio
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    },
-                    complete: function() {
-                        // Ocultar el spinner cuando la búsqueda esté completa
-                        $('#loadingSpinner').hide();
-
-                    }
-
-                });
-
-            }
-
-
-
-        });
-
     </script>
+
 @endsection
+
+
+
+
