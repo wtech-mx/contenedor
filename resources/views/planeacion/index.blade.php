@@ -54,7 +54,7 @@
 @endsection
 
 @section('fullcalendar')
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script type="text/javascript">
 
         const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
@@ -81,7 +81,8 @@
                 headerToolbar:{
                     left:'prev,next today',
                     center:'title',
-                    right: 'listMonth,dayGridMonth'
+                    right: 'listMonth,dayGridMonth,timeGridWeek'
+
                     },
 
                     views: {
