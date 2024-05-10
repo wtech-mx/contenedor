@@ -34,8 +34,7 @@
                                                     Agregar <img src="{{ asset('assets/icons/cliente.png') }}" alt="" width="25px">
                                                 </button>
                                             </div>
-                                            <div class="col-9">
-
+                                            <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="name">Cliente *</label>
                                                     <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_cliente" name="id_cliente" value="{{ old('id_cliente') }}" required>
@@ -45,7 +44,15 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
+                                            </div>
 
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="name">Subcliente *</label>
+                                                    <select class="form-select subcliente d-inline-block" id="id_subcliente" name="id_subcliente" required>
+                                                        <option value="">Seleccionar subcliente</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -368,6 +375,28 @@
 
             // Calcular sobrepeso inicialmente al cargar la página
             calcularSobrepeso();
+        });
+
+        $(document).ready(function() {
+            $('#id_cliente').change(function() {
+                var clienteId = $(this).val();
+                if (clienteId) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/subclientes/' + clienteId,
+                        success: function(data) {
+                            $('#id_subcliente').empty();
+                            $('#id_subcliente').append('<option value="">Seleccionar subcliente</option>');
+                            $.each(data, function(key, subcliente) {
+                                $('#id_subcliente').append('<option value="' + subcliente.id + '">' + subcliente.nombre + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#id_subcliente').empty();
+                    $('#id_subcliente').append('<option value="">Seleccionar subcliente</option>');
+                }
+            });
         });
     </script>
 

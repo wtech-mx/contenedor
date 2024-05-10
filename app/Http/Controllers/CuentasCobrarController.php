@@ -25,6 +25,7 @@ class CuentasCobrarController extends Controller
     }
 
     public function show($id){
+        $cliente = Client::where('id', '=', $id)->first();
         $cotizacionesPorPagar = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
         ->join('asignaciones', 'docum_cotizacion.id', '=', 'asignaciones.id_contenedor')
         ->where('cotizaciones.estatus_pago', '=', '0')
@@ -36,7 +37,7 @@ class CuentasCobrarController extends Controller
 
         $bancos = Bancos::get();
 
-        return view('cuentas_cobrar.show', compact('cotizacionesPorPagar', 'bancos'));
+        return view('cuentas_cobrar.show', compact('cotizacionesPorPagar', 'bancos', 'cliente'));
     }
 
     public function update(Request $request, $id){

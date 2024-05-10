@@ -36,6 +36,13 @@
                             </div>
                         </div>
 
+                        @if ($cotizacion->id_subcliente != NULL)
+                            <div class="col-12 form-group">
+                                <label for="name">Subcliente *</label>
+                                <input id="num_contenedor" value="{{$cotizacion->Subcliente->nombre}} / {{$cotizacion->Subcliente->telefono}}" type="text" class="form-control" readonly>
+                            </div>
+                        @endif
+
                         <div class="col-12 form-group">
                             <label for="name">Selecione Unidad</label>
                             <div class="input-group mb-3">

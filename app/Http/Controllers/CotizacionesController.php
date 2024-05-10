@@ -9,6 +9,7 @@ use App\Models\DocumCotizacion;
 use App\Models\Equipo;
 use App\Models\GastosExtras;
 use App\Models\Proveedor;
+use App\Models\Subclientes;
 use Illuminate\Http\Request;
 use Session;
 
@@ -29,6 +30,15 @@ class CotizacionesController extends Controller
         $clientes = Client::get();
 
         return view('cotizaciones.create',compact('clientes'));
+    }
+
+    public function getSubclientes($clienteId)
+    {
+        // Buscar los subclientes asociados al cliente
+        $subclientes = Subclientes::where('id_cliente', $clienteId)->get();
+
+        // Devolver los subclientes en formato JSON
+        return response()->json($subclientes);
     }
 
     public function store(Request $request){
@@ -52,6 +62,7 @@ class CotizacionesController extends Controller
 
         $cotizaciones = new Cotizaciones;
         $cotizaciones->id_cliente = $cliente;
+        $cotizaciones->id_subcliente = $request->get('id_subcliente');
         $cotizaciones->origen = $request->get('origen');
         $cotizaciones->destino = $request->get('destino');
         $cotizaciones->tamano = $request->get('tamano');
@@ -168,7 +179,6 @@ class CotizacionesController extends Controller
         $cotizaciones->update();
 
         $cotizaciones = Cotizaciones::where('id', '=', $id)->first();
-        $cotizaciones->id_cliente = $request->get('id_cliente');
         $cotizaciones->origen = $request->get('cot_origen');
         $cotizaciones->destino = $request->get('cot_destino');
         $cotizaciones->burreo = $request->get('cot_burreo');
@@ -215,7 +225,7 @@ class CotizacionesController extends Controller
             $file->move($path, $fileName);
             $cotizaciones->img_boleta = $fileName;
         }
-        
+
         $cotizaciones->update();
 
         $gasto_descripcion = $request->input('gasto_descripcion');

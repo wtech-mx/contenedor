@@ -12,6 +12,7 @@ class Cotizaciones extends Model
 
     protected $fillable = [
         'id_cliente',
+        'id_subcliente',
         'origen',
         'destino',
         'tamano',
@@ -39,6 +40,11 @@ class Cotizaciones extends Model
     public function Cliente()
     {
         return $this->belongsTo(Client::class, 'id_cliente');
+    }
+
+    public function Subcliente()
+    {
+        return $this->belongsTo(Subclientes::class, 'id_subcliente');
     }
 
     public function DocCotizacion()

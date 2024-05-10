@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bancos;
+use App\Models\Client;
 use App\Models\Cotizaciones;
 use Illuminate\Http\Request;
 use DB;
@@ -22,6 +23,7 @@ class CuentasPagarController extends Controller
     }
 
     public function show($id){
+
         $cotizacionesPorPagar = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
         ->join('asignaciones', 'docum_cotizacion.id', '=', 'asignaciones.id_contenedor')
         ->where('asignaciones.id_camion', '=', NULL)

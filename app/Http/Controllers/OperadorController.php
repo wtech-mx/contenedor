@@ -8,24 +8,40 @@ use Illuminate\Http\Request;
 use App\Models\Cotizaciones;
 use App\Models\DocumCotizacion;
 use App\Models\Asignaciones;
-
+use App\Models\ComprobanteGastos;
 use Session;
 
 class OperadorController extends Controller
 {
     public function index(){
         $operadores = Operador::get();
+        $pagos_pendientes = Asignaciones::where('estatus_pagado', '=', 'Pendiente Pago')->get();
 
-        $asignaciones = Asignaciones::get();
-        $appointments = Asignaciones::get();
-
-        return view('operadores.index', compact('operadores','asignaciones'));
+        return view('operadores.index', compact('operadores', 'pagos_pendientes'));
     }
 
     public function show($id){
         $operador = Operador::where('id', '=', $id)->first();
+        $pagos = Asignaciones::where('estatus_pagado', '=', 'Pagado')->where('id_operador', '=', $id)->get();
+        $comprobantes_gasolina = ComprobanteGastos::join('asignaciones', 'comprobantes_gastos.id_asignacion', 'asignaciones.id')
+                                            ->where('asignaciones.id_operador', '=', $id)
+                                            ->where('comprobantes_gastos.tipo', '=', 'Gasolina')
+                                            ->select('comprobantes_gastos.*')
+                                            ->get();
 
-        return view('operadores.show', compact('operador'));
+        $comprobantes_casetas = ComprobanteGastos::join('asignaciones', 'comprobantes_gastos.id_asignacion', 'asignaciones.id')
+                                                    ->where('asignaciones.id_operador', '=', $id)
+                                                    ->where('comprobantes_gastos.tipo', '=', 'Casetas')
+                                                    ->select('comprobantes_gastos.*')
+                                                    ->get();
+
+        $comprobantes_otros = ComprobanteGastos::join('asignaciones', 'comprobantes_gastos.id_asignacion', 'asignaciones.id')
+                                                    ->where('asignaciones.id_operador', '=', $id)
+                                                    ->where('comprobantes_gastos.tipo', '=', 'Otros')
+                                                    ->select('comprobantes_gastos.*')
+                                                    ->get();
+
+        return view('operadores.show', compact('operador', 'pagos', 'comprobantes_gasolina', 'comprobantes_casetas', 'comprobantes_otros'));
     }
 
     public function store(Request $request){
@@ -79,5 +95,76 @@ class OperadorController extends Controller
         return redirect()->back()
             ->with('success', 'operador created successfully.');
 
+    }
+
+    public function update_pago(Request $request, $id){
+
+        $cotizaciones = Asignaciones::where('id', '=', $id)->first();
+        $cotizaciones->gasolina = $request->get('gasolina');
+        $cotizaciones->casetas = $request->get('casetas');
+        $cotizaciones->otros = $request->get('otros');
+        $cotizaciones->estatus_pagado = 'Pagado';
+        $cotizaciones->update();
+
+        if ($request->hasFile('comprobante_gasolina')) {
+            // Itera sobre cada imagen cargada
+            foreach ($request->file('comprobante_gasolina') as $image) {
+                // Genera un nombre único para la imagen
+                $fileName = uniqid() . $image->getClientOriginalName();
+
+                // Guarda la imagen en la carpeta deseada
+                $path = public_path() . '/comprobantes';
+                $image->move($path, $fileName);
+
+                // Crea una nueva instancia de ImagenProducto y guarda los datos en la base de datos
+                $imagenProducto = new ComprobanteGastos;
+                $imagenProducto->imagen = $fileName;
+                $imagenProducto->id_asignacion = $cotizaciones->id;
+                $imagenProducto->tipo = 'Gasolina';
+                $imagenProducto->save();
+            }
+        }
+
+        if ($request->hasFile('comprobante_casetas')) {
+            // Itera sobre cada imagen cargada
+            foreach ($request->file('comprobante_casetas') as $image) {
+                // Genera un nombre único para la imagen
+                $fileName = uniqid() . $image->getClientOriginalName();
+
+                // Guarda la imagen en la carpeta deseada
+                $path = public_path() . '/comprobantes';
+                $image->move($path, $fileName);
+
+                // Crea una nueva instancia de ImagenProducto y guarda los datos en la base de datos
+                $imagenProducto = new ComprobanteGastos;
+                $imagenProducto->imagen = $fileName;
+                $imagenProducto->id_asignacion = $cotizaciones->id;
+                $imagenProducto->tipo = 'Casetas';
+                $imagenProducto->save();
+            }
+        }
+
+        if ($request->hasFile('comprobante_otros')) {
+            // Itera sobre cada imagen cargada
+            foreach ($request->file('comprobante_otros') as $image) {
+                // Genera un nombre único para la imagen
+                $fileName = uniqid() . $image->getClientOriginalName();
+
+                // Guarda la imagen en la carpeta deseada
+                $path = public_path() . '/comprobantes';
+                $image->move($path, $fileName);
+
+                // Crea una nueva instancia de ImagenProducto y guarda los datos en la base de datos
+                $imagenProducto = new ComprobanteGastos;
+                $imagenProducto->imagen = $fileName;
+                $imagenProducto->id_asignacion = $cotizaciones->id;
+                $imagenProducto->tipo = 'Otros';
+                $imagenProducto->save();
+            }
+        }
+
+        Session::flash('edit', 'Se ha editado sus datos con exito');
+        return redirect()->back()
+            ->with('success', 'Estatus updated successfully');
     }
 }

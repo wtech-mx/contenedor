@@ -25,15 +25,25 @@
                             <div class="modal-body">
                                 <h3 class="mb-5">Datos de cotizacion</h3>
                                 <div class="row">
-                                        <div class="form-group">
+
+                                        <div class="col-{{ $cotizacion->id_subcliente != NULL ? '6' : '12' }} form-group">
                                             <label for="name">Cliente *</label>
-                                            <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_cliente" name="id_cliente" value="{{ old('id_cliente') }}">
+                                            <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_cliente" name="id_cliente" value="{{ old('id_cliente') }}" disabled>
                                                 <option value="{{$cotizacion->id_cliente}}">{{$cotizacion->Cliente->nombre}} / {{$cotizacion->Cliente->telefono}}</option>
                                                 @foreach ($clientes as $item)
                                                     <option value="{{ $item->id }}">{{ $item->nombre }} / {{ $item->telefono }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
+
+                                        @if ($cotizacion->id_subcliente != NULL)
+                                            <div class="col-6 form-group">
+                                                <label for="name">Subcliente *</label>
+                                                <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_subcliente" name="id_subcliente" value="{{ old('id_subcliente') }}" disabled>
+                                                    <option value="{{$cotizacion->id_subcliente}}">{{$cotizacion->Subcliente->nombre}} / {{$cotizacion->Subcliente->telefono}}</option>
+                                                </select>
+                                            </div>
+                                        @endif
 
                                         <div class="col-6 form-group">
                                             <label for="name">Origen</label>
