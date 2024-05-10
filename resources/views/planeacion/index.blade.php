@@ -172,55 +172,7 @@
     </script>
 @endsection
 
-@section('alerta')
-    <script>
-        $(document).ready(function() {
-            $("#miFormulario").on("submit", function (event) {
-                event.preventDefault();
-                $.ajax({
-                    url: $(this).attr("action"),
-                    type: "POST",
-                    data: new FormData(this),
-                    contentType: false,
-                    processData: false,
-                    success: function(response) { // Agrega "async" aquí
-                        // El formulario se ha enviado correctamente, ahora realiza la impresión
-                        console.log('OK');
-                        Swal.fire({
-                            title: "Planeacion Guardada <strong>¡Exitosamente!</strong>",
-                            icon: "success",
-                            showCloseButton: true,
-                            showCancelButton: true,
-                            focusConfirm: false,
-                            cancelButtonText: `<a  class="btn_swalater_cancel" style="text-decoration: none;color: #fff;" href="{{ route('index.planeaciones') }}" >Cerrar</a>`,
-                        });
-                        location.reload();
 
-                    },
-                    error: function (xhr, status, error) {
-                            var errors = xhr.responseJSON.errors;
-                            var errorMessage = '';
-
-                            // Itera a través de los errores y agrega cada mensaje de error al mensaje final
-                            for (var key in errors) {
-                                if (errors.hasOwnProperty(key)) {
-                                    var errorMessages = errors[key].join('<br>'); // Usamos <br> para separar los mensajes
-                                    errorMessage += '<strong>' + key + ':</strong><br>' + errorMessages + '<br>';
-                                }
-                            }
-                            console.log(errorMessage);
-                            // Muestra el mensaje de error en una SweetAlert
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Faltan Campos',
-                                html: errorMessage, // Usa "html" para mostrar el mensaje con formato HTML
-                            });
-                    }
-                });
-            });
-        });
-    </script>
-@endsection
 
 @section('datatable')
     <script type="text/javascript">
