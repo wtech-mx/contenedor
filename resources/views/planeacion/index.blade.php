@@ -138,6 +138,7 @@
                             complete: function() {
                                 // Ocultar el spinner cuando la búsqueda esté completa
                                 alert('Cambio realizado');
+                                location.reload();
                             }
                         });
                     });
