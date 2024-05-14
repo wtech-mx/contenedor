@@ -159,7 +159,7 @@ class PlaneacionController extends Controller
             $asignaciones->fecha_inicio = $request->get('fecha_inicio_proveedor');
             $asignaciones->fecha_fin = $request->get('fecha_fin_proveedor');
         }
-        
+
         $asignaciones->precio = $request->get('precio');
         $asignaciones->save();
 
@@ -169,9 +169,10 @@ class PlaneacionController extends Controller
         $cotizacion->update();
 
         $coordenada = new Coordenadas;
-        $coordenada = $cotizacion->id;
-        $coordenada = $asignaciones->id;
+        $coordenada->id_cotizacion = $cotizacion->id;
+        $coordenada->id_asignacion = $asignaciones->id;
         $coordenada->save();
+
 
         $cotizacion_data = [
             "tipo_viaje" => $cotizacion->tipo_viaje,
