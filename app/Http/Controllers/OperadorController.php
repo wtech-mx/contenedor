@@ -16,7 +16,6 @@ class OperadorController extends Controller
     public function index(){
         $operadores = Operador::get();
         $pagos_pendientes = Asignaciones::where('estatus_pagado', '=', 'Pendiente Pago')->get();
-
         return view('operadores.index', compact('operadores', 'pagos_pendientes'));
     }
 
@@ -166,5 +165,14 @@ class OperadorController extends Controller
         Session::flash('edit', 'Se ha editado sus datos con exito');
         return redirect()->back()
             ->with('success', 'Estatus updated successfully');
+    }
+
+    public function show_pagos($id){
+        $operador = Operador::find($id);
+        $pagos_pendientes = Asignaciones::where('estatus_pagado', '=', 'Pendiente Pago')
+        ->where('id_operador', '=', $id)
+        ->get();
+
+        return view('operadores.pagos_pendientes', compact('pagos_pendientes', 'operador'));
     }
 }

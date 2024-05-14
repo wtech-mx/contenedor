@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asignaciones;
+use App\Models\Bancos;
 use App\Models\Cotizaciones;
 use App\Models\Equipo;
 use App\Models\Operador;
@@ -34,20 +35,22 @@ class PlaneacionController extends Controller
         foreach ($appointments as $appointment) {
             if($appointment->id_operador == NULL){
                 $description = 'Proveedor: ' . $appointment->Proveedor->nombre . ' - ' . $appointment->Proveedor->telefono . '<br>' . 'Costo viaje: ' . $appointment->precio;
+                $tipo = 'P';
             }else{
                 if($appointment->Contenedor->Cotizacion->tipo_viaje == 'Sencillo'){
                     $description = 'Tipo viaje: ' . $appointment->Contenedor->Cotizacion->tipo_viaje . '<br> <br>' .
                     'Operador: ' . $appointment->Operador->nombre . ' - ' . $appointment->Operador->telefono . '<br>' .
-                    'Camion: ' . $appointment->Camion->num_serie . ' - ' . $appointment->Camion->modelo . '<br>' .
+                    'Camion: ' . ' #' . $appointment->Camion->id_equipo . ' - ' . $appointment->Camion->num_serie . ' - ' . $appointment->Camion->modelo . '<br>' .
                     'Chasis: ' . $appointment->Chasis->num_serie . ' - ' . $appointment->Chasis->modelo . '<br>';
                 }elseif($appointment->Contenedor->Cotizacion->tipo_viaje == 'Full'){
                     $description = 'Tipo viaje: ' . $appointment->Contenedor->Cotizacion->tipo_viaje . '<br> <br>' .
                     'Operador: ' . $appointment->Operador->nombre . ' - ' . $appointment->Operador->telefono . '<br>' .
-                    'Camion: ' . $appointment->Camion->num_serie . ' - ' . $appointment->Camion->modelo . '<br>' .
+                    'Camion: ' . ' #' . $appointment->Camion->id_equipo . ' - ' . $appointment->Camion->num_serie . ' - ' . $appointment->Camion->modelo . '<br>' .
                     'Chasis: ' . $appointment->Chasis->num_serie . ' - ' . $appointment->Chasis->modelo . '<br>' .
                     'Chasis 2: ' . $appointment->Chasis2->num_serie . ' - ' . $appointment->Chasis2->modelo . '<br>' .
                     'Doly: ' . $appointment->Doly->num_serie . ' - ' . $appointment->Doly->modelo . '<br>';
                 }
+                $tipo = 'S';
             }
 
             $coordenadas = Coordenadas::where('id_asignacion', '=', $appointment->id)->first();
@@ -55,7 +58,7 @@ class PlaneacionController extends Controller
             $description = str_replace('<br>', "\n", $description);
 
             $event = [
-                'title' => $appointment->Contenedor->Cotizacion->Cliente->nombre . '/ #' . $appointment->Contenedor->Cotizacion->DocCotizacion->num_contenedor,
+                'title' => $tipo .' / '. $appointment->Contenedor->Cotizacion->Cliente->nombre . ' / #' . $appointment->Contenedor->Cotizacion->DocCotizacion->num_contenedor,
                 'description' => $description,
                 'start' => $appointment->fecha_inicio,
                 'end' => $appointment->fecha_fin,
@@ -131,8 +134,9 @@ class PlaneacionController extends Controller
                 whereNotIn('id', $operadorAsignados)
                 ->get();
 
+            $bancos = Bancos::get();
 
-            return view('planeacion.resultado_equipos', ['dolysNoAsignados' => $dolysNoAsignados, 'camionesNoAsignados' => $camionesNoAsignados, 'chasisNoAsignados' => $chasisNoAsignados, 'operadorNoAsignados' => $operadorNoAsignados]);
+            return view('planeacion.resultado_equipos', ['bancos' => $bancos, 'dolysNoAsignados' => $dolysNoAsignados, 'camionesNoAsignados' => $camionesNoAsignados, 'chasisNoAsignados' => $chasisNoAsignados, 'operadorNoAsignados' => $operadorNoAsignados]);
 
         }
     }
@@ -172,6 +176,11 @@ class PlaneacionController extends Controller
         }
 
         $asignaciones->precio = $request->get('precio');
+
+        $asignaciones->id_banco1_dinero_viaje = $request->get('id_banco1_dinero_viaje');
+        $asignaciones->cantidad_banco1_dinero_viaje = $request->get('cantidad_banco1_dinero_viaje');
+        $asignaciones->id_banco2_dinero_viaje = $request->get('id_banco2_dinero_viaje');
+        $asignaciones->cantidad_banco2_dinero_viaje = $request->get('cantidad_banco2_dinero_viaje');
         $asignaciones->save();
 
         $cotizacion = Cotizaciones::where('id', '=',  $request->get('cotizacion'))->first();

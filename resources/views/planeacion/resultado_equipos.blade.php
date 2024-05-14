@@ -79,7 +79,6 @@
                 <input name="sueldo_viaje" id="sueldo_viaje" type="text" class="form-control">
             </div>
         </div>
-
     </div>
 
     <div class="col-6 form-group" id="operadorGroup">
@@ -92,7 +91,66 @@
                 <input name="dinero_viaje" id="dinero_viaje" type="text" class="form-control">
             </div>
         </div>
+    </div>
 
+    <div class="col-12">
+        <h4>Salida de dinero</h4>
+    </div>
 
+    <div class="col-6">
+        <div class="form-group">
+            <label for="name">Banco 1</label>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">
+                    <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                </span>
+                <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_banco1_dinero_viaje" name="id_banco1_dinero_viaje" value="{{ old('id_banco1_dinero_viaje') }}">
+                        <option value="">Selecciona</option>
+                        @foreach ($bancos as $item)
+                            <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
+                        @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
 
+    <div class="col-6 form-group" id="operadorGroup">
+        <div class="form-group">
+            <label for="name">Cantidad</label>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">
+                    <img src="{{ asset('img/icon/depositar.png') }}" alt="" width="35px">
+                </span>
+                <input name="cantidad_banco1_dinero_viaje" id="cantidad_banco1_dinero_viaje" type="number" class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="form-group">
+            <label for="name">Banco 2</label>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">
+                    <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                </span>
+                <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_banco2_dinero_viaje" name="id_banco2_dinero_viaje" value="{{ old('id_banco2_dinero_viaje') }}">
+                        <option value="">Selecciona</option>
+                        @foreach ($bancos as $item)
+                            <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
+                        @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 form-group" id="operadorGroup">
+        <div class="form-group">
+            <label for="name">Cantidad 2</label>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">
+                    <img src="{{ asset('img/icon/depositar.png') }}" alt="" width="35px">
+                </span>
+                <input name="cantidad_banco2_dinero_viaje" id="cantidad_banco2_dinero_viaje" type="number" class="form-control">
+            </div>
+        </div>
     </div>

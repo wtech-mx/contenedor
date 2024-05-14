@@ -5,20 +5,6 @@
 @endsection
 
 @section('content')
-
-<style>
-    .estilos_equipo{
-        background: #f5f5f5;
-        padding: 30px;
-        border-radius: 12px;
-        margin-bottom: 30px;
-        box-shadow: 6px 6px 15px -10px rgb(0 0 0 / 50%);
-    }
-
-    .titulos_bitacora{
-        font-size: 12px;
-    }
-</style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -68,19 +54,17 @@
                                                         <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
                                                     </a>
 
-                                                    <a type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#operadoresModal_bitacora{{$operador->id}}">
-                                                        <img src="{{ asset('img/icon/depositar.png') }}" alt="" width="25px"> Pagar
+                                                    <a type="button" class="btn btn-sm btn-outline-success" href="{{ route('show_pagos.operadores', $operador->id) }}">
+                                                        <img src="{{ asset('img/icon/depositar.png') }}" alt="" width="25px"> Pagos P.
                                                     </a>
 
                                                     <a type="button" class="btn btn-sm btn-outline-info" href="{{ route('show.operadores', $operador->id) }}">
-                                                        <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px"> Bitacora
+                                                        <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px"> Pagos S.
                                                     </a>
                                                 </td>
                                             </tr>
 
-                                                @include('operadores.modal_bitacora')
                                                 @include('operadores.modal_edit')
-
                                         @endforeach
                                     </tbody>
 

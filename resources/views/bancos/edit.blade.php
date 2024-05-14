@@ -19,6 +19,7 @@
         }
 
         $pagos = 0;
+        $pagos_salida = 0;
 
         foreach ($proveedores as $item){
             if ($item->id_prove_banco1 == $banco->id){
@@ -28,8 +29,17 @@
             }
         }
 
+        foreach ($operadores_salida as $item){
+            if ($item->id_banco1_dinero_viaje == $banco->id){
+                $pagos_salida += $item->cantidad_banco1_dinero_viaje;
+            }elseif ($item->id_banco2_dinero_viaje == $banco->id){
+                $pagos_salida += $item->cantidad_banco2_dinero_viaje;
+            }
+        }
+
+        $total_pagos = $pagos + $pagos_salida;
         $saldo = 0;
-        $saldo = ($banco->saldo_inicial + $total)- $pagos;
+        $saldo = ($banco->saldo_inicial + $total)- $total_pagos;
     @endphp
 
     <div class="col-lg-4 col-md-6 col-12 mt-4 mt-md-0">
@@ -61,7 +71,7 @@
                             <img class="w-60 mt-2" src="{{ asset('img/icon/gastos.png.webp') }}" alt="logo">
                         </div>
                         <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                            $ {{ number_format($pagos, 0, '.', ',') }}
+                            $ {{ number_format($total_pagos, 0, '.', ',') }}
                         </h5>
                         <span class="text-white text-sm">Abono</span>
                     </div>
@@ -149,6 +159,22 @@
                                         $ {{ number_format($item->prove_monto1, 0, '.', ',') }}
                                     @else
                                         $ {{ number_format($item->prove_monto2, 0, '.', ',') }}
+                                    @endif
+                                </div>
+                            @endforeach
+
+                            @foreach ($operadores_salida as $item)
+                                <div class="col-4">
+                                    <a class="btn btn-sm btn-info" href="{{ route('edit.cotizaciones', $item->id) }}">
+                                        {{ $item->Contenedor->num_contenedor }}
+                                    </a>
+                                </div>
+                                <div class="col-4">{{ $item->Operador->nombre }}</div>
+                                <div class="col-4">
+                                    @if ($item->id_banco1_dinero_viaje  == $banco->id)
+                                        $ {{ number_format($item->cantidad_banco1_dinero_viaje, 0, '.', ',') }}
+                                    @else
+                                        $ {{ number_format($item->cantidad_banco2_dinero_viaje, 0, '.', ',') }}
                                     @endif
                                 </div>
                             @endforeach

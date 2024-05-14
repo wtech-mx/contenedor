@@ -53,9 +53,4 @@ class Asignaciones extends Model
     {
         return $this->belongsTo(Proveedor::class, 'id_proveedor');
     }
-
-    public function Client()
-    {
-        return $this->belongsTo(Proveedor::class, 'id_proveedor');
-    }
 }
