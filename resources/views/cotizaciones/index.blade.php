@@ -56,6 +56,7 @@
                                                 <th><img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">Origen</th>
                                                 <th><img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px">Destino</th>
                                                 <th><img src="{{ asset('img/icon/semaforos.webp') }}" alt="" width="25px">Estatus</th>
+                                                <th><img src="{{ asset('img/icon/semaforos.webp') }}" alt="" width="25px">Coordeneadas</th>
                                                 <th><img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">Acciones</th>
                                             </tr>
                                         </thead>
@@ -70,6 +71,11 @@
                                                             <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
                                                                 {{$cotizacion->estatus}}
                                                             </button>
+                                                        </td>
+                                                        <td>
+                                                            <a type="button" class="btn" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
+                                                                <img src="{{ asset('img/icon/coordenadas.png') }}" alt="" width="25px"> Coordenadas
+                                                            </a>
                                                         </td>
                                                         <td>
                                                             <a type="button" class="btn" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">

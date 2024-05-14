@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('asignaciones', function (Blueprint $table) {
             $table->id();
+
             $table->unsignedBigInteger('id_camion')->nullable();
             $table->foreign('id_camion')
                 ->references('id')->on('equipos')

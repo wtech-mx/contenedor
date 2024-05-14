@@ -10,6 +10,8 @@ use App\Models\Planeacion;
 use App\Models\Proveedor;
 use App\Models\Client;
 use App\Models\Subclientes;
+use App\Models\Coordenadas;
+
 use Illuminate\Http\Request;
 use DB;
 use Session;
@@ -157,6 +159,7 @@ class PlaneacionController extends Controller
             $asignaciones->fecha_inicio = $request->get('fecha_inicio_proveedor');
             $asignaciones->fecha_fin = $request->get('fecha_fin_proveedor');
         }
+        
         $asignaciones->precio = $request->get('precio');
         $asignaciones->save();
 
@@ -164,6 +167,11 @@ class PlaneacionController extends Controller
         $cotizacion->estatus_planeacion = 1;
         $cotizacion->tipo_viaje = $request->get('tipo');
         $cotizacion->update();
+
+        $coordenada = new Coordenadas;
+        $coordenada = $cotizacion->id;
+        $coordenada = $asignaciones->id;
+        $coordenada->save();
 
         $cotizacion_data = [
             "tipo_viaje" => $cotizacion->tipo_viaje,
