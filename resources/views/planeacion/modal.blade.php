@@ -14,6 +14,7 @@
                 <input type="date" id="eventoFechaEnd" class="form-control">
                 <input type="hidden" id="urlId" class="form-control">
                 <a id="idCotizacion" class="btn btn-sm btn-primary mt-2" target="_blank">Ver Cotizacion</a>
+                <a id="idCoordenda" class="btn btn-sm btn-warning mt-2" target="_blank">Ver Coordenadas</a>
 
             </div>
 

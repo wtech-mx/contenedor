@@ -30,6 +30,7 @@ class PlaneacionController extends Controller
 
         $appointments = Asignaciones::get();
 
+
         foreach ($appointments as $appointment) {
             if($appointment->id_operador == NULL){
                 $description = 'Proveedor: ' . $appointment->Proveedor->nombre . ' - ' . $appointment->Proveedor->telefono . '<br>' . 'Costo viaje: ' . $appointment->precio;
@@ -49,8 +50,11 @@ class PlaneacionController extends Controller
                 }
             }
 
+            $coordenadas = Coordenadas::where('id_asignacion', '=', $appointment->id)->first();
+
             $description = str_replace('<br>', "\n", $description);
-            $events[] = [
+
+            $event = [
                 'title' => $appointment->Contenedor->Cotizacion->Cliente->nombre . '/ #' . $appointment->Contenedor->Cotizacion->DocCotizacion->num_contenedor,
                 'description' => $description,
                 'start' => $appointment->fecha_inicio,
@@ -58,6 +62,13 @@ class PlaneacionController extends Controller
                 'urlId' => $appointment->id,
                 'idCotizacion' => $appointment->Contenedor->id_cotizacion,
             ];
+
+            // Verificar si $coordenadas no es null antes de acceder a su propiedad id
+            if ($coordenadas !== null) {
+                $event['idCoordenda'] = $coordenadas->id;
+            }
+
+            $events[] = $event;
 
         }
 

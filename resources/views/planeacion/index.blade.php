@@ -99,6 +99,8 @@
                     document.getElementById('eventoFechaStart').value = fechaInicio;
                     document.getElementById('eventoFechaEnd').value = fechaFin;
                     document.getElementById('idCotizacion').setAttribute('href', 'cotizaciones/edit/' + info.event.extendedProps.idCotizacion);
+                    document.getElementById('idCoordenda').setAttribute('href', 'coordenadas/' + info.event.extendedProps.idCoordenda);
+
                     document.getElementById('urlId').value = urlId;
 
                     // Mostrar el modal
@@ -241,18 +243,24 @@
         });
 
         function formatDate(date) {
-            // Obtener la fecha y hora local en la zona horaria de la Ciudad de México
-            var mexicoCityTime = date.toLocaleString('en-US', { timeZone: 'America/Mexico_City' });
-            var mexicoCityDate = new Date(mexicoCityTime);
+            if (date !== null && typeof date !== 'undefined') {
+                // Obtener la fecha y hora local en la zona horaria de la Ciudad de México
+                var mexicoCityTime = date.toLocaleString('en-US', { timeZone: 'America/Mexico_City' });
+                var mexicoCityDate = new Date(mexicoCityTime);
 
-            // Obtener el año, mes y día de la fecha ajustada
-            var year = mexicoCityDate.getFullYear();
-            var month = pad(mexicoCityDate.getMonth() + 1);
-            var day = pad(mexicoCityDate.getDate());
+                // Obtener el año, mes y día de la fecha ajustada
+                var year = mexicoCityDate.getFullYear();
+                var month = pad(mexicoCityDate.getMonth() + 1);
+                var day = pad(mexicoCityDate.getDate());
 
-            // Construir la fecha en el formato YYYY-MM-DD
-            return year + '-' + month + '-' + day;
+                // Construir la fecha en el formato YYYY-MM-DD
+                return year + '-' + month + '-' + day;
+            } else {
+                // Si date es null o indefinido, devuelve una cadena vacía o maneja el caso según sea necesario
+                return '';
+            }
         }
+
 
         // Función para agregar un cero delante de números menores a 10
         function pad(number) {
@@ -279,7 +287,4 @@
     </script>
 
 @endsection
-
-
-
 
