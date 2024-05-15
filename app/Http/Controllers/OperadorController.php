@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Cotizaciones;
 use App\Models\DocumCotizacion;
 use App\Models\Asignaciones;
+use App\Models\Bancos;
 use App\Models\ComprobanteGastos;
 use Session;
 
@@ -103,6 +104,11 @@ class OperadorController extends Controller
         $cotizaciones->casetas = $request->get('casetas');
         $cotizaciones->otros = $request->get('otros');
         $cotizaciones->estatus_pagado = 'Pagado';
+
+        $cotizaciones->id_banco1_pago_operador = $request->get('id_banco1_pago_operador');
+        $cotizaciones->cantidad_banco1_pago_operador = $request->get('cantidad_banco1_pago_operador');
+        $cotizaciones->id_banco2_pago_operador = $request->get('id_banco2_pago_operador');
+        $cotizaciones->cantidad_banco2_pago_operador = $request->get('cantidad_banco2_pago_operador');
         $cotizaciones->update();
 
         if ($request->hasFile('comprobante_gasolina')) {
@@ -173,6 +179,8 @@ class OperadorController extends Controller
         ->where('id_operador', '=', $id)
         ->get();
 
-        return view('operadores.pagos_pendientes', compact('pagos_pendientes', 'operador'));
+        $bancos = Bancos::get();
+
+        return view('operadores.pagos_pendientes', compact('pagos_pendientes', 'operador', 'bancos'));
     }
 }

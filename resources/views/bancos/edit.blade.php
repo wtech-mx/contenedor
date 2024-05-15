@@ -179,6 +179,22 @@
                                 </div>
                             @endforeach
 
+                            @foreach ($operadores_salida_pago as $item)
+                                <div class="col-4">
+                                    <a class="btn btn-sm btn-denger" href="{{ route('edit.cotizaciones', $item->id) }}">
+                                        {{ $item->Contenedor->num_contenedor }}
+                                    </a>
+                                </div>
+                                <div class="col-4">{{ $item->Operador->nombre }}</div>
+                                <div class="col-4">
+                                    @if ($item->id_banco1_pago_operador  == $banco->id)
+                                        $ {{ number_format($item->cantidad_banco1_pago_operador, 0, '.', ',') }}
+                                    @else
+                                        $ {{ number_format($item->cantidad_banco2_pago_operador, 0, '.', ',') }}
+                                    @endif
+                                </div>
+                            @endforeach
+
                         </div>
                     </div>
                 </div>
