@@ -50,6 +50,17 @@
                     Sistema de Gestion de Transporte
                 </h4>
 
+                @if($coordenadas->Cotizacion->DocCotizacion->num_contenedo == null)
+
+                    Falta asignar Contenedor
+
+                @else
+
+                <p>Num de Contenedor : {{ $coordenadas->Cotizacion->DocCotizacion->num_contenedo }}</p>
+
+                @endif
+
+
               </div>
               <div class="card-body px-lg-5 pt-0">
                 <div class="text-center text-muted mb-4">
