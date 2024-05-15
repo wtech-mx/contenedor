@@ -23,8 +23,8 @@
                         <table class="table table-striped table-hover table_id" id="datatable-search">
                             <thead class="thead">
                                 <tr>
-                                    <th><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px">Subcliente</th>
                                     <th><img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="25px"># Contenedor</th>
+                                    <th><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px">Subcliente</th>
                                     <th><img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px">Total a pagar</th>
                                     <th><img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">Tipo de viaje</th>
                                     <th><img src="{{ asset('img/icon/gastos.png.webp') }}" alt="" width="25px">Restante</th>
@@ -34,6 +34,7 @@
                             <tbody>
                                 @foreach ($cotizacionesPorPagar as $item)
                                     <tr>
+                                        <td>{{ $item->DocCotizacion->num_contenedor }}</td>
                                         <td>
                                             @if ($item->id_subcliente != NULL)
                                                 {{$item->Subcliente->nombre}} / {{$item->Subcliente->telefono}}
@@ -41,7 +42,6 @@
                                                 -
                                             @endif
                                         </td>
-                                        <td>{{ $item->DocCotizacion->num_contenedor }}</td>
                                         <td>$ {{ number_format($item->total, 2, '.', ',') }}</td>
                                         <td>{{ $item->tipo_viaje }}</td>
                                         <td>$ {{ number_format($item->restante, 2, '.', ',') }}</td>
