@@ -13,8 +13,9 @@
                 <input type="date" id="eventoFechaStart" class="form-control mb-3">
                 <input type="date" id="eventoFechaEnd" class="form-control">
                 <input type="hidden" id="urlId" class="form-control">
-                <a id="idCotizacion" class="btn btn-sm btn-primary mt-2" target="_blank">Ver Cotizacion</a>
-                <a id="idCoordenda" class="btn btn-sm btn-warning mt-2" target="_blank">Ver Coordenadas</a>
+                <a id="idCotizacion" class="btn mt-3 btn-sm btn-primary mt-2" target="_blank">Cotizacion</a>
+                <a id="idCoordenda" class="btn mt-3 btn-sm btn-warning mt-2" target="_blank">Ver Coordenadas</a>
+                <a id="telOperador" class="btn mt-3 btn-sm btn-success mt-2" target="_blank">Enviar x Whtaspp</a>
 
             </div>
 

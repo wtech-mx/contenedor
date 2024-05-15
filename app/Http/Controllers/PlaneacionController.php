@@ -71,6 +71,10 @@ class PlaneacionController extends Controller
                 $event['idCoordenda'] = $coordenadas->id;
             }
 
+            if ($appointment->Operador !== null) {
+                $event['telOperador'] = $appointment->Operador->telefono;
+            }
+
             $events[] = $event;
 
         }
