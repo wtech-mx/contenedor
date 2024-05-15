@@ -36,6 +36,17 @@
                                             </select>
                                         </div>
 
+                                        <div class="col-6 form-group">
+                                            <label for="name">Num. Contenedor</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="num_contenedor" id="num_contenedor" type="text" class="form-control" value="{{$documentacion->num_contenedor}}">
+                                            </div>
+                                        </div>
+
+
                                         @if ($cotizacion->id_subcliente != NULL)
                                             <div class="col-6 form-group">
                                                 <label for="name">Subcliente *</label>
@@ -262,15 +273,6 @@
 
                                     <h3 class="mb-5 mt-3    ">Registrar Documentación</h3>
 
-                                    <div class="col-6 form-group">
-                                        <label for="name">Num. Contenedor</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="num_contenedor" id="num_contenedor" type="text" class="form-control" value="{{$documentacion->num_contenedor}}">
-                                        </div>
-                                    </div>
 
                                     <div class="col-6 form-group">
                                         <label for="name">Terminal(Nombre)</label>
