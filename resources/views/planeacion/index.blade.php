@@ -100,7 +100,7 @@
                     document.getElementById('eventoFechaEnd').value = fechaFin;
                     document.getElementById('idCotizacion').setAttribute('href', 'cotizaciones/edit/' + info.event.extendedProps.idCotizacion);
                     document.getElementById('idCoordenda').setAttribute('href', 'coordenadas/' + info.event.extendedProps.idCoordenda);
-                    document.getElementById('telOperador').setAttribute('href', 'https://api.whatsapp.com/send?phone=521'+ info.event.extendedProps.telOperador + '&text=Link de seguimiento%3A%0A'+'https://contenedores.wtech.com.mx/cotizaciones/edit/'+info.event.extendedProps.idCotizacion);
+                    document.getElementById('telOperador').setAttribute('href', 'https://api.whatsapp.com/send?phone=521'+ info.event.extendedProps.telOperador + '&text=Link de seguimiento%3A%0A'+'https://contenedores.wtech.com.mx/coordenadas/'+info.event.extendedProps.idCotizacion);
 
                     document.getElementById('urlId').value = urlId;
 
