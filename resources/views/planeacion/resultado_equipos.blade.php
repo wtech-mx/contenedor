@@ -96,40 +96,7 @@
     <div class="col-12">
         <h4>Salida de dinero</h4>
     </div>
-    @php
-        $total = 0;
 
-        foreach ($cotizaciones as $item){
-            if ($item->id_banco1 == $banco->id){
-                $total += $item->monto1;
-            }elseif ($item->id_banco2 == $banco->id){
-                $total += $item->monto2;
-            }
-        }
-
-        $pagos = 0;
-        $pagos_salida = 0;
-
-        foreach ($proveedores as $item){
-            if ($item->id_prove_banco1 == $banco->id){
-                $pagos += $item->prove_monto1;
-            }elseif ($item->id_prove_banco2 == $banco->id){
-                $pagos += $item->prove_monto2;
-            }
-        }
-
-        foreach ($operadores_salida as $item){
-            if ($item->id_banco1_dinero_viaje == $banco->id){
-                $pagos_salida += $item->cantidad_banco1_dinero_viaje;
-            }elseif ($item->id_banco2_dinero_viaje == $banco->id){
-                $pagos_salida += $item->cantidad_banco2_dinero_viaje;
-            }
-        }
-
-        $total_pagos = $pagos + $pagos_salida;
-        $saldo = 0;
-        $saldo = ($banco->saldo_inicial + $total)- $total_pagos;
-    @endphp
     <div class="col-6">
         <div class="form-group">
             <label for="name">Banco 1</label>
@@ -140,7 +107,7 @@
                 <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_banco1_dinero_viaje" name="id_banco1_dinero_viaje" value="{{ old('id_banco1_dinero_viaje') }}">
                         <option value="">Selecciona</option>
                         @foreach ($bancos as $item)
-                            <option value="{{$item->id}}">{{$item->nombre_banco}} - ${{$item->nombre_banco}}</option>
+                            <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
                         @endforeach
                 </select>
             </div>
