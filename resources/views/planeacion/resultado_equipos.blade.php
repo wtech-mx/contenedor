@@ -107,7 +107,7 @@
                 <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_banco1_dinero_viaje" name="id_banco1_dinero_viaje" value="{{ old('id_banco1_dinero_viaje') }}">
                         <option value="">Selecciona</option>
                         @foreach ($bancos as $item)
-                            <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
+                            <option value="{{$item->id}}">{{$item->nombre_banco}} - ${{ number_format($item->saldo, 2, '.', ',') }}</option>
                         @endforeach
                 </select>
             </div>
@@ -136,7 +136,7 @@
                 <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_banco2_dinero_viaje" name="id_banco2_dinero_viaje" value="{{ old('id_banco2_dinero_viaje') }}">
                         <option value="">Selecciona</option>
                         @foreach ($bancos as $item)
-                            <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
+                            <option value="{{$item->id}}">{{$item->nombre_banco}} - ${{ number_format($item->saldo, 2, '.', ',') }}</option>
                         @endforeach
                 </select>
             </div>

@@ -138,7 +138,7 @@ class PlaneacionController extends Controller
                 whereNotIn('id', $operadorAsignados)
                 ->get();
 
-            $bancos = Bancos::get();
+            $bancos = Bancos::where('saldo', '>', '0')->get();
 
             return view('planeacion.resultado_equipos', ['bancos' => $bancos, 'dolysNoAsignados' => $dolysNoAsignados, 'camionesNoAsignados' => $camionesNoAsignados, 'chasisNoAsignados' => $chasisNoAsignados, 'operadorNoAsignados' => $operadorNoAsignados]);
 
