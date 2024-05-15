@@ -55,8 +55,9 @@
                                                 <th><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px">Cliente</th>
                                                 <th><img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">Origen</th>
                                                 <th><img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px">Destino</th>
+                                                <th><img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="25px"># Contenedor</th>
                                                 <th><img src="{{ asset('img/icon/semaforos.webp') }}" alt="" width="25px">Estatus</th>
-                                                <th><img src="{{ asset('img/icon/semaforos.webp') }}" alt="" width="25px">Coordeneadas</th>
+                                                <th><img src="{{ asset('img/icon/coordenadas.png') }}" alt="" width="25px">Coordeneadas</th>
                                                 <th><img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">Acciones</th>
                                             </tr>
                                         </thead>
@@ -67,6 +68,8 @@
                                                         <td>{{$cotizacion->Cliente->nombre}}</td>
                                                         <td>{{$cotizacion->origen}}</td>
                                                         <td>{{$cotizacion->destino}}</td>
+                                                        <td>{{$cotizacion->DocCotizacion->num_contenedor}}</td>
+
                                                         <td>
                                                             <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
                                                                 {{$cotizacion->estatus}}
