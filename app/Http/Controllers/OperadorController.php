@@ -44,6 +44,15 @@ class OperadorController extends Controller
         return view('operadores.show', compact('operador', 'pagos', 'comprobantes_gasolina', 'comprobantes_casetas', 'comprobantes_otros'));
     }
 
+    public function update(Request $request, Operador $id)
+    {
+
+        $id->update($request->all());
+
+        Session::flash('edit', 'Se ha editado sus datos con exito');
+        return redirect()->back()->with('success', 'Operador updated successfully');
+    }
+
     public function store(Request $request){
 
         $operador = new Operador;
