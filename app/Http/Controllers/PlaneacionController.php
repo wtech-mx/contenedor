@@ -139,6 +139,18 @@ class PlaneacionController extends Controller
                 ->get();
 
             $bancos = Bancos::get();
+            $cotizaciones = Cotizaciones::where('id_banco1', '=', $id)->orwhere('id_banco2', '=', $id)->get();
+            $proveedores = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
+                        ->join('asignaciones', 'docum_cotizacion.id', '=', 'asignaciones.id_contenedor')
+                        ->where('asignaciones.id_camion', '=', NULL)
+                        ->where('cotizaciones.id_prove_banco1', '=', $id)
+                        ->orWhere('cotizaciones.id_prove_banco2', '=', $id)
+                        ->select('cotizaciones.*')
+                        ->get();
+
+            $operadores_salida = Asignaciones::where('id_banco1_dinero_viaje', '=', $id)->orwhere('id_banco2_dinero_viaje', '=', $id)->get();
+
+            $operadores_salida_pago = Asignaciones::where('id_banco1_dinero_viaje', '=', $id)->orwhere('id_banco2_dinero_viaje', '=', $id)->get();
 
             return view('planeacion.resultado_equipos', ['bancos' => $bancos, 'dolysNoAsignados' => $dolysNoAsignados, 'camionesNoAsignados' => $camionesNoAsignados, 'chasisNoAsignados' => $chasisNoAsignados, 'operadorNoAsignados' => $operadorNoAsignados]);
 

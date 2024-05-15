@@ -11,11 +11,6 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <a class="btn"  href="{{ route('index.operadores') }}" style="background: {{$configuracion->color_boton_close}}; color: #ffff;margin-right: 3rem;">
-                                <img src="{{ asset('img/icon/izquierda_white.png') }}" alt="" width="25px"> Regresar
-                            </a>
-                        </div>
                         <h3 class="text-center">{{ $operador->nombre }}</h3>
                     </div>
 
@@ -58,4 +53,12 @@
     </div>
 
 @endsection
+@section('datatable')
+    <script type="text/javascript">
+        const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
+        searchable: true,
+        fixedHeight: false
+        });
 
+    </script>
+@endsection

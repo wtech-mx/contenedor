@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Asignaciones;
 use App\Models\Client;
+use App\Models\ComprobanteGastos;
+use App\Models\Coordenadas;
 use App\Models\Cotizaciones;
 use App\Models\DocumCotizacion;
 use App\Models\Equipo;
@@ -109,11 +111,20 @@ class CotizacionesController extends Controller
         if($request->get('estatus') == 'Cancelada'){
             $doc_cotizaciones = DocumCotizacion::where('id_cotizacion', '=', $id)->first();
 
-            $asignaciones = Asignaciones::where('id_contenedor', '=', $doc_cotizaciones->id)->first();
-            $asignaciones->delete();
+            if ($doc_cotizaciones) {
+                $asignaciones = Asignaciones::where('id_contenedor', '=', $doc_cotizaciones->id)->first();
 
-            $doc_cotizaciones->delete();
+                if ($asignaciones) {
+                    $comprobantes = ComprobanteGastos::where('id_asignacion', '=', $asignaciones->id)->delete();
+                    $coordenadas = Coordenadas::where('id_asignacion', '=', $asignaciones->id)->first();
+                    if ($coordenadas) {
+                        $coordenadas->delete();
+                    }
+                    $asignaciones->delete();
+                }
 
+                $doc_cotizaciones->delete();
+            }
             $gastos_extras = GastosExtras::where('id_cotizacion', '=', $id)->delete();
 
             $cot = Cotizaciones::findOrFail($id);

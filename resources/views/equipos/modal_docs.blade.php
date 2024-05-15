@@ -32,9 +32,27 @@
 
                         @else
 
-                        <p class="text-center">
-                            <img src="{{ asset('equipos/'.$item->tarjeta_circulacion) }}" alt="" width="100%">
+                        @if (pathinfo($item->tarjeta_circulacion, PATHINFO_EXTENSION) == 'pdf')
+                        <p class="text-center ">
+                            <iframe class="mt-2" src="{{asset('equipos/'.$item->tarjeta_circulacion)}}" style="width: 80%; height: 250px;"></iframe>
                         </p>
+                                <a class="btn btn-sm text-dark" href="{{asset('equipos/'.$item->tarjeta_circulacion) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
+                        @elseif (pathinfo($item->tarjeta_circulacion, PATHINFO_EXTENSION) == 'doc')
+                        <p class="text-center ">
+                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                        </p>
+                                <a class="btn btn-sm text-dark" href="{{asset('equipos/'.$item->tarjeta_circulacion) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                        @elseif (pathinfo($item->tarjeta_circulacion, PATHINFO_EXTENSION) == 'docx')
+                        <p class="text-center ">
+                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                        </p>
+                                <a class="btn btn-sm text-dark" href="{{asset('equipos/'.$item->tarjeta_circulacion) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                        @else
+                            <p class="text-center mt-2">
+                                <img id="blah" src="{{asset('equipos/'.$item->tarjeta_circulacion) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
+                            </p>
+                                <a class="text-center text-dark btn btn-sm" href="{{asset('equipos/'.$item->tarjeta_circulacion) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
+                        @endif
 
                         @endif
                     </div>
@@ -52,9 +70,27 @@
                         </div>
                         @else
 
-                        <p class="text-center">
-                            <img src="{{ asset('equipos/'.$item->poliza_seguro) }}" alt="" width="100%">
-                        </p>
+                            @if (pathinfo($item->poliza_seguro, PATHINFO_EXTENSION) == 'pdf')
+                            <p class="text-center ">
+                                <iframe class="mt-2" src="{{asset('equipos/'.$item->poliza_seguro)}}" style="width: 80%; height: 250px;"></iframe>
+                            </p>
+                                    <a class="btn btn-sm text-dark" href="{{asset('equipos/'.$item->poliza_seguro) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
+                            @elseif (pathinfo($item->poliza_seguro, PATHINFO_EXTENSION) == 'doc')
+                            <p class="text-center ">
+                                <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                            </p>
+                                    <a class="btn btn-sm text-dark" href="{{asset('equipos/'.$item->poliza_seguro) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                            @elseif (pathinfo($item->poliza_seguro, PATHINFO_EXTENSION) == 'docx')
+                            <p class="text-center ">
+                                <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                            </p>
+                                    <a class="btn btn-sm text-dark" href="{{asset('equipos/'.$item->poliza_seguro) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                            @else
+                                <p class="text-center mt-2">
+                                    <img id="blah" src="{{asset('equipos/'.$item->poliza_seguro) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
+                                </p>
+                                    <a class="text-center text-dark btn btn-sm" href="{{asset('equipos/'.$item->poliza_seguro) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
+                            @endif
 
                         @endif
                     </div>

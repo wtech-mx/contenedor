@@ -325,12 +325,12 @@
                                                 <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->boleta_liberacion) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
                                         @elseif (pathinfo($documentacion->boleta_liberacion, PATHINFO_EXTENSION) == 'doc')
                                         <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
                                         </p>
                                                 <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->boleta_liberacion) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
                                         @elseif (pathinfo($documentacion->boleta_liberacion, PATHINFO_EXTENSION) == 'docx')
                                         <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
                                         </p>
                                                 <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->boleta_liberacion) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
                                         @else
@@ -370,17 +370,17 @@
                                                 <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doda) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
                                         @elseif (pathinfo($documentacion->doda, PATHINFO_EXTENSION) == 'doc')
                                         <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
                                         </p>
                                                 <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doda) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
                                         @elseif (pathinfo($documentacion->doda, PATHINFO_EXTENSION) == 'docx')
                                         <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
                                         </p>
                                                 <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doda) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
                                         @else
                                             <p class="text-center mt-2">
-                                                <img id="blah" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doda) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
+                                                <img id="blah" src="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doda) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
                                             </p>
                                                 <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doda) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
                                         @endif
@@ -416,12 +416,12 @@
                                                 <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
                                         @elseif (pathinfo($cotizacion->carta_porte, PATHINFO_EXTENSION) == 'doc')
                                         <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
                                         </p>
                                                 <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
                                         @elseif (pathinfo($cotizacion->carta_porte, PATHINFO_EXTENSION) == 'docx')
                                         <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
                                         </p>
                                                 <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
                                         @else
@@ -485,12 +485,12 @@
                                                 <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
                                         @elseif (pathinfo($cotizacion->img_boleta, PATHINFO_EXTENSION) == 'doc')
                                         <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
                                         </p>
                                                 <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
                                         @elseif (pathinfo($cotizacion->img_boleta, PATHINFO_EXTENSION) == 'docx')
                                         <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
                                         </p>
                                                 <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
                                         @else
@@ -556,12 +556,12 @@
                                                 <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
                                         @elseif (pathinfo($documentacion->doc_eir, PATHINFO_EXTENSION) == 'doc')
                                         <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
                                         </p>
                                                 <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
                                         @elseif (pathinfo($documentacion->doc_eir, PATHINFO_EXTENSION) == 'docx')
                                         <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/user/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
                                         </p>
                                                 <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
                                         @else
