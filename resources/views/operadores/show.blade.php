@@ -20,151 +20,37 @@
                     </div>
 
                     <div class="card-body">
-                        @foreach ($pagos as $item)
-                            <div class="row estilos_equipo">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-3 mb-3">
-                                            <h5 class="titulos_bitacora mb-2">#<strong>ID Cotizacion</strong></h5>
-                                            <p class="mb-4">
-                                                <a type="button" class="btn" target="_blank" href="{{ route('edit.cotizaciones', $item->Contenedor->Cotizacion->id) }}">
-                                                    {{ $item->Contenedor->Cotizacion->id; }}
-                                                </a>
-                                            </p>
-                                        </div>
+                        <table class="table table-flush" id="datatable-search">
+                            <thead class="thead">
+                                <tr>
+                                    <th class="text-center">ID Cotizacion</th>
+                                    <th class="text-center">Num. Contenedor <img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px"></th>
+                                    <th class="text-center">Destino <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px"></th>
+                                    <th class="text-center">Acciones <img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px"></th>
+                                </tr>
+                            </thead>
 
-                                        <div class="col-3 mb-3">
-                                            <h5 class="titulos_bitacora mb-2">#<strong>Num. Contenedor</strong></h5>
-                                            <p class="mb-4">
-                                                {{ $item->Contenedor->Cotizacion->DocCotizacion->num_contenedor; }}
-                                            </p>
-                                        </div>
+                            <tbody class="text-center">
+                                @foreach ($pagos as $item)
+                                    <tr>
+                                        <td>
+                                            <a type="button" class="btn" target="_blank" href="{{ route('edit.cotizaciones', $item->Contenedor->Cotizacion->id) }}">
+                                                {{ $item->Contenedor->Cotizacion->id; }}
+                                            </a>
+                                        </td>
+                                        <td>{{ $item->Contenedor->Cotizacion->DocCotizacion->num_contenedor; }}</td>
+                                        <td>{{ $item->Contenedor->Cotizacion->destino }}</td>
+                                        <td>
+                                            <a type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#operadoresModal_detalles{{$item->id}}">
+                                                <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    @include('operadores.modal_detalles')
+                                @endforeach
+                            </tbody>
 
-                                        <div class="col-6 mb-3">
-                                            <h5 class="titulos_bitacora mb-2"><img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px"><strong> Fecha modulación y Fecha entrega</strong></h5>
-                                            @php
-                                                $fecha_modulacion = $item->Contenedor->Cotizacion->fecha_modulacion;
-                                                $fecha_timestamp_modulacion = strtotime($fecha_modulacion);
-                                                $fecha_formateada_modulacion = date('d \d\e F \d\e\l Y', $fecha_timestamp_modulacion);
-
-                                                $fecha_entrega = $item->Contenedor->Cotizacion->fecha_entrega;
-                                                $fecha_timestamp_entrega = strtotime($fecha_entrega);
-                                                $fecha_formateada_entrega = date('d \d\e F \d\e\l Y', $fecha_timestamp_entrega);
-                                            @endphp
-
-                                            <p class="mb-4"> {{$fecha_formateada_modulacion}} <strong>al</strong> {{$fecha_formateada_entrega}}</p>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                            <div class="col-3">
-                                            <h5 class="titulos_bitacora"><img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px"><strong>Viaje</strong></h5>
-                                            <p class="mb-4">{{ $item->Contenedor->Cotizacion->origen }} <strong>a</strong> {{ $item->Contenedor->Cotizacion->destino }}</p>
-                                            </div>
-
-                                            <div class="col-3">
-                                            <h5 class="titulos_bitacora"><img src="{{ asset('img/icon/depositar.png') }}" alt="" width="25px"><strong>Sueldo</strong></h5>
-                                            <p class="mb-4">
-                                                ${{ number_format($item->sueldo_viaje, 2, '.', ','); }}
-                                            </p>
-                                            </div>
-
-                                            <div class="col-3">
-                                            <h5 class="titulos_bitacora"><img src="{{ asset('img/icon/billetera.png') }}" alt="" width="25px"><strong>Dinero del viaje</strong></h5>
-                                            <p class="mb-4">
-                                                ${{ number_format($item->dinero_viaje, 2, '.', ','); }}
-                                            </p>
-                                            </div>
-
-                                            <div class="col-8">
-
-                                            </div>
-
-                                            <div class="col-12">
-                                                <h5 class="titulos_bitacora mb-4"><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px"><strong> Comprobantes de Pago</strong></h5>
-                                                <div class="row">
-
-                                                    <div class="col-3 form-group">
-                                                        <label for="name">Faltante / Restante</label>
-                                                        <div class="input-group mb-3">
-                                                            <span class="input-group-text" id="basic-addon1">
-                                                                <img src="{{ asset('img/icon/depositar.png') }}" alt="" width="25px">
-                                                            </span>
-                                                            <input name="resta" id="resta_{{ $item->id }}" type="text" class="form-control" value="{{ $item->dinero_viaje - $item->sueldo_viaje - $item->gasolina - $item->casetas -$item->otros }}" readonly>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-3 form-group">
-                                                        <label for="name">Gasolina</label>
-                                                        <div class="input-group mb-3">
-                                                            <span class="input-group-text" id="basic-addon1">
-                                                                <img src="{{ asset('img/icon/bomba-de-gas.png') }}" alt="" width="25px">
-                                                            </span>
-                                                            <input name="gasolina" type="text" class="form-control" value="{{ $item->gasolina }}" disabled>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-3 form-group">
-                                                        <label for="name">Casetas</label>
-                                                        <div class="input-group mb-3">
-                                                            <span class="input-group-text" id="basic-addon1">
-                                                                <img src="{{ asset('img/icon/guardia.png') }}" alt="" width="25px">
-                                                            </span>
-                                                            <input name="casetas" type="text" class="form-control" value="{{ $item->casetas }}" disabled>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-3 form-group">
-                                                        <label for="name">Otros</label>
-                                                        <div class="input-group mb-3">
-                                                            <span class="input-group-text" id="basic-addon1">
-                                                                <img src="{{ asset('img/icon/menu.png') }}" alt="" width="25px">
-                                                            </span>
-                                                            <input name="otros" type="text" class="form-control" value="{{ $item->otros }}" disabled>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-4 form-group">
-                                                        <h5 for="name">Comprobante gasolina</h5><br>
-                                                        @foreach ($comprobantes_gasolina as $comprobante)
-                                                            @if ($item->id == $comprobante->id_asignacion)
-                                                                <a  href="{{asset('comprobantes/'.$comprobante->imagen) }}" data-lightbox="example-2" data-title="{{$comprobante->tipo}}" target="_blank">
-                                                                    <img src="{{ asset('comprobantes/'. $comprobante->imagen) }}" alt="" width="100px">
-                                                                </a>
-                                                            @endif
-                                                        @endforeach
-                                                    </div>
-
-                                                    <div class="col-4 form-group">
-                                                        <h5 for="name">Comprobante casetas</h5><br>
-                                                        @foreach ($comprobantes_casetas as $comprobante)
-                                                            @if ($item->id == $comprobante->id_asignacion)
-                                                                <a  href="{{asset('comprobantes/'.$comprobante->imagen) }}" data-lightbox="example-2" data-title="{{$comprobante->tipo}}" target="_blank">
-                                                                    <img src="{{ asset('comprobantes/'. $comprobante->imagen) }}" alt="" width="100px">
-                                                                </a>
-                                                            @endif
-                                                        @endforeach
-                                                    </div>
-
-                                                    <div class="col-4 form-group">
-                                                        <h5 for="name">Comprobante otros</h5><br>
-                                                        @foreach ($comprobantes_otros as $comprobante)
-                                                            @if ($item->id == $comprobante->id_asignacion)
-                                                                <a  href="{{asset('comprobantes/'.$comprobante->imagen) }}" data-lightbox="example-2" data-title="{{$comprobante->tipo}}" target="_blank">
-                                                                    <img src="{{ asset('comprobantes/'. $comprobante->imagen) }}" alt="" width="100px">
-                                                                </a>
-                                                            @endif
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        @endforeach
+                        </table>
                     </div>
                 </div>
             </div>

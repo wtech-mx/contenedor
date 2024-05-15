@@ -88,26 +88,4 @@
         });
 
     </script>
-    <script>
-        // Escuchar eventos de entrada en los campos de gasolina, casetas y otros
-        document.addEventListener('input', function (event) {
-            if (event.target.matches('[id^="gasolina_"], [id^="casetas_"], [id^="otros_"]')) {
-                // Obtener el ID del elemento
-                var itemId = event.target.id.split('_')[1];
-
-                // Obtener los valores de los campos
-                var gasolina = parseFloat(document.getElementById('gasolina_' + itemId).value) || 0;
-                var casetas = parseFloat(document.getElementById('casetas_' + itemId).value) || 0;
-                var otros = parseFloat(document.getElementById('otros_' + itemId).value) || 0;
-
-                // Obtener el valor original de dinero_viaje y sueldo_viaje desde los campos ocultos
-                var dinero_viaje = parseFloat(document.getElementById('dinero_viaje_' + itemId).value);
-                var sueldo_viaje = parseFloat(document.getElementById('sueldo_viaje_' + itemId).value);
-
-                // Calcular la resta y actualizar el campo de resta
-                var resta = dinero_viaje - sueldo_viaje - gasolina - casetas - otros;
-                document.getElementById('resta_' + itemId).value = resta.toFixed(2);
-            }
-        });
-    </script>
 @endsection
