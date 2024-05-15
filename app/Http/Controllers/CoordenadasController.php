@@ -55,7 +55,7 @@ class CoordenadasController extends Controller
 
         $coordenadas->update();
 
-        return redirect()->route('edit.cooredenadas', $id);
+        return redirect()->back();
 
     }
 }
