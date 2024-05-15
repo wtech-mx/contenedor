@@ -166,28 +166,28 @@
 
                             @auth
 
-                            <br>
-                            <button onclick="abrirEnMapsdentro_puerto()" class="btn btn-primary btn-sm">Ver en Maps</button>
+                                <br>
+                                <button onclick="abrirEnMapsdentro_puerto()" class="btn btn-primary btn-sm">Ver en Maps</button>
 
 
-                            <script>
+                                <script>
 
-                                function abrirEnMapsdentro_puerto() {
-                                    // Obtener las coordenadas de la variable PHP
-                                    var coordenadas = "{{ $coordenadas->dentro_puerto }}";
+                                    function abrirEnMapsdentro_puerto() {
+                                        // Obtener las coordenadas de la variable PHP
+                                        var coordenadas = "{{ $coordenadas->dentro_puerto }}";
 
-                                    // Convertir las coordenadas al formato necesario para el enlace
-                                    var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
+                                        // Convertir las coordenadas al formato necesario para el enlace
+                                        var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
 
-                                    // Crear el enlace con las coordenadas
-                                    var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
+                                        // Crear el enlace con las coordenadas
+                                        var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
 
-                                    // Abrir la página de Google Maps en una nueva ventana o pestaña
-                                    window.open(url, '_blank');
-                                }
-                            </script>
+                                        // Abrir la página de Google Maps en una nueva ventana o pestaña
+                                        window.open(url, '_blank');
+                                    }
+                                </script>
 
-                        @endauth
+                            @endauth
 
                         </div>
 
@@ -228,6 +228,30 @@
                         </div>
 
                         <input type="hidden" name="latitud_longitud_descarga_vacio" value="{{ $coordenadas->descarga_vacio }}">
+                        @auth
+
+                            <br>
+                            <button onclick="abrirEnMapsdescarga()" class="btn btn-primary btn-sm">Ver en Maps</button>
+
+
+                            <script>
+
+                                function abrirEnMapsdescarga() {
+                                    // Obtener las coordenadas de la variable PHP
+                                    var coordenadas = "{{ $coordenadas->descarga_vacio }}";
+
+                                    // Convertir las coordenadas al formato necesario para el enlace
+                                    var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
+
+                                    // Crear el enlace con las coordenadas
+                                    var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
+
+                                    // Abrir la página de Google Maps en una nueva ventana o pestaña
+                                    window.open(url, '_blank');
+                                }
+                            </script>
+
+                        @endauth
 
                     </div>
 
@@ -266,7 +290,30 @@
                         </div>
 
                         <input type="hidden" name="latitud_longitud_cargado_contenedor" value="{{ $coordenadas->cargado_contenedor }}">
+                        @auth
 
+                            <br>
+                            <button onclick="abrirEnMapscargado_contenedor()" class="btn btn-primary btn-sm">Ver en Maps</button>
+
+
+                            <script>
+
+                                function abrirEnMapscargado_contenedor() {
+                                    // Obtener las coordenadas de la variable PHP
+                                    var coordenadas = "{{ $coordenadas->cargado_contenedor }}";
+
+                                    // Convertir las coordenadas al formato necesario para el enlace
+                                    var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
+
+                                    // Crear el enlace con las coordenadas
+                                    var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
+
+                                    // Abrir la página de Google Maps en una nueva ventana o pestaña
+                                    window.open(url, '_blank');
+                                }
+                            </script>
+
+                        @endauth
                     </div>
                     @endif
 
@@ -290,6 +337,8 @@
 
                         <input type="hidden" id="latitud_longitud_fila_fiscal" name="latitud_longitud_fila_fiscal">
 
+
+
                     </div>
 
                     @else
@@ -305,7 +354,30 @@
                         </div>
 
                         <input type="hidden" name="latitud_longitud_fila_fiscal" value="{{ $coordenadas->fila_fiscal }}">
+                        @auth
 
+                            <br>
+                            <button onclick="abrirEnMapsfila_fiscal()" class="btn btn-primary btn-sm">Ver en Maps</button>
+
+
+                            <script>
+
+                                function abrirEnMapsfila_fiscal() {
+                                    // Obtener las coordenadas de la variable PHP
+                                    var coordenadas = "{{ $coordenadas->fila_fiscal }}";
+
+                                    // Convertir las coordenadas al formato necesario para el enlace
+                                    var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
+
+                                    // Crear el enlace con las coordenadas
+                                    var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
+
+                                    // Abrir la página de Google Maps en una nueva ventana o pestaña
+                                    window.open(url, '_blank');
+                                }
+                            </script>
+
+                        @endauth
                     </div>
                     @endif
 
@@ -376,6 +448,29 @@
                             </label>
                         </div>
                         <input type="hidden" name="latitud_longitud_en_destino" value="{{ $coordenadas->en_destino }}">
+                        @auth
+
+                            <br>
+                            <button onclick="abrirEnMapsen_destino()" class="btn btn-primary btn-sm">Ver en Maps</button>
+
+                            <script>
+
+                                function abrirEnMapsen_destino() {
+                                    // Obtener las coordenadas de la variable PHP
+                                    var coordenadas = "{{ $coordenadas->en_destino }}";
+
+                                    // Convertir las coordenadas al formato necesario para el enlace
+                                    var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
+
+                                    // Crear el enlace con las coordenadas
+                                    var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
+
+                                    // Abrir la página de Google Maps en una nueva ventana o pestaña
+                                    window.open(url, '_blank');
+                                }
+                            </script>
+
+                        @endauth
 
                     </div>
                     @endif
@@ -415,7 +510,29 @@
                             </div>
 
                             <input type="hidden" name="latitud_longitud_inicio_descarga" value="{{ $coordenadas->inicio_descarga }}">
+                            @auth
 
+                                <br>
+                                <button onclick="abrirEnMapsinicio_descarga()" class="btn btn-primary btn-sm">Ver en Maps</button>
+
+                                <script>
+
+                                    function abrirEnMapsinicio_descarga() {
+                                        // Obtener las coordenadas de la variable PHP
+                                        var coordenadas = "{{ $coordenadas->inicio_descarga }}";
+
+                                        // Convertir las coordenadas al formato necesario para el enlace
+                                        var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
+
+                                        // Crear el enlace con las coordenadas
+                                        var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
+
+                                        // Abrir la página de Google Maps en una nueva ventana o pestaña
+                                        window.open(url, '_blank');
+                                    }
+                                </script>
+
+                            @endauth
                         </div>
 
                     @endif
@@ -454,7 +571,29 @@
                             </label>
                         </div>
                         <input type="hidden" name="latitud_longitud_fin_descarga" value="{{ $coordenadas->fin_descarga }}">
+                        @auth
 
+                        <br>
+                        <button onclick="abrirEnMapsfin_descarga()" class="btn btn-primary btn-sm">Ver en Maps</button>
+
+                        <script>
+
+                            function abrirEnMapsfin_descarga() {
+                                // Obtener las coordenadas de la variable PHP
+                                var coordenadas = "{{ $coordenadas->fin_descarga }}";
+
+                                // Convertir las coordenadas al formato necesario para el enlace
+                                var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
+
+                                // Crear el enlace con las coordenadas
+                                var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
+
+                                // Abrir la página de Google Maps en una nueva ventana o pestaña
+                                window.open(url, '_blank');
+                            }
+                        </script>
+
+                    @endauth
                     </div>
                     @endif
 
@@ -490,7 +629,29 @@
                             </label>
                         </div>
                         <input type="hidden" name="latitud_longitud_recepcion_doc_firmados" value="{{ $coordenadas->recepcion_doc_firmados }}">
+                        @auth
 
+                        <br>
+                        <button onclick="abrirEnMapsrecepcion_doc_firmados()" class="btn btn-primary btn-sm">Ver en Maps</button>
+
+                        <script>
+
+                            function abrirEnMapsrecepcion_doc_firmados() {
+                                // Obtener las coordenadas de la variable PHP
+                                var coordenadas = "{{ $coordenadas->recepcion_doc_firmados }}";
+
+                                // Convertir las coordenadas al formato necesario para el enlace
+                                var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
+
+                                // Crear el enlace con las coordenadas
+                                var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
+
+                                // Abrir la página de Google Maps en una nueva ventana o pestaña
+                                window.open(url, '_blank');
+                            }
+                        </script>
+
+                    @endauth
                     </div>
                     @endif
 
