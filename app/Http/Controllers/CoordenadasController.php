@@ -10,7 +10,7 @@ class CoordenadasController extends Controller
 {
     public function index($id){
 
-        $coordenadas = Coordenadas::find($id);
+        $coordenadas = Coordenadas::where('id_asignacion' ,'=', $id)->first();
 
 
         return view('coordendas.index',compact('coordenadas'));

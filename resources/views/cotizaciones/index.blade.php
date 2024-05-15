@@ -73,9 +73,11 @@
                                                             </button>
                                                         </td>
                                                         <td>
-                                                            <a type="button" class="btn" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
-                                                                <img src="{{ asset('img/icon/coordenadas.png') }}" alt="" width="25px"> Coordenadas
-                                                            </a>
+                                                            @if ($cotizacion->DocCotizacion && $cotizacion->DocCotizacion->Asignaciones)
+                                                                <a type="button" class="btn" href="{{ route('index.cooredenadas', $cotizacion->DocCotizacion->Asignaciones->id) }}">
+                                                                    <img src="{{ asset('img/icon/coordenadas.png') }}" alt="" width="25px"> Coordenadas
+                                                                </a>
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             <a type="button" class="btn" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">

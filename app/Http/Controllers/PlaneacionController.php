@@ -68,7 +68,7 @@ class PlaneacionController extends Controller
 
             // Verificar si $coordenadas no es null antes de acceder a su propiedad id
             if ($coordenadas !== null) {
-                $event['idCoordenda'] = $coordenadas->id;
+                $event['idCoordenda'] = $appointment->id;
             }
 
             if ($appointment->Operador !== null) {
