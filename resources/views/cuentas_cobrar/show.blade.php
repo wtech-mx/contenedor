@@ -27,7 +27,6 @@
                                     <th><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px">Subcliente</th>
                                     <th><img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px">Total a pagar</th>
                                     <th><img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">Tipo de viaje</th>
-                                    <th><img src="{{ asset('img/icon/gastos.png.webp') }}" alt="" width="25px">Restante</th>
                                     <th><img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">Acciones</th>
                                 </tr>
                             </thead>
@@ -43,8 +42,13 @@
                                             @endif
                                         </td>
                                         <td>$ {{ number_format($item->total, 2, '.', ',') }}</td>
-                                        <td>{{ $item->tipo_viaje }}</td>
-                                        <td>$ {{ number_format($item->restante, 2, '.', ',') }}</td>
+                                        <td>
+                                            @if ($item->tipo_viaje == NULL || $item->tipo_viaje == 'Seleccionar Opcion')
+                                                Subcontratado
+                                            @else
+                                                {{ $item->tipo_viaje }}
+                                            @endif
+                                        </td>
                                         <td>
                                             <a class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#cobrarModal{{ $item->id }}">
                                                 <i class="fa fa-fw fa-edit"></i> Ver

@@ -21,6 +21,7 @@
                                 </span>
                                 <select class="form-select cliente d-inline-block"  data-toggle="select" id="estatus" name="estatus" value="{{ old('estatus') }}">
                                     <option>Seleccionar Estatus</option>
+                                    <option value="Pendiente">Pendiente</option>
                                     <option value="Aprobada">Aprobada</option>
                                     <option value="Cancelada">Cancelar</option>
                                 </select>

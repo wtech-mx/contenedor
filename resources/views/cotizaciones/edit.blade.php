@@ -26,13 +26,24 @@
                                 <h3 class="mb-5">Datos de cotizacion</h3>
                                 <div class="row">
 
-                                        <div class="col-{{ $cotizacion->id_subcliente != NULL ? '6' : '12' }} form-group">
+                                        <div class="col-6 form-group">
                                             <label for="name">Cliente *</label>
-                                            <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_cliente" name="id_cliente" value="{{ old('id_cliente') }}" disabled>
-                                                <option value="{{$cotizacion->id_cliente}}">{{$cotizacion->Cliente->nombre}} / {{$cotizacion->Cliente->telefono}}</option>
+                                            <select class="form-select cliente d-inline-block" data-toggle="select" id="id_cliente" name="id_cliente">
+                                                <option value="{{ $cotizacion->id_cliente }}">{{ $cotizacion->Cliente->nombre }} / {{ $cotizacion->Cliente->telefono }}</option>
                                                 @foreach ($clientes as $item)
                                                     <option value="{{ $item->id }}">{{ $item->nombre }} / {{ $item->telefono }}</option>
                                                 @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="col-6 form-group">
+                                            <label for="name">Subcliente *</label>
+                                            <select class="form-select subcliente d-inline-block" id="id_subcliente" name="id_subcliente">
+                                                @if ($cotizacion->id_subcliente != NULL)
+                                                    <option value="{{ $cotizacion->id_subcliente }}">{{ $cotizacion->Subcliente->nombre }} / {{ $cotizacion->Subcliente->telefono }}</option>
+                                                @else
+                                                    <option value="">Seleccionar subcliente</option>
+                                                @endif
                                             </select>
                                         </div>
 
@@ -46,15 +57,6 @@
                                             </div>
                                         </div>
 
-
-                                        @if ($cotizacion->id_subcliente != NULL)
-                                            <div class="col-6 form-group">
-                                                <label for="name">Subcliente *</label>
-                                                <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_subcliente" name="id_subcliente" value="{{ old('id_subcliente') }}" disabled>
-                                                    <option value="{{$cotizacion->id_subcliente}}">{{$cotizacion->Subcliente->nombre}} / {{$cotizacion->Subcliente->telefono}}</option>
-                                                </select>
-                                            </div>
-                                        @endif
 
                                         <div class="col-6 form-group">
                                             <label for="name">Origen</label>
@@ -809,6 +811,41 @@
 
             // Llamar a la función inicialmente para asegurarse de que el campo se oculte o muestre correctamente
             toggleInputEir();
+        });
+
+        $(document).ready(function() {
+            function loadSubclientes(clienteId, selectedSubclienteId = null) {
+                if (clienteId) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/subclientes/' + clienteId,
+                        success: function(data) {
+                            $('#id_subcliente').empty();
+                            $('#id_subcliente').append('<option value="">Seleccionar subcliente</option>');
+                            $.each(data, function(key, subcliente) {
+                                if (selectedSubclienteId && selectedSubclienteId == subcliente.id) {
+                                    $('#id_subcliente').append('<option value="' + subcliente.id + '" selected>' + subcliente.nombre + '</option>');
+                                } else {
+                                    $('#id_subcliente').append('<option value="' + subcliente.id + '">' + subcliente.nombre + '</option>');
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    $('#id_subcliente').empty();
+                    $('#id_subcliente').append('<option value="">Seleccionar subcliente</option>');
+                }
+            }
+
+            $('#id_cliente').change(function() {
+                var clienteId = $(this).val();
+                loadSubclientes(clienteId);
+            });
+
+            // Load subclientes on page load
+            var initialClienteId = $('#id_cliente').val();
+            var initialSubclienteId = '{{ $cotizacion->id_subcliente }}';
+            loadSubclientes(initialClienteId, initialSubclienteId);
         });
     </script>
 

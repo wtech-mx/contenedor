@@ -16,12 +16,12 @@ class ConfiguracionSeeder extends Seeder
     public function run()
     {
         $configuracion = Configuracion::create([
-            'nombre_sistema' => 'Sistema WebTech',
-            'color_principal' => '#46cda0',
+            'nombre_sistema' => 'SITA',
+            'color_principal' => '#47a0cd',
             'logo' => '62c7b5166ea00W-TECHBL6.png',
             'favicon' => '62c7b5166f3b7LogosinF.png',
-            'color_iconos_sidebar' => '#5bb9e1',
-            'color_iconos_cards' => '#e61986',
+            'color_iconos_sidebar' => '#e1915b',
+            'color_iconos_cards' => '#dbdd5a',
             'color_boton_add' => '#e6e02d',
             'color_boton_save' => '#3fd73c',
             'color_boton_close' => '#e60f0f',

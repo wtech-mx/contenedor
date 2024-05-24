@@ -24,8 +24,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::get();
-        $subclientes = Subclientes::get();
+        $clients = Client::orderBy('created_at', 'desc')->get();
+        $subclientes = Subclientes::orderBy('created_at', 'desc')->get();
 
         return view('client.index', compact('clients', 'subclientes'));
     }

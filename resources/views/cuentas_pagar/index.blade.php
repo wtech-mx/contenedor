@@ -27,8 +27,6 @@ Cuentas Pagar
                             <table class="table table-striped table-hover table_id" id="datatable-search">
                                 <thead class="thead">
                                     <tr>
-                                        <th>No</th>
-
 										<th>Nombre</th>
 										<th>Telefono</th>
 										<th>Viajes a deber</th>
@@ -38,12 +36,11 @@ Cuentas Pagar
                                 <tbody>
                                     @foreach ($cotizacionesPorCliente as $item)
                                         <tr>
-                                            <td>{{ $item->id }}</td>
-											<td>{{ $item->Cliente->nombre }}</td>
-											<td>{{ $item->Cliente->telefono }}</td>
-											<td>{{ $item->total_cotizaciones }}</td>
+											<td>{{ $item['proveedor']->nombre }}</td>
+											<td>{{ $item['proveedor']->telefono }}</td>
+											<td>{{ $item['total_cotizaciones'] }}</td>
                                             <td>
-                                                <a class="btn btn-sm btn-success" href="{{ route('show.pagar', $item->id_cliente) }}">
+                                                <a class="btn btn-sm btn-success" href="{{ route('show.pagar', $item['id_proveedor']) }}">
                                                     <i class="fa fa-fw fa-edit"></i> Ver
                                                 </a>
                                             </td>

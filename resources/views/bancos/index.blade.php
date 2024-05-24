@@ -41,8 +41,8 @@ Bancos
                                                             <h6 class="text-white mb-0">{{ $item->nombre_banco }}</h6>
                                                         </div>
                                                         <div>
-                                                            <p class="text-white text-sm opacity-8 mb-0">Cuenta bancaria</p>
-                                                            <h6 class="text-white mb-0">{{ $item->cuenta_bancaria }}</h6>
+                                                            <p class="text-white text-sm opacity-8 mb-0">Dinero en banco</p>
+                                                            <h6 class="text-white mb-0">${{ number_format($item->saldo, 0, '.', ',') }}</h6>
                                                         </div>
                                                     </div>
                                                     <div class="ms-auto w-20 d-flex align-items-end justify-content-end">

@@ -11,9 +11,9 @@ class EquiposController extends Controller
     public function index(){
         $fechaActual = date('Y-m-d');
 
-        $equipos_dolys = Equipo::where('tipo','=','Dolys')->get();
-        $equipos_chasis = Equipo::where('tipo','=','Chasis / Plataforma')->get();
-        $equipos_camiones = Equipo::where('tipo','=','Tractos / Camiones')->get();
+        $equipos_dolys = Equipo::where('tipo','=','Dolys')->orderBy('created_at', 'desc')->get();
+        $equipos_chasis = Equipo::where('tipo','=','Chasis / Plataforma')->orderBy('created_at', 'desc')->get();
+        $equipos_camiones = Equipo::where('tipo','=','Tractos / Camiones')->orderBy('created_at', 'desc')->get();
 
         return view('equipos.index', compact('equipos_dolys','equipos_chasis','equipos_camiones', 'fechaActual'));
     }

@@ -12,10 +12,11 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <a class="btn"  href="{{ route('index.cobrar') }}" style="background: {{$configuracion->color_boton_close}}; color: #ffff;margin-right: 3rem;">
+                            <a class="btn"  href="{{ route('index.pagar') }}" style="background: {{$configuracion->color_boton_close}}; color: #ffff;margin-right: 3rem;">
                                 Regresar
                             </a>
                         </div>
+                        <h3 class="text-center">{{$cliente->nombre}}</h3>
                     </div>
 
                     <div class="card-body">
@@ -32,8 +33,8 @@
                                 @foreach ($cotizacionesPorPagar as $item)
                                     <tr>
                                         <td>{{ $item->id }}</td>
-                                        <td>{{ $item->DocCotizacion->num_contenedor }}</td>
-                                        <td>${{ number_format($item->precio, 2, '.', ',') }}</td>
+                                        <td>{{ $item->num_contenedor }}</td>
+                                        <td>${{ number_format($item->total_proveedor, 2, '.', ',') }}</td>
                                         <td>
                                             <a class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#cobrarModal{{ $item->id }}">
                                                 <i class="fa fa-fw fa-edit"></i> Ver

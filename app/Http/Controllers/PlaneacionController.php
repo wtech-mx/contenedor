@@ -35,7 +35,7 @@ class PlaneacionController extends Controller
         foreach ($appointments as $appointment) {
             if($appointment->id_operador == NULL){
                 $description = 'Proveedor: ' . $appointment->Proveedor->nombre . ' - ' . $appointment->Proveedor->telefono . '<br>' . 'Costo viaje: ' . $appointment->precio;
-                $tipo = 'P';
+                $tipo = 'S';
             }else{
                 if($appointment->Contenedor->Cotizacion->tipo_viaje == 'Sencillo'){
                     $description = 'Tipo viaje: ' . $appointment->Contenedor->Cotizacion->tipo_viaje . '<br> <br>' .
@@ -50,7 +50,7 @@ class PlaneacionController extends Controller
                     'Chasis 2: ' . $appointment->Chasis2->num_serie . ' - ' . $appointment->Chasis2->modelo . '<br>' .
                     'Doly: ' . $appointment->Doly->num_serie . ' - ' . $appointment->Doly->modelo . '<br>';
                 }
-                $tipo = 'S';
+                $tipo = 'P';
             }
 
             $coordenadas = Coordenadas::where('id_asignacion', '=', $appointment->id)->first();
@@ -87,56 +87,61 @@ class PlaneacionController extends Controller
         $fechaFin = $request->fecha_fin;
 
         if($fechaInicio  &&  $fechaFin){
-            $camionesAsignados = Asignaciones::
-            where(function ($query) use ($fechaInicio, $fechaFin) {
+            $camionesAsignados = Asignaciones::whereNotNull('id_camion')
+            ->where(function ($query) use ($fechaInicio, $fechaFin) {
                 $query->where('fecha_inicio', '<=', $fechaFin)
-                    ->where('fecha_fin', '>=', $fechaInicio);
+                      ->where('fecha_fin', '>=', $fechaInicio);
             })
-            ->pluck('id_camion')
-            ->toArray();
+            ->pluck('id_camion');
 
-            $camionesNoAsignados = Equipo::
-                where('tipo', 'LIKE', '%Camiones%')
-                ->whereNotIn('id', $camionesAsignados)
-                ->get();
+            $camionesNoAsignados = Equipo::where('tipo', 'LIKE', '%Camiones%')
+            ->whereNotIn('id', $camionesAsignados)
+            ->orWhereNotIn('id', function ($query) {
+                $query->select('id_camion')->from('asignaciones')->whereNull('id_camion');
+            })
+            ->get();
 
-            $chasisAsignados = Asignaciones::
-            where(function ($query) use ($fechaInicio, $fechaFin) {
+            $chasisAsignados = Asignaciones::whereNotNull('id_chasis')
+            ->where(function ($query) use ($fechaInicio, $fechaFin) {
                 $query->where('fecha_inicio', '<=', $fechaFin)
-                    ->where('fecha_fin', '>=', $fechaInicio);
+                      ->where('fecha_fin', '>=', $fechaInicio);
             })
-            ->pluck('id_chasis')
-            ->toArray();
+            ->pluck('id_chasis');
 
-            $chasisNoAsignados = Equipo::
-                where('tipo', 'LIKE', '%Chasis%')
+            $chasisNoAsignados = Equipo::where('tipo', 'LIKE', '%Chasis%')
                 ->whereNotIn('id', $chasisAsignados)
+                ->orWhereNotIn('id', function ($query) {
+                    $query->select('id_chasis')->from('asignaciones')->whereNull('id_chasis');
+                })
                 ->get();
 
-            $dolysAsignados = Asignaciones::
-            where(function ($query) use ($fechaInicio, $fechaFin) {
+            $dolysAsignados = Asignaciones::whereNotNull('id_camion')
+            ->where(function ($query) use ($fechaInicio, $fechaFin) {
                 $query->where('fecha_inicio', '<=', $fechaFin)
-                    ->where('fecha_fin', '>=', $fechaInicio);
+                        ->where('fecha_fin', '>=', $fechaInicio);
             })
-            ->pluck('id_camion')
-            ->toArray();
+            ->pluck('id_camion');
 
-            $dolysNoAsignados = Equipo::
-                where('tipo', 'LIKE', '%Dolys%')
+            $dolysNoAsignados = Equipo::where('tipo', 'LIKE', '%Dolys%')
                 ->whereNotIn('id', $dolysAsignados)
+                ->orWhereNotIn('id', function ($query) {
+                    $query->select('id_camion')->from('asignaciones')->whereNull('id_camion');
+                })
                 ->get();
 
-            $operadorAsignados = Asignaciones::
-            where(function ($query) use ($fechaInicio, $fechaFin) {
+            $operadorAsignados = Asignaciones::whereNotNull('id_operador')
+            ->where(function ($query) use ($fechaInicio, $fechaFin) {
                 $query->where('fecha_inicio', '<=', $fechaFin)
-                    ->where('fecha_fin', '>=', $fechaInicio);
+                        ->where('fecha_fin', '>=', $fechaInicio);
             })
-            ->pluck('id_operador')
-            ->toArray();
+            ->pluck('id_operador');
 
-            $operadorNoAsignados = Operador::
-                whereNotIn('id', $operadorAsignados)
+            $operadorNoAsignados = Operador::whereNotIn('id', $operadorAsignados)
+                ->orWhereNotIn('id', function ($query) {
+                    $query->select('id_operador')->from('asignaciones')->whereNull('id_operador');
+                })
                 ->get();
+
 
             $bancos = Bancos::where('saldo', '>', '0')->get();
 
@@ -149,7 +154,7 @@ class PlaneacionController extends Controller
 
         $validator = Validator::make($request->all(), [
             'id_proveedor' => 'required_if:viaje,Camion Subcontratado',
-            'precio' => 'required_if:viaje,Camion Subcontratado',
+            'precio_proveedor' => 'required_if:viaje,Camion Subcontratado',
 
             'camion' => 'required_if:viaje,Camion Propio',
             'operador' => 'required_if:viaje,Camion Propio',
@@ -173,13 +178,20 @@ class PlaneacionController extends Controller
         $asignaciones->dinero_viaje = $request->get('dinero_viaje');
         if($request->get('id_proveedor') == NULL){
             $asignaciones->fecha_inicio = $request->get('fecha_inicio');
-            $asignaciones->fecha_fin = $request->get('fecha_fin');
+            $asignaciones->fecha_fin = $request->get('fecha_fin') . ' 23:00:00';
         }else{
             $asignaciones->fecha_inicio = $request->get('fecha_inicio_proveedor');
-            $asignaciones->fecha_fin = $request->get('fecha_fin_proveedor');
+            $asignaciones->fecha_fin = $request->get('fecha_fin_proveedor') . ' 23:00:00';
         }
 
-        $asignaciones->precio = $request->get('precio');
+        $asignaciones->precio = $request->get('precio_proveedor');
+        $asignaciones->burreo = $request->get('burreo_proveedor');
+        $asignaciones->maniobra = $request->get('maniobra_proveedor');
+        $asignaciones->estadia = $request->get('estadia_proveedor');
+        $asignaciones->otro = $request->get('otro_proveedor');
+        $asignaciones->iva = $request->get('iva_proveedor');
+        $asignaciones->retencion = $request->get('retencion_proveedor');
+        $asignaciones->total_proveedor = $request->get('total_proveedor');
 
         $asignaciones->id_banco1_dinero_viaje = $request->get('id_banco1_dinero_viaje');
         $asignaciones->cantidad_banco1_dinero_viaje = $request->get('cantidad_banco1_dinero_viaje');

@@ -5,6 +5,21 @@
 @endsection
 
 @section('content')
+<style>
+
+    .custom-tabs .custom-tab {
+        background-color: #f8f9fa; /* Color por defecto */
+        border-color: #dee2e6; /* Color del borde por defecto */
+        color: #495057; /* Color del texto por defecto */
+    }
+
+    .custom-tabs .custom-tab.active {
+        background-color: #47a0cd; /* Color de fondo del tab activo */
+        border-color: #47a0cd; /* Color del borde del tab activo */
+        color: #ffffff; /* Color del texto del tab activo */
+    }
+
+</style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -25,20 +40,20 @@
                     </div>
 
                     <nav class="mx-auto">
-                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <button class="nav-link active" id="nav-planeadas-tab" data-bs-toggle="tab" data-bs-target="#nav-planeadas" type="button" role="tab" aria-controls="nav-planeadas" aria-selected="false">
+                        <div class="nav nav-tabs custom-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link custom-tab active" id="nav-planeadas-tab" data-bs-toggle="tab" data-bs-target="#nav-planeadas" type="button" role="tab" aria-controls="nav-planeadas" aria-selected="false">
                             <img src="{{ asset('img/icon/resultado.webp') }}" alt="" width="40px">  Planeadas
                             </button>
 
-                          <button class="nav-link" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
+                          <button class="nav-link custom-tab" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
                             <img src="{{ asset('img/icon/pausa.png') }}" alt="" width="40px">  En espera
                           </button>
 
-                          <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
+                          <button class="nav-link custom-tab" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
                             <img src="{{ asset('img/icon/cheque.png') }}" alt="" width="40px">  Aprobada
                           </button>
 
-                          <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
+                          <button class="nav-link custom-tab" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
                             <img src="{{ asset('img/icon/cerrar.png') }}" alt="" width="40px">  Canceladas
                           </button>
                         </div>
@@ -86,9 +101,20 @@
                                                             <a type="button" class="btn" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
                                                                 <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
                                                             </a>
+
+                                                            @if ($cotizacion->DocCotizacion->Asignaciones)
+                                                                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
+                                                                    @if ($cotizacion->DocCotizacion->Asignaciones->id_proveedor == NULL)
+                                                                        Propio
+                                                                    @else
+                                                                        Subcontratado
+                                                                    @endif
+                                                                </button>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                     @include('cotizaciones.modal_estatus')
+                                                    @include('cotizaciones.modal_cambio')
                                                 @endforeach
                                             </tbody>
 
@@ -283,5 +309,119 @@
         fixedHeight: false
         });
 
+        document.addEventListener("DOMContentLoaded", function() {
+            // Inicializar los formularios y eventos para cada cotización
+            @foreach($cotizaciones_planeadas as $cotizacion)
+                @if ($cotizacion->DocCotizacion->Asignaciones)
+                    (function() {
+                        var modalId = "{{ $cotizacion->DocCotizacion->Asignaciones->id }}";
+                        var formPropio = document.getElementById("formPropio" + modalId);
+                        var formSubcontratado = document.getElementById("formSubcontratado" + modalId);
+
+                        var radioPropio = document.getElementById("propio" + modalId);
+                        var radioSubcontratado = document.getElementById("subcontratado" + modalId);
+
+                        function inicializarFormulario() {
+                            var idProveedor = "{{ $cotizacion->DocCotizacion->Asignaciones->id_proveedor }}";
+
+                            if (idProveedor === "") {
+                                formPropio.style.display = "block";
+                                formSubcontratado.style.display = "none";
+                                radioPropio.checked = true;
+                            } else {
+                                formPropio.style.display = "none";
+                                formSubcontratado.style.display = "block";
+                                radioSubcontratado.checked = true;
+                            }
+                        }
+
+                        document.querySelectorAll('input[name="formType' + modalId + '"]').forEach(function(radio) {
+                            radio.addEventListener("change", function() {
+                                if (radioPropio.checked) {
+                                    formPropio.style.display = "block";
+                                    formSubcontratado.style.display = "none";
+                                } else {
+                                    formPropio.style.display = "none";
+                                    formSubcontratado.style.display = "block";
+                                }
+                            });
+                        });
+
+                        // Inicializar el formulario cuando se muestra el modal
+                        $('#cambioModal' + modalId).on('show.bs.modal', function () {
+                            inicializarFormulario();
+                        });
+                    })();
+                @endif
+            @endforeach
+        });
+
+        $(document).ready(function() {
+            $('[id^="btn_clientes_search"]').click(function() {
+                var cotizacionId = $(this).data('cotizacion-id'); // Obtener el ID de la cotización del atributo data
+                buscar_clientes(cotizacionId);
+            });
+
+            function buscar_clientes(cotizacionId) {
+                $('#loadingSpinner').show();
+
+                var fecha_inicio = $('#fecha_inicio_' + cotizacionId).val();
+                var fecha_fin = $('#fecha_fin_' + cotizacionId).val();
+
+                $.ajax({
+                    url: '{{ route('equipos.planeaciones') }}',
+                    type: 'get',
+                    data: {
+                        'fecha_inicio': fecha_inicio,
+                        'fecha_fin': fecha_fin,
+                        '_token': '{{ csrf_token() }}' // Agregar el token CSRF a los datos enviados
+                    },
+                    success: function(data) {
+                        $('#resultado_equipos' + cotizacionId).html(data); // Actualiza la sección con los datos del servicio
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    },
+                    complete: function() {
+                        // Ocultar el spinner cuando la búsqueda esté completa
+                        $('#loadingSpinner').hide();
+                    }
+                });
+            }
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            @foreach($cotizaciones_planeadas as $cotizacion)
+                @if ($cotizacion->DocCotizacion->Asignaciones)
+                    (function() {
+                        var asignacionId = "{{ $cotizacion->DocCotizacion->Asignaciones->id }}";
+
+                        function calcularTotal(asignacionId) {
+                            var precio = parseFloat($('#cot_precio_' + asignacionId).val()) || 0;
+                            var burreo = parseFloat($('#cot_burreo_' + asignacionId).val()) || 0;
+                            var maniobra = parseFloat($('#cot_maniobra_' + asignacionId).val()) || 0;
+                            var estadia = parseFloat($('#cot_estadia_' + asignacionId).val()) || 0;
+                            var otro = parseFloat($('#cot_otro_' + asignacionId).val()) || 0;
+                            var retencion = parseFloat($('#cot_retencion_' + asignacionId).val()) || 0;
+                            var iva = parseFloat($('#cot_iva_' + asignacionId).val()) || 0;
+
+                            var total = precio + burreo + maniobra + estadia + otro + iva - retencion;
+
+                            $('#total_proveedor_' + asignacionId).val(total.toFixed(2));
+                        }
+
+                        $('#cot_precio_' + asignacionId + ', #cot_burreo_' + asignacionId + ', #cot_maniobra_' + asignacionId + ', #cot_estadia_' + asignacionId + ', #cot_otro_' + asignacionId + ', #cot_retencion_' + asignacionId + ', #cot_iva_' + asignacionId).on('input', function() {
+                            calcularTotal(asignacionId);
+                        });
+
+                        // Inicializa el total cuando se muestra el modal
+                        $('#cambioModal' + asignacionId).on('show.bs.modal', function () {
+                            calcularTotal(asignacionId);
+                        });
+                    })();
+                @endif
+            @endforeach
+        });
     </script>
 @endsection

@@ -12,7 +12,6 @@
                 <div class="modal-body">
                     <div class="row">
 
-
                         <input name="num_contenedor" value="{{$cotizacion->DocCotizacion->id}}" type="hidden">
                         <input name="cotizacion" value="{{$cotizacion->DocCotizacion->id_cotizacion}}" type="hidden">
 
@@ -157,7 +156,7 @@
                                         <span class="input-group-text" id="basic-addon1">
                                             <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
                                         </span>
-                                        <input name="precio" id="precio" type="number" class="form-control" value="0">
+                                        <input name="precio_proveedor" id="precio_proveedor_{{$cotizacion->id}}" type="number" class="form-control" value="0">
                                     </div>
                                 </div>
 
@@ -167,7 +166,7 @@
                                         <span class="input-group-text" id="basic-addon1">
                                             <img src="{{ asset('img/icon/burro.png') }}" alt="" width="25px">
                                         </span>
-                                        <input name="cot_burreo" id="cot_burreo" type="float" class="form-control">
+                                        <input name="burreo_proveedor" id="burreo_proveedor_{{$cotizacion->id}}" type="float" class="form-control">
                                     </div>
                                 </div>
 
@@ -177,7 +176,7 @@
                                         <span class="input-group-text" id="basic-addon1">
                                             <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px">
                                         </span>
-                                        <input name="cot_maniobra" id="cot_maniobra" type="float" class="form-control">
+                                        <input name="maniobra_proveedor" id="maniobra_proveedor_{{$cotizacion->id}}" type="float" class="form-control">
                                     </div>
                                 </div>
 
@@ -187,7 +186,7 @@
                                         <span class="input-group-text" id="basic-addon1">
                                             <img src="{{ asset('img/icon/servidor-en-la-nube.png') }}" alt="" width="25px">
                                         </span>
-                                        <input name="cot_estadia" id="cot_estadia" type="float" class="form-control">
+                                        <input name="estadia_proveedor" id="estadia_proveedor_{{$cotizacion->id}}" type="float" class="form-control">
                                     </div>
                                 </div>
 
@@ -197,7 +196,7 @@
                                         <span class="input-group-text" id="basic-addon1">
                                             <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
                                         </span>
-                                        <input name="cot_otro" id="cot_otro" type="float" class="form-control">
+                                        <input name="otro_proveedor" id="otro_proveedor_{{$cotizacion->id}}" type="float" class="form-control">
                                     </div>
                                 </div>
 
@@ -207,7 +206,7 @@
                                         <span class="input-group-text" id="basic-addon1">
                                             <img src="{{ asset('img/icon/impuesto.png') }}" alt="" width="25px">
                                         </span>
-                                        <input name="cot_iva" id="cot_iva" type="number" class="form-control">
+                                        <input name="iva_proveedor" id="iva_proveedor_{{$cotizacion->id}}" type="number" class="form-control">
                                     </div>
                                 </div>
 
@@ -217,7 +216,17 @@
                                         <span class="input-group-text" id="basic-addon1">
                                             <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
                                         </span>
-                                        <input name="cot_retencion" id="cot_retencion" type="float" class="form-control">
+                                        <input name="retencion_proveedor" id="retencion_proveedor_{{$cotizacion->id}}" type="float" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-4 form-group">
+                                    <label for="name">Total</label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                        </span>
+                                        <input name="total_proveedor" id="total_proveedor_{{$cotizacion->id}}" type="number" class="form-control" readonly>
                                     </div>
                                 </div>
                             </div>

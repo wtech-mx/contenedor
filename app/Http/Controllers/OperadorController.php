@@ -15,7 +15,7 @@ use Session;
 class OperadorController extends Controller
 {
     public function index(){
-        $operadores = Operador::get();
+        $operadores = Operador::orderBy('created_at', 'desc')->get();
         $pagos_pendientes = Asignaciones::where('estatus_pagado', '=', 'Pendiente Pago')->get();
         return view('operadores.index', compact('operadores', 'pagos_pendientes'));
     }
@@ -118,6 +118,7 @@ class OperadorController extends Controller
         $cotizaciones->cantidad_banco1_pago_operador = $request->get('cantidad_banco1_pago_operador');
         $cotizaciones->id_banco2_pago_operador = $request->get('id_banco2_pago_operador');
         $cotizaciones->cantidad_banco2_pago_operador = $request->get('cantidad_banco2_pago_operador');
+        $cotizaciones->fecha_pago_operador = date('Y-m-d');
         $cotizaciones->update();
 
         if ($request->hasFile('comprobante_gasolina')) {

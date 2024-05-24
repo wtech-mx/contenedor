@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asignaciones;
+use App\Models\Bancos;
 use App\Models\Client;
 use App\Models\ComprobanteGastos;
 use App\Models\Coordenadas;
@@ -10,6 +11,7 @@ use App\Models\Cotizaciones;
 use App\Models\DocumCotizacion;
 use App\Models\Equipo;
 use App\Models\GastosExtras;
+use App\Models\Operador;
 use App\Models\Proveedor;
 use App\Models\Subclientes;
 use Illuminate\Http\Request;
@@ -19,13 +21,20 @@ class CotizacionesController extends Controller
 {
     public function index(){
 
-        $cotizaciones = Cotizaciones::where('estatus','=','Pendiente')->get();
-        $cotizaciones_aprovadas = Cotizaciones::where('estatus','=','Aprobada')->where('estatus_planeacion','=', NULL)->get();
-        $cotizaciones_canceladas = Cotizaciones::where('estatus','=','Cancelada')->get();
-        $cotizaciones_planeadas = Cotizaciones::where('estatus','=','Aprobada')->where('estatus_planeacion','=', 1)->get();
+        $cotizaciones = Cotizaciones::where('estatus','=','Pendiente')->orderBy('created_at', 'desc')->get();
+        $cotizaciones_aprovadas = Cotizaciones::where('estatus','=','Aprobada')->where('estatus_planeacion','=', NULL)->orderBy('created_at', 'desc')->get();
+        $cotizaciones_canceladas = Cotizaciones::where('estatus','=','Cancelada')->orderBy('created_at', 'desc')->get();
+        $cotizaciones_planeadas = Cotizaciones::where('estatus','=','Aprobada')->where('estatus_planeacion','=', 1)->orderBy('created_at', 'desc')->get();
+
+        $equipos_dolys = Equipo::where('tipo','=','Dolys')->get();
+        $equipos_chasis = Equipo::where('tipo','=','Chasis / Plataforma')->get();
+        $equipos_camiones = Equipo::where('tipo','=','Tractos / Camiones')->get();
+        $operadores = Operador::get();
+        $bancos = Bancos::get();
+        $proveedores = Proveedor::get();
 
 
-        return view('cotizaciones.index', compact('cotizaciones','cotizaciones_aprovadas','cotizaciones_canceladas', 'cotizaciones_planeadas'));
+        return view('cotizaciones.index', compact('proveedores','bancos','operadores','equipos_dolys','equipos_chasis','equipos_camiones','cotizaciones','cotizaciones_aprovadas','cotizaciones_canceladas', 'cotizaciones_planeadas'));
     }
 
     public function create(){
@@ -130,6 +139,16 @@ class CotizacionesController extends Controller
             $cot = Cotizaciones::findOrFail($id);
             $cot->delete();
 
+        }else if($request->get('estatus') == 'Pendiente'){
+            // $doc_cotizaciones = DocumCotizacion::where('id_cotizacion', '=', $id)->first();
+            // $asignaciones = Asignaciones::where('id_contenedor', '=', $doc_cotizaciones->id)->first();
+            // $coordenadas = Coordenadas::where('id_asignacion', '=', $asignaciones->id)->delete();
+            // $asignaciones->delete();
+
+            $cotizaciones = Cotizaciones::find($id);
+            $cotizaciones->estatus = $request->get('estatus');
+            $cotizaciones->estatus_planeacion = null;
+            $cotizaciones->update();
         }else{
             $cotizaciones = Cotizaciones::find($id);
             $cotizaciones->estatus = $request->get('estatus');
@@ -190,6 +209,8 @@ class CotizacionesController extends Controller
         $cotizaciones->update();
 
         $cotizaciones = Cotizaciones::where('id', '=', $id)->first();
+        $cotizaciones->id_cliente = $request->get('id_cliente');
+        $cotizaciones->id_subcliente = $request->get('id_subcliente');
         $cotizaciones->origen = $request->get('cot_origen');
         $cotizaciones->destino = $request->get('cot_destino');
         $cotizaciones->burreo = $request->get('cot_burreo');
@@ -284,5 +305,89 @@ class CotizacionesController extends Controller
         Session::flash('edit', 'Se ha editado sus datos con exito');
         return redirect()->back()
             ->with('success', 'Estatus updated successfully');
+    }
+
+    public function update_cambio(Request $request, $id){
+        // Capturar todos los inputs
+        $inputs = $request->all();
+
+        // Encontrar el radio input seleccionado
+        $tipo_cambio = null;
+        foreach ($inputs as $key => $value) {
+            if (strpos($key, 'formType') === 0 && $value) {
+                $tipo_cambio = $value;
+                break;
+            }
+        }
+
+        $asignacion = Asignaciones::find($id);
+
+        if ($tipo_cambio  == 'propio') {
+            // Cambiar a propio
+            $asignacion->id_proveedor = null;
+            $asignacion->precio = null;
+            $asignacion->burreo = null;
+            $asignacion->maniobra = null;
+            $asignacion->estadia = null;
+            $asignacion->otro = null;
+            $asignacion->iva = null;
+            $asignacion->retencion = null;
+            $asignacion->total_proveedor = null;
+            // Actualizar otros campos según el formulario de propio
+            $asignacion->id_camion = $request->camion;
+            $asignacion->id_chasis = $request->chasis;
+            $asignacion->id_dolys = $request->nuevoCampoDoly;
+            $asignacion->id_operador = $request->operador;
+            $asignacion->id_chasis2 = $request->chasisAdicional1;
+            $asignacion->fecha_inicio = $request->fecha_inicio;
+            $asignacion->fecha_fin = $request->fecha_fin . ' 23:00:00';
+            $asignacion->sueldo_viaje = $request->sueldo_viaje;
+            $asignacion->dinero_viaje = $request->dinero_viaje;
+            $asignacion->id_banco1_dinero_viaje = $request->id_banco1_dinero_viaje;
+            $asignacion->cantidad_banco1_dinero_viaje = $request->cantidad_banco1_dinero_viaje;
+            $asignacion->id_banco2_dinero_viaje = $request->id_banco2_dinero_viaje;
+            $asignacion->cantidad_banco2_dinero_viaje = $request->cantidad_banco2_dinero_viaje;
+            $asignacion->id_banco1_pago_operador = $request->id_banco1_pago_operador;
+            $asignacion->cantidad_banco1_pago_operador = $request->cantidad_banco1_pago_operador;
+            $asignacion->id_banco2_pago_operador = $request->id_banco2_pago_operador;
+            $asignacion->cantidad_banco2_pago_operador = $request->cantidad_banco2_pago_operador;
+            $asignacion->fecha_pago_salida = date('Y-m-d');
+            $asignacion->estatus_pagado = 'Pendiente Pago';
+        } else if ($tipo_cambio  == 'subcontratado'){
+            // Cambiar a subcontratado
+            $asignacion->id_camion = null;
+            $asignacion->id_chasis = null;
+            $asignacion->id_dolys = null;
+            $asignacion->id_operador = null;
+            $asignacion->id_chasis2 = null;
+            $asignacion->sueldo_viaje = null;
+            $asignacion->dinero_viaje = null;
+            $asignacion->id_banco1_dinero_viaje = null;
+            $asignacion->cantidad_banco1_dinero_viaje = null;
+            $asignacion->id_banco2_dinero_viaje = null;
+            $asignacion->cantidad_banco2_dinero_viaje = null;
+            $asignacion->id_banco1_pago_operador = null;
+            $asignacion->cantidad_banco1_pago_operador = null;
+            $asignacion->id_banco2_pago_operador = null;
+            $asignacion->cantidad_banco2_pago_operador = null;
+            $asignacion->fecha_pago_salida = null;
+            $asignacion->fecha_pago_operador = null;
+            // Actualizar otros campos según el formulario de subcontratado
+            $asignacion->id_proveedor = $request->id_proveedor;
+            $asignacion->precio = $request->precio;
+            $asignacion->burreo = $request->cot_burreo;
+            $asignacion->maniobra = $request->cot_maniobra;
+            $asignacion->estadia = $request->cot_estadia;
+            $asignacion->otro = $request->cot_otro;
+            $asignacion->iva = $request->cot_iva;
+            $asignacion->retencion = $request->cot_retencion;
+            $asignacion->total_proveedor = $request->total_proveedor;
+            $asignacion->fecha_inicio = $request->fecha_inicio_proveedor;
+            $asignacion->fecha_fin = $request->fecha_fin_proveedor . ' 23:00:00';
+        }
+
+        $asignacion->save();
+
+        return redirect()->back()->with('success', 'Ha sido cambiado exitosamente.');
     }
 }

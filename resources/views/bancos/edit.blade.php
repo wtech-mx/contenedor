@@ -103,25 +103,26 @@
     <div class="container-fluid py-4">
         <div class="row mt-3">
 
-            <div class="col-12 col-md-6 col-xl-4">
+            <div class="col-12 col-md-6 col-xl-6 mb-4"">
                 <div class="card h-100">
                     <div class="card-header pb-0 p-3">
                         <h6 class="mb-0">Cobros</h6>
                     </div>
                     <div class="card-body p-3">
                         <div class="row">
-                            <div class="col-4"><b>Contenedor</b></div>
-                            <div class="col-4"><b>Cliente</b></div>
-                            <div class="col-4"><b>Cargo</b></div>
+                            <div class="col-3"><b>Contenedor</b></div>
+                            <div class="col-3"><b>Cliente</b></div>
+                            <div class="col-3"><b>Cargo</b></div>
+                            <div class="col-3"><b>Fecha</b></div>
 
                             @foreach ($cotizaciones as $item)
-                                <div class="col-4">
+                                <div class="col-3">
                                     <a class="btn btn-sm btn-success" href="{{ route('edit.cotizaciones', $item->id) }}">
                                         {{ $item->DocCotizacion->num_contenedor }}
                                     </a>
                                 </div>
-                                <div class="col-4">{{ $item->Cliente->nombre }}</div>
-                                <div class="col-4">
+                                <div class="col-3">{{ $item->Cliente->nombre }}</div>
+                                <div class="col-3">
                                     @if ($item->id_banco1  == $banco->id)
                                         $ {{ number_format($item->monto1, 0, '.', ',') }}
                                     @else
@@ -129,6 +130,9 @@
                                     @endif
 
                                 </div>
+                                <div class="col-3">
+                                    {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
+                                </div>
                             @endforeach
 
                         </div>
@@ -136,61 +140,75 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 col-xl-4 mt-md-0 mt-4">
+            <div class="col-12 col-md-6 col-xl-6 mt-md-0 mt-4">
                 <div class="card h-100">
                     <div class="card-header pb-0 p-3">
                         <h6 class="mb-0">Pagos</h6>
                     </div>
                     <div class="card-body p-3">
                         <div class="row">
-                            <div class="col-4"><b>Contenedor</b></div>
-                            <div class="col-4"><b>Cliente</b></div>
-                            <div class="col-4"><b>Cargo</b></div>
+                            <div class="col-3"><b>Contenedor</b></div>
+                            <div class="col-3"><b>Cliente</b></div>
+                            <div class="col-3"><b>Cargo</b></div>
+                            <div class="col-3"><b>Fecha</b></div>
 
                             @foreach ($proveedores as $item)
-                                <div class="col-4">
+                                <div class="col-3">
                                     <a class="btn btn-sm btn-success" href="{{ route('edit.cotizaciones', $item->id) }}">
                                         {{ $item->DocCotizacion->num_contenedor }}
                                     </a>
                                 </div>
-                                <div class="col-4">{{ $item->Cliente->nombre }}</div>
-                                <div class="col-4">
+                                <div class="col-3">{{ $item->Cliente->nombre }}</div>
+                                <div class="col-3">
                                     @if ($item->id_prove_banco1  == $banco->id)
                                         $ {{ number_format($item->prove_monto1, 0, '.', ',') }}
                                     @else
                                         $ {{ number_format($item->prove_monto2, 0, '.', ',') }}
                                     @endif
                                 </div>
+                                <div class="col-3">
+                                    {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
+                                </div>
                             @endforeach
 
                             @foreach ($operadores_salida as $item)
-                                <div class="col-4">
+                                <div class="col-3">
                                     <a class="btn btn-sm btn-info" href="{{ route('edit.cotizaciones', $item->id) }}">
                                         {{ $item->Contenedor->num_contenedor }}
                                     </a>
                                 </div>
-                                <div class="col-4">{{ $item->Operador->nombre }}</div>
-                                <div class="col-4">
+                                <div class="col-3">{{ $item->Operador->nombre }}</div>
+                                <div class="col-3">
                                     @if ($item->id_banco1_dinero_viaje  == $banco->id)
                                         $ {{ number_format($item->cantidad_banco1_dinero_viaje, 0, '.', ',') }}
                                     @else
                                         $ {{ number_format($item->cantidad_banco2_dinero_viaje, 0, '.', ',') }}
                                     @endif
                                 </div>
+                                <div class="col-3">
+                                    @if ($item->fecha_pago_salida != NULL)
+                                    {{ \Carbon\Carbon::parse($item->fecha_pago_salida)->translatedFormat('j \d\e F') }}
+                                    @endif
+                                </div>
                             @endforeach
 
                             @foreach ($operadores_salida_pago as $item)
-                                <div class="col-4">
+                                <div class="col-3">
                                     <a class="btn btn-sm btn-denger" href="{{ route('edit.cotizaciones', $item->id) }}">
                                         {{ $item->Contenedor->num_contenedor }}
                                     </a>
                                 </div>
-                                <div class="col-4">{{ $item->Operador->nombre }}</div>
-                                <div class="col-4">
+                                <div class="col-3">{{ $item->Operador->nombre }}</div>
+                                <div class="col-3">
                                     @if ($item->id_banco1_pago_operador  == $banco->id)
                                         $ {{ number_format($item->cantidad_banco1_pago_operador, 0, '.', ',') }}
                                     @else
                                         $ {{ number_format($item->cantidad_banco2_pago_operador, 0, '.', ',') }}
+                                    @endif
+                                </div>
+                                <div class="col-3">
+                                    @if ($item->fecha_pago_operador != NULL)
+                                        {{ \Carbon\Carbon::parse($item->fecha_pago_operador)->translatedFormat('j \d\e F') }}
                                     @endif
                                 </div>
                             @endforeach
@@ -200,7 +218,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 col-xl-4 mt-md-0 mt-4">
+            <div class="col-12 col-md-6 col-xl-6 mt-md-0 mt-4">
                 <div class="card h-100">
                     <div class="card-header pb-0 p-3">
                         <h6 class="mb-0">Datos Bancarios</h6>

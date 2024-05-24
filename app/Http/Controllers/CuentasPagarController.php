@@ -5,20 +5,32 @@ namespace App\Http\Controllers;
 use App\Models\Bancos;
 use App\Models\Client;
 use App\Models\Cotizaciones;
+use App\Models\Proveedor;
 use Illuminate\Http\Request;
 use DB;
 
 class CuentasPagarController extends Controller
 {
     public function index(){
-        $cotizacionesPorCliente = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
+        $cotizacionIds = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
         ->join('asignaciones', 'docum_cotizacion.id', '=', 'asignaciones.id_contenedor')
-        ->where('asignaciones.id_camion', '=', NULL)
+        ->whereNull('asignaciones.id_camion')
         ->where('cotizaciones.estatus', '=', 'Aprobada')
-        ->select('cotizaciones.id_cliente', DB::raw('COUNT(*) as total_cotizaciones'))
-        ->groupBy('cotizaciones.id_cliente')
-        ->get();
+        ->where('cotizaciones.prove_monto1', '=', NULL)
+        ->select('cotizaciones.id')
+        ->pluck('cotizaciones.id');
 
+        $cotizacionesPorCliente = Cotizaciones::whereIn('id', $cotizacionIds)
+            ->with(['DocCotizacion.Asignaciones.Proveedor']) // Carga las relaciones necesarias
+            ->get()
+            ->groupBy('DocCotizacion.Asignaciones.id_proveedor')
+            ->map(function ($group) {
+                return [
+                    'id_proveedor' => $group->first()->DocCotizacion->Asignaciones->id_proveedor,
+                    'total_cotizaciones' => $group->count(),
+                    'proveedor' => $group->first()->DocCotizacion->Asignaciones->Proveedor,
+                ];
+        });
         return view('cuentas_pagar.index', compact('cotizacionesPorCliente'));
     }
 
@@ -28,13 +40,15 @@ class CuentasPagarController extends Controller
         ->join('asignaciones', 'docum_cotizacion.id', '=', 'asignaciones.id_contenedor')
         ->where('asignaciones.id_camion', '=', NULL)
         ->where('cotizaciones.estatus', '=', 'Aprobada')
-        ->where('cotizaciones.id_cliente', '=', $id)
-        ->select('cotizaciones.*', 'asignaciones.precio')
+        ->where('asignaciones.id_proveedor', '=', $id)
+        ->where('cotizaciones.prove_monto1', '=', NULL)
+        ->select('asignaciones.*', 'docum_cotizacion.num_contenedor', 'docum_cotizacion.id_cotizacion')
         ->get();
 
         $bancos = Bancos::get();
+        $cliente = Proveedor::where('id', '=', $id)->first();
 
-        return view('cuentas_pagar.show', compact('cotizacionesPorPagar', 'bancos'));
+        return view('cuentas_pagar.show', compact('cotizacionesPorPagar', 'bancos', 'cliente'));
     }
 
     public function update(Request $request, $id){

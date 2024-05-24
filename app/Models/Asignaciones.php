@@ -23,6 +23,8 @@ class Asignaciones extends Model
         'id_chasis2',
         'sueldo_viaje',
         'dinero_viaje',
+        'id_banco1_dinero_viaje',
+        'id_banco2_dinero_viaje'
     ];
 
     public function Camion()
@@ -53,4 +55,13 @@ class Asignaciones extends Model
     {
         return $this->belongsTo(Proveedor::class, 'id_proveedor');
     }
+    public function Banco1()
+    {
+        return $this->belongsTo(Bancos::class, 'id_banco1_dinero_viaje');
+    }
+    public function Banco2()
+    {
+        return $this->belongsTo(Bancos::class, 'id_banco2_dinero_viaje');
+    }
 }
+

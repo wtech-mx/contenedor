@@ -44,7 +44,7 @@ class BancosController extends Controller
 
         $operadores_salida = Asignaciones::where('id_banco1_dinero_viaje', '=', $id)->orwhere('id_banco2_dinero_viaje', '=', $id)->get();
 
-        $operadores_salida_pago = Asignaciones::where('id_banco1_dinero_viaje', '=', $id)->orwhere('id_banco2_dinero_viaje', '=', $id)->get();
+        $operadores_salida_pago = Asignaciones::where('id_banco1_pago_operador', '=', $id)->orwhere('id_banco2_pago_operador', '=', $id)->get();
 
         return view('bancos.edit', compact('banco', 'cotizaciones', 'proveedores', 'operadores_salida', 'operadores_salida_pago'));
     }

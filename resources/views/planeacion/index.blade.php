@@ -285,6 +285,33 @@
             }
         }
 
+        $(document).ready(function() {
+            function calculateTotal(cotizacionId) {
+                var precio = parseFloat($('#precio_proveedor_' + cotizacionId).val()) || 0;
+                var burreo = parseFloat($('#burreo_proveedor_' + cotizacionId).val()) || 0;
+                var maniobra = parseFloat($('#maniobra_proveedor_' + cotizacionId).val()) || 0;
+                var estadia = parseFloat($('#estadia_proveedor_' + cotizacionId).val()) || 0;
+                var otro = parseFloat($('#otro_proveedor_' + cotizacionId).val()) || 0;
+                var iva = parseFloat($('#iva_proveedor_' + cotizacionId).val()) || 0;
+                var retencion = parseFloat($('#retencion_proveedor_' + cotizacionId).val()) || 0;
+
+                var total = precio + burreo + maniobra + estadia + otro + iva - retencion;
+
+                $('#total_proveedor_' + cotizacionId).val(total.toFixed(2));
+            }
+
+            @foreach($cotizaciones as $cotizacion)
+                (function(cotizacionId) {
+                    $('#precio_proveedor_' + cotizacionId + ', #burreo_proveedor_' + cotizacionId + ', #maniobra_proveedor_' + cotizacionId + ', #estadia_proveedor_' + cotizacionId + ', #otro_proveedor_' + cotizacionId + ', #iva_proveedor_' + cotizacionId + ', #retencion_proveedor_' + cotizacionId).on('input', function() {
+                        calculateTotal(cotizacionId);
+                    });
+
+                    // Call calculateTotal on page load to set the initial value
+                    calculateTotal(cotizacionId);
+                })('{{$cotizacion->id}}');
+            @endforeach
+        });
+
     </script>
 
 @endsection
