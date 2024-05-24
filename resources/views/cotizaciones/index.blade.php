@@ -53,9 +53,9 @@
                             <img src="{{ asset('img/icon/cheque.png') }}" alt="" width="40px">  Aprobada
                           </button>
 
-                          <button class="nav-link custom-tab" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
+                          {{-- <button class="nav-link custom-tab" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
                             <img src="{{ asset('img/icon/cerrar.png') }}" alt="" width="40px">  Canceladas
-                          </button>
+                          </button> --}}
                         </div>
                       </nav>
 
