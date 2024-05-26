@@ -117,43 +117,10 @@ class CotizacionesController extends Controller
             'estatus' => 'required',
         ]);
 
-        if($request->get('estatus') == 'Cancelada'){
-            $doc_cotizaciones = DocumCotizacion::where('id_cotizacion', '=', $id)->first();
-
-            if ($doc_cotizaciones) {
-                $asignaciones = Asignaciones::where('id_contenedor', '=', $doc_cotizaciones->id)->first();
-
-                if ($asignaciones) {
-                    $comprobantes = ComprobanteGastos::where('id_asignacion', '=', $asignaciones->id)->delete();
-                    $coordenadas = Coordenadas::where('id_asignacion', '=', $asignaciones->id)->first();
-                    if ($coordenadas) {
-                        $coordenadas->delete();
-                    }
-                    $asignaciones->delete();
-                }
-
-                $doc_cotizaciones->delete();
-            }
-            $gastos_extras = GastosExtras::where('id_cotizacion', '=', $id)->delete();
-
-            $cot = Cotizaciones::findOrFail($id);
-            $cot->delete();
-
-        }else if($request->get('estatus') == 'Pendiente'){
-            // $doc_cotizaciones = DocumCotizacion::where('id_cotizacion', '=', $id)->first();
-            // $asignaciones = Asignaciones::where('id_contenedor', '=', $doc_cotizaciones->id)->first();
-            // $coordenadas = Coordenadas::where('id_asignacion', '=', $asignaciones->id)->delete();
-            // $asignaciones->delete();
-
-            $cotizaciones = Cotizaciones::find($id);
-            $cotizaciones->estatus = $request->get('estatus');
-            $cotizaciones->estatus_planeacion = null;
-            $cotizaciones->update();
-        }else{
-            $cotizaciones = Cotizaciones::find($id);
-            $cotizaciones->estatus = $request->get('estatus');
-            $cotizaciones->update();
-        }
+        $cotizaciones = Cotizaciones::find($id);
+        $cotizaciones->estatus = $request->get('estatus');
+        $cotizaciones->estatus_planeacion = null;
+        $cotizaciones->update();
 
         Session::flash('edit', 'Se ha editado sus datos con exito');
         return redirect()->route('index.cotizaciones')

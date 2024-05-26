@@ -72,184 +72,52 @@
 
                     @if($coordenadas->registro_puerto == null)
 
-                    <div class="col-12 mb-4">
-                        <h5 class="text-left">1) Registro en Puerto ?</h5>
-
-                        <div class="form-check" style="display: inline-block;margin-right:3rem;">
-                            <input class="form-check-input" type="radio" name="registro_puerto" id="registro_puerto_no" value="No" checked>
-                            <label class="form-check-label" for="registro_puerto_no">
-                                No
-                            </label>
-                        </div>
-
-                        <div class="form-check" style="display: inline-block;">
-                            <input class="form-check-input" type="radio" name="registro_puerto" id="registro_puerto_si" value="Si">
-                            <label class="form-check-label" for="registro_puerto_si">
-                                Si
-                            </label>
-                        </div>
-
-                        <input type="hidden" id="latitud_longitud_registro_puerto" name="latitud_longitud_registro_puerto">
-
-                    </div>
-
-                    @else
-
-                    <div class="col-12 mb-4 coordenadas_contestado">
-                        <h5 class="text-left">1) Registro en Puerto ?</h5>
-
-                        <div class="form-check" style="display: inline-block;">
-                            <input class="form-check-input" type="radio"  id="registro_puerto_si" checked disabled>
-                            <label class="form-check-label" for="registro_puerto_si">
-                                Si
-                            </label>
-                        </div>
-
-                        <input type="hidden" name="latitud_longitud_registro_puerto" value="{{ $coordenadas->registro_puerto }}">
-
-                    @auth
-
-                        <br>
-                        <button onclick="abrirEnMaps()" class="btn btn-primary btn-sm">Ver en Maps</button>
-
-
-                        <script>
-
-                            function abrirEnMaps() {
-                                // Obtener las coordenadas de la variable PHP
-                                var coordenadas = "{{ $coordenadas->registro_puerto }}";
-
-                                // Convertir las coordenadas al formato necesario para el enlace
-                                var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
-
-                                // Crear el enlace con las coordenadas
-                                var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
-
-                                // Abrir la página de Google Maps en una nueva ventana o pestaña
-                                window.open(url, '_blank');
-                            }
-
-
-                        </script>
-
-                    @endauth
-
-                    </div>
-
-                    @endif
-
-                    @if($coordenadas->dentro_puerto == null)
-
                         <div class="col-12 mb-4">
-                            <h5 class="text-left">2) Dentro de Puerto ?</h5>
+                            <h5 class="text-left">1) Registro en Puerto ?</h5>
 
                             <div class="form-check" style="display: inline-block;margin-right:3rem;">
-                                <input class="form-check-input" type="radio" name="dentro_puerto" id="dentro_puerto_no" value="No" checked>
-                                <label class="form-check-label" for="dentro_puerto_no">
+                                <input class="form-check-input" type="radio" name="registro_puerto" id="registro_puerto_no" value="No" checked>
+                                <label class="form-check-label" for="registro_puerto_no">
                                     No
                                 </label>
                             </div>
 
                             <div class="form-check" style="display: inline-block;">
-                                <input class="form-check-input" type="radio" name="dentro_puerto" id="dentro_puerto_si" value="Si">
-                                <label class="form-check-label" for="dentro_puerto_si">
+                                <input class="form-check-input" type="radio" name="registro_puerto" id="registro_puerto_si" value="Si">
+                                <label class="form-check-label" for="registro_puerto_si">
                                     Si
                                 </label>
                             </div>
 
-                            <input type="hidden" id="latitud_longitud_dentro_puerto" name="latitud_longitud_dentro_puerto">
+                            <input type="hidden" id="latitud_longitud_registro_puerto" name="latitud_longitud_registro_puerto">
+
                         </div>
 
-                    @else
+                        @else
 
                         <div class="col-12 mb-4 coordenadas_contestado">
-                            <h5 class="text-left">2) Dentro de Puerto ?</h5>
+                            <h5 class="text-left">1) Registro en Puerto ?</h5>
 
                             <div class="form-check" style="display: inline-block;">
-                                <input class="form-check-input" type="radio"  id="dentro_puerto_si"  checked disabled>
-                                <label class="form-check-label" for="dentro_puerto_si">
+                                <input class="form-check-input" type="radio"  id="registro_puerto_si" checked disabled>
+                                <label class="form-check-label" for="registro_puerto_si">
                                     Si
                                 </label>
                             </div>
 
-                            <input type="hidden" name="latitud_longitud_dentro_puerto" value="{{ $coordenadas->dentro_puerto }}">
+                            <input type="hidden" name="latitud_longitud_registro_puerto" value="{{ $coordenadas->registro_puerto }}">
 
-
-                            @auth
-
-                                <br>
-                                <button onclick="abrirEnMapsdentro_puerto()" class="btn btn-primary btn-sm">Ver en Maps</button>
-
-
-                                <script>
-
-                                    function abrirEnMapsdentro_puerto() {
-                                        // Obtener las coordenadas de la variable PHP
-                                        var coordenadas = "{{ $coordenadas->dentro_puerto }}";
-
-                                        // Convertir las coordenadas al formato necesario para el enlace
-                                        var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
-
-                                        // Crear el enlace con las coordenadas
-                                        var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
-
-                                        // Abrir la página de Google Maps en una nueva ventana o pestaña
-                                        window.open(url, '_blank');
-                                    }
-                                </script>
-
-                            @endauth
-
-                        </div>
-
-                    @endif
-
-                    @if($coordenadas->descarga_vacio == null)
-
-                    <div class="col-12 mb-4">
-                        <h5 class="text-left">3) Descarga Vacío?</h5>
-
-                        <div class="form-check" style="display: inline-block;margin-right:3rem;">
-                            <input class="form-check-input" type="radio" name="descarga_vacio" id="descarga_vacio_no" value="No" checked>
-                            <label class="form-check-label" for="descarga_vacio_no">
-                                No
-                            </label>
-                        </div>
-
-                        <div class="form-check" style="display: inline-block;">
-                            <input class="form-check-input" type="radio" name="descarga_vacio" id="descarga_vacio_si" value="Si">
-                            <label class="form-check-label" for="descarga_vacio_si">
-                                Si
-                            </label>
-                        </div>
-
-                        <input type="hidden" id="latitud_longitud_descarga_vacio" name="latitud_longitud_descarga_vacio">
-                    </div>
-
-                    @else
-
-                    <div class="col-12 mb-4 coordenadas_contestado">
-                        <h5 class="text-left">3) Descarga Vacío?</h5>
-
-                        <div class="form-check" style="display: inline-block;">
-                            <input class="form-check-input" type="radio"  id="descarga_vacio_si" checked disabled >
-                            <label class="form-check-label" for="descarga_vacio_si">
-                                Si
-                            </label>
-                        </div>
-
-                        <input type="hidden" name="latitud_longitud_descarga_vacio" value="{{ $coordenadas->descarga_vacio }}">
                         @auth
 
                             <br>
-                            <button onclick="abrirEnMapsdescarga()" class="btn btn-primary btn-sm">Ver en Maps</button>
+                            <button onclick="abrirEnMaps()" class="btn btn-primary btn-sm">Ver en Maps</button>
 
 
                             <script>
 
-                                function abrirEnMapsdescarga() {
+                                function abrirEnMaps() {
                                     // Obtener las coordenadas de la variable PHP
-                                    var coordenadas = "{{ $coordenadas->descarga_vacio }}";
+                                    var coordenadas = "{{ $coordenadas->registro_puerto }}";
 
                                     // Convertir las coordenadas al formato necesario para el enlace
                                     var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
@@ -260,412 +128,557 @@
                                     // Abrir la página de Google Maps en una nueva ventana o pestaña
                                     window.open(url, '_blank');
                                 }
+
+
                             </script>
 
                         @endauth
 
-                    </div>
+                        </div>
 
                     @endif
 
-                    @if($coordenadas->cargado_contenedor == null)
-                    <div class="col-12 mb-4">
-                        <h5 class="text-left">4)Cargado Contenedor ?</h5>
-
-                        <div class="form-check" style="display: inline-block;margin-right:3rem;">
-                            <input class="form-check-input" type="radio" name="cargado_contenedor" id="cargado_contenedor_no" value="No" checked>
-                            <label class="form-check-label" for="cargado_contenedor_no">
-                                No
-                            </label>
-                        </div>
-
-                        <div class="form-check" style="display: inline-block;">
-                            <input class="form-check-input" type="radio" name="cargado_contenedor" id="cargado_contenedor_si" value="Si">
-                            <label class="form-check-label" for="cargado_contenedor_si">
-                                Si
-                            </label>
-                        </div>
-
-                        <input type="hidden" id="latitud_longitud_cargado_contenedor" name="latitud_longitud_cargado_contenedor">
-                    </div>
-
-                    @else
-                    <div class="col-12 mb-4 coordenadas_contestado">
-                        <h5 class="text-left">4)Cargado Contenedor ?</h5>
-
-                        <div class="form-check" style="display: inline-block;">
-                            <input class="form-check-input" type="radio"  id="cargado_contenedor_si" disabled checked>
-                            <label class="form-check-label" for="cargado_contenedor_si">
-                                Si
-                            </label>
-                        </div>
-
-                        <input type="hidden" name="latitud_longitud_cargado_contenedor" value="{{ $coordenadas->cargado_contenedor }}">
-                        @auth
-
-                            <br>
-                            <button onclick="abrirEnMapscargado_contenedor()" class="btn btn-primary btn-sm">Ver en Maps</button>
-
-
-                            <script>
-
-                                function abrirEnMapscargado_contenedor() {
-                                    // Obtener las coordenadas de la variable PHP
-                                    var coordenadas = "{{ $coordenadas->cargado_contenedor }}";
-
-                                    // Convertir las coordenadas al formato necesario para el enlace
-                                    var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
-
-                                    // Crear el enlace con las coordenadas
-                                    var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
-
-                                    // Abrir la página de Google Maps en una nueva ventana o pestaña
-                                    window.open(url, '_blank');
-                                }
-                            </script>
-
-                        @endauth
-                    </div>
-                    @endif
-
-                    @if($coordenadas->fila_fiscal == null)
-                    <div class="col-12 mb-4">
-                        <h5 class="text-left">5) En Fila Fiscal ?</h5>
-
-                        <div class="form-check" style="display: inline-block;margin-right:3rem;">
-                            <input class="form-check-input" type="radio" name="fila_fiscal" id="fila_fiscal_no" value="No" checked>
-                            <label class="form-check-label" for="fila_fiscal_no">
-                                No
-                            </label>
-                        </div>
-
-                        <div class="form-check" style="display: inline-block;">
-                            <input class="form-check-input" type="radio" name="fila_fiscal" id="fila_fiscal_si" value="Si">
-                            <label class="form-check-label" for="fila_fiscal_si">
-                                Si
-                            </label>
-                        </div>
-
-                        <input type="hidden" id="latitud_longitud_fila_fiscal" name="latitud_longitud_fila_fiscal">
-
-
-
-                    </div>
-
-                    @else
-
-                    <div class="col-12 mb-4 coordenadas_contestado">
-                        <h5 class="text-left">5) En Fila Fiscal ?</h5>
-
-                        <div class="form-check" style="display: inline-block;">
-                            <input class="form-check-input" type="radio"  id="fila_fiscal_si" disabled checked >
-                            <label class="form-check-label" for="fila_fiscal_si">
-                                Si
-                            </label>
-                        </div>
-
-                        <input type="hidden" name="latitud_longitud_fila_fiscal" value="{{ $coordenadas->fila_fiscal }}">
-                        @auth
-
-                            <br>
-                            <button onclick="abrirEnMapsfila_fiscal()" class="btn btn-primary btn-sm">Ver en Maps</button>
-
-
-                            <script>
-
-                                function abrirEnMapsfila_fiscal() {
-                                    // Obtener las coordenadas de la variable PHP
-                                    var coordenadas = "{{ $coordenadas->fila_fiscal }}";
-
-                                    // Convertir las coordenadas al formato necesario para el enlace
-                                    var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
-
-                                    // Crear el enlace con las coordenadas
-                                    var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
-
-                                    // Abrir la página de Google Maps en una nueva ventana o pestaña
-                                    window.open(url, '_blank');
-                                }
-                            </script>
-
-                        @endauth
-                    </div>
-                    @endif
-
-                    @if($coordenadas->modulado_tipo == null)
-                    <div class="col-12 mb-4">
-                        <h5 class="text-left">6) Modulado </h5>
-
-                        <div class="form-floating">
-                            <select class="form-select"  name="modulado_tipo" id="modulado_tipo">
-                              <option value="">Selecionar</option>
-                              <option value="5.1) Verde"> 5.1) Verde </option>
-                              <option value="5.2) Amarillo"> 5.2) Amarillo</option>
-                              <option value="5.3) Rojo">5.3) Rojo</option>
-                              <option value="5.4) OVT">5.4) OVT</option>
-
-                            </select>
-                            <label for="floatingSelectGrid">Seleciona una opcion</label>
-                          </div>
-
-                          <input type="hidden" id="latitud_longitud_modulado_tipo" name="latitud_longitud_modulado_tipo">
-
-                    </div>
-
-                    @else
-                    <div class="col-12 mb-4 coordenadas_contestado">
-                        <h5 class="text-left">6) Modulado </h5>
-
-                        <div class="form-floating">
-                            <select class="form-select"  name="modulado_tipo" id="modulado_tipo" redonly>
-                              <option value="{{ $coordenadas->modulado_tipo }}">{{ $coordenadas->modulado_tipo }}</option>
-                            </select>
-                            <label for="floatingSelectGrid">Selecionado</label>
-                          </div>
-
-                    </div>
-                    @endif
-
-                    @if($coordenadas->en_destino == null)
-
-                    <div class="col-12 mb-4">
-                        <h5 class="text-left">7) En Destino</h5>
-
-                        <div class="form-check" style="display: inline-block;margin-right:3rem;">
-                            <input class="form-check-input" type="radio" name="en_destino" id="en_destino_no" value="No" checked>
-                            <label class="form-check-label" for="en_destino_no">
-                                No
-                            </label>
-                        </div>
-
-                        <div class="form-check" style="display: inline-block;">
-                            <input class="form-check-input" type="radio" name="en_destino" id="en_destino_si" value="Si">
-                            <label class="form-check-label" for="en_destino_si">
-                                Si
-                            </label>
-                        </div>
-
-                        <input type="hidden" id="latitud_longitud_en_destino" name="latitud_longitud_en_destino">
-                    </div>
-
-                    @else
-                    <div class="col-12 mb-4 coordenadas_contestado">
-                        <h5 class="text-left">7) En Destino</h5>
-
-                        <div class="form-check" style="display: inline-block;">
-                            <input class="form-check-input" type="radio"  id="en_destino_si"  checked disabled>
-                            <label class="form-check-label" for="en_destino_si">
-                                Si
-                            </label>
-                        </div>
-                        <input type="hidden" name="latitud_longitud_en_destino" value="{{ $coordenadas->en_destino }}">
-                        @auth
-
-                            <br>
-                            <button onclick="abrirEnMapsen_destino()" class="btn btn-primary btn-sm">Ver en Maps</button>
-
-                            <script>
-
-                                function abrirEnMapsen_destino() {
-                                    // Obtener las coordenadas de la variable PHP
-                                    var coordenadas = "{{ $coordenadas->en_destino }}";
-
-                                    // Convertir las coordenadas al formato necesario para el enlace
-                                    var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
-
-                                    // Crear el enlace con las coordenadas
-                                    var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
-
-                                    // Abrir la página de Google Maps en una nueva ventana o pestaña
-                                    window.open(url, '_blank');
-                                }
-                            </script>
-
-                        @endauth
-
-                    </div>
-                    @endif
-
-                    @if($coordenadas->inicio_descarga == null)
-
-                    <div class="col-12 mb-4">
-                        <h5 class="text-left">8) Inicio Descarga</h5>
-
-                        <div class="form-check" style="display: inline-block;margin-right:3rem;">
-                            <input class="form-check-input" type="radio" name="inicio_descarga" id="inicio_descarga_no" value="No" checked>
-                            <label class="form-check-label" for="inicio_descarga_no">
-                                No
-                            </label>
-                        </div>
-
-                        <div class="form-check" style="display: inline-block;">
-                            <input class="form-check-input" type="radio" name="inicio_descarga" id="inicio_descarga_si" value="Si">
-                            <label class="form-check-label" for="inicio_descarga_si">
-                                Si
-                            </label>
-                        </div>
-
-                        <input type="hidden" id="latitud_longitud_inicio_descarga" name="latitud_longitud_inicio_descarga">
-                    </div>
-
-                    @else
-
-                        <div class="col-12 mb-4 coordenadas_contestado">
-                            <h5 class="text-left">8) Inicio Descarga</h5>
-
-                            <div class="form-check" style="display: inline-block;">
-                                <input class="form-check-input" type="radio"  id="inicio_descarga_si"  checked disabled>
-                                <label class="form-check-label" for="inicio_descarga_si">
-                                    Si
-                                </label>
+                    @if ($coordenadas->registro_puerto != null)
+                        @if($coordenadas->dentro_puerto == null)
+
+                            <div class="col-12 mb-4">
+                                <h5 class="text-left">2) Dentro de Puerto ?</h5>
+
+                                <div class="form-check" style="display: inline-block;margin-right:3rem;">
+                                    <input class="form-check-input" type="radio" name="dentro_puerto" id="dentro_puerto_no" value="No" checked>
+                                    <label class="form-check-label" for="dentro_puerto_no">
+                                        No
+                                    </label>
+                                </div>
+
+                                <div class="form-check" style="display: inline-block;">
+                                    <input class="form-check-input" type="radio" name="dentro_puerto" id="dentro_puerto_si" value="Si">
+                                    <label class="form-check-label" for="dentro_puerto_si">
+                                        Si
+                                    </label>
+                                </div>
+
+                                <input type="hidden" id="latitud_longitud_dentro_puerto" name="latitud_longitud_dentro_puerto">
                             </div>
 
-                            <input type="hidden" name="latitud_longitud_inicio_descarga" value="{{ $coordenadas->inicio_descarga }}">
-                            @auth
+                            @else
 
-                                <br>
-                                <button onclick="abrirEnMapsinicio_descarga()" class="btn btn-primary btn-sm">Ver en Maps</button>
+                            <div class="col-12 mb-4 coordenadas_contestado">
+                                <h5 class="text-left">2) Dentro de Puerto ?</h5>
 
-                                <script>
+                                <div class="form-check" style="display: inline-block;">
+                                    <input class="form-check-input" type="radio"  id="dentro_puerto_si"  checked disabled>
+                                    <label class="form-check-label" for="dentro_puerto_si">
+                                        Si
+                                    </label>
+                                </div>
 
-                                    function abrirEnMapsinicio_descarga() {
-                                        // Obtener las coordenadas de la variable PHP
-                                        var coordenadas = "{{ $coordenadas->inicio_descarga }}";
-
-                                        // Convertir las coordenadas al formato necesario para el enlace
-                                        var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
-
-                                        // Crear el enlace con las coordenadas
-                                        var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
-
-                                        // Abrir la página de Google Maps en una nueva ventana o pestaña
-                                        window.open(url, '_blank');
-                                    }
-                                </script>
-
-                            @endauth
-                        </div>
-
-                    @endif
+                                <input type="hidden" name="latitud_longitud_dentro_puerto" value="{{ $coordenadas->dentro_puerto }}">
 
 
-                    @if($coordenadas->fin_descarga == null)
+                                @auth
 
-                    <div class="col-12 mb-4">
-                        <h5 class="text-left">9) Fin Descarga</h5>
-
-                        <div class="form-check" style="display: inline-block;margin-right:3rem;">
-                            <input class="form-check-input" type="radio" name="fin_descarga" id="fin_descarga_no" value="No" checked>
-                            <label class="form-check-label" for="fin_descarga_no">
-                                No
-                            </label>
-                        </div>
-
-                        <div class="form-check" style="display: inline-block;">
-                            <input class="form-check-input" type="radio" name="fin_descarga" id="fin_descarga_si" value="Si">
-                            <label class="form-check-label" for="fin_descarga_si">
-                                Si
-                            </label>
-                        </div>
-
-                        <input type="hidden" id="latitud_longitud_fin_descarga" name="latitud_longitud_fin_descarga">
-                    </div>
-
-                    @else
-                    <div class="col-12 mb-4 coordenadas_contestado">
-                        <h5 class="text-left">9) Fin Descarga</h5>
-
-                        <div class="form-check" style="display: inline-block;">
-                            <input class="form-check-input" type="radio"  id="fin_descarga_si" value="{{ $coordenadas->fin_descarga }}" disabled checked>
-                            <label class="form-check-label" for="fin_descarga_si">
-                                Si
-                            </label>
-                        </div>
-                        <input type="hidden" name="latitud_longitud_fin_descarga" value="{{ $coordenadas->fin_descarga }}">
-                        @auth
-
-                        <br>
-                        <button onclick="abrirEnMapsfin_descarga()" class="btn btn-primary btn-sm">Ver en Maps</button>
-
-                        <script>
-
-                            function abrirEnMapsfin_descarga() {
-                                // Obtener las coordenadas de la variable PHP
-                                var coordenadas = "{{ $coordenadas->fin_descarga }}";
-
-                                // Convertir las coordenadas al formato necesario para el enlace
-                                var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
-
-                                // Crear el enlace con las coordenadas
-                                var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
-
-                                // Abrir la página de Google Maps en una nueva ventana o pestaña
-                                window.open(url, '_blank');
-                            }
-                        </script>
-
-                    @endauth
-                    </div>
-                    @endif
+                                    <br>
+                                    <button onclick="abrirEnMapsdentro_puerto()" class="btn btn-primary btn-sm">Ver en Maps</button>
 
 
-                    @if($coordenadas->recepcion_doc_firmados == null)
-                        <div class="col-12 mb-4">
-                            <h5 class="text-left">10) Recepción Doctos Firmados</h5>
+                                    <script>
 
-                            <div class="form-check" style="display: inline-block;margin-right:3rem;">
-                                <input class="form-check-input" type="radio" name="recepcion_doc_firmados" id="recepcion_doc_firmados_no" value="No" checked>
-                                <label class="form-check-label" for="recepcion_doc_firmados_no">
-                                    No
-                                </label>
+                                        function abrirEnMapsdentro_puerto() {
+                                            // Obtener las coordenadas de la variable PHP
+                                            var coordenadas = "{{ $coordenadas->dentro_puerto }}";
+
+                                            // Convertir las coordenadas al formato necesario para el enlace
+                                            var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
+
+                                            // Crear el enlace con las coordenadas
+                                            var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
+
+                                            // Abrir la página de Google Maps en una nueva ventana o pestaña
+                                            window.open(url, '_blank');
+                                        }
+                                    </script>
+
+                                @endauth
+
                             </div>
 
-                            <div class="form-check" style="display: inline-block;">
-                                <input class="form-check-input" type="radio" name="recepcion_doc_firmados" id="recepcion_doc_firmados_si" value="Si">
-                                <label class="form-check-label" for="recepcion_doc_firmados_si">
-                                    Si
-                                </label>
-                            </div>
+                        @endif
 
-                            <input type="hidden" id="latitud_longitud_recepcion_doc_firmados" name="latitud_longitud_recepcion_doc_firmados">
-                        </div>
-                    @else
-                    <div class="col-12 mb-4 coordenadas_contestado">
-                        <h5 class="text-left">10) Recepción Doctos Firmados</h5>
+                        @if ($coordenadas->dentro_puerto != null)
+                            @if($coordenadas->descarga_vacio == null)
 
-                        <div class="form-check" style="display: inline-block;">
-                            <input class="form-check-input" type="radio"  id="recepcion_doc_firmados_si" disabled checked>
-                            <label class="form-check-label" for="recepcion_doc_firmados_si">
-                                Si
-                            </label>
-                        </div>
-                        <input type="hidden" name="latitud_longitud_recepcion_doc_firmados" value="{{ $coordenadas->recepcion_doc_firmados }}">
-                        @auth
+                                <div class="col-12 mb-4">
+                                    <h5 class="text-left">3) Descarga Vacío?</h5>
 
-                        <br>
-                        <button onclick="abrirEnMapsrecepcion_doc_firmados()" class="btn btn-primary btn-sm">Ver en Maps</button>
+                                    <div class="form-check" style="display: inline-block;margin-right:3rem;">
+                                        <input class="form-check-input" type="radio" name="descarga_vacio" id="descarga_vacio_no" value="No" checked>
+                                        <label class="form-check-label" for="descarga_vacio_no">
+                                            No
+                                        </label>
+                                    </div>
 
-                        <script>
+                                    <div class="form-check" style="display: inline-block;">
+                                        <input class="form-check-input" type="radio" name="descarga_vacio" id="descarga_vacio_si" value="Si">
+                                        <label class="form-check-label" for="descarga_vacio_si">
+                                            Si
+                                        </label>
+                                    </div>
 
-                            function abrirEnMapsrecepcion_doc_firmados() {
-                                // Obtener las coordenadas de la variable PHP
-                                var coordenadas = "{{ $coordenadas->recepcion_doc_firmados }}";
+                                    <input type="hidden" id="latitud_longitud_descarga_vacio" name="latitud_longitud_descarga_vacio">
+                                </div>
 
-                                // Convertir las coordenadas al formato necesario para el enlace
-                                var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
+                                @else
 
-                                // Crear el enlace con las coordenadas
-                                var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
+                                <div class="col-12 mb-4 coordenadas_contestado">
+                                    <h5 class="text-left">3) Descarga Vacío?</h5>
 
-                                // Abrir la página de Google Maps en una nueva ventana o pestaña
-                                window.open(url, '_blank');
-                            }
-                        </script>
+                                    <div class="form-check" style="display: inline-block;">
+                                        <input class="form-check-input" type="radio"  id="descarga_vacio_si" checked disabled >
+                                        <label class="form-check-label" for="descarga_vacio_si">
+                                            Si
+                                        </label>
+                                    </div>
 
-                    @endauth
-                    </div>
+                                    <input type="hidden" name="latitud_longitud_descarga_vacio" value="{{ $coordenadas->descarga_vacio }}">
+                                    @auth
+
+                                        <br>
+                                        <button onclick="abrirEnMapsdescarga()" class="btn btn-primary btn-sm">Ver en Maps</button>
+
+
+                                        <script>
+
+                                            function abrirEnMapsdescarga() {
+                                                // Obtener las coordenadas de la variable PHP
+                                                var coordenadas = "{{ $coordenadas->descarga_vacio }}";
+
+                                                // Convertir las coordenadas al formato necesario para el enlace
+                                                var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
+
+                                                // Crear el enlace con las coordenadas
+                                                var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
+
+                                                // Abrir la página de Google Maps en una nueva ventana o pestaña
+                                                window.open(url, '_blank');
+                                            }
+                                        </script>
+
+                                    @endauth
+
+                                </div>
+
+                            @endif
+
+                            @if ($coordenadas->descarga_vacio != null)
+                                @if($coordenadas->cargado_contenedor == null)
+                                    <div class="col-12 mb-4">
+                                        <h5 class="text-left">4)Cargado Contenedor ?</h5>
+
+                                        <div class="form-check" style="display: inline-block;margin-right:3rem;">
+                                            <input class="form-check-input" type="radio" name="cargado_contenedor" id="cargado_contenedor_no" value="No" checked>
+                                            <label class="form-check-label" for="cargado_contenedor_no">
+                                                No
+                                            </label>
+                                        </div>
+
+                                        <div class="form-check" style="display: inline-block;">
+                                            <input class="form-check-input" type="radio" name="cargado_contenedor" id="cargado_contenedor_si" value="Si">
+                                            <label class="form-check-label" for="cargado_contenedor_si">
+                                                Si
+                                            </label>
+                                        </div>
+
+                                        <input type="hidden" id="latitud_longitud_cargado_contenedor" name="latitud_longitud_cargado_contenedor">
+                                    </div>
+
+                                    @else
+                                    <div class="col-12 mb-4 coordenadas_contestado">
+                                        <h5 class="text-left">4)Cargado Contenedor ?</h5>
+
+                                        <div class="form-check" style="display: inline-block;">
+                                            <input class="form-check-input" type="radio"  id="cargado_contenedor_si" disabled checked>
+                                            <label class="form-check-label" for="cargado_contenedor_si">
+                                                Si
+                                            </label>
+                                        </div>
+
+                                        <input type="hidden" name="latitud_longitud_cargado_contenedor" value="{{ $coordenadas->cargado_contenedor }}">
+                                        @auth
+
+                                            <br>
+                                            <button onclick="abrirEnMapscargado_contenedor()" class="btn btn-primary btn-sm">Ver en Maps</button>
+
+
+                                            <script>
+
+                                                function abrirEnMapscargado_contenedor() {
+                                                    // Obtener las coordenadas de la variable PHP
+                                                    var coordenadas = "{{ $coordenadas->cargado_contenedor }}";
+
+                                                    // Convertir las coordenadas al formato necesario para el enlace
+                                                    var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
+
+                                                    // Crear el enlace con las coordenadas
+                                                    var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
+
+                                                    // Abrir la página de Google Maps en una nueva ventana o pestaña
+                                                    window.open(url, '_blank');
+                                                }
+                                            </script>
+
+                                        @endauth
+                                    </div>
+                                @endif
+
+                                @if ($coordenadas->cargado_contenedor != null)
+                                    @if($coordenadas->fila_fiscal == null)
+                                        <div class="col-12 mb-4">
+                                            <h5 class="text-left">5) En Fila Fiscal ?</h5>
+
+                                            <div class="form-check" style="display: inline-block;margin-right:3rem;">
+                                                <input class="form-check-input" type="radio" name="fila_fiscal" id="fila_fiscal_no" value="No" checked>
+                                                <label class="form-check-label" for="fila_fiscal_no">
+                                                    No
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check" style="display: inline-block;">
+                                                <input class="form-check-input" type="radio" name="fila_fiscal" id="fila_fiscal_si" value="Si">
+                                                <label class="form-check-label" for="fila_fiscal_si">
+                                                    Si
+                                                </label>
+                                            </div>
+
+                                            <input type="hidden" id="latitud_longitud_fila_fiscal" name="latitud_longitud_fila_fiscal">
+
+
+
+                                        </div>
+
+                                        @else
+
+                                        <div class="col-12 mb-4 coordenadas_contestado">
+                                            <h5 class="text-left">5) En Fila Fiscal ?</h5>
+
+                                            <div class="form-check" style="display: inline-block;">
+                                                <input class="form-check-input" type="radio"  id="fila_fiscal_si" disabled checked >
+                                                <label class="form-check-label" for="fila_fiscal_si">
+                                                    Si
+                                                </label>
+                                            </div>
+
+                                            <input type="hidden" name="latitud_longitud_fila_fiscal" value="{{ $coordenadas->fila_fiscal }}">
+                                            @auth
+
+                                                <br>
+                                                <button onclick="abrirEnMapsfila_fiscal()" class="btn btn-primary btn-sm">Ver en Maps</button>
+
+
+                                                <script>
+
+                                                    function abrirEnMapsfila_fiscal() {
+                                                        // Obtener las coordenadas de la variable PHP
+                                                        var coordenadas = "{{ $coordenadas->fila_fiscal }}";
+
+                                                        // Convertir las coordenadas al formato necesario para el enlace
+                                                        var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
+
+                                                        // Crear el enlace con las coordenadas
+                                                        var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
+
+                                                        // Abrir la página de Google Maps en una nueva ventana o pestaña
+                                                        window.open(url, '_blank');
+                                                    }
+                                                </script>
+
+                                            @endauth
+                                        </div>
+                                    @endif
+
+                                    @if ($coordenadas->fila_fiscal != null)
+                                        @if($coordenadas->modulado_tipo == null)
+                                            <div class="col-12 mb-4">
+                                                <h5 class="text-left">6) Modulado </h5>
+
+                                                <div class="form-floating">
+                                                    <select class="form-select"  name="modulado_tipo" id="modulado_tipo">
+                                                    <option value="">Selecionar</option>
+                                                    <option value="5.1) Verde"> 5.1) Verde </option>
+                                                    <option value="5.2) Amarillo"> 5.2) Amarillo</option>
+                                                    <option value="5.3) Rojo">5.3) Rojo</option>
+                                                    <option value="5.4) OVT">5.4) OVT</option>
+
+                                                    </select>
+                                                    <label for="floatingSelectGrid">Seleciona una opcion</label>
+                                                </div>
+
+                                                <input type="hidden" id="latitud_longitud_modulado_tipo" name="latitud_longitud_modulado_tipo">
+
+                                            </div>
+
+                                            @else
+                                            <div class="col-12 mb-4 coordenadas_contestado">
+                                                <h5 class="text-left">6) Modulado </h5>
+
+                                                <div class="form-floating">
+                                                    <select class="form-select"  name="modulado_tipo" id="modulado_tipo" redonly>
+                                                    <option value="{{ $coordenadas->modulado_tipo }}">{{ $coordenadas->modulado_tipo }}</option>
+                                                    </select>
+                                                    <label for="floatingSelectGrid">Selecionado</label>
+                                                </div>
+
+                                            </div>
+                                        @endif
+
+                                        @if ($coordenadas->modulado_tipo != null)
+                                            @if($coordenadas->en_destino == null)
+                                                <div class="col-12 mb-4">
+                                                    <h5 class="text-left">7) En Destino</h5>
+
+                                                    <div class="form-check" style="display: inline-block;margin-right:3rem;">
+                                                        <input class="form-check-input" type="radio" name="en_destino" id="en_destino_no" value="No" checked>
+                                                        <label class="form-check-label" for="en_destino_no">
+                                                            No
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="form-check" style="display: inline-block;">
+                                                        <input class="form-check-input" type="radio" name="en_destino" id="en_destino_si" value="Si">
+                                                        <label class="form-check-label" for="en_destino_si">
+                                                            Si
+                                                        </label>
+                                                    </div>
+
+                                                    <input type="hidden" id="latitud_longitud_en_destino" name="latitud_longitud_en_destino">
+                                                </div>
+
+                                                @else
+                                                <div class="col-12 mb-4 coordenadas_contestado">
+                                                    <h5 class="text-left">7) En Destino</h5>
+
+                                                    <div class="form-check" style="display: inline-block;">
+                                                        <input class="form-check-input" type="radio"  id="en_destino_si"  checked disabled>
+                                                        <label class="form-check-label" for="en_destino_si">
+                                                            Si
+                                                        </label>
+                                                    </div>
+                                                    <input type="hidden" name="latitud_longitud_en_destino" value="{{ $coordenadas->en_destino }}">
+                                                    @auth
+
+                                                        <br>
+                                                        <button onclick="abrirEnMapsen_destino()" class="btn btn-primary btn-sm">Ver en Maps</button>
+
+                                                        <script>
+
+                                                            function abrirEnMapsen_destino() {
+                                                                // Obtener las coordenadas de la variable PHP
+                                                                var coordenadas = "{{ $coordenadas->en_destino }}";
+
+                                                                // Convertir las coordenadas al formato necesario para el enlace
+                                                                var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
+
+                                                                // Crear el enlace con las coordenadas
+                                                                var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
+
+                                                                // Abrir la página de Google Maps en una nueva ventana o pestaña
+                                                                window.open(url, '_blank');
+                                                            }
+                                                        </script>
+
+                                                    @endauth
+
+                                                </div>
+                                            @endif
+
+                                            @if ($coordenadas->en_destino != null)
+                                                @if($coordenadas->inicio_descarga == null)
+
+                                                    <div class="col-12 mb-4">
+                                                        <h5 class="text-left">8) Inicio Descarga</h5>
+
+                                                        <div class="form-check" style="display: inline-block;margin-right:3rem;">
+                                                            <input class="form-check-input" type="radio" name="inicio_descarga" id="inicio_descarga_no" value="No" checked>
+                                                            <label class="form-check-label" for="inicio_descarga_no">
+                                                                No
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="form-check" style="display: inline-block;">
+                                                            <input class="form-check-input" type="radio" name="inicio_descarga" id="inicio_descarga_si" value="Si">
+                                                            <label class="form-check-label" for="inicio_descarga_si">
+                                                                Si
+                                                            </label>
+                                                        </div>
+
+                                                        <input type="hidden" id="latitud_longitud_inicio_descarga" name="latitud_longitud_inicio_descarga">
+                                                    </div>
+
+                                                    @else
+
+                                                    <div class="col-12 mb-4 coordenadas_contestado">
+                                                        <h5 class="text-left">8) Inicio Descarga</h5>
+
+                                                        <div class="form-check" style="display: inline-block;">
+                                                            <input class="form-check-input" type="radio"  id="inicio_descarga_si"  checked disabled>
+                                                            <label class="form-check-label" for="inicio_descarga_si">
+                                                                Si
+                                                            </label>
+                                                        </div>
+
+                                                        <input type="hidden" name="latitud_longitud_inicio_descarga" value="{{ $coordenadas->inicio_descarga }}">
+                                                        @auth
+
+                                                            <br>
+                                                            <button onclick="abrirEnMapsinicio_descarga()" class="btn btn-primary btn-sm">Ver en Maps</button>
+
+                                                            <script>
+
+                                                                function abrirEnMapsinicio_descarga() {
+                                                                    // Obtener las coordenadas de la variable PHP
+                                                                    var coordenadas = "{{ $coordenadas->inicio_descarga }}";
+
+                                                                    // Convertir las coordenadas al formato necesario para el enlace
+                                                                    var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
+
+                                                                    // Crear el enlace con las coordenadas
+                                                                    var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
+
+                                                                    // Abrir la página de Google Maps en una nueva ventana o pestaña
+                                                                    window.open(url, '_blank');
+                                                                }
+                                                            </script>
+
+                                                        @endauth
+                                                    </div>
+
+                                                @endif
+
+                                                @if ($coordenadas->inicio_descarga != null)
+                                                    @if($coordenadas->fin_descarga == null)
+                                                        <div class="col-12 mb-4">
+                                                            <h5 class="text-left">9) Fin Descarga</h5>
+
+                                                            <div class="form-check" style="display: inline-block;margin-right:3rem;">
+                                                                <input class="form-check-input" type="radio" name="fin_descarga" id="fin_descarga_no" value="No" checked>
+                                                                <label class="form-check-label" for="fin_descarga_no">
+                                                                    No
+                                                                </label>
+                                                            </div>
+
+                                                            <div class="form-check" style="display: inline-block;">
+                                                                <input class="form-check-input" type="radio" name="fin_descarga" id="fin_descarga_si" value="Si">
+                                                                <label class="form-check-label" for="fin_descarga_si">
+                                                                    Si
+                                                                </label>
+                                                            </div>
+
+                                                            <input type="hidden" id="latitud_longitud_fin_descarga" name="latitud_longitud_fin_descarga">
+                                                        </div>
+
+                                                        @else
+                                                        <div class="col-12 mb-4 coordenadas_contestado">
+                                                            <h5 class="text-left">9) Fin Descarga</h5>
+
+                                                            <div class="form-check" style="display: inline-block;">
+                                                                <input class="form-check-input" type="radio"  id="fin_descarga_si" value="{{ $coordenadas->fin_descarga }}" disabled checked>
+                                                                <label class="form-check-label" for="fin_descarga_si">
+                                                                    Si
+                                                                </label>
+                                                            </div>
+                                                            <input type="hidden" name="latitud_longitud_fin_descarga" value="{{ $coordenadas->fin_descarga }}">
+                                                            @auth
+
+                                                            <br>
+                                                            <button onclick="abrirEnMapsfin_descarga()" class="btn btn-primary btn-sm">Ver en Maps</button>
+
+                                                            <script>
+
+                                                                function abrirEnMapsfin_descarga() {
+                                                                    // Obtener las coordenadas de la variable PHP
+                                                                    var coordenadas = "{{ $coordenadas->fin_descarga }}";
+
+                                                                    // Convertir las coordenadas al formato necesario para el enlace
+                                                                    var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
+
+                                                                    // Crear el enlace con las coordenadas
+                                                                    var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
+
+                                                                    // Abrir la página de Google Maps en una nueva ventana o pestaña
+                                                                    window.open(url, '_blank');
+                                                                }
+                                                            </script>
+
+                                                        @endauth
+                                                        </div>
+                                                    @endif
+
+                                                    @if ($coordenadas->fin_descarga != null)
+                                                        @if($coordenadas->recepcion_doc_firmados == null)
+                                                                <div class="col-12 mb-4">
+                                                                    <h5 class="text-left">10) Recepción Doctos Firmados</h5>
+
+                                                                    <div class="form-check" style="display: inline-block;margin-right:3rem;">
+                                                                        <input class="form-check-input" type="radio" name="recepcion_doc_firmados" id="recepcion_doc_firmados_no" value="No" checked>
+                                                                        <label class="form-check-label" for="recepcion_doc_firmados_no">
+                                                                            No
+                                                                        </label>
+                                                                    </div>
+
+                                                                    <div class="form-check" style="display: inline-block;">
+                                                                        <input class="form-check-input" type="radio" name="recepcion_doc_firmados" id="recepcion_doc_firmados_si" value="Si">
+                                                                        <label class="form-check-label" for="recepcion_doc_firmados_si">
+                                                                            Si
+                                                                        </label>
+                                                                    </div>
+
+                                                                    <input type="hidden" id="latitud_longitud_recepcion_doc_firmados" name="latitud_longitud_recepcion_doc_firmados">
+                                                                </div>
+                                                            @else
+                                                            <div class="col-12 mb-4 coordenadas_contestado">
+                                                                <h5 class="text-left">10) Recepción Doctos Firmados</h5>
+
+                                                                <div class="form-check" style="display: inline-block;">
+                                                                    <input class="form-check-input" type="radio"  id="recepcion_doc_firmados_si" disabled checked>
+                                                                    <label class="form-check-label" for="recepcion_doc_firmados_si">
+                                                                        Si
+                                                                    </label>
+                                                                </div>
+                                                                <input type="hidden" name="latitud_longitud_recepcion_doc_firmados" value="{{ $coordenadas->recepcion_doc_firmados }}">
+                                                                @auth
+
+                                                                <br>
+                                                                <button onclick="abrirEnMapsrecepcion_doc_firmados()" class="btn btn-primary btn-sm">Ver en Maps</button>
+
+                                                                <script>
+
+                                                                    function abrirEnMapsrecepcion_doc_firmados() {
+                                                                        // Obtener las coordenadas de la variable PHP
+                                                                        var coordenadas = "{{ $coordenadas->recepcion_doc_firmados }}";
+
+                                                                        // Convertir las coordenadas al formato necesario para el enlace
+                                                                        var coordenadasFormato = coordenadas.replace(",", "+").replace(" ", "+");
+
+                                                                        // Crear el enlace con las coordenadas
+                                                                        var url = 'https://www.google.com/maps/search/?api=1&query=' + coordenadasFormato;
+
+                                                                        // Abrir la página de Google Maps en una nueva ventana o pestaña
+                                                                        window.open(url, '_blank');
+                                                                    }
+                                                                </script>
+
+                                                            @endauth
+                                                            </div>
+                                                        @endif
+                                                    @endif
+                                                @endif
+                                            @endif
+                                        @endif
+                                    @endif
+                                @endif
+                            @endif
+                        @endif
                     @endif
-
 
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary w-100 my-4 mb-2"> Actualizar</button>
