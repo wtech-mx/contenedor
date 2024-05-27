@@ -75,10 +75,10 @@
                         <div class="col-12 mb-4">
                             <h5 class="text-left">1) Registro en Puerto ?</h5>
 
-                            <div class="form-check" style="display: inline-block;margin-right:3rem;">
+                            <div class="form-check" style="display: inline-block;margin-right:3rem;display: none" >
                                 <input class="form-check-input" type="radio" name="registro_puerto" id="registro_puerto_no" value="No" checked>
-                                <label class="form-check-label" for="registro_puerto_no">
-                                    No
+                                <label class="form-check-label" for="registro_puerto_no" >
+                                    Noa
                                 </label>
                             </div>
 
@@ -110,7 +110,7 @@
                         @auth
 
                             <br>
-                            <button onclick="abrirEnMaps()" class="btn btn-primary btn-sm">Ver en Maps</button>
+                            <button onclick="abrirEnMaps()" class="btn btn-primary btn-sm"> <img src="{{ asset('img/icon/gps.webp') }}" alt="" width="15px"> Ver en Maps</button>
 
 
                             <script>
@@ -144,7 +144,7 @@
                             <div class="col-12 mb-4">
                                 <h5 class="text-left">2) Dentro de Puerto ?</h5>
 
-                                <div class="form-check" style="display: inline-block;margin-right:3rem;">
+                                <div class="form-check" style="display: inline-block;margin-right:3rem;display: none">
                                     <input class="form-check-input" type="radio" name="dentro_puerto" id="dentro_puerto_no" value="No" checked>
                                     <label class="form-check-label" for="dentro_puerto_no">
                                         No
@@ -179,7 +179,7 @@
                                 @auth
 
                                     <br>
-                                    <button onclick="abrirEnMapsdentro_puerto()" class="btn btn-primary btn-sm">Ver en Maps</button>
+                                    <button onclick="abrirEnMapsdentro_puerto()" class="btn btn-primary btn-sm"> <img src="{{ asset('img/icon/gps.webp') }}" alt="" width="15px"> Ver en Maps</button>
 
 
                                     <script>
@@ -211,7 +211,7 @@
                                 <div class="col-12 mb-4">
                                     <h5 class="text-left">3) Descarga Vacío?</h5>
 
-                                    <div class="form-check" style="display: inline-block;margin-right:3rem;">
+                                    <div class="form-check" style="display: inline-block;margin-right:3rem;display: none">
                                         <input class="form-check-input" type="radio" name="descarga_vacio" id="descarga_vacio_no" value="No" checked>
                                         <label class="form-check-label" for="descarga_vacio_no">
                                             No
@@ -244,7 +244,7 @@
                                     @auth
 
                                         <br>
-                                        <button onclick="abrirEnMapsdescarga()" class="btn btn-primary btn-sm">Ver en Maps</button>
+                                        <button onclick="abrirEnMapsdescarga()" class="btn btn-primary btn-sm"> <img src="{{ asset('img/icon/gps.webp') }}" alt="" width="15px"> Ver en Maps</button>
 
 
                                         <script>
@@ -275,7 +275,7 @@
                                     <div class="col-12 mb-4">
                                         <h5 class="text-left">4)Cargado Contenedor ?</h5>
 
-                                        <div class="form-check" style="display: inline-block;margin-right:3rem;">
+                                        <div class="form-check" style="display: inline-block;margin-right:3rem;display: none">
                                             <input class="form-check-input" type="radio" name="cargado_contenedor" id="cargado_contenedor_no" value="No" checked>
                                             <label class="form-check-label" for="cargado_contenedor_no">
                                                 No
@@ -307,7 +307,7 @@
                                         @auth
 
                                             <br>
-                                            <button onclick="abrirEnMapscargado_contenedor()" class="btn btn-primary btn-sm">Ver en Maps</button>
+                                            <button onclick="abrirEnMapscargado_contenedor()" class="btn btn-primary btn-sm"> <img src="{{ asset('img/icon/gps.webp') }}" alt="" width="15px"> Ver en Maps</button>
 
 
                                             <script>
@@ -336,7 +336,7 @@
                                         <div class="col-12 mb-4">
                                             <h5 class="text-left">5) En Fila Fiscal ?</h5>
 
-                                            <div class="form-check" style="display: inline-block;margin-right:3rem;">
+                                            <div class="form-check" style="display: inline-block;margin-right:3rem;display: none">
                                                 <input class="form-check-input" type="radio" name="fila_fiscal" id="fila_fiscal_no" value="No" checked>
                                                 <label class="form-check-label" for="fila_fiscal_no">
                                                     No
@@ -372,7 +372,7 @@
                                             @auth
 
                                                 <br>
-                                                <button onclick="abrirEnMapsfila_fiscal()" class="btn btn-primary btn-sm">Ver en Maps</button>
+                                                <button onclick="abrirEnMapsfila_fiscal()" class="btn btn-primary btn-sm"> <img src="{{ asset('img/icon/gps.webp') }}" alt="" width="15px"> Ver en Maps</button>
 
 
                                                 <script>
@@ -436,7 +436,7 @@
                                                 <div class="col-12 mb-4">
                                                     <h5 class="text-left">7) En Destino</h5>
 
-                                                    <div class="form-check" style="display: inline-block;margin-right:3rem;">
+                                                    <div class="form-check" style="display: inline-block;margin-right:3rem;display: none">
                                                         <input class="form-check-input" type="radio" name="en_destino" id="en_destino_no" value="No" checked>
                                                         <label class="form-check-label" for="en_destino_no">
                                                             No
@@ -467,7 +467,7 @@
                                                     @auth
 
                                                         <br>
-                                                        <button onclick="abrirEnMapsen_destino()" class="btn btn-primary btn-sm">Ver en Maps</button>
+                                                        <button onclick="abrirEnMapsen_destino()" class="btn btn-primary btn-sm"> <img src="{{ asset('img/icon/gps.webp') }}" alt="" width="15px"> Ver en Maps</button>
 
                                                         <script>
 
@@ -497,7 +497,7 @@
                                                     <div class="col-12 mb-4">
                                                         <h5 class="text-left">8) Inicio Descarga</h5>
 
-                                                        <div class="form-check" style="display: inline-block;margin-right:3rem;">
+                                                        <div class="form-check" style="display: inline-block;margin-right:3rem;display: none">
                                                             <input class="form-check-input" type="radio" name="inicio_descarga" id="inicio_descarga_no" value="No" checked>
                                                             <label class="form-check-label" for="inicio_descarga_no">
                                                                 No
@@ -530,7 +530,7 @@
                                                         @auth
 
                                                             <br>
-                                                            <button onclick="abrirEnMapsinicio_descarga()" class="btn btn-primary btn-sm">Ver en Maps</button>
+                                                            <button onclick="abrirEnMapsinicio_descarga()" class="btn btn-primary btn-sm"> <img src="{{ asset('img/icon/gps.webp') }}" alt="" width="15px"> Ver en Maps</button>
 
                                                             <script>
 
@@ -559,7 +559,7 @@
                                                         <div class="col-12 mb-4">
                                                             <h5 class="text-left">9) Fin Descarga</h5>
 
-                                                            <div class="form-check" style="display: inline-block;margin-right:3rem;">
+                                                            <div class="form-check" style="display: inline-block;margin-right:3rem;display: none">
                                                                 <input class="form-check-input" type="radio" name="fin_descarga" id="fin_descarga_no" value="No" checked>
                                                                 <label class="form-check-label" for="fin_descarga_no">
                                                                     No
@@ -590,7 +590,7 @@
                                                             @auth
 
                                                             <br>
-                                                            <button onclick="abrirEnMapsfin_descarga()" class="btn btn-primary btn-sm">Ver en Maps</button>
+                                                            <button onclick="abrirEnMapsfin_descarga()" class="btn btn-primary btn-sm"> <img src="{{ asset('img/icon/gps.webp') }}" alt="" width="15px"> Ver en Maps</button>
 
                                                             <script>
 
@@ -618,7 +618,7 @@
                                                                 <div class="col-12 mb-4">
                                                                     <h5 class="text-left">10) Recepción Doctos Firmados</h5>
 
-                                                                    <div class="form-check" style="display: inline-block;margin-right:3rem;">
+                                                                    <div class="form-check" style="display: inline-block;margin-right:3rem;display: none">
                                                                         <input class="form-check-input" type="radio" name="recepcion_doc_firmados" id="recepcion_doc_firmados_no" value="No" checked>
                                                                         <label class="form-check-label" for="recepcion_doc_firmados_no">
                                                                             No
@@ -648,7 +648,7 @@
                                                                 @auth
 
                                                                 <br>
-                                                                <button onclick="abrirEnMapsrecepcion_doc_firmados()" class="btn btn-primary btn-sm">Ver en Maps</button>
+                                                                <button onclick="abrirEnMapsrecepcion_doc_firmados()" class="btn btn-primary btn-sm"> <img src="{{ asset('img/icon/gps.webp') }}" alt="" width="15px"> Ver en Maps</button>
 
                                                                 <script>
 
@@ -681,7 +681,9 @@
                     @endif
 
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary w-100 my-4 mb-2"> Actualizar</button>
+                        <button type="submit" class="btn btn-success w-100 my-4 mb-2">
+                            <img src="{{ asset('img/icon/disquete-imageonline.co-5785320.webp') }}" alt="" width="20px"> - Actualizar
+                        </button>
                     </div>
 
                 </form>
