@@ -54,6 +54,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('clients/create', [App\Http\Controllers\ClientController::class, 'store'])->name('store.clients');
     Route::patch('clients/update/{id}', [App\Http\Controllers\ClientController::class, 'update'])->name('update.clients');
 
+    Route::get('subclientes/edit/{id}', [App\Http\Controllers\ClientController::class, 'edit_subclientes'])->name('edit_subclientes.clients');
+    Route::patch('subclientes/update/{id}', [App\Http\Controllers\ClientController::class, 'update_subclientes'])->name('update_subclientes.clients');
+
     Route::post('clients/subclientes/create', [App\Http\Controllers\ClientController::class, 'store_subclientes'])->name('store_subclientes.clients');
 
     // ==================== P R O V E E D O R E S ====================

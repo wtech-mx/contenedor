@@ -126,6 +126,25 @@ class ClientController extends Controller
         return view('client.edit', compact('client'));
     }
 
+    public function edit_subclientes($id)
+    {
+        $subcliente = Subclientes::find($id);
+
+        return view('client.subclientes', compact('subcliente'));
+    }
+
+
+    public function update_subclientes(Request $request, Subclientes $id)
+    {
+
+        $id->update($request->all());
+
+        Session::flash('edit', 'Se ha editado sus datos con exito');
+        return redirect()->route('clients.index')
+            ->with('success', 'Client updated successfully');
+    }
+
+
     /**
      * Update the specified resource in storage.
      *
