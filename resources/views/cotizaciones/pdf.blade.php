@@ -1,134 +1,120 @@
 <!DOCTYPE html>
     <html>
-        <style type="text/css" media="screen">
+        <style>
             body{
-
-            }
-            .img-log{
-                padding: 20px;
-                width:50%;
+              font-family: sans-serif;
             }
 
-            .cotizacion{
-                position: absolute;
-                right: 3%;
-                top: 0%;
-                padding: 30px;
-                font-size: 80px;
+            @page {
+              margin: 160px 50px;
             }
-            .fecha{
-                position: absolute;
-                right: 3%;
-                padding: 30px;
-                font-size: 30px;
+
+            header { position: fixed;
+              left: 0px;
+              top: -160px;
+              right: 0px;
+              height: 100px;
+              background-color: #47A0CD;
+              color: #fff;
+              text-align: center;
             }
-            .mensaje{
-                padding: 20px 0px 0px 0px;
+
+            header h1{
+              margin: 10px 0;
             }
-            .from{
-                font-size: 40px;
+
+            header h2{
+              margin: 0 0 10px 0;
             }
-            .para{
-                font-size: 20px;
+
+            footer {
+              position: fixed;
+              left: 0px;
+              bottom: -50px;
+              right: 0px;
+              height: 40px;
+              border-bottom: 2px solid #47A0CD;
             }
-            .tabla-completa{
-                width: 100%;
-                padding: 30px;
+
+            footer .page:after {
+              content: counter(page);
             }
-            .tabla-azul{
-                padding: 100px;
+
+            footer table {
+              width: 100%;
             }
-            .tr{
-                background-color: #47A0CD;
-                height: 40px;
+
+            footer p {
+              text-align: right;
             }
-            td{
-                height: 40px;
+
+            footer .izq {
+              text-align: left;
             }
-            tbody{
-                text-align: center;
-                font-size: 120%;
-            }
-            .costos{
-                position: absolute;
-                right: 5%;
-                padding: 30px;
-                font-size: 20px;
-            }
-            .totalsub{
-                padding: 30px;
-            }
-            .sub{
-                padding: 30px;
-            }
-            .tota{
-                padding: 30px;
-            }
-            .datos-contacto{
-                font-size: 20px;
-                text-decoration: none;
-            }
-            .gracias{
-                position: absolute;
-                right: 5%;
-                padding: 30px;
-                font-size: 30px;
-            }
-            .footer{
+
+            table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            border-radius: 6px;
 
             }
-            .pag{
-                position: absolute;
-                text-decoration: none;
-                color: #fff;
-                left: 40%;
-                display:block;
+
+            td, th {
+            text-align: center;
+            padding: 8px;
             }
-            .container{
-                z-index: 1000;
-            }
-            .padre {
-                padding: 0 1rem;
-            }
-            .hijo_uno {
-            /* IMPORTANTE */
-            width: 200px;
-            margin-left: auto;
-            margin-right: auto;
+
+            tr:nth-child(even) {
+            background-color: #47A0CD;
             }
         </style>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-        <body style="background-color: #fff ;">
-            <div class="container">
-                <div class="row" style="padding: 20px 0px 0px 0px;">
-                    <div style="width: 50%; float:left">
-                        <img alt="Bootstrap Image Preview" src="{{ asset('img/logo.jpg') }}" style="width:80%; right: 5%;">
-                    </div>
+        <body>
+            <header>
+                    <img alt="Bootstrap Image Preview" src="{{ asset('img/logo.jpg') }}" style="width:25%; ">
+            </header>
 
-                </div>
+            <footer>
+                <table>
+                  <tr>
+                    <td>
+                        <p class="izq">
+                            Fecha: {{$fechaCarbon->format('d \d\e F \d\e\l Y')}}
+                        </p>
+                    </td>
+                    <td>
+                      <p class="page">
+                        Página
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+            </footer>
 
-                <div class="padre">
-                    <div class="hijo_uno">
-                        <h3 style="color: #47A0CD;font-size: 40px;">Recibo</h3>
-                    </div>
-                </div>
+            <div id="content">
+                <div class="row">
+                    <h3 style="color: #47A0CD;font-size: 40px; text-align: center;">Recibo</h3>
 
-                <div class="row" >
                     <div style="width: 50%; float:left">
                         <blockquote class="blockquote">
                             <p class="display-4 from" style="color: #47A0CD;font-size: 25px;">
                                 <strong>Datos Generales </strong>
                             </p>
                             <p class="text-right  text-white" style="color: #000;font-size: 18px;">
-                                Nombre:
+                                Empresa: {{$configuracion->nombre_sistema}}
                             </p>
                             <p class="text-right  text-white" style="color: #000;font-size: 18px;">
-                                Empresa:
+                                Telefono: 5500000000
                             </p>
                             <p class="text-right  text-white" style="color: #000;font-size: 18px;">
-                                Telefono:
+                                Correo: <br> sita@gmail.com
                             </p>
+                            <p class="text-right  text-white" style="color: #000;font-size: 18px;">
+                                Fecha:  {{$cotizacion->created_at->format('d \d\e F \d\e\l Y')}}
+                            </p>
+
                         </blockquote>
                     </div>
 
@@ -138,28 +124,35 @@
                                 <strong>Datos del cliente </strong>
                             </p>
 
-                                <p class="blockquote-footer text-white para" style="color: #000;font-size: 18px;">
+                                <p class="text-footer text-white para" style="color: #000;font-size: 18px;">
                                     Nombre: {{ $cotizacion->Cliente->nombre }}
                                 </p>
 
-                                <p class="blockquote-footer text-white para" style="color: #000;font-size: 18px;">
+                                <p class="text-footer text-white para" style="color: #000;font-size: 18px;">
                                     Telefono: {{ $cotizacion->Cliente->telefono }}
                                 </p>
 
-                                <p class="blockquote-footer text-white para" style="color: #000;font-size: 18px;">
+                                <p class="text-footer text-white para" style="color: #000;font-size: 18px;">
                                     Correo: {{ $cotizacion->Cliente->correo }}
                                 </p>
 
-                                <p class="blockquote-footer text-white para" style="color: #000;font-size: 18px;">
+                                <p class="text-footer text-white para" style="color: #000;font-size: 18px;">
                                     Facturado A:
+                                    @if ($cotizacion->id_subcliente == NULL)
+                                        {{ $cotizacion->Cliente->nombre }}
+                                    @else
+                                        {{ $cotizacion->Subcliente->nombre }}
+                                    @endif
                                 </p>
                         </blockquote>
                     </div>
                 </div>
 
-                <div class="row mt-5" style="position: relative;">
+                <h2 style="page-break-before: always; text-align: center;"></h2>
+
+                <div class="row mt-5">
                     <div class="col-md-12">
-                        <h5>Datos del Contenedor</h5>
+                        <h3 style="text-align: center;">Datos del Contenedor</h3>
                         <table id="ejemplo" class="table text-white tabla-completa" style="color: #000;width: 100%;padding: 30px;">
                             <thead class="tabla-azul" style="padding: 100px;">
                                 <tr class="tr" style="background-color: #47A0CD;height: 40px; color: #ffffff;">
@@ -200,7 +193,7 @@
                             </tbody>
                         </table>
 
-                        <h5>Costos de Contenedor</h5>
+                        <h3 style="text-align: center;">Costos del Contenedor</h3>
 
                         <table id="ejemplo" class="table text-white tabla-completa" style="color: #000;width: 100%;padding: 30px;">
                             <thead class="tabla-azul" style="padding: 100px;">
@@ -213,54 +206,50 @@
                                         Estadia
                                     </th>
 
-                                    <th >
-                                        Peso
-                                    </th>
-
                                     <th>
-                                        sobre Peso
+                                        Sobre peso
                                     </th>
 
                                     <th>
                                         Otro
+                                    </th>
+
+                                    <th>
+                                        Precio de Venta
                                     </th>
                                 </tr>
                             </thead>
 
                             <tbody style="text-align: center;font-size: 120%;">
                                 <th>
-                                    $ {{$documentacion->burreo}} .0
+                                    $ {{ number_format($cotizacion->burreo, 2, '.', ',')}}
                                 </th>
 
                                 <th>
-                                    $ {{$cotizacion->estadia}} .0
+                                    $ {{ number_format($cotizacion->estadia, 2, '.', ',')}}
                                 </th>
 
                                 <th>
-                                    $ {{$cotizacion->cot_peso_contenedor}} .0
+                                    $ {{ number_format($cotizacion->precio_sobre_peso, 2, '.', ',')}}
                                 </th>
 
                                 <th>
-                                    $ {{$cotizacion->sobrepeso}} .0
+                                    $ {{ number_format($cotizacion->cot_otro, 2, '.', ',')}}
                                 </th>
 
                                 <th>
-                                    $ {{$cotizacion->cot_otro}} .0
+                                    $ {{ number_format($cotizacion->precio_viaje, 2, '.', ',')}}
                                 </th>
                             </tbody>
 
                         </table>
 
 
-                            <h5>Costos de Contenedor</h5>
+                        <h3 style="text-align: center;">Factura</h3>
 
-                            <table id="ejemplo" class="table text-white tabla-completa" style="color: #000;width: 100%;padding: 30px;">
-                                <thead class="tabla-azul" style="padding: 100px;">
+                        <table id="ejemplo" class="table text-white tabla-completa" style="color: #000;width: 100%;padding: 10px;">
+                                <thead class="tabla-azul" >
                                     <tr class="tr" style="background-color: #47A0CD;height: 40px; color: #ffffff;">
-                                        <th >
-                                            Precio de Venta
-                                        </th>
-
                                         <th >
                                             Base Factura
                                         </th>
@@ -276,13 +265,40 @@
                                         <th>
                                             Base Taref
                                         </th>
+                                    </tr>
+                                </thead>
 
+                            <tbody style="text-align: center;font-size: 120%;">
+                                <th>
+                                    $ {{ number_format($cotizacion->base_factura, 1, '.', ',')}}
+                                </th>
+
+                                <th>
+                                    $ {{ number_format($cotizacion->iva, 1, '.', ',')}}
+                                </th>
+
+                                <th>
+                                    $ {{ number_format($cotizacion->retencion, 1, '.', ',')}}
+                                </th>
+
+                                <th>
+                                    $ {{ number_format($cotizacion->base_taref, 1, '.', ',')}}
+                                </th>
+
+                            </tbody>
+                        </table>
+
+                        <h3 style="text-align: center;">Totales</h3>
+
+                        <table id="ejemplo" class="table text-white tabla-completa" style="color: #000;width: 100%;padding: 10px;">
+                                <thead class="tabla-azul" >
+                                    <tr class="tr" style="background-color: #143E90;height: 40px; color: #ffffff;">
                                         <th>
-                                            total oficial
+                                            Total Oficial
                                         </th>
 
                                         <th>
-                                            total no oficial
+                                            Total no Oficial
                                         </th>
 
                                         <th>
@@ -292,37 +308,22 @@
                                 </thead>
 
                             <tbody style="text-align: center;font-size: 120%;">
-
                                 <th>
-                                    $ {{$cotizacion->precio_viaje}} .0
+                                    @php
+                                        $total_oficial = ($cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
+                                    @endphp
+                                    $ {{ number_format($total_oficial, 1, '.', ',')}}
                                 </th>
 
                                 <th>
-
+                                    $ {{ number_format($cotizacion->base_taref, 1, '.', ',')}}
                                 </th>
 
                                 <th>
-                                    {{$cotizacion->IVA}}
-                                </th>
-
-                                <th>
-
-                                </th>
-
-                                <th>
-
-                                </th>
-
-                                <th>
-
-                                </th>
-
-                                <th>
-
-                                </th>
-
-                                <th>
-
+                                    @php
+                                        $importe_vta = $cotizacion->base_taref + $total_oficial;
+                                    @endphp
+                                    $ {{ number_format($importe_vta, 1, '.', ',')}}
                                 </th>
 
                             </tbody>
@@ -331,23 +332,37 @@
                     </div>
                 </div>
 
+                <h2 style="page-break-before: always; text-align: center;"></h2>
                 <div class="row mt-5">
                     <div class="col-md-6">
+                        <h3 style="color: #47A0CD;font-size: 40px; text-align: center;">Datos de cuentas</h3>
                         <address class="text-white datos-contacto" style="color: #000;font-size: 20px;text-decoration: none;">
                             <p>
-                            <ul style="color: #000"><p><strong>Nota: Estos son los numeros de cuenta</strong></p>
-                                <li>Nombre: JOSE HEMSANI ZAPAN</li>
-                                <li>Banco: Azteca</li>
-                                <li>No. CLABE: 1271 8001 3811 684971</li>
-                                <li>No. CTA : 4442 1381 1684 97</li>
-                            </ul>
-                            </p><br>
+                                <ul style="color: #000">
+                                    <p class="display-4 from" style="color: #47A0CD;font-size: 25px;">
+                                        <strong>Oficial</strong>
+                                    </p>
+                                    @foreach ($bancos_oficiales as $banco_oficial)
+                                        <li>Nombre: {{$banco_oficial->nombre_beneficiario}}</li>
+                                        <li>Banco: {{$banco_oficial->nombre_banco}}</li>
+                                        <li>No. CLABE: {{$banco_oficial->clabe}}</li>
+                                        <li>No. CTA : {{$banco_oficial->cuenta_bancaria}}</li>
+                                    @endforeach
+                                </ul>
+                            </p>
+
+                            <br>
                             <p>
-                                <ul style="color: #000"><p><strong>JAVIER GONZALEZ ALANIS</strong></p>
-                                    <li>Nombre: JOSE HEMSANI ZAPAN</li>
-                                    <li>Banco : BANORTE</li>
-                                    <li>No. CLABE: 1271 8001 3811 684971</li>
-                                    <li>No. CTA : 4442 1381 1684 97</li>
+                                <ul style="color: #000">
+                                    <p class="display-4 from" style="color: #47A0CD;font-size: 25px;">
+                                        <strong>No Oficial</strong>
+                                    </p>
+                                    @foreach ($bancos_no_oficiales as $banco_oficial)
+                                        <li>Nombre: {{$banco_oficial->nombre_beneficiario}}</li>
+                                        <li>Banco: {{$banco_oficial->nombre_banco}}</li>
+                                        <li>No. CLABE: {{$banco_oficial->clabe}}</li>
+                                        <li>No. CTA : {{$banco_oficial->cuenta_bancaria}}</li>
+                                    @endforeach
                                 </ul>
                                 </p><br>
                         </address>

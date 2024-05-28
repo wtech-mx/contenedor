@@ -6,6 +6,7 @@ use App\Models\Asignaciones;
 use App\Models\Bancos;
 use App\Models\Client;
 use App\Models\ComprobanteGastos;
+use App\Models\Configuracion;
 use App\Models\Coordenadas;
 use App\Models\Cotizaciones;
 use App\Models\DocumCotizacion;
@@ -16,6 +17,7 @@ use App\Models\Proveedor;
 use App\Models\Subclientes;
 use Illuminate\Http\Request;
 use Session;
+use Carbon\Carbon;
 
 class CotizacionesController extends Controller
 {
@@ -150,10 +152,16 @@ class CotizacionesController extends Controller
         $documentacion = DocumCotizacion::where('id_cotizacion', '=', $cotizacion->id)->first();
         $gastos_extras = GastosExtras::where('id_cotizacion', '=', $cotizacion->id)->get();
         $clientes = Client::get();
+        $configuracion = Configuracion::first();
+        $bancos_oficiales = Bancos::where('tipo', '=', 'Oficial')->get();
+        $bancos_no_oficiales = Bancos::where('tipo', '=', 'No Oficial')->get();
 
+        $fecha = date('Y-m-d');
+        $fechaCarbon = Carbon::parse($fecha);
 
-        $pdf = \PDF::loadView('cotizaciones.pdf', compact('cotizacion', 'documentacion', 'clientes','gastos_extras'));
-        return $pdf->download('cotizacion'.$cotizacion->Cliente->nombre.'_#'.$cotizacion->id.'.pdf');
+        $pdf = \PDF::loadView('cotizaciones.pdf', compact('cotizacion', 'documentacion', 'clientes','gastos_extras', 'configuracion', 'fechaCarbon', 'bancos_oficiales', 'bancos_no_oficiales'));
+        return $pdf->stream();
+        //return $pdf->download('cotizacion'.$cotizacion->Cliente->nombre.'_#'.$cotizacion->id.'.pdf');
     }
 
 
@@ -227,6 +235,8 @@ class CotizacionesController extends Controller
         $cotizaciones->bloque_hora_f = $request->get('bloque_hora_f');
         $cotizaciones->peso_reglamentario = $request->get('peso_reglamentario');
         $cotizaciones->fecha_eir = $request->get('fecha_eir');
+        $cotizaciones->base_factura = $request->get('base_factura');
+        $cotizaciones->base_taref = $request->get('base_taref');
 
         if($request->get('cot_peso_contenedor') > $request->get('peso_reglamentario')){
             $sobrepeso = $request->get('cot_peso_contenedor') - $request->get('peso_reglamentario');

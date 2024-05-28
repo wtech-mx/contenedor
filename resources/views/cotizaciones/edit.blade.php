@@ -157,7 +157,6 @@
                                                 <input name="precio_tonelada" id="precio_tonelada" type="text" class="form-control" value="{{$cotizacion->precio_tonelada}}" readonly>
                                             </div>
                                         </div>
-                                        <div class="col-6"></div>
 
                                         <div class="col-3 form-group">
                                             <label for="name">Precio Viaje</label>
@@ -236,6 +235,28 @@
                                                     <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
                                                 </span>
                                                 <input name="total" id="total" type="float" class="form-control" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6"></div>
+
+                                        <div class="col-4 form-group">
+                                            <label for="name">Base Factura</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/factura.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="base_factura" id="base_factura" type="float" class="form-control" value="{{$cotizacion->base_factura}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4 form-group">
+                                            <label for="name">Base Taref</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/factura.png.webp') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="base_taref" id="base_taref" type="float" class="form-control" value="{{$cotizacion->base_taref}}">
                                             </div>
                                         </div>
                                 </div>

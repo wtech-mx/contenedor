@@ -311,7 +311,7 @@
                                         <label for="name">Cuenta Bancaria *</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/telefono.png.webp') }}" alt="" width="25px">
+                                                <img src="{{ asset('img/icon/business-card-design.webp') }}" alt="" width="25px">
                                             </span>
                                             <input name="cuenta_bancaria" id="cuenta_bancaria" type="text" class="form-control" value="{{$banco->cuenta_bancaria}}">
                                         </div>
@@ -321,9 +321,27 @@
                                         <label for="name">Saldo inicial *</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/telefono.png.webp') }}" alt="" width="25px">
+                                                <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px">
                                             </span>
                                             <input name="saldo_inicial" id="saldo_inicial" type="number" class="form-control" value="{{$banco->saldo_inicial}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 form-group">
+                                        <label for="name">Tipo *</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/pago-en-efectivo.png') }}" alt="" width="25px">
+                                            </span>
+                                            <select class="form-select d-inline-block" id="tipo" name="tipo">
+                                                @if ($banco->tipo == null)
+                                                    <option value="Selecciona una opcion">Selecciona una opcion</option>
+                                                @else
+                                                    <option value="{{$banco->tipo}}">{{$banco->tipo}}</option>
+                                                @endif
+                                                <option value="Oficial">Oficial</option>
+                                                <option value="No Oficial">No Oficial</option>
+                                            </select>
                                         </div>
                                     </div>
 
