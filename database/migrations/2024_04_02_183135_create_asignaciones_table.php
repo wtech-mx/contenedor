@@ -41,8 +41,8 @@ return new class extends Migration
                 ->references('id')->on('operadores')
                 ->inDelete('set null');
 
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin');
+            $table->datetime('fecha_inicio');
+            $table->datetime('fecha_fin');
             $table->timestamps();
         });
     }

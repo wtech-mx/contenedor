@@ -25,7 +25,7 @@ class CotizacionesController extends Controller
         $cotizaciones_aprovadas = Cotizaciones::where('estatus','=','Aprobada')->where('estatus_planeacion','=', NULL)->orderBy('created_at', 'desc')->get();
         $cotizaciones_canceladas = Cotizaciones::where('estatus','=','Cancelada')->orderBy('created_at', 'desc')->get();
         $cotizaciones_planeadas = Cotizaciones::where('estatus','=','Aprobada')->where('estatus_planeacion','=', 1)->orderBy('created_at', 'desc')->get();
-        $cotizaciones_finalizadas = Cotizaciones::where('tipo_viaje','=','Finalizado')->orderBy('created_at', 'desc')->get();
+        $cotizaciones_finalizadas = Cotizaciones::where('estatus','=','Finalizado')->orderBy('created_at', 'desc')->get();
 
         $equipos_dolys = Equipo::where('tipo','=','Dolys')->get();
         $equipos_chasis = Equipo::where('tipo','=','Chasis / Plataforma')->get();
@@ -123,6 +123,14 @@ class CotizacionesController extends Controller
         $cotizaciones->estatus_planeacion = null;
         $cotizaciones->update();
 
+        $asignaciones_id = $cotizaciones->DocCotizacion->Asignaciones->id;
+        $asignaciones = Asignaciones::find($asignaciones_id);
+        if($request->get('estatus') == 'Cancelada'){
+            $asignaciones->fecha_inicio = null;
+            $asignaciones->fecha_fin = null;
+        }
+        $asignaciones->update();
+
         Session::flash('edit', 'Se ha editado sus datos con exito');
         return redirect()->route('index.cotizaciones')
             ->with('success', 'Estatus updated successfully');
@@ -184,6 +192,16 @@ class CotizacionesController extends Controller
             $fileName = uniqid() . $file->getClientOriginalName();
             $file->move($path, $fileName);
             $cotizaciones->doda = $fileName;
+        }
+
+        $cotizaciones->ccp = $request->get('ccp');
+
+        if ($request->hasFile("doc_ccp")) {
+            $file = $request->file('doc_ccp');
+            $path = public_path() . '/cotizaciones/cotizacion'. $id;
+            $fileName = uniqid() . $file->getClientOriginalName();
+            $file->move($path, $fileName);
+            $cotizaciones->doc_ccp = $fileName;
         }
 
         $cotizaciones->update();

@@ -73,7 +73,7 @@
                             <span class="input-group-text" id="basic-addon1">
                                 <img src="{{ asset('img/icon/sku.webp') }}" alt="" width="25px">
                             </span>
-                            <input name="num_serie" id="num_serie" type="number" class="form-control" value="{{$item->num_serie}}">
+                            <input name="num_serie" id="num_serie" type="text" class="form-control" value="{{$item->num_serie}}">
                         </div>
                     </div>
 

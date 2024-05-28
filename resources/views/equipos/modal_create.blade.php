@@ -38,7 +38,7 @@
                                 <div class="row">
 
                                     <div class="col-12">
-                                        <h6>Datos del Vehiculo</h6>
+                                        <h6>Datos del Tracto / Camion</h6>
                                     </div>
 
                                     <div class="col-6 form-group">
@@ -91,13 +91,33 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 form-group">
-                                        <label for="name">Numero de Serie *</label>
+                                    <div class="col-6 form-group">
+                                        <label for="name">Motor *</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/gear.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="motor" id="motor" type="text" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 form-group">
+                                        <label for="name">Placas *</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/sku.webp') }}" alt="" width="25px">
                                             </span>
-                                            <input name="num_serie" id="num_serie" type="number" class="form-control">
+                                            <input name="placas" id="placas" type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 form-group">
+                                        <label for="name">Numero de Serie *</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="num_serie" id="num_serie" type="text" class="form-control">
                                         </div>
                                     </div>
 
@@ -137,7 +157,7 @@
                             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
                                 <div class="row">
                                     <div class="col-12">
-                                        <h6>Datos del Vehiculo</h6>
+                                        <h6>Datos del Chasis Plataforma</h6>
                                     </div>
 
                                     <div class="col-6 form-group">
@@ -190,6 +210,16 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-6 form-group">
+                                        <label for="name">Motor *</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/gear.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="motor_chasis" id="motor_chasis" type="text" class="form-control">
+                                        </div>
+                                    </div>
+
                                     <div class="col-12 form-group">
                                         <label for="name">Numero de Serie *</label>
                                         <div class="input-group mb-3">
@@ -228,10 +258,6 @@
                                             </span>
                                             <input name="poliza_seguro_chasis" id="poliza_seguro_chasis" type="file" class="form-control">
                                         </div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <h6>Sin Motor</h6>
                                     </div>
 
                                     <div class="col-12">

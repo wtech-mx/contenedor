@@ -55,6 +55,7 @@
 
 @section('fullcalendar')
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 
     <script type="text/javascript">
 
@@ -94,19 +95,48 @@
                     var fechaInicio = formatDate(info.event.start);
                     var fechaFin = formatDate(info.event.end);
                     var urlId = info.event.extendedProps.urlId;
+                    var telOperadorUrl = 'https://contenedores.wtech.com.mx/coordenadas/' + info.event.extendedProps.idCotizacion;
 
                     // Establecer los valores en los inputs del formulario
                     document.getElementById('eventoFechaStart').value = fechaInicio;
                     document.getElementById('eventoFechaEnd').value = fechaFin;
                     document.getElementById('idCotizacion').setAttribute('href', 'cotizaciones/edit/' + info.event.extendedProps.idCotizacion);
                     document.getElementById('idCoordenda').setAttribute('href', 'coordenadas/' + info.event.extendedProps.idCoordenda);
-                    document.getElementById('telOperador').setAttribute('href', 'https://api.whatsapp.com/send?phone=521'+ info.event.extendedProps.telOperador + '&text=Link de seguimiento%3A%0A'+'https://contenedores.wtech.com.mx/coordenadas/'+info.event.extendedProps.idCotizacion);
-
                     document.getElementById('urlId').value = urlId;
+                    document.getElementById('telOperadorUrl').value = telOperadorUrl;
 
                     // Mostrar el modal
                     var eventoModal = new bootstrap.Modal(document.getElementById('eventoModal'));
                     eventoModal.show();
+
+                    // Funcionalidad para copiar al portapapeles
+                    var telOperadorBtn = document.getElementById('telOperador');
+                    telOperadorBtn.addEventListener('click', function() {
+                        var url = 'https://contenedores.wtech.com.mx/coordenadas/' + info.event.extendedProps.idCotizacion;
+
+                        // Copiar URL al portapapeles
+                        var tempInput = document.createElement('input');
+                        document.body.appendChild(tempInput);
+                        tempInput.value = url;
+                        tempInput.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(tempInput);
+
+                        // Mostrar el popover
+                        $(telOperadorBtn).popover('show');
+
+                        // Ocultar el popover después de 2 segundos
+                        setTimeout(function () {
+                            $(telOperadorBtn).popover('hide');
+                        }, 2000);
+                    });
+
+                    // Configurar el popover de Bootstrap
+                    $(telOperadorBtn).popover({
+                        trigger: 'manual',
+                        content: 'URL copiada!',
+                        placement: 'top'
+                    });
 
                     // Escuchar el clic en el botón de "Actualizar fecha"
                     document.getElementById('actualizarFechaBtn').addEventListener('click', function () {

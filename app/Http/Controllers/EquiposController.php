@@ -27,6 +27,7 @@ class EquiposController extends Controller
             $proveedor->tipo = 'Tractos / Camiones';
             $proveedor->id_equipo = $request->get('id_equipo');
             $proveedor->marca = $request->get('marca');
+            $proveedor->motor = $request->get('motor');
             $proveedor->year = $request->get('year');
             $proveedor->num_serie = $request->get('num_serie');
             $proveedor->modelo = $request->get('modelo');
@@ -56,6 +57,7 @@ class EquiposController extends Controller
             $proveedor->tipo = 'Chasis / Plataforma';
             $proveedor->id_equipo = $request->get('id_equipo_chasis');
             $proveedor->marca = $request->get('marca_chasis');
+            $proveedor->motor = $request->get('motor_chasis');
             $proveedor->year = $request->get('year_chasis');
             $proveedor->num_serie = $request->get('num_serie_chasis');
             $proveedor->modelo = $request->get('modelo_chasis');

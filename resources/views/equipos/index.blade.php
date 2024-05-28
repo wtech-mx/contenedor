@@ -61,16 +61,13 @@
                                                 @foreach ($equipos_dolys as $item)
                                                     <tr>
                                                         <td>{{$item->id}}</td>
-                                                        <td>{{$item->folio}}</td>
+                                                        <td>{{$item->id_equipo}}</td>
                                                         <td>
                                                             <ul>
-                                                                <li>Marca : {{$item->folio}}</li>
+                                                                <li>Marca : {{$item->marca}}</li>
                                                                 <li>Año : {{$item->year}}</li>
                                                                 <li>Modelo : {{$item->modelo}}</li>
-                                                                <li>Motor : {{$item->folio}}</li>
-                                                                <li>Marca : {{$item->motor}}</li>
                                                                 <li>Num Serie : {{$item->num_serie}}</li>
-
                                                             </ul>
                                                         </td>
                                                         <td>{{$item->acceso}}</td>
@@ -116,16 +113,14 @@
                                                 @foreach ($equipos_chasis as $item)
                                                     <tr>
                                                         <td>{{$item->id}}</td>
-                                                        <td>{{$item->folio}}</td>
+                                                        <td>{{$item->id_equipo}}</td>
                                                         <td>
                                                             <ul>
-                                                                <li>Marca : {{$item->folio}}</li>
+                                                                <li>Marca : {{$item->marca}}</li>
                                                                 <li>Año : {{$item->year}}</li>
                                                                 <li>Modelo : {{$item->modelo}}</li>
-                                                                <li>Motor : {{$item->folio}}</li>
-                                                                <li>Marca : {{$item->motor}}</li>
+                                                                <li>Motor : {{$item->motor}}</li>
                                                                 <li>Num Serie : {{$item->num_serie}}</li>
-
                                                             </ul>
                                                         </td>
                                                         <td>{{$item->acceso}}</td>
@@ -172,14 +167,13 @@
                                                     @foreach ($equipos_camiones as $item)
                                                         <tr>
                                                             <td>{{$item->id}}</td>
-                                                            <td>{{$item->folio}}</td>
+                                                            <td>{{$item->id_equipo}}</td>
                                                             <td>
                                                                 <ul>
-                                                                    <li>Marca : {{$item->folio}}</li>
+                                                                    <li>Marca : {{$item->marca}}</li>
                                                                     <li>Año : {{$item->year}}</li>
                                                                     <li>Modelo : {{$item->modelo}}</li>
-                                                                    <li>Motor : {{$item->folio}}</li>
-                                                                    <li>Marca : {{$item->motor}}</li>
+                                                                    <li>Motor : {{$item->motor}}</li>
                                                                     <li>Num Serie : {{$item->num_serie}}</li>
 
                                                                 </ul>

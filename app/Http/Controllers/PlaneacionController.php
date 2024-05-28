@@ -222,17 +222,22 @@ class PlaneacionController extends Controller
         $id = $request->get('urlId');
         $idCoordenda = $request->get('idCoordenda');
 
-        $asignaciones = Asignaciones::find($id);
-
-        $asignaciones->fecha_inicio = $request->get('nuevaFechaInicio');
-        $asignaciones->fecha_fin = $request->get('nuevaFechaFin');
-        $asignaciones->update();
-
         $cotizaciones = Cotizaciones::find($idCoordenda);
-
-        $cotizaciones->tipo_viaje = $request->get('finzalizar_vieje');
+        $cotizaciones->estatus = $request->get('finzalizar_vieje');
         $cotizaciones->update();
 
+
+        $asignaciones = Asignaciones::find($id);
+
+        if($request->get('finzalizar_vieje') == 'Finalizado'){
+            $asignaciones->fecha_inicio = null;
+            $asignaciones->fecha_fin = null;
+        }else{
+            $asignaciones->fecha_inicio = $request->get('nuevaFechaInicio');
+            $asignaciones->fecha_fin = $request->get('nuevaFechaFin');
+        }
+
+        $asignaciones->update();
 
         // Devuelve una respuesta, por ejemplo:
         return response()->json(['message' => 'Fechas actualizadas correctamente']);

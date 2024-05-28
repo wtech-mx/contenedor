@@ -50,16 +50,17 @@
                     Sistema de Gestion de Transporte
                 </h4>
 
-                @if($coordenadas->Cotizacion->DocCotizacion->num_contenedo == null)
-
+                @if($coordenadas->Cotizacion->DocCotizacion->num_contenedor == null)
                     Falta asignar Contenedor
-
                 @else
-
-                <p>Num de Contenedor : {{ $coordenadas->Cotizacion->DocCotizacion->num_contenedo }}</p>
-
+                    <p>Num de Contenedor : {{ $coordenadas->Cotizacion->DocCotizacion->num_contenedor }}</p>
                 @endif
-
+                @if($coordenadas->id_operador == null)
+                    <p>Telefono proveedor : {{ $coordenadas->Asignaciones->Proveedor->telefono }}</p>
+                @else
+                    <p>Telefono operador : {{ $coordenadas->Asignaciones->Operador->telefono }}</p>
+                    <p>Num. placas : {{ $coordenadas->Asignaciones->Camion->placas }}</p>
+                @endif
 
               </div>
               <div class="card-body px-lg-5 pt-0">
@@ -681,9 +682,12 @@
                     @endif
 
                     <div class="text-center">
-                        <button type="submit" class="btn btn-success w-100 my-4 mb-2">
-                            <img src="{{ asset('img/icon/disquete-imageonline.co-5785320.webp') }}" alt="" width="20px"> - Actualizar
-                        </button>
+                        @if($coordenadas->Cotizacion->estatus == 'Aprobada')
+                            <button type="submit" class="btn btn-success w-100 my-4 mb-2">
+                                <img src="{{ asset('img/icon/disquete-imageonline.co-5785320.webp') }}" alt="" width="20px"> - Actualizar
+                            </button>
+                        @endif
+
                     </div>
 
                 </form>

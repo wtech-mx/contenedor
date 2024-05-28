@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asignaciones;
+use App\Models\BancoDinero;
 use App\Models\Bancos;
 use App\Models\Cotizaciones;
 use Session;
@@ -46,7 +47,21 @@ class BancosController extends Controller
 
         $operadores_salida_pago = Asignaciones::where('id_banco1_pago_operador', '=', $id)->orwhere('id_banco2_pago_operador', '=', $id)->get();
 
-        return view('bancos.edit', compact('banco', 'cotizaciones', 'proveedores', 'operadores_salida', 'operadores_salida_pago'));
+        $banco_dinero_entrada = BancoDinero::where('tipo', '=', 'Entrada')
+        ->where(function($query) use ($banco) {
+            $query->where('id_banco1', '=', $banco->id)
+                  ->orWhere('id_banco2', '=', $banco->id);
+        })
+        ->get();
+
+        $banco_dinero_salida = BancoDinero::where('tipo', '=', 'Salida')
+        ->where(function($query) use ($banco) {
+            $query->where('id_banco1', '=', $banco->id)
+                  ->orWhere('id_banco2', '=', $banco->id);
+        })
+        ->get();
+
+        return view('bancos.edit', compact('banco', 'cotizaciones', 'proveedores', 'operadores_salida', 'operadores_salida_pago', 'banco_dinero_entrada', 'banco_dinero_salida'));
     }
 
     public function update(Request $request, Bancos $id)

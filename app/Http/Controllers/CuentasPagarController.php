@@ -16,6 +16,7 @@ class CuentasPagarController extends Controller
         ->join('asignaciones', 'docum_cotizacion.id', '=', 'asignaciones.id_contenedor')
         ->whereNull('asignaciones.id_camion')
         ->where('cotizaciones.estatus', '=', 'Aprobada')
+        ->orwhere('cotizaciones.estatus', '=', 'Finalizado')
         ->where('cotizaciones.prove_monto1', '=', NULL)
         ->select('cotizaciones.id')
         ->pluck('cotizaciones.id');
@@ -40,9 +41,10 @@ class CuentasPagarController extends Controller
         ->join('asignaciones', 'docum_cotizacion.id', '=', 'asignaciones.id_contenedor')
         ->where('asignaciones.id_camion', '=', NULL)
         ->where('cotizaciones.estatus', '=', 'Aprobada')
+        ->orwhere('cotizaciones.estatus', '=', 'Finalizado')
         ->where('asignaciones.id_proveedor', '=', $id)
         ->where('cotizaciones.prove_monto1', '=', NULL)
-        ->select('asignaciones.*', 'docum_cotizacion.num_contenedor', 'docum_cotizacion.id_cotizacion')
+        ->select('asignaciones.*', 'docum_cotizacion.num_contenedor', 'docum_cotizacion.id_cotizacion', 'cotizaciones.estatus')
         ->get();
 
         $bancos = Bancos::get();

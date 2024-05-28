@@ -296,6 +296,61 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label>¿CCP - Carta Porte?</label><br>
+                                            @if ($documentacion->ccp == 'si')
+                                                <input class="form-check-input" type="radio" name="ccp" value="si" id="option_si_ccp" checked> Sí<br>
+                                                <input class="form-check-input" type="radio" name="ccp" value="no" id="option_no_ccp"> No
+                                            @else
+                                                <input class="form-check-input" type="radio" name="ccp" value="si" id="option_si_ccp"> Sí<br>
+                                                <input class="form-check-input" type="radio" name="ccp" value="no" id="option_no_ccp" checked> No
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6">
+                                        @if ($documentacion->ccp == 'si')
+                                            <div class="form-group" id="inputFieldccp">
+                                        @else
+                                            <div class="form-group" id="inputFieldccp" style="display: none;">
+                                        @endif
+                                            <label for="input">Documento CCP:</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="doc_ccp" id="doc_ccp" type="file" class="form-control">
+                                            </div>
+
+                                            @if ($documentacion->ccp == 'si')
+                                                <div class="col-6">
+                                                    @if (pathinfo($documentacion->doc_ccp, PATHINFO_EXTENSION) == 'pdf')
+                                                    <p class="text-center ">
+                                                        <iframe class="mt-2" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp)}}" style="width: 80%; height: 250px;"></iframe>
+                                                    </p>
+                                                            <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
+                                                    @elseif (pathinfo($documentacion->doc_ccp, PATHINFO_EXTENSION) == 'doc')
+                                                    <p class="text-center ">
+                                                        <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                                    </p>
+                                                            <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                                    @elseif (pathinfo($documentacion->doc_ccp, PATHINFO_EXTENSION) == 'docx')
+                                                    <p class="text-center ">
+                                                        <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                                    </p>
+                                                            <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                                    @else
+                                                        <p class="text-center mt-2">
+                                                            <img id="blah" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
+                                                        </p>
+                                                            <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
+                                                    @endif
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+
                                     <h3 class="mt-3 mb-5">Documentación</h3>
 
                                     <div class="col-6 form-group">
@@ -759,6 +814,30 @@
         });
     </script>
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtener referencias a los elementos
+            var optionSi = document.getElementById('option_si_ccp');
+            var optionNo = document.getElementById('option_no_ccp');
+            var inputFieldIMG = document.getElementById('inputFieldccp');
+
+            // Función para controlar la visibilidad del campo de entrada
+            function toggleInputField() {
+                // Si el radio button "Sí" está seleccionado, mostrar el campo de entrada
+                if (optionSi.checked) {
+                    inputFieldIMG.style.display = 'block';
+                } else {
+                    inputFieldIMG.style.display = 'none';
+                }
+            }
+
+            // Agregar eventos change a los radio buttons
+            optionSi.addEventListener('change', toggleInputField);
+            optionNo.addEventListener('change', toggleInputField);
+
+            // Llamar a la función inicialmente para asegurarse de que el campo se oculte o muestre correctamente
+            toggleInputField();
+        });
+
         document.addEventListener('DOMContentLoaded', function () {
             // Obtener referencias a los elementos
             var optionSi = document.getElementById('option_si');

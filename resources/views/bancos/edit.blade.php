@@ -8,6 +8,27 @@
 <div class="row">
 
     @php
+        $banco_entrada = 0;
+        $banco_salida = 0;
+
+        foreach ($banco_dinero_entrada as $item){
+            if ($item->id_banco1 == $banco->id){
+                $banco_entrada += $item->monto1;
+            }
+            if ($item->id_banco2 == $banco->id){
+                $banco_entrada += $item->monto2;
+            }
+        }
+
+        foreach ($banco_dinero_salida as $item){
+            if ($item->id_banco1 == $banco->id){
+                $banco_salida += $item->monto1;
+            }
+            if ($item->id_banco2 == $banco->id){
+                $banco_salida += $item->monto2;
+            }
+        }
+
         $total = 0;
 
         foreach ($cotizaciones as $item){
@@ -37,9 +58,9 @@
             }
         }
 
-        $total_pagos = $pagos + $pagos_salida;
+        $total_pagos = $pagos + $pagos_salida + $banco_salida;
         $saldo = 0;
-        $saldo = ($banco->saldo_inicial + $total)- $total_pagos;
+        $saldo = ($banco->saldo_inicial + $total + $banco_entrada)- $total_pagos;
     @endphp
 
     <div class="col-lg-4 col-md-6 col-12 mt-4 mt-md-0">
@@ -134,6 +155,23 @@
                                     {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
                                 </div>
                             @endforeach
+                            @foreach ($banco_dinero_entrada as $item)
+                                <div class="col-3">
+                                    Varios
+                                </div>
+                                <div class="col-3">{{ $item->Cliente->nombre }}</div>
+                                <div class="col-3">
+                                    @if ($item->id_banco1  == $banco->id)
+                                        $ {{ number_format($item->monto1, 0, '.', ',') }}
+                                    @else
+                                        $ {{ number_format($item->monto2, 0, '.', ',') }}
+                                    @endif
+
+                                </div>
+                                <div class="col-3">
+                                    {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
+                                </div>
+                            @endforeach
 
                         </div>
                     </div>
@@ -210,6 +248,24 @@
                                     @if ($item->fecha_pago_operador != NULL)
                                         {{ \Carbon\Carbon::parse($item->fecha_pago_operador)->translatedFormat('j \d\e F') }}
                                     @endif
+                                </div>
+                            @endforeach
+
+                            @foreach ($banco_dinero_salida as $item)
+                                <div class="col-3">
+                                    Varios
+                                </div>
+                                <div class="col-3">{{ $item->Cliente->nombre }}</div>
+                                <div class="col-3">
+                                    @if ($item->id_banco1  == $banco->id)
+                                        $ {{ number_format($item->monto1, 0, '.', ',') }}
+                                    @else
+                                        $ {{ number_format($item->monto2, 0, '.', ',') }}
+                                    @endif
+
+                                </div>
+                                <div class="col-3">
+                                    {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
                                 </div>
                             @endforeach
 

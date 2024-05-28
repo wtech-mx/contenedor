@@ -23,21 +23,27 @@
                         <table class="table table-striped table-hover table_id" id="datatable-search">
                             <thead class="thead">
                                 <tr>
-                                    <th>No</th>
-                                    <th># Contenedor</th>
-                                    <th>Total a pagar</th>
-                                    <th>Acciones</th>
+                                    <th><img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="25px"># Contenedor</th>
+                                    <th><img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px">Total a pagar</th>
+                                    <th><img src="{{ asset('img/icon/semaforos.webp') }}" alt="" width="25px">Estatus</th>
+                                    <th><img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($cotizacionesPorPagar as $item)
                                     <tr>
-                                        <td>{{ $item->id }}</td>
                                         <td>{{ $item->num_contenedor }}</td>
                                         <td>${{ number_format($item->total_proveedor, 2, '.', ',') }}</td>
                                         <td>
+                                            @if ($item->estatus == 'Aprobada')
+                                                En curso
+                                            @else
+                                                {{ $item->estatus }}
+                                            @endif
+                                        </td>
+                                        <td>
                                             <a class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#cobrarModal{{ $item->id }}">
-                                                <i class="fa fa-fw fa-edit"></i> Ver
+                                                <i class="fa fa-fw fa-edit"></i> Pagar
                                             </a>
                                         </td>
                                     </tr>
