@@ -220,12 +220,19 @@ class PlaneacionController extends Controller
     public function edit_fecha(Request $request)
     {
         $id = $request->get('urlId');
+        $idCoordenda = $request->get('idCoordenda');
 
         $asignaciones = Asignaciones::find($id);
 
         $asignaciones->fecha_inicio = $request->get('nuevaFechaInicio');
         $asignaciones->fecha_fin = $request->get('nuevaFechaFin');
         $asignaciones->update();
+
+        $cotizaciones = Cotizaciones::find($idCoordenda);
+
+        $cotizaciones->tipo_viaje = $request->get('finzalizar_vieje');
+        $cotizaciones->update();
+
 
         // Devuelve una respuesta, por ejemplo:
         return response()->json(['message' => 'Fechas actualizadas correctamente']);

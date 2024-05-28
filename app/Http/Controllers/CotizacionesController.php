@@ -25,6 +25,7 @@ class CotizacionesController extends Controller
         $cotizaciones_aprovadas = Cotizaciones::where('estatus','=','Aprobada')->where('estatus_planeacion','=', NULL)->orderBy('created_at', 'desc')->get();
         $cotizaciones_canceladas = Cotizaciones::where('estatus','=','Cancelada')->orderBy('created_at', 'desc')->get();
         $cotizaciones_planeadas = Cotizaciones::where('estatus','=','Aprobada')->where('estatus_planeacion','=', 1)->orderBy('created_at', 'desc')->get();
+        $cotizaciones_finalizadas = Cotizaciones::where('tipo_viaje','=','Finalizado')->orderBy('created_at', 'desc')->get();
 
         $equipos_dolys = Equipo::where('tipo','=','Dolys')->get();
         $equipos_chasis = Equipo::where('tipo','=','Chasis / Plataforma')->get();
@@ -34,7 +35,7 @@ class CotizacionesController extends Controller
         $proveedores = Proveedor::get();
 
 
-        return view('cotizaciones.index', compact('proveedores','bancos','operadores','equipos_dolys','equipos_chasis','equipos_camiones','cotizaciones','cotizaciones_aprovadas','cotizaciones_canceladas', 'cotizaciones_planeadas'));
+        return view('cotizaciones.index', compact('proveedores','bancos','operadores','equipos_dolys','equipos_chasis','equipos_camiones','cotizaciones','cotizaciones_aprovadas','cotizaciones_canceladas', 'cotizaciones_planeadas','cotizaciones_finalizadas'));
     }
 
     public function create(){
@@ -135,6 +136,18 @@ class CotizacionesController extends Controller
 
         return view('cotizaciones.edit', compact('cotizacion', 'documentacion', 'clientes','gastos_extras'));
     }
+
+    public function pdf($id){
+        $cotizacion = Cotizaciones::where('id', '=', $id)->first();
+        $documentacion = DocumCotizacion::where('id_cotizacion', '=', $cotizacion->id)->first();
+        $gastos_extras = GastosExtras::where('id_cotizacion', '=', $cotizacion->id)->get();
+        $clientes = Client::get();
+
+
+        $pdf = \PDF::loadView('cotizaciones.pdf', compact('cotizacion', 'documentacion', 'clientes','gastos_extras'));
+        return $pdf->download('cotizacion'.$cotizacion->Cliente->nombre.'_#'.$cotizacion->id.'.pdf');
+    }
+
 
     public function update(Request $request, $id){
 

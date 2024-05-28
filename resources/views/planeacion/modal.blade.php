@@ -10,12 +10,27 @@
                 <p id="eventoTitulo"></p>
                 <p id="eventoDescripcion"></p>
                 <!-- Cambiar los inputs a tipo date -->
+
                 <input type="date" id="eventoFechaStart" class="form-control mb-3">
                 <input type="date" id="eventoFechaEnd" class="form-control">
+
                 <input type="hidden" id="urlId" class="form-control">
+                <input type="hidden" id="idCoordenda" class="form-control">
+
                 <a id="idCotizacion" class="btn mt-3 btn-sm btn-primary mt-2" target="_blank">Cotizacion</a>
                 <a id="idCoordenda" class="btn mt-3 btn-sm btn-warning mt-2" target="_blank">Ver Coordenadas</a>
                 <a id="telOperador" class="btn mt-3 btn-sm btn-success mt-2" target="_blank">Enviar x Whtaspp</a>
+
+                <h6 class="mt-3 mb-3">
+                    ¿Deseas Finalizar el Viaje?
+                </h6>
+
+                <select name="finzalizar_vieje" id="finzalizar_vieje" class="form-control">
+                    <option value="">Seleciona la opcion</option>
+                    <option value="Finalizado">Si</option>
+                    <option>No</option>
+                </select>
+
 
             </div>
 

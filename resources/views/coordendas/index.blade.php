@@ -78,7 +78,7 @@
                             <div class="form-check" style="display: inline-block;margin-right:3rem;display: none" >
                                 <input class="form-check-input" type="radio" name="registro_puerto" id="registro_puerto_no" value="No" checked>
                                 <label class="form-check-label" for="registro_puerto_no" >
-                                    Noa
+                                    No
                                 </label>
                             </div>
 

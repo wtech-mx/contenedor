@@ -43,7 +43,11 @@
                         <div class="nav nav-tabs custom-tabs" id="nav-tab" role="tablist">
                         <button class="nav-link custom-tab active" id="nav-planeadas-tab" data-bs-toggle="tab" data-bs-target="#nav-planeadas" type="button" role="tab" aria-controls="nav-planeadas" aria-selected="false">
                             <img src="{{ asset('img/icon/resultado.webp') }}" alt="" width="40px">  Planeadas
-                            </button>
+                        </button>
+
+                        <button class="nav-link custom-tab " id="nav-finalizadas-tab" data-bs-toggle="tab" data-bs-target="#nav-finalizadas" type="button" role="tab" aria-controls="nav-finalizadas" aria-selected="false">
+                            <img src="{{ asset('img/icon/pdf.webp') }}" alt="" width="40px">  Finalizadas
+                        </button>
 
                           <button class="nav-link custom-tab" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
                             <img src="{{ asset('img/icon/pausa.png') }}" alt="" width="40px">  En espera
@@ -103,14 +107,97 @@
                                                             </a>
 
                                                             @if ($cotizacion->DocCotizacion->Asignaciones)
+                                                                @if ($cotizacion->DocCotizacion->Asignaciones->id_proveedor == NULL)
+
                                                                 <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
-                                                                    @if ($cotizacion->DocCotizacion->Asignaciones->id_proveedor == NULL)
                                                                         Propio
-                                                                    @else
-                                                                        Subcontratado
-                                                                    @endif
                                                                 </button>
+
+                                                                @else
+
+                                                                <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
+                                                                    Subcontratado
+                                                                </button>
+                                                                @endif
                                                             @endif
+
+
+
+                                                        </td>
+                                                    </tr>
+                                                    @include('cotizaciones.modal_estatus')
+                                                    @include('cotizaciones.modal_cambio')
+                                                @endforeach
+                                            </tbody>
+
+                                    </table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade " id="nav-finalizadas" role="tabpanel" aria-labelledby="nav-finalizadas-tab" tabindex="0">
+                            <div class="table-responsive">
+                                    <table class="table table-flush" id="datatable-finalizadas">
+                                        <thead class="thead">
+                                            <tr>
+                                                <th>No</th>
+                                                <th><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px">Cliente</th>
+                                                <th><img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">Origen</th>
+                                                <th><img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px">Destino</th>
+                                                <th><img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="25px"># Contenedor</th>
+                                                <th><img src="{{ asset('img/icon/semaforos.webp') }}" alt="" width="25px">Estatus</th>
+                                                <th><img src="{{ asset('img/icon/coordenadas.png') }}" alt="" width="25px">Coordeneadas</th>
+                                                <th><img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">Acciones</th>
+                                            </tr>
+                                        </thead>
+                                            <tbody>
+                                                @foreach ($cotizaciones_finalizadas as $cotizacion)
+                                                    <tr>
+                                                        <td>{{$cotizacion->id}}</td>
+                                                        <td>{{$cotizacion->Cliente->nombre}}</td>
+                                                        <td>{{$cotizacion->origen}}</td>
+                                                        <td>{{$cotizacion->destino}}</td>
+                                                        <td>{{$cotizacion->DocCotizacion->num_contenedor}}</td>
+
+                                                        <td>
+                                                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
+                                                                {{$cotizacion->estatus}}
+                                                            </button>
+                                                        </td>
+                                                        <td>
+                                                            @if ($cotizacion->DocCotizacion && $cotizacion->DocCotizacion->Asignaciones)
+                                                                <a type="button" class="btn" href="{{ route('index.cooredenadas', $cotizacion->DocCotizacion->Asignaciones->id) }}">
+                                                                    <img src="{{ asset('img/icon/coordenadas.png') }}" alt="" width="25px"> Coordenadas
+                                                                </a>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <a type="button" class="btn" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
+                                                                <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
+                                                            </a>
+
+                                                            <a type="button" class="btn" href="{{ route('pdf.cotizaciones', $cotizacion->id) }}">
+                                                                <img src="{{ asset('img/icon/pdf.webp') }}" alt="" width="25px">
+                                                            </a>
+
+                                                            @if ($cotizacion->DocCotizacion->Asignaciones)
+                                                                @if ($cotizacion->DocCotizacion->Asignaciones->id_proveedor == NULL)
+
+                                                                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
+                                                                        Propio
+                                                                </button>
+
+
+
+                                                                @else
+
+                                                                <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
+                                                                    Subcontratado
+                                                                </button>
+                                                                @endif
+                                                            @endif
+
+
+
                                                         </td>
                                                     </tr>
                                                     @include('cotizaciones.modal_estatus')
@@ -293,6 +380,12 @@
         searchable: true,
         fixedHeight: false
         });
+
+        const dataTableSearch5 = new simpleDatatables.DataTable("#datatable-finalizadas", {
+        searchable: true,
+        fixedHeight: false
+        });
+
 
         const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
         searchable: true,

@@ -111,17 +111,21 @@
                     // Escuchar el clic en el botón de "Actualizar fecha"
                     document.getElementById('actualizarFechaBtn').addEventListener('click', function () {
                         // Obtener los nuevos valores de las fechas
+                        var finzalizar_vieje = document.getElementById('finzalizar_vieje').value;
                         var nuevaFechaInicio = document.getElementById('eventoFechaStart').value;
                         var nuevaFechaFin = document.getElementById('eventoFechaEnd').value;
                         var urlId = document.getElementById('urlId').value;
+                        var idCoordenda = info.event.extendedProps.idCoordenda;
 
                         $.ajax({
                             url: '{{ route('asignacion.edit_fecha') }}',
                             type: 'get',
                             data: {
+                                'finzalizar_vieje': finzalizar_vieje,
                                 'nuevaFechaInicio': nuevaFechaInicio,
                                 'nuevaFechaFin': nuevaFechaFin,
                                 'urlId': urlId,
+                                'idCoordenda': idCoordenda,
                                 '_token': token // Agregar el token CSRF a los datos enviados
                             },
                             success: function(data) {

@@ -124,7 +124,7 @@
                                                 <span class="input-group-text" id="basic-addon1">
                                                     <img src="{{ asset('img/icon/peso.png') }}" alt="" width="25px">
                                                 </span>
-                                                <input name="cot_peso_contenedor" id="cot_peso_contenedor" type="text" class="form-control" value="{{$cotizacion->peso_contenedor}}">
+                                                <input name="cot_peso_contenedor" id="cot_peso_contenedor" type="text" class="form-control" value="{{$cotizacion->cot_peso_contenedor}}">
                                             </div>
                                         </div>
 
