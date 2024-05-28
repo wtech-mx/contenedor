@@ -111,25 +111,21 @@
 
                     // Funcionalidad para copiar al portapapeles
                     var telOperadorBtn = document.getElementById('telOperador');
+
                     telOperadorBtn.addEventListener('click', function() {
-                        var url = 'https://contenedores.wtech.com.mx/coordenadas/' + info.event.extendedProps.idCotizacion;
+                var url = document.getElementById('telOperadorUrl').value;
+                console.log('entro');
+                console.log(url);
 
-                        // Copiar URL al portapapeles
-                        var tempInput = document.createElement('input');
-                        document.body.appendChild(tempInput);
-                        tempInput.value = url;
-                        tempInput.select();
-                        document.execCommand('copy');
-                        document.body.removeChild(tempInput);
-
-                        // Mostrar el popover
-                        $(telOperadorBtn).popover('show');
-
-                        // Ocultar el popover después de 2 segundos
-                        setTimeout(function () {
-                            $(telOperadorBtn).popover('hide');
-                        }, 2000);
-                    });
+                navigator.clipboard.writeText(url).then(function() {
+                    $(telOperadorBtn).popover('show');
+                    setTimeout(function () {
+                        $(telOperadorBtn).popover('hide');
+                    }, 2000);
+                }).catch(function(err) {
+                    console.error('Error al copiar al portapapeles: ', err);
+                });
+            });
 
                     // Configurar el popover de Bootstrap
                     $(telOperadorBtn).popover({

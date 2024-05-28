@@ -74,6 +74,9 @@ class PlaneacionController extends Controller
             if ($appointment->Operador !== null) {
                 $event['telOperador'] = $appointment->Operador->telefono;
             }
+            // else{
+            //     $event['telOperador'] = '5585314498';
+            // }
 
             $events[] = $event;
 

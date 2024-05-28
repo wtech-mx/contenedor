@@ -15,16 +15,17 @@
                 <input type="date" id="eventoFechaEnd" class="form-control">
 
                 <input type="hidden" id="urlId" class="form-control">
-                <input type="hidden" id="idCoordenda" class="form-control">
+                <input type="hidden" id="" class="form-control">
 
                 <a id="idCotizacion" class="btn mt-3 btn-sm btn-primary mt-2" target="_blank">Cotizacion</a>
                 <a id="idCoordenda" class="btn mt-3 btn-sm btn-warning mt-2" target="_blank">Ver Coordenadas</a>
 
-                <h6 class="mt-3 mb-3">
-                    Copiar url
-                </h6>
-                <input type="tetx" id="telOperadorUrl" class="form-control">
-                {{-- <a id="telOperador" class="btn btn-sm btn-success mt-2" data-toggle="popover" data-content="URL copiada!" data-trigger="manual">Copiar url</a> --}}
+                <h6 class="mt-3 mb-3">Copiar url</h6>
+
+                <input type="text" id="telOperadorUrl" class="form-control">
+
+                <a id="telOperador" class="btn btn-sm btn-success mt-2" data-toggle="popover" data-content="URL copiada!" data-trigger="manual">Copiar url</a>
+
 
                 <h6 class="mt-3 mb-3">
                     ¿Deseas Finalizar el Viaje?
