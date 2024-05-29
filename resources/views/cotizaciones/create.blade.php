@@ -119,6 +119,16 @@
                                     </div>
 
                                     <div class="col-3 form-group">
+                                        <label for="name">Num. Contenedor</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="num_contenedor" id="num_contenedor" type="text" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3 form-group">
                                         <label for="name">Tamaño Contenedor</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
@@ -178,7 +188,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-6"></div>
+                                    <div class="col-3"></div>
 
                                     <div class="col-3 form-group">
                                         <label for="name">Precio Viaje</label>
@@ -249,6 +259,27 @@
                                             <input name="retencion" id="retencion" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()">
                                         </div>
                                     </div>
+
+                                    <div class="col-4 form-group">
+                                        <label for="name">Base 1</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/factura.png') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="base_factura" id="base_factura" type="float" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4 form-group">
+                                        <label for="name">Base 2</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/factura.png.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="base_taref" id="base_taref" type="float" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-4"></div>
 
                                     <div class="col-4 form-group">
                                         <label for="name">Total</label>

@@ -19,35 +19,309 @@
                     </div>
 
                     <div class="card-body">
+
+                        <nav class="mx-auto">
+                            <div class="nav nav-tabs custom-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link custom-tab active" id="nav-cotizacion-tab" data-bs-toggle="tab" data-bs-target="#nav-cotizacion" type="button" role="tab" aria-controls="nav-planeadas" aria-selected="false">
+                                Cotización
+                                </button>
+
+                              <button class="nav-link custom-tab" id="nav-Bloque-tab" data-bs-toggle="tab" data-bs-target="#nav-Bloque" type="button" role="tab" aria-controls="nav-Bloque" aria-selected="true">
+                                Bloque
+                              </button>
+
+                              <button class="nav-link custom-tab" id="nav-Contenedor-tab" data-bs-toggle="tab" data-bs-target="#nav-Contenedor" type="button" role="tab" aria-controls="nav-Contenedor" aria-selected="false">
+                                Contenedor
+                              </button>
+
+                              <button class="nav-link custom-tab" id="nav-Documentacion-tab" data-bs-toggle="tab" data-bs-target="#nav-Documentacion" type="button" role="tab" aria-controls="nav-Documentacion" aria-selected="false">
+                                Documentación
+                              </button>
+
+                              <button class="nav-link custom-tab" id="nav-Gastos-tab" data-bs-toggle="tab" data-bs-target="#nav-Gastos" type="button" role="tab" aria-controls="nav-Gastos" aria-selected="false">
+                                Gastos
+                              </button>
+                            </div>
+                        </nav>
+
+
                         <form method="POST" action="{{ route('update.cotizaciones', $cotizacion->id) }}" id="" enctype="multipart/form-data" role="form">
                             @csrf
                             <input type="hidden" name="_method" value="PATCH">
-                            <div class="modal-body">
-                                <h3 class="mb-5">Datos de cotizacion</h3>
-                                <div class="row">
 
-                                        <div class="col-6 form-group">
-                                            <label for="name">Cliente *</label>
-                                            <select class="form-select cliente d-inline-block" data-toggle="select" id="id_cliente" name="id_cliente">
-                                                <option value="{{ $cotizacion->id_cliente }}">{{ $cotizacion->Cliente->nombre }} / {{ $cotizacion->Cliente->telefono }}</option>
-                                                @foreach ($clientes as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->nombre }} / {{ $item->telefono }}</option>
-                                                @endforeach
-                                            </select>
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-cotizacion" role="tabpanel" aria-labelledby="nav-cotizacion-tab" tabindex="0">
+                                    <h3 class="mb-5">Datos de cotizacion</h3>
+                                    <div class="row">
+                                            @if ($documentacion->num_contenedor != NULL)
+                                                <label style="font-size: 20px;">Num contenedor:  {{$documentacion->num_contenedor}} </label>
+                                            @endif
+
+                                            <div class="col-6 form-group">
+                                                <label for="name">Cliente *</label>
+                                                <select class="form-select cliente d-inline-block" data-toggle="select" id="id_cliente" name="id_cliente">
+                                                    <option value="{{ $cotizacion->id_cliente }}">{{ $cotizacion->Cliente->nombre }} / {{ $cotizacion->Cliente->telefono }}</option>
+                                                    @foreach ($clientes as $item)
+                                                        <option value="{{ $item->id }}">{{ $item->nombre }} / {{ $item->telefono }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class="col-6 form-group">
+                                                <label for="name">Subcliente *</label>
+                                                <select class="form-select subcliente d-inline-block" id="id_subcliente" name="id_subcliente">
+                                                    @if ($cotizacion->id_subcliente != NULL)
+                                                        <option value="{{ $cotizacion->id_subcliente }}">{{ $cotizacion->Subcliente->nombre }} / {{ $cotizacion->Subcliente->telefono }}</option>
+                                                    @else
+                                                        <option value="">Seleccionar subcliente</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+
+                                            <div class="col-6 form-group">
+                                                <label for="name">Origen</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="cot_origen" id="cot_origen" type="text" class="form-control" value="{{$cotizacion->origen}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6 form-group">
+                                                <label for="name">Destino</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="cot_destino" id="cot_destino" type="text" class="form-control" value="{{$cotizacion->destino}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6 form-group">
+                                                <label for="name">Fecha modulación</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="cot_fecha_modulacion" id="cot_fecha_modulacion" type="date" class="form-control" value="{{$cotizacion->fecha_modulacion}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6 form-group">
+                                                <label for="name">Fecha entrega</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="cot_fecha_entrega" id="cot_fecha_entrega" type="date" class="form-control" value="{{$cotizacion->fecha_entrega}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3 form-group">
+                                                <label for="name">Tamaño Contenedor</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/escala.png') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="cot_tamano" id="cot_tamano" type="text" class="form-control"  value="{{$cotizacion->tamano}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3 form-group">
+                                                <label for="name">Peso Reglamentario</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/perdida-de-peso.png') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="peso_reglamentario" id="peso_reglamentario" type="number" class="form-control"  value="{{$cotizacion->peso_reglamentario}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3 form-group">
+                                                <label for="name">Peso Contenedor</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/peso.png') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="cot_peso_contenedor" id="cot_peso_contenedor" type="text" class="form-control" value="{{$cotizacion->peso_contenedor}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3 form-group">
+                                                <label for="name">Sobrepeso</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/pesa-rusa.png') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="sobrepeso" id="sobrepeso" type="text" class="form-control" readonly value="{{$cotizacion->sobrepeso}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3 form-group">
+                                                <label for="name">Precio Sobre Peso</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/tonelada.png') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="precio_sobre_peso" id="precio_sobre_peso" type="text" class="form-control" value="{{ number_format($cotizacion->precio_sobre_peso, 2, '.', ',') }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3 form-group">
+                                                <label for="name">Precio Tonelada</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/tonelada.png') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="precio_tonelada" id="precio_tonelada" type="text" class="form-control" value="{{$cotizacion->precio_tonelada}}" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-6"></div>
+
+                                            <div class="col-3 form-group">
+                                                <label for="name">Precio Viaje</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="cot_precio_viaje" id="cot_precio_viaje" type="text" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->precio_viaje}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3 form-group">
+                                                <label for="name">Burreo</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/burro.png') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="cot_burreo" id="cot_burreo" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->burreo}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3 form-group">
+                                                <label for="name">Maniobra</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="cot_maniobra" id="cot_maniobra" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->maniobra}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3 form-group">
+                                                <label for="name">Estadia</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/servidor-en-la-nube.png') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="cot_estadia" id="cot_estadia" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->estadia}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4 form-group">
+                                                <label for="name">Otros</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="cot_otro" id="cot_otro" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()"  value="{{$cotizacion->otro}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4 form-group">
+                                                <label for="name">IVA</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/impuesto.png') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="cot_iva" id="cot_iva" type="number" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->iva}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4 form-group">
+                                                <label for="name">Retención</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="cot_retencion" id="cot_retencion" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->retencion}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4 form-group">
+                                                <label for="name">Base 1</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/factura.png') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="base_factura" id="base_factura" type="float" class="form-control" value="{{$cotizacion->base_factura}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4 form-group">
+                                                <label for="name">Base 2</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/factura.png.webp') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="base_taref" id="base_taref" type="float" class="form-control" value="{{$cotizacion->base_taref}}">
+                                                </div>
+                                            </div>
+                                            <div class="col-4"></div>
+
+                                            <div class="col-4 form-group">
+                                                <label for="name">Total Cotización</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="total" id="total" type="float" class="form-control" readonly>
+                                                </div>
+                                            </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="nav-Bloque" role="tabpanel" aria-labelledby="nav-Bloque-tab" tabindex="0">
+                                    <h3 class="mb-5 mt-3">Bloque de Entrada</h3>
+                                    <div class="row">
+                                        <div class="col-4 form-group">
+                                            <label for="name">Block</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/contenedores.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="bloque" id="bloque" type="text" class="form-control" value="{{$cotizacion->bloque}}">
+                                            </div>
                                         </div>
 
-                                        <div class="col-6 form-group">
-                                            <label for="name">Subcliente *</label>
-                                            <select class="form-select subcliente d-inline-block" id="id_subcliente" name="id_subcliente">
-                                                @if ($cotizacion->id_subcliente != NULL)
-                                                    <option value="{{ $cotizacion->id_subcliente }}">{{ $cotizacion->Subcliente->nombre }} / {{ $cotizacion->Subcliente->telefono }}</option>
-                                                @else
-                                                    <option value="">Seleccionar subcliente</option>
-                                                @endif
-                                            </select>
+                                        <div class="col-4 form-group">
+                                            <label for="name">Horario Inicio</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="bloque_hora_i" id="bloque_hora_i" type="time" class="form-control" value="{{$cotizacion->bloque_hora_i}}">
+                                            </div>
                                         </div>
 
-                                        <div class="col-6 form-group">
+                                        <div class="col-4 form-group">
+                                            <label for="name">Horario Fin</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="bloque_hora_f" id="bloque_hora_f" type="time" class="form-control" value="{{$cotizacion->bloque_hora_f}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="nav-Contenedor" role="tabpanel" aria-labelledby="nav-Contenedor-tab" tabindex="0">
+                                    <h3 class="mb-5 mt-3">Contenedor</h3>
+                                    <div class="row">
+                                        <div class="col-4 form-group">
                                             <label for="name">Num. Contenedor</label>
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="basic-addon1">
@@ -57,656 +331,424 @@
                                             </div>
                                         </div>
 
-
-                                        <div class="col-6 form-group">
-                                            <label for="name">Origen</label>
+                                        <div class="col-4 form-group">
+                                            <label for="name">Terminal(Nombre)</label>
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">
+                                                    <img src="{{ asset('img/icon/terminal.png') }}" alt="" width="25px">
                                                 </span>
-                                                <input name="cot_origen" id="cot_origen" type="text" class="form-control" value="{{$cotizacion->origen}}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-6 form-group">
-                                            <label for="name">Destino</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="cot_destino" id="cot_destino" type="text" class="form-control" value="{{$cotizacion->destino}}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-6 form-group">
-                                            <label for="name">Fecha modulación</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="cot_fecha_modulacion" id="cot_fecha_modulacion" type="date" class="form-control" value="{{$cotizacion->fecha_modulacion}}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-6 form-group">
-                                            <label for="name">Fecha entrega</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="cot_fecha_entrega" id="cot_fecha_entrega" type="date" class="form-control" value="{{$cotizacion->fecha_entrega}}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3 form-group">
-                                            <label for="name">Tamaño Contenedor</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/escala.png') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="cot_tamano" id="cot_tamano" type="text" class="form-control"  value="{{$cotizacion->tamano}}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3 form-group">
-                                            <label for="name">Peso Reglamentario</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/perdida-de-peso.png') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="peso_reglamentario" id="peso_reglamentario" type="number" class="form-control"  value="{{$cotizacion->peso_reglamentario}}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3 form-group">
-                                            <label for="name">Peso Contenedor</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/peso.png') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="cot_peso_contenedor" id="cot_peso_contenedor" type="text" class="form-control" value="{{$cotizacion->cot_peso_contenedor}}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3 form-group">
-                                            <label for="name">Sobrepeso</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/pesa-rusa.png') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="sobrepeso" id="sobrepeso" type="text" class="form-control" readonly value="{{$cotizacion->sobrepeso}}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3 form-group">
-                                            <label for="name">Precio Sobre Peso</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/tonelada.png') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="precio_sobre_peso" id="precio_sobre_peso" type="text" class="form-control" value="{{ number_format($cotizacion->precio_sobre_peso, 2, '.', ',') }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3 form-group">
-                                            <label for="name">Precio Tonelada</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/tonelada.png') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="precio_tonelada" id="precio_tonelada" type="text" class="form-control" value="{{$cotizacion->precio_tonelada}}" readonly>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3 form-group">
-                                            <label for="name">Precio Viaje</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="cot_precio_viaje" id="cot_precio_viaje" type="text" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->precio_viaje}}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3 form-group">
-                                            <label for="name">Burreo</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/burro.png') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="cot_burreo" id="cot_burreo" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->burreo}}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3 form-group">
-                                            <label for="name">Maniobra</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="cot_maniobra" id="cot_maniobra" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->maniobra}}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3 form-group">
-                                            <label for="name">Estadia</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/servidor-en-la-nube.png') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="cot_estadia" id="cot_estadia" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->estadia}}">
+                                                <input name="terminal" id="terminal" type="text" class="form-control" value="{{$documentacion->terminal}}">
                                             </div>
                                         </div>
 
                                         <div class="col-4 form-group">
-                                            <label for="name">Otros</label>
+                                            <label for="name">Num. Autorización</label>
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
+                                                    <img src="{{ asset('img/icon/persona-clave.png') }}" alt="" width="25px">
                                                 </span>
-                                                <input name="cot_otro" id="cot_otro" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()"  value="{{$cotizacion->otro}}">
+                                                <input name="num_autorizacion" id="num_autorizacion" type="text" class="form-control" value="{{$documentacion->num_autorizacion}}">
                                             </div>
                                         </div>
 
-                                        <div class="col-4 form-group">
-                                            <label for="name">IVA</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/impuesto.png') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="cot_iva" id="cot_iva" type="number" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->iva}}">
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>¿CCP - Carta Porte?</label><br>
+                                                @if ($documentacion->ccp == 'si')
+                                                    <input class="form-check-input" type="radio" name="ccp" value="si" id="option_si_ccp" checked> Sí<br>
+                                                    <input class="form-check-input" type="radio" name="ccp" value="no" id="option_no_ccp"> No
+                                                @else
+                                                    <input class="form-check-input" type="radio" name="ccp" value="si" id="option_si_ccp"> Sí<br>
+                                                    <input class="form-check-input" type="radio" name="ccp" value="no" id="option_no_ccp" checked> No
+                                                @endif
                                             </div>
                                         </div>
 
-                                        <div class="col-4 form-group">
-                                            <label for="name">Retención</label>
+                                        <div class="col-6">
+                                            @if ($documentacion->ccp == 'si')
+                                                <div class="form-group" id="inputFieldccp">
+                                            @else
+                                                <div class="form-group" id="inputFieldccp" style="display: none;">
+                                            @endif
+                                                <label for="input">Documento CCP:</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="doc_ccp" id="doc_ccp" type="file" class="form-control">
+                                                </div>
+
+                                                @if ($documentacion->ccp == 'si')
+                                                    <div class="col-6">
+                                                        @if (pathinfo($documentacion->doc_ccp, PATHINFO_EXTENSION) == 'pdf')
+                                                        <p class="text-center ">
+                                                            <iframe class="mt-2" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp)}}" style="width: 100%; height: 100px;"></iframe>
+                                                        </p>
+                                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
+                                                        @elseif (pathinfo($documentacion->doc_ccp, PATHINFO_EXTENSION) == 'doc')
+                                                        <p class="text-center ">
+                                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                                        </p>
+                                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                                        @elseif (pathinfo($documentacion->doc_ccp, PATHINFO_EXTENSION) == 'docx')
+                                                        <p class="text-center ">
+                                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                                        </p>
+                                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                                        @else
+                                                            <p class="text-center mt-2">
+                                                                <img id="blah" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
+                                                            </p>
+                                                                <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
+                                                        @endif
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="nav-Documentacion" role="tabpanel" aria-labelledby="nav-Documentacion-tab" tabindex="0">
+                                    <h3 class="mt-3 mb-5">Documentación</h3>
+                                    <div class="row">
+                                        <div class="col-6 form-group">
+                                            <label for="name">Num. Boleta de Liberación</label>
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                                    <img src="{{ asset('img/icon/9.webp') }}" alt="" width="25px">
                                                 </span>
-                                                <input name="cot_retencion" id="cot_retencion" type="float" class="form-control"onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46" oninput="calcularTotal()" value="{{$cotizacion->retencion}}">
+                                                <input name="num_boleta_liberacion" id="num_boleta_liberacion" type="text" class="form-control" value="{{$documentacion->num_boleta_liberacion}}">
                                             </div>
                                         </div>
 
-                                        <div class="col-4 form-group">
-                                            <label for="name">Total Cotización</label>
+                                        <div class="col-6 form-group">
+                                            <label for="name">Boleta de Liberación</label>
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                                    <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
                                                 </span>
-                                                <input name="total" id="total" type="float" class="form-control" readonly>
+                                                <input name="boleta_liberacion" id="boleta_liberacion" type="file" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6"></div>
+                                        <div class="col-6">
+                                            @if (pathinfo($documentacion->boleta_liberacion, PATHINFO_EXTENSION) == 'pdf')
+                                            <p class="text-center ">
+                                                <iframe class="mt-2" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->boleta_liberacion)}}" style="width: 100%; height: 100px;"></iframe>
+                                            </p>
+                                                    <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->boleta_liberacion) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
+                                            @elseif (pathinfo($documentacion->boleta_liberacion, PATHINFO_EXTENSION) == 'doc')
+                                            <p class="text-center ">
+                                                <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            </p>
+                                                    <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->boleta_liberacion) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                            @elseif (pathinfo($documentacion->boleta_liberacion, PATHINFO_EXTENSION) == 'docx')
+                                            <p class="text-center ">
+                                                <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            </p>
+                                                    <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->boleta_liberacion) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                            @else
+                                                <p class="text-center mt-2">
+                                                    <img id="blah" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->boleta_liberacion) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
+                                                </p>
+                                                    <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->boleta_liberacion) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-6 form-group">
+                                            <label for="name">Num. Doda</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/cero.webp') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="num_doda" id="num_doda" type="text" class="form-control" value="{{$documentacion->num_doda}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 form-group">
+                                            <label for="name">Doda</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/documento.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="doda" id="doda" type="file" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6"></div>
+                                        <div class="col-6">
+                                            @if (pathinfo($documentacion->doda, PATHINFO_EXTENSION) == 'pdf')
+                                            <p class="text-center ">
+                                                <iframe class="mt-2" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doda)}}" style="width: 100%; height: 100px;"></iframe>
+                                            </p>
+                                                    <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doda) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
+                                            @elseif (pathinfo($documentacion->doda, PATHINFO_EXTENSION) == 'doc')
+                                            <p class="text-center ">
+                                                <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            </p>
+                                                    <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doda) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                            @elseif (pathinfo($documentacion->doda, PATHINFO_EXTENSION) == 'docx')
+                                            <p class="text-center ">
+                                                <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            </p>
+                                                    <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doda) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                            @else
+                                                <p class="text-center mt-2">
+                                                    <img id="blah" src="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doda) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
+                                                </p>
+                                                    <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doda) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-6 form-group">
+                                            <label for="name">Num. Carta Porte</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/9.webp') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="num_carta_porte" id="num_carta_porte" type="text" class="form-control" value="{{$documentacion->num_carta_porte}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 form-group">
+                                            <label for="name">Carta Porte</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                                </span>
+                                                <input name="carta_porte" id="carta_porte" type="file" class="form-control">
                                             </div>
                                         </div>
 
                                         <div class="col-6"></div>
 
-                                        <div class="col-4 form-group">
-                                            <label for="name">Base Factura</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/factura.png') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="base_factura" id="base_factura" type="float" class="form-control" value="{{$cotizacion->base_factura}}">
+                                        <div class="col-6">
+                                            @if (pathinfo($cotizacion->carta_porte, PATHINFO_EXTENSION) == 'pdf')
+                                            <p class="text-center ">
+                                                <iframe class="mt-2" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte)}}" style="width: 100%; height: 100px;"></iframe>
+                                            </p>
+                                                    <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
+                                            @elseif (pathinfo($cotizacion->carta_porte, PATHINFO_EXTENSION) == 'doc')
+                                            <p class="text-center ">
+                                                <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            </p>
+                                                    <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                            @elseif (pathinfo($cotizacion->carta_porte, PATHINFO_EXTENSION) == 'docx')
+                                            <p class="text-center ">
+                                                <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            </p>
+                                                    <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                            @else
+                                                <p class="text-center mt-2">
+                                                    <img id="blah" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
+                                                </p>
+                                                    <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>¿Boleta Vacio?</label><br>
+                                                @if ($documentacion->boleta_vacio == 'si')
+                                                    <input class="form-check-input" type="radio" name="boleta_vacio" value="si" id="option_si" checked> Sí<br>
+                                                    <input class="form-check-input" type="radio" name="boleta_vacio" value="no" id="option_no"> No
+                                                @else
+                                                    <input class="form-check-input" type="radio" name="boleta_vacio" value="si" id="option_si"> Sí<br>
+                                                    <input class="form-check-input" type="radio" name="boleta_vacio" value="no" id="option_no" checked> No
+                                                @endif
                                             </div>
                                         </div>
 
-                                        <div class="col-4 form-group">
-                                            <label for="name">Base Taref</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/factura.png.webp') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="base_taref" id="base_taref" type="float" class="form-control" value="{{$cotizacion->base_taref}}">
+                                        <div class="col-4">
+                                            @if ($documentacion->boleta_vacio == 'si')
+                                                <div class="form-group" id="inputField">
+                                            @else
+                                                <div class="form-group" id="inputField" style="display: none;">
+                                            @endif
+                                                <label for="input">Fecha Boleta Vacio:</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="fecha_boleta_vacio" id="fecha_boleta_vacio" type="date" class="form-control" value="{{$documentacion->fecha_boleta_vacio}}">
+                                                </div>
                                             </div>
                                         </div>
+
+                                        <div class="col-6">
+                                            @if ($documentacion->boleta_vacio == 'si')
+                                                <div class="form-group" id="inputFieldIMG">
+                                            @else
+                                                <div class="form-group" id="inputFieldIMG" style="display: none;">
+                                            @endif
+                                                <label for="input">IMG Boleta Vacio:</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="img_boleta" id="img_boleta" type="file" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6">
+                                            @if (pathinfo($cotizacion->img_boleta, PATHINFO_EXTENSION) == 'pdf')
+                                            <p class="text-center ">
+                                                <iframe class="mt-2" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta)}}" style="width: 100%; height: 50px;"></iframe>
+                                            </p>
+                                                    <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
+                                            @elseif (pathinfo($cotizacion->img_boleta, PATHINFO_EXTENSION) == 'doc')
+                                            <p class="text-center ">
+                                                <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            </p>
+                                                    <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                            @elseif (pathinfo($cotizacion->img_boleta, PATHINFO_EXTENSION) == 'docx')
+                                            <p class="text-center ">
+                                                <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            </p>
+                                                    <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                            @else
+                                                <p class="text-center mt-2">
+                                                    <img id="blah" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
+                                                </p>
+                                                    <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-6"></div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>¿EIR?</label><br>
+                                                @if ($documentacion->eir == 'si')
+                                                    <input class="form-check-input" type="radio" name="eir" value="si" id="eir_si" checked> Sí<br>
+                                                    <input class="form-check-input" type="radio" name="eir" value="no" id="eir_no"> No
+                                                @else
+                                                    <input class="form-check-input" type="radio" name="eir" value="si" id="eir_si"> Sí<br>
+                                                    <input class="form-check-input" type="radio" name="eir" value="no" id="eir_no" checked> No
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4">
+                                            @if ($documentacion->eir == 'si')
+                                                <div class="form-group" id="inputEir">
+                                            @else
+                                                <div class="form-group" id="inputEir" style="display: none;">
+                                            @endif
+                                                <label for="input">Doc EIR:</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="doc_eir" id="doc_eir" type="file" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4">
+                                            @if ($documentacion->eir == 'si')
+                                                <div class="form-group" id="inputEirFecha">
+                                            @else
+                                                <div class="form-group" id="inputEirFecha" style="display: none;">
+                                            @endif
+                                                <label for="input">Fecha EIR:</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="fecha_eir" id="fecha_eir" type="date" class="form-control" value="{{$cotizacion->fecha_eir}}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6">
+                                            @if (pathinfo($documentacion->doc_eir, PATHINFO_EXTENSION) == 'pdf')
+                                            <p class="text-center ">
+                                                <iframe class="mt-2" src="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir)}}" style="width: 100%; height: 50px;"></iframe>
+                                            </p>
+                                                    <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
+                                            @elseif (pathinfo($documentacion->doc_eir, PATHINFO_EXTENSION) == 'doc')
+                                            <p class="text-center ">
+                                                <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            </p>
+                                                    <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                            @elseif (pathinfo($documentacion->doc_eir, PATHINFO_EXTENSION) == 'docx')
+                                            <p class="text-center ">
+                                                <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
+                                            </p>
+                                                    <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
+                                            @else
+                                                <p class="text-center mt-2">
+                                                    <img id="blah" src="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
+                                                </p>
+                                                    <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="row">
-                                    <h3 class="mb-5 mt-3">Bloque de Entrada</h3>
-
-                                    <div class="col-4 form-group">
-                                        <label for="name">Block</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/contenedores.png') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="bloque" id="bloque" type="text" class="form-control" value="{{$cotizacion->bloque}}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-4 form-group">
-                                        <label for="name">Horario Inicio</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="bloque_hora_i" id="bloque_hora_i" type="time" class="form-control" value="{{$cotizacion->bloque_hora_i}}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-4 form-group">
-                                        <label for="name">Horario Fin</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="bloque_hora_f" id="bloque_hora_f" type="time" class="form-control" value="{{$cotizacion->bloque_hora_f}}">
-                                        </div>
-                                    </div>
-
-                                    <h3 class="mb-5 mt-3    ">Registrar Documentación</h3>
-
-
-                                    <div class="col-6 form-group">
-                                        <label for="name">Terminal(Nombre)</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/terminal.png') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="terminal" id="terminal" type="text" class="form-control" value="{{$documentacion->terminal}}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6 form-group">
-                                        <label for="name">Num. Autorización</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/persona-clave.png') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="num_autorizacion" id="num_autorizacion" type="text" class="form-control" value="{{$documentacion->num_autorizacion}}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-2">
-                                        <div class="form-group">
-                                            <label>¿CCP - Carta Porte?</label><br>
-                                            @if ($documentacion->ccp == 'si')
-                                                <input class="form-check-input" type="radio" name="ccp" value="si" id="option_si_ccp" checked> Sí<br>
-                                                <input class="form-check-input" type="radio" name="ccp" value="no" id="option_no_ccp"> No
-                                            @else
-                                                <input class="form-check-input" type="radio" name="ccp" value="si" id="option_si_ccp"> Sí<br>
-                                                <input class="form-check-input" type="radio" name="ccp" value="no" id="option_no_ccp" checked> No
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6">
-                                        @if ($documentacion->ccp == 'si')
-                                            <div class="form-group" id="inputFieldccp">
-                                        @else
-                                            <div class="form-group" id="inputFieldccp" style="display: none;">
-                                        @endif
-                                            <label for="input">Documento CCP:</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="doc_ccp" id="doc_ccp" type="file" class="form-control">
-                                            </div>
-
-                                            @if ($documentacion->ccp == 'si')
-                                                <div class="col-6">
-                                                    @if (pathinfo($documentacion->doc_ccp, PATHINFO_EXTENSION) == 'pdf')
-                                                    <p class="text-center ">
-                                                        <iframe class="mt-2" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp)}}" style="width: 80%; height: 250px;"></iframe>
-                                                    </p>
-                                                            <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
-                                                    @elseif (pathinfo($documentacion->doc_ccp, PATHINFO_EXTENSION) == 'doc')
-                                                    <p class="text-center ">
-                                                        <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
-                                                    </p>
-                                                            <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
-                                                    @elseif (pathinfo($documentacion->doc_ccp, PATHINFO_EXTENSION) == 'docx')
-                                                    <p class="text-center ">
-                                                        <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
-                                                    </p>
-                                                            <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
-                                                    @else
-                                                        <p class="text-center mt-2">
-                                                            <img id="blah" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
-                                                        </p>
-                                                            <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doc_ccp) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
-                                                    @endif
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <h3 class="mt-3 mb-5">Documentación</h3>
-
-                                    <div class="col-6 form-group">
-                                        <label for="name">Num. Boleta de Liberación</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/9.webp') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="num_boleta_liberacion" id="num_boleta_liberacion" type="text" class="form-control" value="{{$documentacion->num_boleta_liberacion}}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6 form-group">
-                                        <label for="name">Boleta de Liberación</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="boleta_liberacion" id="boleta_liberacion" type="file" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6"></div>
-                                    <div class="col-6">
-                                        @if (pathinfo($documentacion->boleta_liberacion, PATHINFO_EXTENSION) == 'pdf')
-                                        <p class="text-center ">
-                                            <iframe class="mt-2" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->boleta_liberacion)}}" style="width: 80%; height: 250px;"></iframe>
-                                        </p>
-                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->boleta_liberacion) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
-                                        @elseif (pathinfo($documentacion->boleta_liberacion, PATHINFO_EXTENSION) == 'doc')
-                                        <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
-                                        </p>
-                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->boleta_liberacion) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
-                                        @elseif (pathinfo($documentacion->boleta_liberacion, PATHINFO_EXTENSION) == 'docx')
-                                        <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
-                                        </p>
-                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->boleta_liberacion) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
-                                        @else
-                                            <p class="text-center mt-2">
-                                                <img id="blah" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->boleta_liberacion) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
-                                            </p>
-                                                <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->boleta_liberacion) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
-                                        @endif
-                                    </div>
-
-                                    <div class="col-6 form-group">
-                                        <label for="name">Num. Doda</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/cero.webp') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="num_doda" id="num_doda" type="text" class="form-control" value="{{$documentacion->num_doda}}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6 form-group">
-                                        <label for="name">Doda</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/documento.png') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="doda" id="doda" type="file" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6"></div>
-                                    <div class="col-6">
-                                        @if (pathinfo($documentacion->doda, PATHINFO_EXTENSION) == 'pdf')
-                                        <p class="text-center ">
-                                            <iframe class="mt-2" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doda)}}" style="width: 80%; height: 250px;"></iframe>
-                                        </p>
-                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doda) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
-                                        @elseif (pathinfo($documentacion->doda, PATHINFO_EXTENSION) == 'doc')
-                                        <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
-                                        </p>
-                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doda) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
-                                        @elseif (pathinfo($documentacion->doda, PATHINFO_EXTENSION) == 'docx')
-                                        <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
-                                        </p>
-                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doda) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
-                                        @else
-                                            <p class="text-center mt-2">
-                                                <img id="blah" src="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doda) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
-                                            </p>
-                                                <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$documentacion->doda) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
-                                        @endif
-                                    </div>
-
-                                    <div class="col-6 form-group">
-                                        <label for="name">Num. Carta Porte</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/9.webp') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="num_carta_porte" id="num_carta_porte" type="text" class="form-control" value="{{$documentacion->num_carta_porte}}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6 form-group">
-                                        <label for="name">Carta Porte</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
-                                            </span>
-                                            <input name="carta_porte" id="carta_porte" type="file" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6"></div>
-
-                                    <div class="col-6">
-                                        @if (pathinfo($cotizacion->carta_porte, PATHINFO_EXTENSION) == 'pdf')
-                                        <p class="text-center ">
-                                            <iframe class="mt-2" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte)}}" style="width: 80%; height: 250px;"></iframe>
-                                        </p>
-                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
-                                        @elseif (pathinfo($cotizacion->carta_porte, PATHINFO_EXTENSION) == 'doc')
-                                        <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
-                                        </p>
-                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
-                                        @elseif (pathinfo($cotizacion->carta_porte, PATHINFO_EXTENSION) == 'docx')
-                                        <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
-                                        </p>
-                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
-                                        @else
-                                            <p class="text-center mt-2">
-                                                <img id="blah" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
-                                            </p>
-                                                <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->carta_porte) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
-                                        @endif
-                                    </div>
-
-                                    <div class="col-2">
-                                        <div class="form-group">
-                                            <label>¿Boleta Vacio?</label><br>
-                                            @if ($documentacion->boleta_vacio == 'si')
-                                                <input class="form-check-input" type="radio" name="boleta_vacio" value="si" id="option_si" checked> Sí<br>
-                                                <input class="form-check-input" type="radio" name="boleta_vacio" value="no" id="option_no"> No
-                                            @else
-                                                <input class="form-check-input" type="radio" name="boleta_vacio" value="si" id="option_si"> Sí<br>
-                                                <input class="form-check-input" type="radio" name="boleta_vacio" value="no" id="option_no" checked> No
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="col-4">
-                                        @if ($documentacion->boleta_vacio == 'si')
-                                            <div class="form-group" id="inputField">
-                                        @else
-                                            <div class="form-group" id="inputField" style="display: none;">
-                                        @endif
-                                            <label for="input">Fecha Boleta Vacio:</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="fecha_boleta_vacio" id="fecha_boleta_vacio" type="date" class="form-control" value="{{$documentacion->fecha_boleta_vacio}}">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6">
-                                        @if ($documentacion->boleta_vacio == 'si')
-                                            <div class="form-group" id="inputFieldIMG">
-                                        @else
-                                            <div class="form-group" id="inputFieldIMG" style="display: none;">
-                                        @endif
-                                            <label for="input">IMG Boleta Vacio:</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="img_boleta" id="img_boleta" type="file" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6">
-                                        @if (pathinfo($cotizacion->img_boleta, PATHINFO_EXTENSION) == 'pdf')
-                                        <p class="text-center ">
-                                            <iframe class="mt-2" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta)}}" style="width: 80%; height: 250px;"></iframe>
-                                        </p>
-                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
-                                        @elseif (pathinfo($cotizacion->img_boleta, PATHINFO_EXTENSION) == 'doc')
-                                        <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
-                                        </p>
-                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
-                                        @elseif (pathinfo($cotizacion->img_boleta, PATHINFO_EXTENSION) == 'docx')
-                                        <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
-                                        </p>
-                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
-                                        @else
-                                            <p class="text-center mt-2">
-                                                <img id="blah" src="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
-                                            </p>
-                                                <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $cotizacion->id . '/' .$cotizacion->img_boleta) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
-                                        @endif
-                                    </div>
-
-                                    <div class="col-6"></div>
-
-                                    <div class="col-2">
-                                        <div class="form-group">
-                                            <label>¿EIR?</label><br>
-                                            @if ($documentacion->eir == 'si')
-                                                <input class="form-check-input" type="radio" name="eir" value="si" id="eir_si" checked> Sí<br>
-                                                <input class="form-check-input" type="radio" name="eir" value="no" id="eir_no"> No
-                                            @else
-                                                <input class="form-check-input" type="radio" name="eir" value="si" id="eir_si"> Sí<br>
-                                                <input class="form-check-input" type="radio" name="eir" value="no" id="eir_no" checked> No
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="col-4">
-                                        @if ($documentacion->eir == 'si')
-                                            <div class="form-group" id="inputEir">
-                                        @else
-                                            <div class="form-group" id="inputEir" style="display: none;">
-                                        @endif
-                                            <label for="input">Doc EIR:</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="doc_eir" id="doc_eir" type="file" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-4">
-                                        @if ($documentacion->eir == 'si')
-                                            <div class="form-group" id="inputEirFecha">
-                                        @else
-                                            <div class="form-group" id="inputEirFecha" style="display: none;">
-                                        @endif
-                                            <label for="input">Fecha EIR:</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="fecha_eir" id="fecha_eir" type="date" class="form-control" value="{{$cotizacion->fecha_eir}}">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6">
-                                        @if (pathinfo($documentacion->doc_eir, PATHINFO_EXTENSION) == 'pdf')
-                                        <p class="text-center ">
-                                            <iframe class="mt-2" src="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir)}}" style="width: 80%; height: 250px;"></iframe>
-                                        </p>
-                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver archivo</a>
-                                        @elseif (pathinfo($documentacion->doc_eir, PATHINFO_EXTENSION) == 'doc')
-                                        <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
-                                        </p>
-                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
-                                        @elseif (pathinfo($documentacion->doc_eir, PATHINFO_EXTENSION) == 'docx')
-                                        <p class="text-center ">
-                                            <img id="blah" src="{{asset('assets/icons/docx.png') }}" alt="Imagen" style="width: 150px; height: 150px;"/>
-                                        </p>
-                                                <a class="btn btn-sm text-dark" href="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" target="_blank" style="background: #836262; color: #ffff!important">Descargar</a>
-                                        @else
-                                            <p class="text-center mt-2">
-                                                <img id="blah" src="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" alt="Imagen" style="width: 150px;height: 150%;"/><br>
-                                            </p>
-                                                <a class="text-center text-dark btn btn-sm" href="{{asset('cotizaciones/cotizacion'. $documentacion->id . '/' .$documentacion->doc_eir) }}" target="_blank" style="background: #836262; color: #ffff!important">Ver Imagen</a>
-                                        @endif
-                                    </div>
-
+                                <div class="tab-pane fade" id="nav-Gastos" role="tabpanel" aria-labelledby="nav-Gastos-tab" tabindex="0">
                                     <h3 class="mt-3 mb-5">Gastos Extras</h3>
-                                    @foreach ($gastos_extras as $gasto_extra)
-                                        <input type="hidden" name="ticket_id[]" value="{{ $gasto_extra->id }}">
-                                        <div class="col-6 form-group">
-                                            <label for="name">Descripción:</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="gasto_descripcion[]" id="gasto_descripcion[]" type="text" class="form-control" value="{{$gasto_extra->descripcion}}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-6 form-group">
-                                            <label for="name">Monto:</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
-                                                </span>
-                                                <input name="gasto_monto[]" id="gasto_monto[]" type="text" class="form-control" value="{{$gasto_extra->monto}}">
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                    <div id="formulario" class="mt-4">
-                                        <button type="button" class="clonar btn btn-secondary btn-sm">Agregar</button>
-                                        <div class="clonars">
-                                            <div class="row">
-                                                <div class="col-6 form-group">
-                                                    <label for="name">Descripción:</label>
-                                                    <div class="input-group mb-3">
-                                                        <span class="input-group-text" id="basic-addon1">
-                                                            <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
-                                                        </span>
-                                                        <input name="gasto_descripcion[]" id="gasto_descripcion[]" type="text" class="form-control" >
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-6 form-group">
-                                                    <label for="name">Monto:</label>
-                                                    <div class="input-group mb-3">
-                                                        <span class="input-group-text" id="basic-addon1">
-                                                            <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
-                                                        </span>
-                                                        <input name="gasto_monto[]" id="gasto_monto[]" type="text" class="form-control" >
-                                                    </div>
+                                    <div class="row">
+                                        @foreach ($gastos_extras as $gasto_extra)
+                                            <input type="hidden" name="ticket_id[]" value="{{ $gasto_extra->id }}">
+                                            <div class="col-6 form-group">
+                                                <label for="name">Descripción:</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="gasto_descripcion[]" id="gasto_descripcion[]" type="text" class="form-control" value="{{$gasto_extra->descripcion}}">
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
 
-                                    <div class="col-4 form-group">
-                                        <label for="name">Total con gastos</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
-                                            </span>
-                                            <input type="float" class="form-control" value="{{ number_format($cotizacion->total, 2, '.', ',') }}" readonly>
+                                            <div class="col-6 form-group">
+                                                <label for="name">Monto:</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="gasto_monto[]" id="gasto_monto[]" type="text" class="form-control" value="{{$gasto_extra->monto}}">
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        <div id="formulario" class="mt-4">
+                                            <button type="button" class="clonar btn btn-secondary btn-sm">Agregar</button>
+                                            <div class="clonars">
+                                                <div class="row">
+                                                    <div class="col-6 form-group">
+                                                        <label for="name">Descripción:</label>
+                                                        <div class="input-group mb-3">
+                                                            <span class="input-group-text" id="basic-addon1">
+                                                                <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                                            </span>
+                                                            <input name="gasto_descripcion[]" id="gasto_descripcion[]" type="text" class="form-control" >
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-6 form-group">
+                                                        <label for="name">Monto:</label>
+                                                        <div class="input-group mb-3">
+                                                            <span class="input-group-text" id="basic-addon1">
+                                                                <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                                            </span>
+                                                            <input name="gasto_monto[]" id="gasto_monto[]" type="text" class="form-control" >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4 form-group">
+                                            <label for="name">Total con gastos</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                                </span>
+                                                <input type="float" class="form-control" value="{{ number_format($cotizacion->total, 2, '.', ',') }}" readonly>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -835,7 +877,7 @@
         });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+         document.addEventListener('DOMContentLoaded', function () {
             // Obtener referencias a los elementos
             var optionSi = document.getElementById('option_si_ccp');
             var optionNo = document.getElementById('option_no_ccp');

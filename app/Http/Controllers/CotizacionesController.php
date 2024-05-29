@@ -95,6 +95,8 @@ class CotizacionesController extends Controller
         $cotizaciones->burreo = $request->get('burreo');
         $cotizaciones->maniobra = $request->get('maniobra');
         $cotizaciones->estadia = $request->get('estadia');
+        $cotizaciones->base_factura = $request->get('base_factura');
+        $cotizaciones->base_taref = $request->get('base_taref');
 
         $precio_tonelada = str_replace(',', '', $request->get('precio_tonelada'));
         $cotizaciones->precio_tonelada = $precio_tonelada;
@@ -107,6 +109,7 @@ class CotizacionesController extends Controller
 
         $docucotizaciones = new DocumCotizacion;
         $docucotizaciones->id_cotizacion = $cotizaciones->id;
+        $docucotizaciones->num_contenedor = $request->get('num_contenedor');
         $docucotizaciones->save();
 
         Session::flash('success', 'Se ha guardado sus datos con exito');
@@ -125,13 +128,16 @@ class CotizacionesController extends Controller
         $cotizaciones->estatus_planeacion = null;
         $cotizaciones->update();
 
-        $asignaciones_id = $cotizaciones->DocCotizacion->Asignaciones->id;
-        $asignaciones = Asignaciones::find($asignaciones_id);
-        if($request->get('estatus') == 'Cancelada'){
-            $asignaciones->fecha_inicio = null;
-            $asignaciones->fecha_fin = null;
+
+        if($request->get('estatus') == 'Cancelada' || $request->get('estatus') == 'Pendiente'){
+            $asignaciones_id = $cotizaciones->DocCotizacion->Asignaciones->id;
+            $asignaciones = Asignaciones::find($asignaciones_id);
+
+                $asignaciones->fecha_inicio = null;
+                $asignaciones->fecha_fin = null;
+
+            $asignaciones->update();
         }
-        $asignaciones->update();
 
         Session::flash('edit', 'Se ha editado sus datos con exito');
         return redirect()->route('index.cotizaciones')
