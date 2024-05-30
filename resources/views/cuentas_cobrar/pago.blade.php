@@ -95,14 +95,29 @@
                                 </div>
                             </div>
                         @endif
+                        <div class="col-6"></div>
 
-                        <div class="form-group">
-                            <label for="name">Total a cobrar *</label>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1">
-                                    <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
-                                </span>
-                                <input type="text" class="form-control" value=" ${{ number_format($item->total, 2, '.', ',') }}" readonly>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name">Total a cobrar *</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/efectivo.webp') }}" alt="" width="25px">
+                                    </span>
+                                    <input type="text" class="form-control" value=" ${{ number_format($item->total, 2, '.', ',') }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name">Restante</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/depositar.png') }}" alt="" width="25px">
+                                    </span>
+                                    <input type="float" class="form-control" name="restante" value=" ${{ number_format($item->restante, 2, '.', ',') }}" readonly>
+                                </div>
                             </div>
                         </div>
 
@@ -233,16 +248,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        {{-- <div class="form-group">
-                            <label for="name">Restante</label>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1">
-                                    <img src="{{ asset('img/icon/coins.webp') }}" alt="" width="25px">
-                                </span>
-                                <input type="float" class="form-control restante" id="restante_{{ $item->id }}" name="restante" readonly>
-                            </div>
-                        </div> --}}
                     </div>
                 </div>
 
