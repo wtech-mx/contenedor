@@ -12,13 +12,27 @@
                 <input type="hidden" name="_method" value="PATCH">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="form-group">
-                            <label for="name">Total a pagar *</label>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1">
-                                    <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
-                                </span>
-                                <input type="float" class="form-control" id="total_{{ $item->id }}" name="total" value=" ${{ number_format($item->total_proveedor, 2, '.', ',') }}" readonly>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name">Total a pagar</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                    </span>
+                                    <input type="float" class="form-control" id="total_{{ $item->id }}" name="total" value=" ${{ number_format($item->total_proveedor, 2, '.', ',') }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name">Restante</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                    </span>
+                                    <input type="float" class="form-control" value=" ${{ number_format($item->prove_restante, 2, '.', ',') }}" readonly>
+                                </div>
                             </div>
                         </div>
 

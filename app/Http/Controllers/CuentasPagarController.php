@@ -22,7 +22,7 @@ class CuentasPagarController extends Controller
             $query->where('cotizaciones.estatus', '=', 'Aprobada')
                   ->orWhere('cotizaciones.estatus', '=', 'Finalizado');
         })
-        ->where('cotizaciones.prove_monto1', '=', NULL)
+        ->where('cotizaciones.prove_restante', '>', 0)
         ->select('cotizaciones.id')
         ->pluck('cotizaciones.id');
 
@@ -50,8 +50,8 @@ class CuentasPagarController extends Controller
                   ->orWhere('cotizaciones.estatus', '=', 'Finalizado');
         })
         ->where('asignaciones.id_proveedor', '=', $id)
-        ->where('cotizaciones.prove_monto1', '=', NULL)
-        ->select('asignaciones.*', 'docum_cotizacion.num_contenedor', 'docum_cotizacion.id_cotizacion', 'cotizaciones.estatus')
+        ->where('cotizaciones.prove_restante', '>', 0)
+        ->select('asignaciones.*', 'docum_cotizacion.num_contenedor', 'docum_cotizacion.id_cotizacion', 'cotizaciones.estatus', 'cotizaciones.prove_restante')
         ->get();
 
         $bancos = Bancos::get();
@@ -84,10 +84,9 @@ class CuentasPagarController extends Controller
             $cotizacion->prove_comprobante_pago2 = $fileName;
         }
 
-        // $suma = $request->get('monto1') + $request->get('monto2');
-        // $resta = $cotizacion->total - $suma;
-        // $cotizacion->prove_restante = $resta;
-
+        $suma = $request->get('monto1') + $request->get('monto2');
+        $resta = $cotizacion->prove_restante - $suma;
+        $cotizacion->prove_restante = $resta;
         $cotizacion->update();
 
         return redirect()->back()->with('success', 'Comprobante de pago exitosamente');
@@ -95,12 +94,22 @@ class CuentasPagarController extends Controller
 
     public function update_varios(Request $request){
         $cotizacionesData = $request->get('id_cotizacion');
+        $remainingTotal = $request->get('remaining_total');
+
         for ($count = 0; $count < count($cotizacionesData); $count++) {
             $asignacion = Asignaciones::where('id', '=', $cotizacionesData[$count])->first();
             $doc = DocumCotizacion::where('id', '=', $asignacion->id_contenedor)->first();
 
             $cotizacion = Cotizaciones::where('id', '=', $doc->id_cotizacion)->first();
-            $cotizacion->prove_monto1 = $cotizacion->total;
+
+            if ($count == count($cotizacionesData) - 1 && $remainingTotal > 0) {
+                // Última cotización y remainingTotal es mayor a 0
+                $cotizacion->prove_restante = $remainingTotal;
+            } else {
+                // Para todas las demás cotizaciones o si remainingTotal es 0
+                $cotizacion->prove_restante = 0;
+            }
+
             $cotizacion->update();
         }
 

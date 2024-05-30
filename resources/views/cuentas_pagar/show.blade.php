@@ -30,11 +30,35 @@
                             <div class="row">
                                 <input type="hidden" id="id_cliente" name="id_cliente" value="{{ $cliente->id }}">
                                 <div class="col-6" style="    display: grid;">
-                                    <select class="form-control cotizaciones" name="id_cotizacion[]" id="id_cotizacion[]" multiple>
+                                    <select class="form-control cotizaciones" name="id_cotizacion[]" id="id_cotizacion" multiple>
                                         @foreach($cotizacionesPorPagar as $item)
-                                            <option value="{{ $item->id }}">{{ $item->num_contenedor }} / ${{ number_format($item->total_proveedor, 2, '.', ',') }}</option>
+                                            <option value="{{ $item->id }}" data-total="{{ $item->total_proveedor }}">{{ $item->num_contenedor }} / ${{ number_format($item->total_proveedor, 2, '.', ',') }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="name">Total a pagar</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input class="form-control" type="text" name="total_sum" id="total_sum" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="name">Resta</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input class="form-control" type="text" name="remaining_total" id="remaining_total" readonly>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <h5 class="modal-title mt-3">Metodo de pago 1</h5>
@@ -176,7 +200,7 @@
                                 @foreach ($cotizacionesPorPagar as $item)
                                     <tr>
                                         <td>{{ $item->num_contenedor }}</td>
-                                        <td>${{ number_format($item->total_proveedor, 2, '.', ',') }}</td>
+                                        <td>${{ number_format($item->prove_restante, 2, '.', ',') }}</td>
                                         <td>
                                             @if ($item->estatus == 'Aprobada')
                                                 En curso
@@ -211,6 +235,32 @@
 
         $(document).ready(function() {
             $('.cotizaciones').select2();
+        });
+
+        $(document).ready(function() {
+            function updateRemainingTotal() {
+                const totalSum = parseFloat($('#total_sum').val()) || 0;
+                const monto1 = parseFloat($('#monto1_varios').val()) || 0;
+                const monto2 = parseFloat($('#monto2_varios').val()) || 0;
+                const remainingTotal = totalSum - (monto1 + monto2);
+
+                $('#remaining_total').val(remainingTotal.toFixed(2));
+            }
+
+            $('#id_cotizacion').on('change', function() {
+                let totalSum = 0;
+
+                $('#id_cotizacion option:selected').each(function() {
+                    totalSum += parseFloat($(this).data('total'));
+                });
+
+                $('#total_sum').val(totalSum.toFixed(2));
+                updateRemainingTotal();
+            });
+
+            $('#monto1_varios, #monto2_varios').on('input', function() {
+                updateRemainingTotal();
+            });
         });
     </script>
 

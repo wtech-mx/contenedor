@@ -203,6 +203,10 @@ class PlaneacionController extends Controller
         $asignaciones->save();
 
         $cotizacion = Cotizaciones::where('id', '=',  $request->get('cotizacion'))->first();
+        if($request->get('id_proveedor') == NULL){
+        }else{
+            $cotizacion->prove_restante = $asignaciones->total_proveedor;
+        }
         $cotizacion->estatus_planeacion = 1;
         $cotizacion->tipo_viaje = $request->get('tipo');
         $cotizacion->update();
