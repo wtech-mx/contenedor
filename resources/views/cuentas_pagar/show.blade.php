@@ -29,7 +29,7 @@
                             @csrf
                             <div class="row">
                                 <input type="hidden" id="id_cliente" name="id_cliente" value="{{ $cliente->id }}">
-                                <div class="col-3">
+                                <div class="col-6" style="    display: grid;">
                                     <select class="form-control cotizaciones" name="id_cotizacion[]" id="id_cotizacion[]" multiple>
                                         @foreach($cotizacionesPorPagar as $item)
                                             <option value="{{ $item->id }}">{{ $item->num_contenedor }} / ${{ number_format($item->total_proveedor, 2, '.', ',') }}</option>
@@ -202,8 +202,7 @@
 
 @endsection
 @section('datatable')
-    <script src="{{ asset('assets/admin/vendor/jquery/dist/jquery.min.js')}}"></script>
-    <script src="{{ asset('assets/admin/vendor/select2/dist/js/select2.min.js')}}"></script>
+    <script src="{{ asset('assets/vendor/select2/dist/js/select2.min.js')}}"></script>
     <script>
         const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
         searchable: true,
