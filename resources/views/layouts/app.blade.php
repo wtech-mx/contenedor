@@ -106,6 +106,8 @@
     document.getElementById('backButton').addEventListener('click', function(event) {
         event.preventDefault(); // Evitar el comportamiento predeterminado del enlace
         history.back(); // Volver a la página anterior
+        location.reload();
+
     });
 </script>
 
