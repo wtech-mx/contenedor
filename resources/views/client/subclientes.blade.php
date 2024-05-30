@@ -11,6 +11,9 @@ Subcliuente
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <a id="backButton" class="btn" style="background: {{$configuracion->color_boton_close}}; color: #ffff; margin-right: 3rem;">
+                                Regresar
+                            </a>
 
                             <h2 id="card_title">
                                Subcliente <br>{{ $subcliente->nombre }}

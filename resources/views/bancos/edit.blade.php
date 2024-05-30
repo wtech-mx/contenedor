@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Bancos
+    Bancos Edit
 @endsection
 
 @section('content')
@@ -127,6 +127,9 @@
             <div class="col-12 col-md-6 col-xl-6 mb-4"">
                 <div class="card h-100">
                     <div class="card-header pb-0 p-3">
+                        <a id="backButton" class="btn" style="background: {{$configuracion->color_boton_close}}; color: #ffff; margin-right: 3rem;">
+                            Regresar
+                        </a>
                         <h6 class="mb-0">Cobros</h6>
                     </div>
                     <div class="card-body p-3">

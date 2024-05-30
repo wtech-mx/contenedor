@@ -24,7 +24,7 @@
                         </a>
                     </div>
 
-                    <div class="collapse container_filter " id="collapseFilter" style="background: #ffffff;">
+                    <div class="collapse container_filter p-3" id="collapseFilter" style="background: #ffffff;">
                         <form method="POST" action="{{ route('update_varios.pagar') }}" enctype="multipart/form-data" role="form">
                             @csrf
                             <div class="row">

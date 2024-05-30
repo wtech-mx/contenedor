@@ -12,11 +12,10 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <h3 class="mb-3">Crear Cotizacion</h3>
-
                             <a class="btn"  href="{{ route('index.cotizaciones') }}" style="background: {{$configuracion->color_boton_close}}; color: #ffff;margin-right: 3rem;">
                                 Regresar
                             </a>
+                            <h3 class="mb-3">Crear Cotizacion</h3>
                         </div>
                     </div>
 
