@@ -80,21 +80,22 @@ class CuentasCobrarController extends Controller
 
     public function update_varios(Request $request){
         $cotizacionesData = $request->get('id_cotizacion');
+        $abonos = $request->get('abono');
         $remainingTotal = $request->get('remaining_total');
 
-        for ($count = 0; $count < count($cotizacionesData); $count++) {
-            $cotizacion = Cotizaciones::where('id', '=', $cotizacionesData[$count])->first();
+        foreach ($cotizacionesData as $id) {
+            $cotizacion = Cotizaciones::where('id', '=', $id)->first();
 
-            if ($count == count($cotizacionesData) - 1 && $remainingTotal > 0) {
-                // Última cotización y remainingTotal es mayor a 0
-                $cotizacion->restante = $remainingTotal;
-                $cotizacion->estatus_pago = 0;
-            } else {
-                // Para todas las demás cotizaciones o si remainingTotal es 0
-                $cotizacion->restante = 0;
-                $cotizacion->estatus_pago = 1;
+            // Establecer el abono y calcular el restante
+            $abono = isset($abonos[$id]) ? floatval($abonos[$id]) : 0;
+            $nuevoRestante = $cotizacion->total - $abono;
+
+            if ($nuevoRestante < 0) {
+                $nuevoRestante = 0;
             }
 
+            $cotizacion->restante = $nuevoRestante;
+            $cotizacion->estatus_pago = ($nuevoRestante == 0) ? 1 : 0;
             $cotizacion->update();
         }
 
