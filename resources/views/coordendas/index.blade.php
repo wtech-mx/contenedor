@@ -55,7 +55,7 @@
                 @else
                     <p>Num de Contenedor : {{ $coordenadas->Cotizacion->DocCotizacion->num_contenedor }}</p>
                 @endif
-                @if($coordenadas->id_operador == null)
+                @if($coordenadas->Asignaciones->id_operador == null)
                     <p>Telefono proveedor : {{ $coordenadas->Asignaciones->Proveedor->telefono }}</p>
                 @else
                     <p>Telefono operador : {{ $coordenadas->Asignaciones->Operador->telefono }}</p>

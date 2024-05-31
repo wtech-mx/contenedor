@@ -12,7 +12,6 @@ class CoordenadasController extends Controller
 
         $coordenadas = Coordenadas::where('id_asignacion' ,'=', $id)->first();
 
-
         return view('coordendas.index',compact('coordenadas'));
 
     }

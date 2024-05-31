@@ -47,6 +47,6 @@ class Coordenadas extends Model
 
     public function Asignaciones()
     {
-        return $this->belongsTo(Asignaciones::class, 'id_cotizacion');
+        return $this->belongsTo(Asignaciones::class, 'id_asignacion');
     }
 }
