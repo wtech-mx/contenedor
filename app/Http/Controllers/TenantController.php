@@ -42,7 +42,7 @@ class TenantController extends Controller
 
 
         $tenant->domains()->create([
-            'domain' => $tenant->id .'.'.'contenedor.test',
+            'domain' => $tenant->id .'.'.'contenedores.wtech.com.mx',
         ]);
 
         return redirect()->back()->with('success', 'Comprobante de pago exitosamente');
@@ -62,7 +62,7 @@ class TenantController extends Controller
         ]);
 
         $tenant->domains()->update([
-            'domain' => $request->get('id') .'.'.'contenedor.test',
+            'domain' => $request->get('id') .'.'.'contenedores.wtech.com.mx',
         ]);
 
         return redirect()->back()->with('success', 'Comprobante de pago exitosamente');
