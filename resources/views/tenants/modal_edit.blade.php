@@ -5,7 +5,7 @@
           <h5 class="modal-title">Crear Operadores</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form method="POST" action="{{ route('update.tenants',{{  $item }}) }}" id="" enctype="multipart/form-data" role="form">
+        <form method="POST" action="{{ route('update.tenants',$item) }}" id="" enctype="multipart/form-data" role="form">
             @csrf
             @method('PUT')
 
