@@ -52,7 +52,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('tenants', [App\Http\Controllers\TenantController::class, 'index'])->name('index.tenants');
     Route::post('tenants/create', [App\Http\Controllers\TenantController::class, 'store'])->name('store.tenants');
     Route::patch('tenants/update/{id}', [App\Http\Controllers\TenantController::class, 'update'])->name('update.tenants');
-
+    Route::delete('tenants/eliminar/{id}', [TenantController::class, 'eliminar'])->name('eliminar.tenants');
 
     // ==================== C L I E N T E S ====================
     Route::resource('clients', ClientController::class);

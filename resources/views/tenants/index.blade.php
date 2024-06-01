@@ -47,6 +47,11 @@
                                                     <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipoEditModal-{{$item->id}}">
                                                         <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
                                                     </button>
+                                                    <form action="{{ route('eliminar.tenants',$item) }}"   class=" d-inline" >
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger" >Eliminar</button>
+                                                    </form>
                                                 </th>
                                             </tr>
 

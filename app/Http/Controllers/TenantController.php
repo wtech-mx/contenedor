@@ -49,28 +49,6 @@ class TenantController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Tenant  $tenant
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Tenant $tenant)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Tenant  $tenant
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tenant $tenant)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -79,7 +57,16 @@ class TenantController extends Controller
      */
     public function update(Request $request, Tenant $tenant)
     {
-        //
+        $tenant->update([
+            'id' => $request->get('id'),
+        ]);
+
+        $tenant->domains()->update([
+            'domain' => $request->get('id') .'.'.'contenedor.test',
+        ]);
+
+        return redirect()->back()->with('success', 'Comprobante de pago exitosamente');
+
     }
 
     /**
@@ -92,4 +79,12 @@ class TenantController extends Controller
     {
         //
     }
+
+    public function eliminar(Tenant $tenant){
+
+        $tenant->delete();
+        return redirect()->back();
+
+    }
+
 }

@@ -5,8 +5,9 @@
           <h5 class="modal-title">Crear Operadores</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form method="POST" action="{{ route('store.tenants') }}" id="" enctype="multipart/form-data" role="form">
+        <form method="POST" action="{{ route('update.tenants',{{  $item }}) }}" id="" enctype="multipart/form-data" role="form">
             @csrf
+            @method('PUT')
 
             <div class="modal-body">
                 <div class="row">
@@ -17,7 +18,7 @@
                             <span class="input-group-text" id="basic-addon1">
                                 <img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px">
                             </span>
-                            <input name="id" id="id" type="text" class="form-control" >
+                            <input name="id" id="id" type="text" class="form-control" value="{{  $item->id }}">
                         </div>
                     </div>
 
