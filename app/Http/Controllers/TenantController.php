@@ -42,7 +42,7 @@ class TenantController extends Controller
 
 
         $tenant->domains()->create([
-            'domain' => $tenant->id .'.'.'contenedores.wtech.com.mx',
+            'domain' => $tenant->id .'.'.'gologipro.com',
         ]);
 
         return redirect()->back()->with('success', 'Comprobante de pago exitosamente');
@@ -62,7 +62,7 @@ class TenantController extends Controller
         ]);
 
         $tenant->domains()->update([
-            'domain' => $request->get('id') .'.'.'contenedores.wtech.com.mx',
+            'domain' => $request->get('id') .'.'.'gologipro.com',
         ]);
 
         return redirect()->back()->with('success', 'Comprobante de pago exitosamente');

@@ -98,7 +98,7 @@
                     var fechaInicio = formatDate(info.event.start);
                     var fechaFin = formatDate(info.event.end);
                     var urlId = info.event.extendedProps.urlId;
-                    var telOperadorUrl = 'https://contenedores.wtech.com.mx/coordenadas/' + info.event.extendedProps.idCotizacion;
+                    var telOperadorUrl = 'https://gologipro.com/coordenadas/' + info.event.extendedProps.idCotizacion;
 
                     // Establecer los valores en los inputs del formulario
                     document.getElementById('eventoFechaStart').value = fechaInicio;
