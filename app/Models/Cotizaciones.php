@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Cotizaciones extends Model
 {
@@ -34,6 +35,7 @@ class Cotizaciones extends Model
         'precio_tonelada',
         'id_banco1',
         'id_banco2',
+        'id_empresa',
         'prove_restante',
     ];
 
@@ -60,5 +62,18 @@ class Cotizaciones extends Model
     public function Bancos2()
     {
         return $this->hasOne(Bancos::class, 'id_banco2');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($empresa) {
+            $empresa->id_empresa = Auth::user()->id_empresa;
+        });
+
+        static::updating(function ($empresa) {
+            $empresa->id_empresa = Auth::user()->id_empresa;
+        });
     }
 }

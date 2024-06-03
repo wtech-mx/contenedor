@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class DocumCotizacion extends Model
 {
@@ -17,6 +18,8 @@ class DocumCotizacion extends Model
         'num_autorizacion',
         'boleta_liberacion',
         'doda',
+        'id_empresa',
+
     ];
 
     public function Cotizacion()
@@ -27,5 +30,18 @@ class DocumCotizacion extends Model
     public function Asignaciones()
     {
         return $this->hasOne(Asignaciones::class, 'id_contenedor');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($empresa) {
+            $empresa->id_empresa = Auth::user()->id_empresa;
+        });
+
+        static::updating(function ($empresa) {
+            $empresa->id_empresa = Auth::user()->id_empresa;
+        });
     }
 }

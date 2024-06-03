@@ -10,8 +10,8 @@ use Session;
 class ProveedorController extends Controller
 {
     public function index(){
-        $proveedores = Proveedor::orderBy('created_at', 'desc')->get();
-        $cuentas = CuentasBancarias::orderBy('created_at', 'desc')->get();
+        $proveedores = Proveedor::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
+        $cuentas = CuentasBancarias::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
 
         return view('proveedores.index', compact('proveedores', 'cuentas'));
     }

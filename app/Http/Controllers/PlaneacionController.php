@@ -21,15 +21,15 @@ use Illuminate\Support\Facades\Validator;
 class PlaneacionController extends Controller
 {
     public function index(){
-        $cotizaciones = Cotizaciones::where('estatus', '=', 'Aprobada')->where('estatus_planeacion', '=', NULL)->get();
+        $cotizaciones = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus', '=', 'Aprobada')->where('estatus_planeacion', '=', NULL)->get();
         $numCotizaciones = $cotizaciones->count();
-        $proveedores = Proveedor::where('tipo', 'servicio de burreo')->orwhere('tipo', 'servicio de viaje')->get();
+        $proveedores = Proveedor::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('tipo', 'servicio de burreo')->orwhere('tipo', 'servicio de viaje')->get();
 
-        $equipos = Equipo::all();
-        $operadores = Operador::all();
+        $equipos = Equipo::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
+        $operadores = Operador::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
         $events = [];
 
-        $appointments = Asignaciones::get();
+        $appointments = Asignaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
 
 
         foreach ($appointments as $appointment) {
@@ -146,7 +146,7 @@ class PlaneacionController extends Controller
                 ->get();
 
 
-            $bancos = Bancos::where('saldo', '>', '0')->get();
+            $bancos = Bancos::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('saldo', '>', '0')->get();
 
             return view('planeacion.resultado_equipos', ['bancos' => $bancos, 'dolysNoAsignados' => $dolysNoAsignados, 'camionesNoAsignados' => $camionesNoAsignados, 'chasisNoAsignados' => $chasisNoAsignados, 'operadorNoAsignados' => $operadorNoAsignados]);
 

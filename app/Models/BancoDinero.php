@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class BancoDinero extends Model
 {
@@ -23,6 +24,7 @@ class BancoDinero extends Model
         'id_banco1',
         'id_banco2',
         'tipo',
+        'id_empresa',
     ];
     public function Cliente()
     {
@@ -35,5 +37,18 @@ class BancoDinero extends Model
     public function Banco2()
     {
         return $this->belongsTo(Bancos::class, 'id_banco2');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($empresa) {
+            $empresa->id_empresa = Auth::user()->id_empresa;
+        });
+
+        static::updating(function ($empresa) {
+            $empresa->id_empresa = Auth::user()->id_empresa;
+        });
     }
 }

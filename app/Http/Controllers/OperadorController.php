@@ -15,28 +15,31 @@ use Session;
 class OperadorController extends Controller
 {
     public function index(){
-        $operadores = Operador::orderBy('created_at', 'desc')->get();
-        $pagos_pendientes = Asignaciones::where('estatus_pagado', '=', 'Pendiente Pago')->get();
+        $operadores = Operador::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
+        $pagos_pendientes = Asignaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus_pagado', '=', 'Pendiente Pago')->get();
         return view('operadores.index', compact('operadores', 'pagos_pendientes'));
     }
 
     public function show($id){
-        $operador = Operador::where('id', '=', $id)->first();
-        $pagos = Asignaciones::where('estatus_pagado', '=', 'Pagado')->where('id_operador', '=', $id)->get();
+        $operador = Operador::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('id', '=', $id)->first();
+        $pagos = Asignaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus_pagado', '=', 'Pagado')->where('id_operador', '=', $id)->get();
         $comprobantes_gasolina = ComprobanteGastos::join('asignaciones', 'comprobantes_gastos.id_asignacion', 'asignaciones.id')
                                             ->where('asignaciones.id_operador', '=', $id)
+                                            ->where('id_empresa' ,'=',auth()->user()->id_empresa)
                                             ->where('comprobantes_gastos.tipo', '=', 'Gasolina')
                                             ->select('comprobantes_gastos.*')
                                             ->get();
 
         $comprobantes_casetas = ComprobanteGastos::join('asignaciones', 'comprobantes_gastos.id_asignacion', 'asignaciones.id')
                                                     ->where('asignaciones.id_operador', '=', $id)
+                                                    ->where('id_empresa' ,'=',auth()->user()->id_empresa)
                                                     ->where('comprobantes_gastos.tipo', '=', 'Casetas')
                                                     ->select('comprobantes_gastos.*')
                                                     ->get();
 
         $comprobantes_otros = ComprobanteGastos::join('asignaciones', 'comprobantes_gastos.id_asignacion', 'asignaciones.id')
                                                     ->where('asignaciones.id_operador', '=', $id)
+                                                    ->where('id_empresa' ,'=',auth()->user()->id_empresa)
                                                     ->where('comprobantes_gastos.tipo', '=', 'Otros')
                                                     ->select('comprobantes_gastos.*')
                                                     ->get();
@@ -185,7 +188,7 @@ class OperadorController extends Controller
 
     public function show_pagos($id){
         $operador = Operador::find($id);
-        $pagos_pendientes = Asignaciones::where('estatus_pagado', '=', 'Pendiente Pago')
+        $pagos_pendientes = Asignaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus_pagado', '=', 'Pendiente Pago')
         ->where('id_operador', '=', $id)
         ->get();
 

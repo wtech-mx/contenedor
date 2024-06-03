@@ -107,7 +107,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/sku.webp') }}" alt="" width="25px">
                                             </span>
-                                            <input name="placas" id="placas" type="text" class="form-control" required>
+                                            <input name="placas" id="placas" type="text" class="form-control" >
                                         </div>
                                     </div>
 

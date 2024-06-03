@@ -12,7 +12,7 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header">
-              <h3 class="mb-3">Create New User</h3>
+              <h3 class="mb-3">Crear nuevo usuario</h3>
                <a class="btn" href="{{ route('users.index') }}" style="background: {{$configuracion->color_boton_close}}; color: #ffff"> Back</a>
                     @if (count($errors) > 0)
                       <div class="alert alert-danger">
@@ -43,6 +43,19 @@
                             {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
                         </div>
                     </div>
+
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="">Empresa</label>
+                            <select name="id_empresa" id="" class="form-select">
+                                <option value="">Seleciona una opcion</option>
+                                @foreach ($empresas as  $item)
+                                    <option value="{{ $item->id }}">{{ $item->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="col-xs-12 col-sm-12 col-md-6">
                         <div class="form-group">
                             <label class="form-control-label">Password:</label>

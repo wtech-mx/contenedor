@@ -26,10 +26,9 @@ class ClientController extends Controller
     public function index()
     {
 
+        $clients = Client::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
 
-        $clients = Client::orderBy('created_at', 'desc')->get();
-
-        $subclientes = Subclientes::orderBy('created_at', 'desc')->get();
+        $subclientes = Subclientes::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
 
         return view('client.index', compact('clients', 'subclientes'));
     }
@@ -61,6 +60,8 @@ class ClientController extends Controller
         $fechaActual = date('Y-m-d');
 
         $client = new Client;
+        $client->id_empresa =auth()->user()->id_empresa;
+
         $client->nombre = $request->get('nombre');
         $client->correo = $request->get('correo');
         $client->telefono = $request->get('telefono');

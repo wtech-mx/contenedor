@@ -23,15 +23,15 @@ class CotizacionesController extends Controller
 {
     public function index(){
 
-        $cotizaciones = Cotizaciones::where('estatus','=','Pendiente')->orderBy('created_at', 'desc')->get();
-        $cotizaciones_aprovadas = Cotizaciones::where('estatus','=','Aprobada')->where('estatus_planeacion','=', NULL)->orderBy('created_at', 'desc')->get();
-        $cotizaciones_canceladas = Cotizaciones::where('estatus','=','Cancelada')->orderBy('created_at', 'desc')->get();
-        $cotizaciones_planeadas = Cotizaciones::where('estatus','=','Aprobada')->where('estatus_planeacion','=', 1)->orderBy('created_at', 'desc')->get();
-        $cotizaciones_finalizadas = Cotizaciones::where('estatus','=','Finalizado')->orderBy('created_at', 'desc')->get();
+        $cotizaciones = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Pendiente')->orderBy('created_at', 'desc')->get();
+        $cotizaciones_aprovadas = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Aprobada')->where('estatus_planeacion','=', NULL)->orderBy('created_at', 'desc')->get();
+        $cotizaciones_canceladas = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Cancelada')->orderBy('created_at', 'desc')->get();
+        $cotizaciones_planeadas = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Aprobada')->where('estatus_planeacion','=', 1)->orderBy('created_at', 'desc')->get();
+        $cotizaciones_finalizadas = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Finalizado')->orderBy('created_at', 'desc')->get();
 
-        $equipos_dolys = Equipo::where('tipo','=','Dolys')->get();
-        $equipos_chasis = Equipo::where('tipo','=','Chasis / Plataforma')->get();
-        $equipos_camiones = Equipo::where('tipo','=','Tractos / Camiones')->get();
+        $equipos_dolys = Equipo::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('tipo','=','Dolys')->get();
+        $equipos_chasis = Equipo::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('tipo','=','Chasis / Plataforma')->get();
+        $equipos_camiones = Equipo::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('tipo','=','Tractos / Camiones')->get();
         $operadores = Operador::get();
         $bancos = Bancos::get();
         $proveedores = Proveedor::get();
@@ -41,7 +41,7 @@ class CotizacionesController extends Controller
     }
 
     public function create(){
-        $clientes = Client::get();
+        $clientes = Client::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
 
         return view('cotizaciones.create',compact('clientes'));
     }
@@ -49,7 +49,7 @@ class CotizacionesController extends Controller
     public function getSubclientes($clienteId)
     {
         // Buscar los subclientes asociados al cliente
-        $subclientes = Subclientes::where('id_cliente', $clienteId)->get();
+        $subclientes = Subclientes::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('id_cliente', $clienteId)->get();
 
         // Devolver los subclientes en formato JSON
         return response()->json($subclientes);
@@ -148,7 +148,7 @@ class CotizacionesController extends Controller
         $cotizacion = Cotizaciones::where('id', '=', $id)->first();
         $documentacion = DocumCotizacion::where('id_cotizacion', '=', $cotizacion->id)->first();
         $gastos_extras = GastosExtras::where('id_cotizacion', '=', $cotizacion->id)->get();
-        $clientes = Client::get();
+        $clientes = Client::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
 
         return view('cotizaciones.edit', compact('cotizacion', 'documentacion', 'clientes','gastos_extras'));
     }

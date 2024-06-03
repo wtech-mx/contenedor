@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class BancosController extends Controller
 {
     public function index(){
-        $bancos = Bancos::get();
+        $bancos = Bancos::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
 
         return view('bancos.index', compact('bancos'));
     }
@@ -33,7 +33,7 @@ class BancosController extends Controller
     }
 
     public function edit($id){
-        $banco = Bancos::where('id', '=', $id)->first();
+        $banco = Bancos::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('id', '=', $id)->first();
         $cotizaciones = Cotizaciones::where('id_banco1', '=', $id)->orwhere('id_banco2', '=', $id)->get();
         $proveedores = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
                     ->join('asignaciones', 'docum_cotizacion.id', '=', 'asignaciones.id_contenedor')

@@ -18,6 +18,7 @@ class CuentasPagarController extends Controller
         $cotizacionIds = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
         ->join('asignaciones', 'docum_cotizacion.id', '=', 'asignaciones.id_contenedor')
         ->whereNull('asignaciones.id_camion')
+        ->where('cotizaciones.id_empresa', '=',auth()->user()->id_empresa)
         ->where(function($query) {
             $query->where('cotizaciones.estatus', '=', 'Aprobada')
                   ->orWhere('cotizaciones.estatus', '=', 'Finalizado');
