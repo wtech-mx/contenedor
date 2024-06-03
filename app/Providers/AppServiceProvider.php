@@ -53,7 +53,7 @@ class AppServiceProvider extends ServiceProvider
                           ->orWhere('id_banco2', '=', $banco->id);
                 })
                 ->get();
-
+                
                 $banco_dinero_salida = BancoDinero::where('tipo', '=', 'Salida')
                 ->where(function($query) use ($banco) {
                     $query->where('id_banco1', '=', $banco->id)

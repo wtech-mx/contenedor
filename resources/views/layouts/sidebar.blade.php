@@ -139,9 +139,9 @@
           <div class="collapse " id="sistem">
             <ul class="nav ms-4">
               <li class="nav-item ">
-                <a class="nav-link {{ (Request::is('tenants*') ? 'show' : '') }}" href="{{ route('index.tenants') }}">
-                  <span class="sidenav-mini-icon">T</span>
-                  <span class="sidenav-normal">Tenants</span>
+                <a class="nav-link {{ (Request::is('configuracion*') ? 'show' : '') }}" href="#">
+                  <span class="sidenav-mini-icon">U</span>
+                  <span class="sidenav-normal">Horarios</span>
                 </a>
               </li>
             </ul>

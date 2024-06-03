@@ -48,11 +48,14 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('permisos', PermisosController::class);
     Route::resource('users', UserController::class);
 
+<<<<<<< HEAD
     // ==================== T E N A N T S ====================
     Route::get('tenants', [App\Http\Controllers\TenantController::class, 'index'])->name('index.tenants');
     Route::post('tenants/create', [App\Http\Controllers\TenantController::class, 'store'])->name('store.tenants');
     Route::patch('tenants/update/{id}', [App\Http\Controllers\TenantController::class, 'update'])->name('update.tenants');
     Route::delete('tenants/eliminar/{id}', [TenantController::class, 'eliminar'])->name('eliminar.tenants');
+=======
+>>>>>>> parent of 87ebe26 (Axtualizacion de multitenany cnfig basca)
 
     // ==================== C L I E N T E S ====================
     Route::resource('clients', ClientController::class);
