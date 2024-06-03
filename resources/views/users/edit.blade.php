@@ -36,30 +36,52 @@
                             {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
                         </div>
                     </div>
+
                     <div class="col-xs-12 col-sm-12 col-md-6">
                         <div class="form-group">
                             <label class="form-control-label">Email:</label>
                             {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
                         </div>
                     </div>
+
+
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="">Empresa</label>
+                            <select name="id_empresa" id="" class="form-select">
+                                <option value="">Seleciona una opcion</option>
+                                @foreach ($empresas as  $item)
+                                    @if($item->id == $user->id_empresa)
+                                        <option value="" selected>{{ $item->nombre }}</option>
+                                    @endif
+                                    <option value="{{ $item->id }}">{{ $item->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+
                     <div class="col-xs-12 col-sm-12 col-md-6">
                         <div class="form-group">
                             <label class="form-control-label">Password:</label>
                             {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}
                         </div>
                     </div>
+
                     <div class="col-xs-12 col-sm-12 col-md-6">
                         <div class="form-group">
                             <label class="form-control-label">Confirm Password:</label>
                             {!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
                         </div>
                     </div>
+
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label class="form-control-label">Role:</label>
                             {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
                         </div>
                     </div>
+
                     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                         <button type="submit" class="btn" style="background: {{$configuracion->color_boton_save}}; color: #ffff">Submit</button>
                     </div>

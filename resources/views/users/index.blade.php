@@ -23,6 +23,7 @@
                        <th>No</th>
                        <th>Name</th>
                        <th>Email</th>
+                       <th>Empresa</th>
                        <th>Roles</th>
                        <th width="280px">Action</th>
                      </tr>
@@ -33,6 +34,7 @@
                         <td>{{ ++$i }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
+                        <td>{{ $user->Empresa->nombre }}</td>
                         <td>
                           @if(!empty($user->getRoleNames()))
                             @foreach($user->getRoleNames() as $v)
@@ -42,21 +44,19 @@
                         </td>
 
                         <td class="text-right">
-                          <div class="dropdown ">
-                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="fas fa-ellipsis-v"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                              <a class="dropdown-item" href="{{ route('users.show',$user->id) }}">
-                                  Show
-                              </a>
-                              <a class="dropdown-item" href="{{ route('users.edit',$user->id) }}">
-                                Edit
-                              </a>
-                            {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
+
+                          <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="{{ route('users.edit',$user->id) }}">Edit</a></li>
+                              <li>
+                                {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
                                 {!! Form::submit('Delete', ['class' => 'dropdown-item']) !!}
-                            {!! Form::close() !!}
-                            </div>
+                                {!! Form::close() !!}
+                              </li>
+                            </ul>
                           </div>
                         </td>
 

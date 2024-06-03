@@ -120,6 +120,11 @@
                   <span class="sidenav-mini-icon"> P </span>
                   <span class="sidenav-normal">Roles</span>
                 </a>
+
+                <a class="nav-link {{ (Request::is('empresas*') ? 'show' : '') }}" href="{{ route('empresas.index') }}">
+                    <span class="sidenav-mini-icon"> P </span>
+                    <span class="sidenav-normal">Empresas</span>
+                  </a>
               </li>
             </ul>
           </div>

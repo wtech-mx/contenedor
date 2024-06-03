@@ -22,9 +22,13 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
+
+
         $clients = Client::orderBy('created_at', 'desc')->get();
+
         $subclientes = Subclientes::orderBy('created_at', 'desc')->get();
 
         return view('client.index', compact('clients', 'subclientes'));

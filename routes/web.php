@@ -7,6 +7,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PermisosController;
+use App\Http\Controllers\EmpresasController;
 
 
 /*
@@ -38,6 +39,7 @@ Auth::routes();
 
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
+
 // ==================== C O O R D E N A D A S ====================
 
 Route::get('coordenadas/{id}', [App\Http\Controllers\CoordenadasController::class, 'index'])->name('index.cooredenadas');
@@ -48,14 +50,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('permisos', PermisosController::class);
     Route::resource('users', UserController::class);
 
-<<<<<<< HEAD
-    // ==================== T E N A N T S ====================
-    Route::get('tenants', [App\Http\Controllers\TenantController::class, 'index'])->name('index.tenants');
-    Route::post('tenants/create', [App\Http\Controllers\TenantController::class, 'store'])->name('store.tenants');
-    Route::patch('tenants/update/{id}', [App\Http\Controllers\TenantController::class, 'update'])->name('update.tenants');
-    Route::delete('tenants/eliminar/{id}', [TenantController::class, 'eliminar'])->name('eliminar.tenants');
-=======
->>>>>>> parent of 87ebe26 (Axtualizacion de multitenany cnfig basca)
+    // ==================== E M P R E S A S ====================
+    Route::resource('empresas', EmpresasController::class);
+    Route::post('empresas/create', [App\Http\Controllers\EmpresasController::class, 'store'])->name('store.empresas');
+    Route::patch('empresas/update/{id}', [App\Http\Controllers\EmpresasController::class, 'update'])->name('update.empresas');
 
     // ==================== C L I E N T E S ====================
     Route::resource('clients', ClientController::class);

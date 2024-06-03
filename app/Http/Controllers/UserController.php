@@ -10,6 +10,7 @@ use DB;
 use Hash;
 use Illuminate\Support\Arr;
 use Session;
+use App\Models\Empresas;
 
 class UserController extends Controller
 {
@@ -21,6 +22,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $data = User::orderBy('id','DESC')->paginate(5);
+
         return view('users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -83,10 +85,14 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
+
         $roles = Role::pluck('name','name')->all();
+
         $userRole = $user->roles->pluck('name','name')->all();
 
-        return view('users.edit',compact('user','roles','userRole'));
+        $empresas = Empresas::orderBy('id','DESC')->get();
+
+        return view('users.edit',compact('user','roles','userRole','empresas'));
     }
 
     /**
@@ -105,6 +111,7 @@ class UserController extends Controller
             'roles' => 'required'
         ]);
 
+
         $input = $request->all();
         if(!empty($input['password'])){
             $input['password'] = Hash::make($input['password']);
@@ -113,6 +120,7 @@ class UserController extends Controller
         }
 
         $user = User::find($id);
+
         $user->update($input);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
 
