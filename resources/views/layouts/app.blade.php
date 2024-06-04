@@ -79,7 +79,6 @@
   <!-- End Modal lateral Congif -->
 
 
-
   <!--   Core JS Files   -->
   {{-- <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js')}}"></script> --}}
 
@@ -108,8 +107,20 @@
         history.back(); // Volver a la página anterior
 
     });
-</script>
 
+
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('miFormulario');
+        const submitButton = document.getElementById('btnEnviar');
+
+        form.addEventListener('submit', function() {
+            submitButton.disabled = true;
+            submitButton.textContent = 'Enviando...'; // Opcional: Cambiar el texto del botón
+        });
+    });
+</script>
 
 
   @yield('datatable')
