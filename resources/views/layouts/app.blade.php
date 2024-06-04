@@ -36,8 +36,12 @@
         }
 
         .dataTable-wrapper .dataTable-container .table tbody tr td {
-            padding: 1px 0.3rem!important;
-            font-size: 11pm!important;
+            padding: 0px 0.3rem!important;
+            font-size: 13px!important;
+        }
+
+        .dataTable-wrapper .dataTable-top {
+            padding: 0rem 1.5rem 0rem 1.5rem;
         }
     </style>
 
