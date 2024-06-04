@@ -192,7 +192,7 @@ class OperadorController extends Controller
         ->where('id_operador', '=', $id)
         ->get();
 
-        $bancos = Bancos::get();
+        $bancos = Bancos::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
 
         return view('operadores.pagos_pendientes', compact('pagos_pendientes', 'operador', 'bancos'));
     }

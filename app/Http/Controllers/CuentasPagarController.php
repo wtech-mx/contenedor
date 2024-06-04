@@ -55,7 +55,7 @@ class CuentasPagarController extends Controller
         ->select('asignaciones.*', 'docum_cotizacion.num_contenedor', 'docum_cotizacion.id_cotizacion', 'cotizaciones.estatus', 'cotizaciones.prove_restante')
         ->get();
 
-        $bancos = Bancos::get();
+        $bancos = Bancos::where('id_empresa', '=',auth()->user()->id_empresa)->get();
         $cliente = Proveedor::where('id', '=', $id)->first();
 
         return view('cuentas_pagar.show', compact('cotizacionesPorPagar', 'bancos', 'cliente'));

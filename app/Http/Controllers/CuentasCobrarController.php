@@ -41,7 +41,7 @@ class CuentasCobrarController extends Controller
         ->select('cotizaciones.*')
         ->get();
 
-        $bancos = Bancos::get();
+        $bancos = Bancos::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
 
         return view('cuentas_cobrar.show', compact('cotizacionesPorPagar', 'bancos', 'cliente'));
     }

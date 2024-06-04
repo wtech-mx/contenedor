@@ -23,7 +23,12 @@ class PlaneacionController extends Controller
     public function index(){
         $cotizaciones = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus', '=', 'Aprobada')->where('estatus_planeacion', '=', NULL)->get();
         $numCotizaciones = $cotizaciones->count();
-        $proveedores = Proveedor::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('tipo', 'servicio de burreo')->orwhere('tipo', 'servicio de viaje')->get();
+        $proveedores = Proveedor::where('id_empresa' ,'=',auth()->user()->id_empresa)
+        ->where(function ($query) {
+            $query->where('tipo', '=', 'servicio de burreo')
+                  ->orwhere('tipo', '>=', 'servicio de viaje');
+        })
+        ->get();
 
         $equipos = Equipo::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
         $operadores = Operador::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
@@ -90,56 +95,64 @@ class PlaneacionController extends Controller
         $fechaFin = $request->fecha_fin;
 
         if($fechaInicio  &&  $fechaFin){
-            $camionesAsignados = Asignaciones::whereNotNull('id_camion')
+            $camionesAsignados = Asignaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)
+            ->whereNotNull('id_camion')
             ->where(function ($query) use ($fechaInicio, $fechaFin) {
                 $query->where('fecha_inicio', '<=', $fechaFin)
                       ->where('fecha_fin', '>=', $fechaInicio);
             })
             ->pluck('id_camion');
 
-            $camionesNoAsignados = Equipo::where('tipo', 'LIKE', '%Camiones%')
+            $camionesNoAsignados = Equipo::where('id_empresa' ,'=',auth()->user()->id_empresa)
+            ->where('tipo', 'LIKE', '%Camiones%')
             ->whereNotIn('id', $camionesAsignados)
             ->orWhereNotIn('id', function ($query) {
                 $query->select('id_camion')->from('asignaciones')->whereNull('id_camion');
             })
             ->get();
 
-            $chasisAsignados = Asignaciones::whereNotNull('id_chasis')
+            $chasisAsignados = Asignaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)
+            ->whereNotNull('id_chasis')
             ->where(function ($query) use ($fechaInicio, $fechaFin) {
                 $query->where('fecha_inicio', '<=', $fechaFin)
                       ->where('fecha_fin', '>=', $fechaInicio);
             })
             ->pluck('id_chasis');
 
-            $chasisNoAsignados = Equipo::where('tipo', 'LIKE', '%Chasis%')
+            $chasisNoAsignados = Equipo::where('id_empresa' ,'=',auth()->user()->id_empresa)
+            ->where('tipo', 'LIKE', '%Chasis%')
                 ->whereNotIn('id', $chasisAsignados)
                 ->orWhereNotIn('id', function ($query) {
                     $query->select('id_chasis')->from('asignaciones')->whereNull('id_chasis');
                 })
                 ->get();
 
-            $dolysAsignados = Asignaciones::whereNotNull('id_camion')
+            $dolysAsignados = Asignaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)
+            ->whereNotNull('id_camion')
             ->where(function ($query) use ($fechaInicio, $fechaFin) {
                 $query->where('fecha_inicio', '<=', $fechaFin)
                         ->where('fecha_fin', '>=', $fechaInicio);
             })
             ->pluck('id_camion');
 
-            $dolysNoAsignados = Equipo::where('tipo', 'LIKE', '%Dolys%')
+            $dolysNoAsignados = Equipo::where('id_empresa' ,'=',auth()->user()->id_empresa)
+            ->where('tipo', 'LIKE', '%Dolys%')
                 ->whereNotIn('id', $dolysAsignados)
                 ->orWhereNotIn('id', function ($query) {
                     $query->select('id_camion')->from('asignaciones')->whereNull('id_camion');
                 })
                 ->get();
 
-            $operadorAsignados = Asignaciones::whereNotNull('id_operador')
+            $operadorAsignados = Asignaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)
+            ->whereNotNull('id_operador')
             ->where(function ($query) use ($fechaInicio, $fechaFin) {
                 $query->where('fecha_inicio', '<=', $fechaFin)
                         ->where('fecha_fin', '>=', $fechaInicio);
             })
             ->pluck('id_operador');
 
-            $operadorNoAsignados = Operador::whereNotIn('id', $operadorAsignados)
+            $operadorNoAsignados = Operador::where('id_empresa' ,'=',auth()->user()->id_empresa)
+            ->whereNotIn('id', $operadorAsignados)
                 ->orWhereNotIn('id', function ($query) {
                     $query->select('id_operador')->from('asignaciones')->whereNull('id_operador');
                 })
