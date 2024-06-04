@@ -49,18 +49,18 @@
                                                 <td>{{$operador->nombre}}</td>
                                                 <td>{{$operador->telefono}}</td>
                                                 <td>
-                                                    <button class="btn btn-sm btn-danger">{{$registrosPendientes}}</button>
+                                                    <button class="btn btn-xs btn-danger">{{$registrosPendientes}}</button>
                                                 </td>
                                                 <td>
-                                                    <a type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#operadoresModal_Edit{{$operador->id}}">
+                                                    <a type="button" class="btn btn-xs btn-outline-primary" data-bs-toggle="modal" data-bs-target="#operadoresModal_Edit{{$operador->id}}">
                                                         <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
                                                     </a>
 
-                                                    <a type="button" class="btn btn-sm btn-outline-success" href="{{ route('show_pagos.operadores', $operador->id) }}">
+                                                    <a type="button" class="btn btn-xs btn-outline-success" href="{{ route('show_pagos.operadores', $operador->id) }}">
                                                         <img src="{{ asset('img/icon/depositar.png') }}" alt="" width="25px"> Pagos P.
                                                     </a>
 
-                                                    <a type="button" class="btn btn-sm btn-outline-info" href="{{ route('show.operadores', $operador->id) }}">
+                                                    <a type="button" class="btn btn-xs btn-outline-info" href="{{ route('show.operadores', $operador->id) }}">
                                                         <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px"> Pagos S.
                                                     </a>
                                                 </td>

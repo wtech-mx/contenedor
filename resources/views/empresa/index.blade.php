@@ -49,7 +49,7 @@ Empresas
 											<td>{{ $item->correo }}</td>
                                             <td>
                                             <td>
-                                                <a class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                                                <a class="btn btn-xs btn-success" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                                                     <i class="fa fa-fw fa-edit"></i> Editar</a>
                                             </td>
                                         </tr>

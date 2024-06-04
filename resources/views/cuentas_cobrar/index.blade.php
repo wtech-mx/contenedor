@@ -46,7 +46,7 @@ Cuentas Cobrar
 											<td>{{ $item->Cliente->telefono }}</td>
 											<td>{{ $item->total_cotizaciones }}</td>
                                             <td>
-                                                <a class="btn btn-sm btn-success" href="{{ route('show.cobrar', $item->id_cliente) }}">
+                                                <a class="btn btn-xs btn-success" href="{{ route('show.cobrar', $item->id_cliente) }}">
                                                     <i class="fa fa-fw fa-edit"></i> Ver
                                                 </a>
                                             </td>

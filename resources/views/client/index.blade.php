@@ -9,7 +9,7 @@ Clientes
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
+                    <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <a href="{{ route('dashboard') }}" class="btn" style="background: {{$configuracion->color_boton_close}}; color: #ffff; margin-right: 3rem;">
                                 Regresar
@@ -50,15 +50,15 @@ Clientes
 											<td>{{ $client->telefono }}</td>
 											<td>{{ $client->correo }}</td>
                                             <td>
-                                                <a type="btn" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#subclienteShowModal-{{$client->id}}" style="margin: 3px!important;">
+                                                <a type="btn" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#subclienteShowModal-{{$client->id}}" >
                                                     <i class="fa fa-fw fa-eye"></i> Ver
                                                 </a>
                                             </td>
                                             <td>
-                                                <a class="btn btn-xs btn-success" data-bs-toggle="modal" data-bs-target="#editModal-{{ $client->id }}" style="margin: 3px!important;">
+                                                <a class="btn btn-xs btn-success" data-bs-toggle="modal" data-bs-target="#editModal-{{ $client->id }}" >
                                                     <i class="fa fa-fw fa-edit"></i> Editar
                                                 </a>
-                                                <a type="btn" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#subclienteModal-{{$client->id}}" style="margin: 3px!important;">
+                                                <a type="btn" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#subclienteModal-{{$client->id}}" >
                                                     Subclientes
                                                 </a>
                                             </td>

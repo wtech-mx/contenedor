@@ -43,6 +43,10 @@
         .dataTable-wrapper .dataTable-top {
             padding: 0rem 1.5rem 0rem 1.5rem;
         }
+
+        .card .card-header {
+            padding: 1.5rem 1.5rem 0 1.5rem;        
+        }
     </style>
 
 </head>

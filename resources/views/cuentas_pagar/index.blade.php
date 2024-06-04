@@ -42,7 +42,7 @@ Cuentas Pagar
 											<td>{{ $item['proveedor']->telefono }}</td>
 											<td>{{ $item['total_cotizaciones'] }}</td>
                                             <td>
-                                                <a class="btn btn-sm btn-success" href="{{ route('show.pagar', $item['id_proveedor']) }}">
+                                                <a class="btn btn-xs btn-success" href="{{ route('show.pagar', $item['id_proveedor']) }}">
                                                     <i class="fa fa-fw fa-edit"></i> Ver
                                                 </a>
                                             </td>

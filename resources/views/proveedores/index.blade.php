@@ -50,15 +50,15 @@
                                                 <td>{{$proveedor->tipo}}</td>
                                                 <td>{{$proveedor->rfc}}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#cuentasModal{{$proveedor->id}}">
+                                                    <button type="button" class="btn btn-xs btn-outline-primary" data-bs-toggle="modal" data-bs-target="#cuentasModal{{$proveedor->id}}">
                                                         Ver cuentas registradas <img src="{{ asset('img/icon/business-card-design.webp') }}" alt="" width="20px">
                                                     </button>
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editModal{{$proveedor->id}}">
+                                                    <button type="button" class="btn btn-xs btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editModal{{$proveedor->id}}">
                                                         <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="20px">
                                                     </button>
-                                                    <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#editarModal{{$proveedor->id}}">
+                                                    <button type="button" class="btn btn-xs btn-outline-success" data-bs-toggle="modal" data-bs-target="#editarModal{{$proveedor->id}}">
                                                         <img src="{{ asset('img/icon/t credito.png.webp') }}" alt="" width="20px">
                                                     </button>
                                                 </td>

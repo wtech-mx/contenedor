@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <a href="{{ route('dashboard') }}" class="btn" style="background: {{$configuracion->color_boton_close}}; color: #ffff; margin-right: 3rem;">
+                            <a href="{{ route('dashboard') }}" class="btn btn-xs" style="background: {{$configuracion->color_boton_close}}; color: #ffff; margin-right: 3rem;">
                                 Regresar
                             </a>
                             <span id="card_title">
@@ -92,32 +92,32 @@
                                                         <td>{{$cotizacion->DocCotizacion->num_contenedor}}</td>
 
                                                         <td>
-                                                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
+                                                            <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
                                                                 {{$cotizacion->estatus}}
                                                             </button>
                                                         </td>
                                                         <td>
                                                             @if ($cotizacion->DocCotizacion && $cotizacion->DocCotizacion->Asignaciones)
-                                                                <a type="button" class="btn" href="{{ route('index.cooredenadas', $cotizacion->DocCotizacion->Asignaciones->id) }}">
+                                                                <a type="button" class="btn btn-xs" href="{{ route('index.cooredenadas', $cotizacion->DocCotizacion->Asignaciones->id) }}">
                                                                     <img src="{{ asset('img/icon/coordenadas.png') }}" alt="" width="25px"> Coordenadas
                                                                 </a>
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            <a type="button" class="btn" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
+                                                            <a type="button" class="btn btn-xs" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
                                                                 <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
                                                             </a>
 
                                                             @if ($cotizacion->DocCotizacion->Asignaciones)
                                                                 @if ($cotizacion->DocCotizacion->Asignaciones->id_proveedor == NULL)
 
-                                                                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
+                                                                <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
                                                                         Propio
                                                                 </button>
 
                                                                 @else
 
-                                                                <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
+                                                                <button type="button" class="btn btn-outline-dark btn-xs" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
                                                                     Subcontratado
                                                                 </button>
                                                                 @endif
@@ -161,30 +161,30 @@
                                                         <td>{{$cotizacion->DocCotizacion->num_contenedor}}</td>
 
                                                         <td>
-                                                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
+                                                            <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
                                                                 {{$cotizacion->estatus}}
                                                             </button>
                                                         </td>
                                                         <td>
                                                             @if ($cotizacion->DocCotizacion && $cotizacion->DocCotizacion->Asignaciones)
-                                                                <a type="button" class="btn" href="{{ route('index.cooredenadas', $cotizacion->DocCotizacion->Asignaciones->id) }}">
+                                                                <a type="button" class="btn btn-xs" href="{{ route('index.cooredenadas', $cotizacion->DocCotizacion->Asignaciones->id) }}">
                                                                     <img src="{{ asset('img/icon/coordenadas.png') }}" alt="" width="25px"> Coordenadas
                                                                 </a>
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            <a type="button" class="btn" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
+                                                            <a type="button" class="btn btn-xs" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
                                                                 <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
                                                             </a>
 
-                                                            <a type="button" class="btn" href="{{ route('pdf.cotizaciones', $cotizacion->id) }}">
+                                                            <a type="button" class="btn btn-xs" href="{{ route('pdf.cotizaciones', $cotizacion->id) }}">
                                                                 <img src="{{ asset('img/icon/pdf.webp') }}" alt="" width="25px">
                                                             </a>
 
                                                             @if ($cotizacion->DocCotizacion->Asignaciones)
                                                                 @if ($cotizacion->DocCotizacion->Asignaciones->id_proveedor == NULL)
 
-                                                                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
+                                                                <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
                                                                         Propio
                                                                 </button>
 
@@ -192,7 +192,7 @@
 
                                                                 @else
 
-                                                                <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
+                                                                <button type="button" class="btn btn-outline-dark btn-xs" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
                                                                     Subcontratado
                                                                 </button>
                                                                 @endif
@@ -243,14 +243,14 @@
                                                                     {{$cotizacion->estatus}}
                                                                 </button>
                                                             @elseif ($cotizacion->estatus == 'Aprobada')
-                                                                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
+                                                                <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
                                                                     {{$cotizacion->estatus}}
                                                                 </button>
                                                             @endif
                                                         </td>
                                                         <td>
                                                             @if ($cotizacion->estatus == 'Aprobada')
-                                                                <a type="button" class="btn" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
+                                                                <a type="button" class="btn btn-xs" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
                                                                     <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
                                                                 </a>
                                                             @endif
@@ -297,14 +297,14 @@
                                                                 {{$cotizacion->estatus}}
                                                             </button>
                                                         @elseif ($cotizacion->estatus == 'Aprobada')
-                                                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
+                                                            <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
                                                                 {{$cotizacion->estatus}}
                                                             </button>
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($cotizacion->estatus == 'Aprobada')
-                                                            <a type="button" class="btn" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
+                                                            <a type="button" class="btn btn-xs" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
                                                                 <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
                                                             </a>
                                                         @endif
@@ -351,14 +351,14 @@
                                                                 {{$cotizacion->estatus}}
                                                             </button>
                                                         @elseif ($cotizacion->estatus == 'Aprobada')
-                                                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
+                                                            <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
                                                                 {{$cotizacion->estatus}}
                                                             </button>
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($cotizacion->estatus == 'Aprobada')
-                                                            <a type="button" class="btn" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
+                                                            <a type="button" class="btn btn-xs" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
                                                                 <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
                                                             </a>
                                                         @endif

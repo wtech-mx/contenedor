@@ -239,7 +239,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#cobrarModal{{ $item->id }}">
+                                            <a class="btn btn-xs btn-success" data-bs-toggle="modal" data-bs-target="#cobrarModal{{ $item->id }}">
                                                 <i class="fa fa-fw fa-edit"></i> Cobrar
                                             </a>
                                         </td>
