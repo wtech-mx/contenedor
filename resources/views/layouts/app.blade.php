@@ -34,6 +34,11 @@
             display: inline-block;
             color: black;
         }
+
+        .dataTable-wrapper .dataTable-container .table tbody tr td {
+            padding: 1px 0.3rem!important;
+            font-size: 11pm!important;
+        }
     </style>
 
 </head>
@@ -107,9 +112,8 @@
         history.back(); // Volver a la página anterior
 
     });
-
-
 </script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('miFormulario');
