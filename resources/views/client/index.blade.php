@@ -55,8 +55,9 @@ Clientes
                                                 </a>
                                             </td>
                                             <td>
-                                                <a class="btn btn-xs btn-success" data-bs-toggle="modal" data-bs-target="#editModal-{{ $client->id }}">
-                                                    <i class="fa fa-fw fa-edit"></i> Editar</a>
+                                                <a class="btn btn-xs btn-success" data-bs-toggle="modal" data-bs-target="#editModal-{{ $client->id }}" style="margin: 3px!important;">
+                                                    <i class="fa fa-fw fa-edit"></i> Editar
+                                                </a>
                                                 <a type="btn" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#subclienteModal-{{$client->id}}" style="margin: 3px!important;">
                                                     Subclientes
                                                 </a>
