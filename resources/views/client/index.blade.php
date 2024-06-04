@@ -9,7 +9,7 @@ Clientes
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <a href="{{ route('dashboard') }}" class="btn" style="background: {{$configuracion->color_boton_close}}; color: #ffff; margin-right: 3rem;">
                                 Regresar
@@ -27,7 +27,7 @@ Clientes
                         </div>
                     </div>
 
-                    <div class="card-body">
+                    <div class="card-body"style="    padding: 0rem 1.5rem 1.5rem 1.5rem;">
                         <div class="table-responsive">
                             <table class="table table-striped table-hover table_id" id="datatable-search">
                                 <thead class="thead">
