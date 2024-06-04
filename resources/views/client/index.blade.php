@@ -50,14 +50,14 @@ Clientes
 											<td>{{ $client->telefono }}</td>
 											<td>{{ $client->correo }}</td>
                                             <td>
-                                                <a type="btn" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#subclienteShowModal-{{$client->id}}">
+                                                <a type="btn" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#subclienteShowModal-{{$client->id}}" style="margin: 3px!important;">
                                                     <i class="fa fa-fw fa-eye"></i> Ver
                                                 </a>
                                             </td>
                                             <td>
                                                 <a class="btn btn-xs btn-success" data-bs-toggle="modal" data-bs-target="#editModal-{{ $client->id }}">
                                                     <i class="fa fa-fw fa-edit"></i> Editar</a>
-                                                <a type="btn" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#subclienteModal-{{$client->id}}">
+                                                <a type="btn" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#subclienteModal-{{$client->id}}" style="margin: 3px!important;">
                                                     Subclientes
                                                 </a>
                                             </td>
