@@ -9,7 +9,6 @@
     <hr class="horizontal dark mt-0">
     <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
       <ul class="navbar-nav">
-
         <li class="nav-item">
           <a class="nav-link {{ (Request::is('dashboard*') ? 'active' : '') }}" href="{{ route('dashboard') }}" target="">
             <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
@@ -19,7 +18,7 @@
           </a>
         </li>
 
-
+        @can('clientes-list')
         <li class="nav-item">
             <a class="nav-link {{ (Request::is('clients*') ? 'active' : '') }}" href="{{ route('clients.index') }}" target="">
               <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
@@ -28,7 +27,9 @@
               <span class="nav-link-text ms-1"><b>I</b> Clientes</span>
             </a>
           </li>
+          @endcan
 
+        @can('proovedores-list')
           <li class="nav-item">
             <a class="nav-link {{ (Request::is('proveedores*') ? 'active' : '') }}" href="{{ route('index.proveedores') }}" target="">
               <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
@@ -37,7 +38,9 @@
               <span class="nav-link-text ms-1"><b>II</b> Proveedores</span>
             </a>
           </li>
+          @endcan
 
+        @can('equipos-list')
           <li class="nav-item">
             <a class="nav-link {{ (Request::is('equipos*') ? 'active' : '') }}" href="{{ route('index.equipos') }}" target="">
               <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
@@ -46,7 +49,9 @@
               <span class="nav-link-text ms-1"><b>III</b> Equipos</span>
             </a>
           </li>
+          @endcan
 
+        @can('operadores-list')
           <li class="nav-item">
             <a class="nav-link {{ (Request::is('operadores*') ? 'active' : '') }}" href="{{ route('index.operadores') }}" target="">
               <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
@@ -55,8 +60,8 @@
               <span class="nav-link-text ms-1"><b>IV</b> Operadores</span>
             </a>
           </li>
-
-
+          @endcan
+        @can('cotizaciones-list')
           <li class="nav-item">
             <a class="nav-link {{ (Request::is('cotizaciones*') ? 'active' : '') }}" href="{{ route('index.cotizaciones') }}" target="">
               <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
@@ -65,7 +70,8 @@
               <span class="nav-link-text ms-1"><b>V</b> Cotizaciones</span>
             </a>
           </li>
-
+          @endcan
+        @can('planeacion-list')
           <li class="nav-item">
             <a class="nav-link {{ (Request::is('planeaciones*') ? 'active' : '') }}" href="{{ route('index.planeaciones') }}" target="">
               <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
@@ -74,7 +80,8 @@
               <span class="nav-link-text ms-1"><b>VI</b> Planeación</span>
             </a>
           </li>
-
+          @endcan
+        @can('bancos-list')
           <li class="nav-item">
             <a class="nav-link {{ (Request::is('bancos*') ? 'active' : '') }}" href="{{ route('index.bancos') }}" target="">
               <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
@@ -83,7 +90,8 @@
               <span class="nav-link-text ms-1"><b>VII</b> Bancos</span>
             </a>
           </li>
-
+          @endcan
+        @can('cuentas-cobrar')
           <li class="nav-item">
             <a class="nav-link {{ (Request::is('cuentas/cobrar*') ? 'active' : '') }}" href="{{ route('index.cobrar') }}" target="">
               <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
@@ -92,7 +100,8 @@
               <span class="nav-link-text ms-1"><b>VIII</b> Cuentas por cobrar</span>
             </a>
           </li>
-
+          @endcan
+        @can('cuentas-pagar')
           <li class="nav-item">
             <a class="nav-link {{ (Request::is('cuentas/pagar*') ? 'active' : '') }}" href="{{ route('index.pagar') }}" target="">
               <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
@@ -101,6 +110,7 @@
               <span class="nav-link-text ms-1"><b>IX</b> Cuentas por pagar</span>
             </a>
           </li>
+          @endcan
 
           <a data-bs-toggle="collapse" href="#pagesExamples" class="nav-link {{ (Request::is('users*') ? 'active' : '') }}{{ (Request::is('roles*') ? 'active' : '') }}" aria-controls="pagesExamples" role="button" aria-expanded="false">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
@@ -108,28 +118,36 @@
             </div>
             <span class="nav-link-text ms-1">Roles y Permisos</span>
           </a>
+
           <div class="collapse " id="pagesExamples">
             <ul class="nav ms-4">
+                @can('roles-permisos-users')
               <li class="nav-item ">
                 <a class="nav-link {{ (Request::is('users*') ? 'show' : '') }}" href="{{ route('users.index') }}">
                   <span class="sidenav-mini-icon"> P </span>
                   <span class="sidenav-normal">Usuarios</span>
                 </a>
+                @endcan
 
+                @can('roles-permisos-users')
                 <a class="nav-link {{ (Request::is('roles*') ? 'show' : '') }}" href="{{ route('roles.index') }}">
                   <span class="sidenav-mini-icon"> P </span>
                   <span class="sidenav-normal">Roles</span>
                 </a>
+                @endcan
 
+                @can('empresas-list')
                 <a class="nav-link {{ (Request::is('empresas*') ? 'show' : '') }}" href="{{ route('empresas.index') }}">
                     <span class="sidenav-mini-icon"> P </span>
                     <span class="sidenav-normal">Empresas</span>
                   </a>
               </li>
+              @endcan
             </ul>
           </div>
         </li>
 
+        @can('configuracion-list')
         <li class="nav-item mt-3">
           <h6 class="ps-4  ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Configuraciones</h6>
         </li>
@@ -162,7 +180,7 @@
             </ul>
           </div>
         </li>
-
+        @endcan
       </ul>
 
     </div>

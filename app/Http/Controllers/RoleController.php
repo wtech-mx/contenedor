@@ -120,9 +120,7 @@ class RoleController extends Controller
 
         $role->syncPermissions($request->input('permission'));
 
-        Session::flash('edit', 'Se ha editado sus datos con exito');
-        return redirect()->route('roles.index')
-                        ->with('success','Role updated successfully');
+        return redirect()->back()->with('success', 'Ha sido cambiado exitosamente.');
     }
     /**
      * Remove the specified resource from storage.

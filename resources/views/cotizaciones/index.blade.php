@@ -34,9 +34,11 @@
                             </span>
 
                              <div class="float-right">
+                                @can('cotizaciones-create')
                                 <a type="button" class="btn btn-primary" href="{{ route('create.cotizaciones') }}" style="background: {{$configuracion->color_boton_add}}; color: #ffff">
                                     Crear
                                   </a>
+                                  @endcan
                               </div>
                         </div>
                     </div>
@@ -63,7 +65,7 @@
                             <img src="{{ asset('img/icon/cerrar.png') }}" alt="" width="40px">  Canceladas
                           </button>
                         </div>
-                      </nav>
+                    </nav>
 
 
                       <div class="tab-content" id="nav-tabContent">
@@ -92,34 +94,42 @@
                                                         <td>{{$cotizacion->DocCotizacion->num_contenedor}}</td>
 
                                                         <td>
-                                                            <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
-                                                                {{$cotizacion->estatus}}
-                                                            </button>
+                                                            @can('cotizaciones-estatus')
+                                                                <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
+                                                                    {{$cotizacion->estatus}}
+                                                                </button>
+                                                            @endcan
                                                         </td>
                                                         <td>
                                                             @if ($cotizacion->DocCotizacion && $cotizacion->DocCotizacion->Asignaciones)
+                                                                @can('cotizaciones-cordeenadas')
                                                                 <a type="button" class="btn btn-xs" href="{{ route('index.cooredenadas', $cotizacion->DocCotizacion->Asignaciones->id) }}">
                                                                     <img src="{{ asset('img/icon/coordenadas.png') }}" alt="" width="25px"> Coordenadas
                                                                 </a>
+                                                                @endcan
                                                             @endif
                                                         </td>
                                                         <td>
+                                                            @can('cotizaciones-edit')
                                                             <a type="button" class="btn btn-xs" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
                                                                 <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
                                                             </a>
+                                                            @endcan
 
                                                             @if ($cotizacion->DocCotizacion->Asignaciones)
                                                                 @if ($cotizacion->DocCotizacion->Asignaciones->id_proveedor == NULL)
-
-                                                                <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
-                                                                        Propio
-                                                                </button>
-
+                                                                @can('cotizaciones-cambio-tipo')
+                                                                    <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
+                                                                            Propio
+                                                                    </button>
+                                                                @endcan
                                                                 @else
 
-                                                                <button type="button" class="btn btn-outline-dark btn-xs" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
-                                                                    Subcontratado
-                                                                </button>
+                                                                @can('cotizaciones-cambio-tipo')
+                                                                    <button type="button" class="btn btn-outline-dark btn-xs" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
+                                                                        Subcontratado
+                                                                    </button>
+                                                                @endcan
                                                                 @endif
                                                             @endif
 
@@ -161,40 +171,48 @@
                                                         <td>{{$cotizacion->DocCotizacion->num_contenedor}}</td>
 
                                                         <td>
+                                                            @can('cotizaciones-estatus')
                                                             <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
                                                                 {{$cotizacion->estatus}}
                                                             </button>
+                                                            @endcan
                                                         </td>
                                                         <td>
                                                             @if ($cotizacion->DocCotizacion && $cotizacion->DocCotizacion->Asignaciones)
+                                                                @can('cotizaciones-cordeenadas')
                                                                 <a type="button" class="btn btn-xs" href="{{ route('index.cooredenadas', $cotizacion->DocCotizacion->Asignaciones->id) }}">
                                                                     <img src="{{ asset('img/icon/coordenadas.png') }}" alt="" width="25px"> Coordenadas
                                                                 </a>
+                                                                @endcan
                                                             @endif
                                                         </td>
                                                         <td>
+                                                            @can('cotizaciones-edit')
                                                             <a type="button" class="btn btn-xs" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
                                                                 <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
                                                             </a>
+                                                            @endcan
 
+                                                            @can('cotizaciones-pdf')
                                                             <a type="button" class="btn btn-xs" href="{{ route('pdf.cotizaciones', $cotizacion->id) }}">
                                                                 <img src="{{ asset('img/icon/pdf.webp') }}" alt="" width="25px">
                                                             </a>
+                                                            @endcan
 
                                                             @if ($cotizacion->DocCotizacion->Asignaciones)
                                                                 @if ($cotizacion->DocCotizacion->Asignaciones->id_proveedor == NULL)
-
+                                                                @can('cotizaciones-cambio-tipo')
                                                                 <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
                                                                         Propio
                                                                 </button>
-
-
+                                                                @endcan
 
                                                                 @else
-
+                                                                @can('cotizaciones-cambio-tipo')
                                                                 <button type="button" class="btn btn-outline-dark btn-xs" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
                                                                     Subcontratado
                                                                 </button>
+                                                                @endcan
                                                                 @endif
                                                             @endif
 
@@ -235,24 +253,32 @@
                                                         <td>{{$cotizacion->DocCotizacion->num_contenedor}}</td>
                                                         <td>
                                                             @if ($cotizacion->estatus == 'Pendiente')
+                                                            @can('cotizaciones-estatus')
                                                                 <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
                                                                     {{$cotizacion->estatus}}
                                                                 </button>
+                                                                @endcan
                                                             @elseif ($cotizacion->estatus == 'Cancelada')
+                                                            @can('cotizaciones-estatus')
                                                                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
                                                                     {{$cotizacion->estatus}}
                                                                 </button>
+                                                                @endcan
                                                             @elseif ($cotizacion->estatus == 'Aprobada')
+                                                            @can('cotizaciones-estatus')
                                                                 <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
                                                                     {{$cotizacion->estatus}}
                                                                 </button>
+                                                                @endcan
                                                             @endif
                                                         </td>
                                                         <td>
                                                             @if ($cotizacion->estatus == 'Aprobada')
+                                                                @can('cotizaciones-edit')
                                                                 <a type="button" class="btn btn-xs" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
                                                                     <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
                                                                 </a>
+                                                                @endcan
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -288,6 +314,7 @@
                                                     <td>{{$cotizacion->destino}}</td>
                                                     <td>#{{$cotizacion->DocCotizacion->num_contenedor}}</td>
                                                     <td>
+                                                        @can('cotizaciones-estatus')
                                                         @if ($cotizacion->estatus == 'Pendiente')
                                                             <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
                                                                 {{$cotizacion->estatus}}
@@ -301,12 +328,15 @@
                                                                 {{$cotizacion->estatus}}
                                                             </button>
                                                         @endif
+                                                        @endcan
                                                     </td>
                                                     <td>
-                                                        @if ($cotizacion->estatus == 'Aprobada')
+                                                        @if ($cotizacion->estatus == 'edit')
+                                                            @can('cotizaciones-estatus')
                                                             <a type="button" class="btn btn-xs" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
                                                                 <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
                                                             </a>
+                                                            @endcan
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -342,25 +372,29 @@
                                                     <td>{{$cotizacion->destino}}</td>
                                                     <td>{{$cotizacion->DocCotizacion->num_contenedor}}</td>
                                                     <td>
-                                                        @if ($cotizacion->estatus == 'Pendiente')
-                                                            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
-                                                                {{$cotizacion->estatus}}
-                                                            </button>
-                                                        @elseif ($cotizacion->estatus == 'Cancelada')
-                                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
-                                                                {{$cotizacion->estatus}}
-                                                            </button>
-                                                        @elseif ($cotizacion->estatus == 'Aprobada')
-                                                            <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
-                                                                {{$cotizacion->estatus}}
-                                                            </button>
-                                                        @endif
+                                                        @can('cotizaciones-estatus')
+                                                            @if ($cotizacion->estatus == 'Pendiente')
+                                                                <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
+                                                                    {{$cotizacion->estatus}}
+                                                                </button>
+                                                            @elseif ($cotizacion->estatus == 'Cancelada')
+                                                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
+                                                                    {{$cotizacion->estatus}}
+                                                                </button>
+                                                            @elseif ($cotizacion->estatus == 'Aprobada')
+                                                                <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#estatusModal{{$cotizacion->id}}">
+                                                                    {{$cotizacion->estatus}}
+                                                                </button>
+                                                            @endif
+                                                        @endcan
                                                     </td>
                                                     <td>
                                                         @if ($cotizacion->estatus == 'Aprobada')
+                                                            @can('cotizaciones-edit')
                                                             <a type="button" class="btn btn-xs" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
                                                                 <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
                                                             </a>
+                                                            @endcan
                                                         @endif
                                                     </td>
                                                 </tr>

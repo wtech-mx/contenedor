@@ -141,9 +141,11 @@
 
                             @foreach ($cotizaciones as $item)
                                 <div class="col-3">
-                                    <a class="btn btn-sm btn-success" href="{{ route('edit.cotizaciones', $item->id) }}">
+                                    @can('bancos-entrar-cotizacion')
+                                    <a class="btn btn-xs btn-success" href="{{ route('edit.cotizaciones', $item->id) }}">
                                         {{ $item->DocCotizacion->num_contenedor }}
                                     </a>
+                                    @endcan
                                 </div>
                                 <div class="col-3">{{ $item->Cliente->nombre }}</div>
                                 <div class="col-3">
@@ -195,9 +197,11 @@
 
                             @foreach ($proveedores as $item)
                                 <div class="col-3">
-                                    <a class="btn btn-sm btn-success" href="{{ route('edit.cotizaciones', $item->id) }}">
+                                    @can('bancos-entrar-cotizacion')
+                                    <a class="btn btn-xs btn-success" href="{{ route('edit.cotizaciones', $item->id) }}">
                                         {{ $item->DocCotizacion->num_contenedor }}
                                     </a>
+                                    @endcan
                                 </div>
                                 <div class="col-3">{{ $item->Cliente->nombre }}</div>
                                 <div class="col-3">
@@ -214,9 +218,11 @@
 
                             @foreach ($operadores_salida as $item)
                                 <div class="col-3">
-                                    <a class="btn btn-sm btn-info" href="{{ route('edit.cotizaciones', $item->id) }}">
+                                    @can('bancos-entrar-cotizacion')
+                                    <a class="btn btn-xs btn-info" href="{{ route('edit.cotizaciones', $item->id) }}">
                                         {{ $item->Contenedor->num_contenedor }}
                                     </a>
+                                    @endcan
                                 </div>
                                 <div class="col-3">{{ $item->Operador->nombre }}</div>
                                 <div class="col-3">
@@ -235,9 +241,11 @@
 
                             @foreach ($operadores_salida_pago as $item)
                                 <div class="col-3">
-                                    <a class="btn btn-sm btn-denger" href="{{ route('edit.cotizaciones', $item->id) }}">
+                                    @can('bancos-entrar-cotizacion')
+                                    <a class="btn btn-xs btn-denger" href="{{ route('edit.cotizaciones', $item->id) }}">
                                         {{ $item->Contenedor->num_contenedor }}
                                     </a>
+                                    @endcan
                                 </div>
                                 <div class="col-3">{{ $item->Operador->nombre }}</div>
                                 <div class="col-3">

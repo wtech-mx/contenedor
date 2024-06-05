@@ -19,9 +19,11 @@
                             </span>
 
                              <div class="float-right">
+                                @can('proovedores-create')
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#proveedores" style="background: {{$configuracion->color_boton_add}}; color: #ffff">
                                     <i class="fa fa-fw fa-plus"></i>  Crear
                                   </button>
+                                  @endcan
                               </div>
                         </div>
                     </div>
@@ -50,17 +52,25 @@
                                                 <td>{{$proveedor->tipo}}</td>
                                                 <td>{{$proveedor->rfc}}</td>
                                                 <td>
+                                                    @can('proovedores-cuentas')
                                                     <button type="button" class="btn btn-xs btn-outline-primary" data-bs-toggle="modal" data-bs-target="#cuentasModal{{$proveedor->id}}">
                                                         Ver cuentas registradas <img src="{{ asset('img/icon/business-card-design.webp') }}" alt="" width="20px">
                                                     </button>
+                                                     @endcan
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-xs btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editModal{{$proveedor->id}}">
-                                                        <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="20px">
-                                                    </button>
-                                                    <button type="button" class="btn btn-xs btn-outline-success" data-bs-toggle="modal" data-bs-target="#editarModal{{$proveedor->id}}">
-                                                        <img src="{{ asset('img/icon/t credito.png.webp') }}" alt="" width="20px">
-                                                    </button>
+                                                    @can('proovedores-edit')
+                                                        <button type="button" class="btn btn-xs btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editModal{{$proveedor->id}}">
+                                                            <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="20px">
+                                                        </button>
+                                                    @endcan
+
+                                                    @can('proovedores-cuentas-create')
+                                                        <button type="button" class="btn btn-xs btn-outline-success" data-bs-toggle="modal" data-bs-target="#editarModal{{$proveedor->id}}">
+                                                            <img src="{{ asset('img/icon/t credito.png.webp') }}" alt="" width="20px">
+                                                        </button>
+                                                    @endcan
+
                                                 </td>
                                             </tr>
                                             @include('proveedores.modal_edit')

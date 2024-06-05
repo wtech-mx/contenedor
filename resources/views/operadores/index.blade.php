@@ -19,9 +19,11 @@
                             </span>
 
                              <div class="float-right">
+                                @can('operadores-create')
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#operadoresModal" style="background: {{$configuracion->color_boton_add}}; color: #ffff">
                                     <i class="fa fa-fw fa-plus"></i> Crear
                                   </button>
+                                  @endcan
                               </div>
                         </div>
                     </div>
@@ -52,17 +54,25 @@
                                                     <button class="btn btn-xs btn-danger">{{$registrosPendientes}}</button>
                                                 </td>
                                                 <td>
+                                                    @can('operadores-edit')
                                                     <a type="button" class="btn btn-xs btn-outline-primary" data-bs-toggle="modal" data-bs-target="#operadoresModal_Edit{{$operador->id}}">
                                                         <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
                                                     </a>
+                                                    @endcan
+
+                                                    @can('operadores-pagos-p')
 
                                                     <a type="button" class="btn btn-xs btn-outline-success" href="{{ route('show_pagos.operadores', $operador->id) }}">
                                                         <img src="{{ asset('img/icon/depositar.png') }}" alt="" width="25px"> Pagos P.
                                                     </a>
+                                                    @endcan
+
+                                                    @can('operadores-pagos-s')
 
                                                     <a type="button" class="btn btn-xs btn-outline-info" href="{{ route('show.operadores', $operador->id) }}">
                                                         <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px"> Pagos S.
                                                     </a>
+                                                    @endcan
                                                 </td>
                                             </tr>
 

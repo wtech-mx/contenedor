@@ -19,9 +19,11 @@ Bancos
                             </h2>
 
                              <div class="float-right">
+                                @can('bancos-create')
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bancoModal" style="background: {{$configuracion->color_boton_add}}; color: #ffff">
                                     <i class="fa fa-fw fa-plus"></i> Crear
                                   </button>
+                                  @endcan
                               </div>
                         </div>
                     </div>
@@ -29,7 +31,10 @@ Bancos
                     <div class="card-body">
                         <div class="row">
                             @foreach ($bancos as $item)
-                                <a class="col-lg-4 mt-lg-0 mt-4" href="{{ route('edit.bancos', $item->id) }}">
+                            <div class="col-lg-4 mt-lg-0 mt-4">
+                                @can('bancos-entrar')
+                                <a  href="{{ route('edit.bancos', $item->id) }}">
+                                @endcan
                                     <div class="card bg-transparent shadow-xl">
                                         <div class="overflow-hidden position-relative border-radius-xl" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/card-visa.jpg');">
                                             <span class="mask bg-gradient-dark"></span>
@@ -54,7 +59,10 @@ Bancos
                                             </div>
                                         </div>
                                     </div>
+                                @can('bancos-entrar')
                                 </a>
+                                @endcan
+                            </div>
                             @endforeach
                         </div>
                     </div>

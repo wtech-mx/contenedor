@@ -2,7 +2,7 @@
 
 @section('breadcrumb')
 <div class="row">
-
+    @can('clientes-list')
     <div class="col-4">
             <div class="card p-3 mb-4">
                 <div class="row">
@@ -26,9 +26,9 @@
                     </div>
                 </div>
             </div>
-
     </div>
-
+    @endcan
+    @can('proovedores-list')
     <div class="col-4">
         <div class="card p-3 mb-4">
             <div class="row">
@@ -53,7 +53,8 @@
             </div>
         </div>
     </div>
-
+    @endcan
+    @can('equipos-list')
     <div class="col-4">
         <div class="card p-3 mb-4">
             <div class="row">
@@ -78,7 +79,8 @@
             </div>
         </div>
     </div>
-
+    @endcan
+    @can('operadores-list')
     <div class="col-4">
         <div class="card p-3 mb-4">
             <div class="row">
@@ -103,7 +105,8 @@
             </div>
         </div>
     </div>
-
+    @endcan
+    @can('cotizaciones-list')
     <div class="col-4">
         <div class="card p-3 mb-4">
             <div class="row">
@@ -128,7 +131,8 @@
             </div>
         </div>
     </div>
-
+    @endcan
+    @can('planeacion-list')
     <div class="col-4">
         <div class="card p-3 mb-4">
             <div class="row">
@@ -151,7 +155,8 @@
             </div>
         </div>
     </div>
-
+    @endcan
+    @can('bancos-list')
     <div class="col-4">
         <div class="card p-3 mb-4">
             <div class="row">
@@ -177,7 +182,8 @@
             </div>
         </div>
     </div>
-
+    @endcan
+    @can('cuentas-cobrar')
     <div class="col-4">
         <div class="card p-3 mb-4">
             <div class="row">
@@ -199,7 +205,8 @@
             </div>
         </div>
     </div>
-
+    @endcan
+    @can('cuentas-pagar')
     <div class="col-4">
         <div class="card p-3 mb-4">
             <div class="row">

@@ -18,11 +18,13 @@
                                 Equipos
                             </span>
 
+                            @can('equipos-create')
                              <div class="float-right">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#equipoModal" style="background: {{$configuracion->color_boton_add}}; color: #ffff">
                                     <i class="fa fa-fw fa-plus"></i> Crear
                                   </button>
                               </div>
+                            @endcan
                         </div>
                     </div>
 
@@ -76,12 +78,17 @@
                                                         <td>{{$item->id_equipo}}</td>
                                                         <td>{{$item->fecha}}</td>
                                                         <td>
+                                                            @can('equipos-edit')
                                                             <button type="button" class="btn btn-xs btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipoEditModal-{{$item->id}}">
                                                                 <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
                                                             </button>
+                                                            @endcan
+
+                                                            @can('equipos-documentos')
                                                             <button type="button" class="btn btn-xs btn-outline-success" data-bs-toggle="modal" data-bs-target="#documenotsdigitales-{{$item->id}}">
                                                                 <img src="{{ asset('img/icon/galeria-de-imagenes.webp') }}" alt="" width="25px">
                                                             </button>
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                     @include('equipos.modal_edit')
@@ -129,12 +136,16 @@
                                                         <td>{{$item->id_equipo}}</td>
                                                         <td>{{$item->fecha}}</td>
                                                         <td>
+                                                            @can('equipos-edit')
                                                             <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipoEditModal-{{$item->id}}">
                                                                 <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
                                                             </button>
+                                                             @endcan
+                                                            @can('equipos-documentos')
                                                             <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#documenotsdigitales-{{$item->id}}">
                                                                 <img src="{{ asset('img/icon/galeria-de-imagenes.webp') }}" alt="" width="25px">
                                                             </button>
+                                                             @endcan
                                                         </td>
                                                     </tr>
                                                     @include('equipos.modal_edit')
@@ -184,12 +195,16 @@
                                                             <td>{{$item->id_equipo}}</td>
                                                             <td>{{$item->fecha}}</td>
                                                             <td>
+                                                                @can('equipos-edit')
                                                                 <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipoEditModal-{{$item->id}}">
                                                                     <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
                                                                 </button>
+                                                                 @endcan
+                                                                @can('equipos-documentos')
                                                                 <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#documenotsdigitales-{{$item->id}}">
                                                                     <img src="{{ asset('img/icon/galeria-de-imagenes.webp') }}" alt="" width="25px">
                                                                 </button>
+                                                                 @endcan
                                                             </td>
                                                         </tr>
                                                         @include('equipos.modal_edit')

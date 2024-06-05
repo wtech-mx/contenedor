@@ -36,13 +36,10 @@
 
                         <td class="text-right">
                           <div class="dropdown ">
-                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="fas fa-ellipsis-v"></i>
-                            </a>
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                              <a class="dropdown-item" href="{{ route('roles.show',$role->id) }}">
-                                  Show
-                              </a>
                               <a class="dropdown-item" href="{{ route('roles.edit',$role->id) }}">
                                 Edit
                               </a>

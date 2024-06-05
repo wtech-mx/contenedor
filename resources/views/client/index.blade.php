@@ -19,11 +19,14 @@ Clientes
                                Clientes
                             </h2>
 
+                              @can('clientes-create')
                              <div class="float-right">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background: {{$configuracion->color_boton_add}}; color: #ffff">
                                     <i class="fa fa-fw fa-plus"></i>  Crear
                                 </button>
                               </div>
+                              @endcan
+
                         </div>
                     </div>
 
@@ -50,17 +53,24 @@ Clientes
 											<td>{{ $client->telefono }}</td>
 											<td>{{ $client->correo }}</td>
                                             <td>
+                                                @can('subclientes-view')
                                                 <a type="btn" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#subclienteShowModal-{{$client->id}}" >
                                                     <i class="fa fa-fw fa-eye"></i> Ver
                                                 </a>
+                                                @endcan
+
                                             </td>
                                             <td>
+                                                @can('clientes-edit')
                                                 <a class="btn btn-xs btn-success" data-bs-toggle="modal" data-bs-target="#editModal-{{ $client->id }}" >
                                                     <i class="fa fa-fw fa-edit"></i> Editar
                                                 </a>
+                                                @endcan
+                                                @can('subclientes-create')
                                                 <a type="btn" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#subclienteModal-{{$client->id}}" >
                                                     Subclientes
                                                 </a>
+                                                @endcan
                                             </td>
                                         </tr>
                                         @include('client.edit')
