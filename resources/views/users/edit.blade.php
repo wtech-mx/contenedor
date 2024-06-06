@@ -52,7 +52,7 @@
                                 <option value="">Seleciona una opcion</option>
                                 @foreach ($empresas as  $item)
                                     @if($item->id == $user->id_empresa)
-                                        <option value="" selected>{{ $item->nombre }}</option>
+                                        <option value="{{ $item->id }}" selected>{{ $item->nombre }}</option>
                                     @endif
                                     <option value="{{ $item->id }}">{{ $item->nombre }}</option>
                                 @endforeach
