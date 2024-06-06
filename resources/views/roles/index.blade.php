@@ -13,10 +13,16 @@
             <!-- Card header -->
             <div class="card-header">
               <h3 class="mb-3">Role Management</h3>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+              <a href="{{ route('dashboard') }}" class="btn" style="background: {{$configuracion->color_boton_close}}; color: #ffff; margin-right: 3rem;">
+                Regresar
+            </a>
 
                 @can('role-create')
                      <a class="btn" href="{{ route('roles.create') }}" style="background: {{$configuracion->color_boton_add}}; color: #ffff">Create New Role</a>
                 @endcan
+
+              </div>
             </div>
 
             <div class="table-responsive py-4" style="">
