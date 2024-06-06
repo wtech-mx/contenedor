@@ -339,6 +339,14 @@
                                                             @endcan
                                                         @endif
                                                     </td>
+                                                    <td>
+                                                        @can('cotizaciones-edit')
+                                                        <a type="button" class="btn btn-xs" href="{{ route('edit.cotizaciones', $cotizacion->id) }}">
+                                                            <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
+                                                        </a>
+                                                        @endcan
+
+                                                    </td>
                                                 </tr>
                                                 @include('cotizaciones.modal_estatus')
                                             @endforeach
