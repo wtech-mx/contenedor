@@ -220,13 +220,23 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 form-group">
+                                    <div class="col-6 form-group">
+                                        <label for="name">Placas *</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/sku.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="placas" id="placas" type="text" class="form-control" >
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 form-group">
                                         <label for="name">Numero de Serie *</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/sku.webp') }}" alt="" width="25px">
                                             </span>
-                                            <input name="num_serie_chasis" id="num_serie_chasis" type="number" class="form-control">
+                                            <input name="num_serie_chasis" id="num_serie_chasis" type="text" class="form-control">
                                         </div>
                                     </div>
 
@@ -337,13 +347,23 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 form-group">
+                                    <div class="col-6 form-group">
+                                        <label for="name">Placas *</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/sku.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input name="placas" id="placas" type="text" class="form-control" >
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 form-group">
                                         <label for="name">Numero de Serie *</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/sku.webp') }}" alt="" width="25px">
                                             </span>
-                                            <input name="num_serie_doly" id="num_serie_doly" type="number" class="form-control">
+                                            <input name="num_serie_doly" id="num_serie_doly" type="text" class="form-control">
                                         </div>
                                     </div>
 
