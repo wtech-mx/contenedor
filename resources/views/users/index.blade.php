@@ -12,8 +12,15 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+              <a href="{{ route('dashboard') }}" class="btn" style="background: {{$configuracion->color_boton_close}}; color: #ffff; margin-right: 3rem;">
+                  Regresar
+              </a>
+
               <h3 class="mb-3">Users Management</h3>
+
               <a class="btn" href="{{ route('users.create') }}" style="background: {{$configuracion->color_boton_add}}; color: #ffff"> Create New User</a>
+                </div>
             </div>
 
             <div class="table-responsive py-4" style="">
