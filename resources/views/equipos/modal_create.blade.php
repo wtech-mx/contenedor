@@ -166,7 +166,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
                                             </span>
-                                            <input name="id_equipo_chasis" id="id_equipo_chasis" type="text" class="form-control">
+                                            <input name="id_equipo" id="id_equipo" type="text" class="form-control">
                                         </div>
                                     </div>
 
@@ -299,12 +299,12 @@
                                     </div>
 
                                     <div class="col-6 form-group">
-                                        <label for="name">ID Interno *</label>
+                                        <label for="name">Folio *</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px">
                                             </span>
-                                            <input name="id_equipo_doly" id="id_equipo_doly" type="text" class="form-control">
+                                            <input name="id_equipo" id="id_equipo" type="text" class="form-control">
                                         </div>
                                     </div>
 
@@ -351,7 +351,7 @@
                                         <label for="name">Placas *</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
-                                                <img src="{{ asset('img/icon/sku.webp') }}" alt="" width="25px">
+                                                <img src="{{ asset('img/icon/placa.png') }}" alt="" width="25px">
                                             </span>
                                             <input name="placas" id="placas" type="text" class="form-control" >
                                         </div>

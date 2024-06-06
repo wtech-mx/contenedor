@@ -67,7 +67,17 @@
                         </div>
                     </div>
 
-                    <div class="col-12 form-group">
+                    <div class="col-6 form-group">
+                        <label for="name">Placas *</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                                <img src="{{ asset('img/icon/placa.png') }}" alt="" width="25px">
+                            </span>
+                            <input name="placas" id="placas" type="text" class="form-control" value="{{$item->placas}}">
+                        </div>
+                    </div>
+
+                    <div class="col-6 form-group">
                         <label for="name">Numero de Serie *</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
@@ -86,8 +96,6 @@
                             <input name="acceso" id="acceso" type="text" class="form-control" value="{{$item->acceso}}">
                         </div>
                     </div>
-
-                    <div class="col-6"></div>
 
                     <div class="col-6 form-group">
                         <label for="name">Tarjeta de Circulacion *</label>
@@ -108,6 +116,30 @@
                             <input name="poliza_seguro" id="poliza_seguro" type="file" class="form-control">
                         </div>
                     </div>
+
+                    @if($item->folio != NULL)
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="name">Tipo *</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/tools.png.webp') }}" alt="" width="35px">
+                                    </span>
+                                    <select name="folio" id="folio" class="form-select d-inline-block" >
+                                        <option value="">Seleccione una opción</option>
+                                        <option value="B9 40P">B9 40P</option>
+                                        <option value="B10 20P">B10 20P</option>
+                                        <option value="B11 20/40P">B11 20/40P</option>
+                                        <option value="B12 Abatible">B12 Abatible</option>
+                                        <option value="B13 Retractil">B13 Retractil</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    @endif
+
 
                 </div>
             </div>

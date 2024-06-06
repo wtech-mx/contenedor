@@ -72,7 +72,7 @@
                                                                 <li>Año : {{$item->year}}</li>
                                                                 <li>Modelo : {{$item->modelo}}</li>
                                                                 <li>Num Serie : {{$item->num_serie}}</li>
-                                                            </ul>
+                                                                <li>Placas : {{$item->placas}}</li>                                                            </ul>
                                                         </td>
                                                         <td>{{$item->acceso}}</td>
                                                         <td>{{$item->id_equipo}}</td>
@@ -130,7 +130,7 @@
                                                                 <li>Modelo : {{$item->modelo}}</li>
                                                                 <li>Motor : {{$item->motor}}</li>
                                                                 <li>Num Serie : {{$item->num_serie}}</li>
-                                                            </ul>
+                                                                <li>Placas : {{$item->placas}}</li>                                                            </ul>
                                                         </td>
                                                         <td>{{$item->acceso}}</td>
                                                         <td>{{$item->id_equipo}}</td>
@@ -170,7 +170,6 @@
                                                     <th>Folio  <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px"></th>
                                                     <th>Vehiculo <img src="{{ asset('img/icon/coche.png') }}" alt="" width="25px"></th>
                                                     <th>Acceso <img src="{{ asset('img/icon/iniciar-sesion.png') }}" alt="" width="25px"></th>
-                                                    <th>ID Interno <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px"></th>
                                                     <th>Fecha Alta <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px"></th>
                                                     <th>Acciones <img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px"></th>
                                                 </tr>
@@ -188,23 +187,33 @@
                                                                     <li>Modelo : {{$item->modelo}}</li>
                                                                     <li>Motor : {{$item->motor}}</li>
                                                                     <li>Num Serie : {{$item->num_serie}}</li>
-
+                                                                    <li>Placas : {{$item->placas}}</li>
                                                                 </ul>
                                                             </td>
                                                             <td>{{$item->acceso}}</td>
-                                                            <td>{{$item->id_equipo}}</td>
                                                             <td>{{$item->fecha}}</td>
                                                             <td>
                                                                 @can('equipos-edit')
-                                                                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipoEditModal-{{$item->id}}">
+                                                                <button type="button" class="btn btn-xs btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipoEditModal-{{$item->id}}">
                                                                     <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
                                                                 </button>
                                                                  @endcan
                                                                 @can('equipos-documentos')
-                                                                <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#documenotsdigitales-{{$item->id}}">
+                                                                <button type="button" class="btn btn-xs btn-outline-success" data-bs-toggle="modal" data-bs-target="#documenotsdigitales-{{$item->id}}">
                                                                     <img src="{{ asset('img/icon/galeria-de-imagenes.webp') }}" alt="" width="25px">
                                                                 </button>
                                                                  @endcan
+
+                                                                 <form method="POST" action="{{ route('desactivar.equipos', $item->id) }}" id="" enctype="multipart/form-data" role="form">
+                                                                    <input type="hidden" name="_method" value="PATCH">
+                                                                    @csrf
+
+                                                                    <input type="hidden" name="tipo" value="desactivado">
+
+                                                                    <button type="submit" class="btn btn-xs btn-outline-warning" >
+                                                                        <img src="{{ asset('img/icon/borrar.webp') }}" alt="" width="25px">
+                                                                    </button>
+                                                                 </form>
                                                             </td>
                                                         </tr>
                                                         @include('equipos.modal_edit')

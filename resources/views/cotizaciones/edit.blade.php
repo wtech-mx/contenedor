@@ -23,23 +23,23 @@
                         <nav class="mx-auto">
                             <div class="nav nav-tabs custom-tabs" id="nav-tab" role="tablist">
                             <button class="nav-link custom-tab active" id="nav-cotizacion-tab" data-bs-toggle="tab" data-bs-target="#nav-cotizacion" type="button" role="tab" aria-controls="nav-planeadas" aria-selected="false">
-                                Cotización
-                                </button>
+                                <img src="{{ asset('img/icon/validando-billete.webp') }}" alt="" width="40px"> Cotización
+                            </button>
 
                               <button class="nav-link custom-tab" id="nav-Bloque-tab" data-bs-toggle="tab" data-bs-target="#nav-Bloque" type="button" role="tab" aria-controls="nav-Bloque" aria-selected="true">
-                                Bloque
+                                <img src="{{ asset('img/icon/contenedores.png') }}" alt="" width="40px"> Bloque
                               </button>
 
                               <button class="nav-link custom-tab" id="nav-Contenedor-tab" data-bs-toggle="tab" data-bs-target="#nav-Contenedor" type="button" role="tab" aria-controls="nav-Contenedor" aria-selected="false">
-                                Contenedor
+                                <img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="40px"> Contenedor
                               </button>
 
                               <button class="nav-link custom-tab" id="nav-Documentacion-tab" data-bs-toggle="tab" data-bs-target="#nav-Documentacion" type="button" role="tab" aria-controls="nav-Documentacion" aria-selected="false">
-                                Documentación
+                                <img src="{{ asset('img/icon/pdf.webp') }}" alt="" width="40px"> Documentación
                               </button>
 
                               <button class="nav-link custom-tab" id="nav-Gastos-tab" data-bs-toggle="tab" data-bs-target="#nav-Gastos" type="button" role="tab" aria-controls="nav-Gastos" aria-selected="false">
-                                Gastos
+                                <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="40px"> Gastos
                               </button>
                             </div>
                         </nav>
@@ -732,7 +732,7 @@
                                                         <label for="name">Monto:</label>
                                                         <div class="input-group mb-3">
                                                             <span class="input-group-text" id="basic-addon1">
-                                                                <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                                                <img src="{{ asset('img/icon/efectivo.webp') }}" alt="" width="25px">
                                                             </span>
                                                             <input name="gasto_monto[]" id="gasto_monto[]" type="text" class="form-control" >
                                                         </div>

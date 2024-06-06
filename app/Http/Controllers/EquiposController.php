@@ -20,6 +20,7 @@ class EquiposController extends Controller
 
     public function store(Request $request){
 
+
         $proveedor = new Equipo;
 
         if($request->get('marca') != NULL){
@@ -28,6 +29,7 @@ class EquiposController extends Controller
             $proveedor->id_equipo = $request->get('id_equipo');
             $proveedor->marca = $request->get('marca');
             $proveedor->motor = $request->get('motor');
+            $proveedor->placas = $request->get('placas');
             $proveedor->year = $request->get('year');
             $proveedor->num_serie = $request->get('num_serie');
             $proveedor->modelo = $request->get('modelo');
@@ -51,13 +53,13 @@ class EquiposController extends Controller
 
             $proveedor->fecha = $request->get('fecha');
             $proveedor->save();
-
         }else if($request->get('marca_chasis') != NULL){
 
             $proveedor->tipo = 'Chasis / Plataforma';
-            $proveedor->id_equipo = $request->get('id_equipo_chasis');
+            $proveedor->id_equipo = $request->get('id_equipo');
             $proveedor->marca = $request->get('marca_chasis');
             $proveedor->motor = $request->get('motor_chasis');
+            $proveedor->placas = $request->get('placas');
             $proveedor->year = $request->get('year_chasis');
             $proveedor->num_serie = $request->get('num_serie_chasis');
             $proveedor->modelo = $request->get('modelo_chasis');
@@ -86,9 +88,10 @@ class EquiposController extends Controller
         }else if($request->get('marca_doly') != NULL){
             $proveedor->tipo = 'Dolys';
             $proveedor->folio = $request->get('folio');
-            $proveedor->id_equipo = $request->get('id_equipo_doly');
+            $proveedor->id_equipo = $request->get('id_equipo');
             $proveedor->year = $request->get('year_doly');
             $proveedor->marca = $request->get('marca_doly');
+            $proveedor->placas = $request->get('placas');
             $proveedor->num_serie = $request->get('num_serie_doly');
             $proveedor->fecha = $request->get('fecha_doly');
 
@@ -135,6 +138,16 @@ class EquiposController extends Controller
             $file->move($path, $fileName);
             $request->poliza_seguro = $fileName;
         }
+
+        $id->update($request->all());
+
+        Session::flash('edit', 'Se ha editado sus datos con exito');
+        return redirect()->back()->with('success', 'Equipo actualizado exitosamente');
+
+    }
+
+    public function desactivar(Request $request, Equipo $id)
+    {
 
         $id->update($request->all());
 
