@@ -15,8 +15,8 @@
               <h3 class="mb-3">Create New Role</h3>
               <div class="d-flex justify-content-between">
                 <a class="btn" href="{{ route('roles.index') }}" style="background: {{$configuracion->color_boton_close}}; color: #ffff"> Back</a>
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                   Crear Role
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
+                    Launch demo modal
                   </button>
               </div>
 
@@ -35,8 +35,8 @@
             <div class="card-body mb-5">
 
                 {!! Form::open(array('route' => 'roles.store','method'=>'POST')) !!}
-
                 <div class="row">
+
                     <div class="col-xs-12 col-sm-12 col-md-6">
                         <div class="form-group">
                             <label class="form-control-label">Name:</label>
@@ -52,16 +52,16 @@
                                 <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}
                                     {{ $value->name }}
                                 </label>
-
-                                  @include('roles.modal_update')
-
                             <br/>
                             @endforeach
                         </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                            <button type="submit" class="btn" style="background: {{$configuracion->color_boton_save}}; color: #ffff">Submit</button>
+                        </div>
+
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                        <button type="submit" class="btn" style="background: {{$configuracion->color_boton_save}}; color: #ffff">Submit</button>
-                    </div>
+
                 </div>
                 {!! Form::close() !!}
 
