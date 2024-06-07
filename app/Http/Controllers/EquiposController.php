@@ -56,10 +56,10 @@ class EquiposController extends Controller
         }else if($request->get('marca_chasis') != NULL){
 
             $proveedor->tipo = 'Chasis / Plataforma';
-            $proveedor->id_equipo = $request->get('id_equipo');
+            $proveedor->id_equipo = $request->get('id_equipo_chasis');
             $proveedor->marca = $request->get('marca_chasis');
             $proveedor->motor = $request->get('motor_chasis');
-            $proveedor->placas = $request->get('placas');
+            $proveedor->placas = $request->get('placas_chasis');
             $proveedor->year = $request->get('year_chasis');
             $proveedor->num_serie = $request->get('num_serie_chasis');
             $proveedor->modelo = $request->get('modelo_chasis');
@@ -88,10 +88,10 @@ class EquiposController extends Controller
         }else if($request->get('marca_doly') != NULL){
             $proveedor->tipo = 'Dolys';
             $proveedor->folio = $request->get('folio');
-            $proveedor->id_equipo = $request->get('id_equipo');
+            $proveedor->id_equipo = $request->get('id_equipo_doly');
             $proveedor->year = $request->get('year_doly');
             $proveedor->marca = $request->get('marca_doly');
-            $proveedor->placas = $request->get('placas');
+            $proveedor->placas = $request->get('placas_doly');
             $proveedor->num_serie = $request->get('num_serie_doly');
             $proveedor->fecha = $request->get('fecha_doly');
 

@@ -48,7 +48,7 @@
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-flush" id="datatable-search">
+                                    <table class="table table-flush" id="datatable-search2">
                                         <thead class="thead">
                                             <tr>
                                                 <th>No</th>
@@ -89,6 +89,19 @@
                                                                 <img src="{{ asset('img/icon/galeria-de-imagenes.webp') }}" alt="" width="25px">
                                                             </button>
                                                             @endcan
+
+                                                            @can('equipos-delete')
+                                                            <form method="POST" class="d-inline" action="{{ route('desactivar.equipos', $item->id) }}" id="" enctype="multipart/form-data" role="form">
+                                                               <input type="hidden" name="_method" value="PATCH">
+                                                               @csrf
+
+                                                               <input type="hidden" name="tipo" value="desactivado">
+
+                                                               <button type="submit" class="btn btn-xs btn-outline-warning" >
+                                                                   <img src="{{ asset('img/icon/borrar.webp') }}" alt="" width="25px">
+                                                               </button>
+                                                            </form>
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                     @include('equipos.modal_edit')
@@ -105,7 +118,7 @@
                         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-flush" id="datatable-search">
+                                    <table class="table table-flush" id="datatable-search3">
                                         <thead class="thead">
                                             <tr>
                                                 <th>No</th>
@@ -145,6 +158,19 @@
                                                             <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#documenotsdigitales-{{$item->id}}">
                                                                 <img src="{{ asset('img/icon/galeria-de-imagenes.webp') }}" alt="" width="25px">
                                                             </button>
+                                                             @endcan
+
+                                                             @can('equipos-delete')
+                                                             <form method="POST" class="d-inline" action="{{ route('desactivar.equipos', $item->id) }}" id="" enctype="multipart/form-data" role="form">
+                                                                <input type="hidden" name="_method" value="PATCH">
+                                                                @csrf
+
+                                                                <input type="hidden" name="tipo" value="desactivado">
+
+                                                                <button type="submit" class="btn btn-xs btn-outline-warning" >
+                                                                    <img src="{{ asset('img/icon/borrar.webp') }}" alt="" width="25px">
+                                                                </button>
+                                                             </form>
                                                              @endcan
                                                         </td>
                                                     </tr>
@@ -198,22 +224,26 @@
                                                                     <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
                                                                 </button>
                                                                  @endcan
+
                                                                 @can('equipos-documentos')
                                                                 <button type="button" class="btn btn-xs btn-outline-success" data-bs-toggle="modal" data-bs-target="#documenotsdigitales-{{$item->id}}">
                                                                     <img src="{{ asset('img/icon/galeria-de-imagenes.webp') }}" alt="" width="25px">
                                                                 </button>
+                                                                @endcan
+
+                                                                 @can('equipos-delete')
+                                                                    <form method="POST" class="d-inline" action="{{ route('desactivar.equipos', $item->id) }}" id="" enctype="multipart/form-data" role="form">
+                                                                        <input type="hidden" name="_method" value="PATCH">
+                                                                        @csrf
+
+                                                                        <input type="hidden" name="tipo" value="desactivado">
+
+                                                                        <button type="submit" class="btn btn-xs btn-outline-warning" >
+                                                                            <img src="{{ asset('img/icon/borrar.webp') }}" alt="" width="25px">
+                                                                        </button>
+                                                                    </form>
                                                                  @endcan
 
-                                                                 <form method="POST" action="{{ route('desactivar.equipos', $item->id) }}" id="" enctype="multipart/form-data" role="form">
-                                                                    <input type="hidden" name="_method" value="PATCH">
-                                                                    @csrf
-
-                                                                    <input type="hidden" name="tipo" value="desactivado">
-
-                                                                    <button type="submit" class="btn btn-xs btn-outline-warning" >
-                                                                        <img src="{{ asset('img/icon/borrar.webp') }}" alt="" width="25px">
-                                                                    </button>
-                                                                 </form>
                                                             </td>
                                                         </tr>
                                                         @include('equipos.modal_edit')
@@ -240,6 +270,16 @@
 @section('datatable')
     <script type="text/javascript">
         const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
+        searchable: true,
+        fixedHeight: false
+        });
+
+        const dataTableSearch = new simpleDatatables.DataTable("#datatable-search2", {
+        searchable: true,
+        fixedHeight: false
+        });
+
+        const dataTableSearch = new simpleDatatables.DataTable("#datatable-search3", {
         searchable: true,
         fixedHeight: false
         });
