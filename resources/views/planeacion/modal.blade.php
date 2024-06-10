@@ -27,6 +27,37 @@
 
                 <a id="telOperador" class="btn btn-sm btn-success mt-2" data-toggle="popover" data-content="URL copiada!" data-trigger="manual">Copiar url</a>
 
+                 <!-- Formulario condicional -->
+                 <div id="formularioOperador" style="display: none;">
+                    <h6 class="mt-3 mb-3">Información del Operador</h6>
+                    <p>Viaje Subcontratado</p>
+
+                    <div class="row">
+
+                        <div class="col-6 form-group">
+                            <label for="name">Nombre Completo*</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px">
+                                </span>
+                                <input name="nombreOperadorSub" id="nombreOperadorSub" type="text" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-6 form-group">
+                            <label for="name">Telefono *</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <img src="{{ asset('img/icon/telefono.png.webp') }}" alt="" width="25px">
+                                </span>
+                                <input name="telefonoOperadorSub" id="telefonoOperadorSub" type="text" class="form-control" maxlength="10" pattern="\d{10}">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
                 @can('planeacion-finalizar')
 
                 <h6 class="mt-3 mb-3">

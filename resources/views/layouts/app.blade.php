@@ -45,7 +45,7 @@
         }
 
         .card .card-header {
-            padding: 1.5rem 1.5rem 0 1.5rem;        
+            padding: 1.5rem 1.5rem 0 1.5rem;
         }
     </style>
 
@@ -121,19 +121,6 @@
 
     });
 </script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('miFormulario');
-        const submitButton = document.getElementById('btnEnviar');
-
-        form.addEventListener('submit', function() {
-            submitButton.disabled = true;
-            submitButton.textContent = 'Enviando...'; // Opcional: Cambiar el texto del botón
-        });
-    });
-</script>
-
 
   @yield('datatable')
 

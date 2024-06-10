@@ -62,6 +62,8 @@ class PlaneacionController extends Controller
 
             $description = str_replace('<br>', "\n", $description);
 
+            $isOperadorNull = $appointment->id_operador === NULL;
+
             $event = [
                 'title' => $tipo .' / '. $appointment->Contenedor->Cotizacion->Cliente->nombre . ' / #' . $appointment->Contenedor->Cotizacion->DocCotizacion->num_contenedor,
                 'description' => $description,
@@ -69,7 +71,11 @@ class PlaneacionController extends Controller
                 'end' => $appointment->fecha_fin,
                 'urlId' => $appointment->id,
                 'idCotizacion' => $appointment->Contenedor->id_cotizacion,
+                'isOperadorNull' => $isOperadorNull,
+                'nombreOperadorSub' => $appointment->nombreOperadorSub ?? '',
+                'telefonoOperadorSub' => $appointment->telefonoOperadorSub ?? '',
             ];
+
 
             // Verificar si $coordenadas no es null antes de acceder a su propiedad id
             if ($coordenadas !== null) {
@@ -256,6 +262,9 @@ class PlaneacionController extends Controller
             $asignaciones->fecha_inicio = $request->get('nuevaFechaInicio');
             $asignaciones->fecha_fin = $request->get('nuevaFechaFin');
         }
+
+        $asignaciones->nombreOperadorSub = $request->get('nombreOperadorSub');
+        $asignaciones->telefonoOperadorSub = $request->get('telefonoOperadorSub');
 
         $asignaciones->update();
 

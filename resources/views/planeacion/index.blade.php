@@ -62,10 +62,23 @@
 @section('fullcalendar')
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const formulario = document.getElementById('miFormulario');
+            const btnEnviar = document.getElementById('btnEnviar');
 
+            formulario.addEventListener('submit', function () {
+                btnEnviar.disabled = true;
+                btnEnviar.innerText = 'Guardando...'; // Cambia el texto del botón si lo deseas
+            });
+        });
+    </script>
     <script type="text/javascript">
 
         document.addEventListener('DOMContentLoaded', function () {
+
+
+
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 events: @json($events),
@@ -110,6 +123,20 @@
                     document.getElementById('idCoordenda').setAttribute('href', 'coordenadas/' + info.event.extendedProps.idCoordenda);
                     document.getElementById('urlId').value = urlId;
                     document.getElementById('telOperadorUrl').value = telOperadorUrl;
+                    // Completar los valores del formulario si existen
+                    document.getElementById('nombreOperadorSub').value = info.event.extendedProps.nombreOperadorSub || '';
+                    document.getElementById('telefonoOperadorSub').value = info.event.extendedProps.telefonoOperadorSub || '';
+
+
+                    // Mostrar u ocultar el formulario del operador según isOperadorNull
+                    const formularioOperador = document.getElementById('formularioOperador');
+                    if (info.event.extendedProps.isOperadorNull) {
+                        console.log("Operador es NULL");
+                        formularioOperador.style.display = 'block';
+                    } else {
+                        console.log("Operador NO es NULL");
+                        formularioOperador.style.display = 'none';
+                    }
 
                     // Mostrar el modal
                     var eventoModal = new bootstrap.Modal(document.getElementById('eventoModal'));
@@ -119,19 +146,19 @@
                     var telOperadorBtn = document.getElementById('telOperador');
 
                     telOperadorBtn.addEventListener('click', function() {
-                var url = document.getElementById('telOperadorUrl').value;
-                console.log('entro');
-                console.log(url);
+                    var url = document.getElementById('telOperadorUrl').value;
+                    console.log('entro');
+                    console.log(url);
 
-                navigator.clipboard.writeText(url).then(function() {
-                    $(telOperadorBtn).popover('show');
-                    setTimeout(function () {
-                        $(telOperadorBtn).popover('hide');
-                    }, 2000);
-                }).catch(function(err) {
-                    console.error('Error al copiar al portapapeles: ', err);
+                    navigator.clipboard.writeText(url).then(function() {
+                        $(telOperadorBtn).popover('show');
+                        setTimeout(function () {
+                            $(telOperadorBtn).popover('hide');
+                        }, 2000);
+                    }).catch(function(err) {
+                        console.error('Error al copiar al portapapeles: ', err);
+                    });
                 });
-            });
 
                     // Configurar el popover de Bootstrap
                     $(telOperadorBtn).popover({
@@ -148,6 +175,9 @@
                         var nuevaFechaFin = document.getElementById('eventoFechaEnd').value;
                         var urlId = document.getElementById('urlId').value;
                         var idCoordenda = info.event.extendedProps.idCoordenda;
+                        var nombreOperadorSub = document.getElementById('nombreOperadorSub').value;
+                        var telefonoOperadorSub = document.getElementById('telefonoOperadorSub').value;
+
 
                         $.ajax({
                             url: '{{ route('asignacion.edit_fecha') }}',
@@ -156,6 +186,8 @@
                                 'finzalizar_vieje': finzalizar_vieje,
                                 'nuevaFechaInicio': nuevaFechaInicio,
                                 'nuevaFechaFin': nuevaFechaFin,
+                                'nombreOperadorSub': nombreOperadorSub,
+                                'telefonoOperadorSub': telefonoOperadorSub,
                                 'urlId': urlId,
                                 'idCoordenda': idCoordenda,
                                 '_token': token // Agregar el token CSRF a los datos enviados
