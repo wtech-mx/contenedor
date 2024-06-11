@@ -53,13 +53,20 @@
                 @if($coordenadas->Cotizacion->DocCotizacion->num_contenedor == null)
                     Falta asignar Contenedor
                 @else
-                    <p>Num de Contenedor : {{ $coordenadas->Cotizacion->DocCotizacion->num_contenedor }}</p>
+                    <p><strong>Num de Contenedor :</strong> #{{ $coordenadas->Cotizacion->DocCotizacion->num_contenedor }}</p>
                 @endif
-                @if($coordenadas->Asignaciones->id_operador == null)
-                    <p>Telefono proveedor : {{ $coordenadas->Asignaciones->Proveedor->telefono }}</p>
+
+                @if($coordenadas->Asignaciones->id_operador == NULL)
+
+                <p>Subcontratado</p>
+                <p><strong>Telefono operador : </strong> {{ $coordenadas->Asignaciones->telefonoOperadorSub}}</p>
+                <p><strong>Nombre del operador: </strong> {{ $coordenadas->Asignaciones->nombreOperadorSub }}</p>
+
                 @else
-                    <p>Telefono operador : {{ $coordenadas->Asignaciones->Operador->telefono }}</p>
-                    <p>Num. placas : {{ $coordenadas->Asignaciones->Camion->placas }}</p>
+
+                    <p><strong>Telefono operador : </strong> {{ $coordenadas->Asignaciones->Operador->telefono }}</p>
+                    <p><strong>Num. placas : </strong> {{ $coordenadas->Asignaciones->Camion->placas }}</p>
+                    <p><strong>Nombre del operador: </strong> {{ $coordenadas->Asignaciones->Operador->nombre }}</p>
                 @endif
 
               </div>
@@ -71,28 +78,74 @@
                 <form method="POST" action="{{ route('edit.cooredenadas', $coordenadas->id) }}">
                     @csrf
 
-                    @if($coordenadas->registro_puerto == null)
+                @if($coordenadas->validaroperador != 'Si')
 
-                        <div class="col-12 mb-4">
-                            <h5 class="text-left">1) Registro en Puerto ?</h5>
+                    <div class="col-12 mb-4">
 
-                            <div class="form-check" style="display: inline-block;margin-right:3rem;display: none" >
-                                <input class="form-check-input" type="radio" name="registro_puerto" id="registro_puerto_no" value="No" checked>
-                                <label class="form-check-label" for="registro_puerto_no" >
+                        @if($coordenadas->Asignaciones->id_operador == NULL)
+                            <h5 class="text-left">0) ¿Eres el operador " {{ $coordenadas->Asignaciones->nombreOperadorSub }} " ?</h5>
+                        @else
+                            <h5 class="text-left">0) ¿Eres el operador " {{ $coordenadas->Asignaciones->Operador->nombre }} " ?</h5>
+                        @endif
+
+                            <div class="form-check" style="display: inline-block;margin-right:3rem;" >
+                                <input class="form-check-input" type="radio" name="validaroperador" id="validaroperador_no" value="No" >
+                                <label class="form-check-label" for="validaroperador_no" >
                                     No
                                 </label>
                             </div>
 
                             <div class="form-check" style="display: inline-block;">
-                                <input class="form-check-input" type="radio" name="registro_puerto" id="registro_puerto_si" value="Si">
-                                <label class="form-check-label" for="registro_puerto_si">
+                                <input class="form-check-input" type="radio" name="validaroperador" id="validaroperador_si" value="Si">
+                                <label class="form-check-label" for="validaroperador_si">
                                     Si
                                 </label>
                             </div>
 
-                            <input type="hidden" id="latitud_longitud_registro_puerto" name="latitud_longitud_registro_puerto">
+                    </div>
 
+                    @else
+
+                    <div class="col-12 mb-4 coordenadas_contestado">
+                        @if($coordenadas->Asignaciones->id_operador == NULL)
+                            <h5 class="text-left">0) ¿ Eres el operador " {{ $coordenadas->Asignaciones->nombreOperadorSub }} " ?</h5>
+                        @else
+                            <h5 class="text-left">0) ¿ Eres el operador " {{ $coordenadas->Asignaciones->Operador->nombre }} " ?</h5>
+                        @endif
+                        <div class="form-check" style="display: inline-block;">
+                            <input class="form-check-input" type="radio"  id="validaroperador_si" checked disabled>
+                            <label class="form-check-label" for="validaroperador_si">
+                                {{ $coordenadas->validaroperador }}
+                            </label>
                         </div>
+                    </div>
+
+                @endif
+
+
+
+                    @if($coordenadas->validaroperador != null)
+                        @if($coordenadas->registro_puerto == null)
+                            <div class="col-12 mb-4">
+                                <h5 class="text-left">1) Registro en Puerto ?</h5>
+
+                                <div class="form-check" style="display: inline-block;margin-right:3rem;display: none" >
+                                    <input class="form-check-input" type="radio" name="registro_puerto" id="registro_puerto_no" value="No" checked>
+                                    <label class="form-check-label" for="registro_puerto_no" >
+                                        No
+                                    </label>
+                                </div>
+
+                                <div class="form-check" style="display: inline-block;">
+                                    <input class="form-check-input" type="radio" name="registro_puerto" id="registro_puerto_si" value="Si">
+                                    <label class="form-check-label" for="registro_puerto_si">
+                                        Si
+                                    </label>
+                                </div>
+
+                                <input type="hidden" id="latitud_longitud_registro_puerto" name="latitud_longitud_registro_puerto">
+
+                            </div>
 
                         @else
 
@@ -680,14 +733,23 @@
                             @endif
                         @endif
                     @endif
+                    @endif
+
 
                     <div class="text-center">
-                        @if($coordenadas->Cotizacion->estatus == 'Aprobada')
-                            <button type="submit" class="btn btn-success w-100 my-4 mb-2">
-                                <img src="{{ asset('img/icon/disquete-imageonline.co-5785320.webp') }}" alt="" width="20px"> - Actualizar
-                            </button>
-                        @endif
+                        @if($coordenadas->validaroperador == 'Si')
 
+                            @if($coordenadas->Cotizacion->estatus == 'Aprobada')
+                                <button type="submit" class="btn btn-success w-100 my-4 mb-2">
+                                    <img src="{{ asset('img/icon/disquete-imageonline.co-5785320.webp') }}" alt="" width="20px"> - Actualizar
+                                </button>
+                            @endif
+
+                            @else
+
+                            Este no es tu viaje
+
+                        @endif
                     </div>
 
                 </form>
@@ -757,6 +819,7 @@
                 obtenerCoordenadas();
             }
         });
+
 
         dentro_puerto_si.addEventListener('change', function () {
             if (this.checked) {

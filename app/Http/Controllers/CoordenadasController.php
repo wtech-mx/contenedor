@@ -21,7 +21,11 @@ class CoordenadasController extends Controller
         $fecha = Carbon::now();
 
         $coordenadas = Coordenadas::find($id);
-        // dd( $request);
+
+        if($request->get('validaroperador')){
+            $coordenadas->validaroperador = $request->get('validaroperador');
+        }
+
         $coordenadas->registro_puerto = $request->get('latitud_longitud_registro_puerto');
         $coordenadas->registro_puerto_datatime = $fecha;
 
