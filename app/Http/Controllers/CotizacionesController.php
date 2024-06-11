@@ -103,7 +103,7 @@ class CotizacionesController extends Controller
 
         $total = str_replace(',', '', $request->get('total'));
         $cotizaciones->total = $total;
-        $cotizaciones->restante = $total;
+        $cotizaciones->restante = $cotizaciones->total;
         $cotizaciones->estatus_pago = '0';
         $cotizaciones->save();
 
@@ -312,6 +312,7 @@ class CotizacionesController extends Controller
                 $suma += $monto;
             }
             $cotizaciones->total = $suma;
+            $cotizaciones->restante = $cotizaciones->total;
             $cotizaciones->update();
 
 

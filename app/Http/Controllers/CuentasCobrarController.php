@@ -71,7 +71,7 @@ class CuentasCobrarController extends Controller
         }
 
         $suma = $request->get('monto1') + $request->get('monto2');
-        $resta = $cotizacion->total - $suma;
+        $resta = $cotizacion->restante - $suma;
         $cotizacion->restante = $resta;
         $cotizacion->estatus_pago = 1;
         $cotizacion->update();
@@ -79,17 +79,21 @@ class CuentasCobrarController extends Controller
         return redirect()->back()->with('success', 'Comprobante de pago exitosamente');
     }
 
-    public function update_varios(Request $request){
+    public function update_varios(Request $request)
+    {
         $cotizacionesData = $request->get('id_cotizacion');
         $abonos = $request->get('abono');
         $remainingTotal = $request->get('remaining_total');
+
+        // Array para almacenar contenedor y abono
+        $contenedoresAbonos = [];
 
         foreach ($cotizacionesData as $id) {
             $cotizacion = Cotizaciones::where('id', '=', $id)->first();
 
             // Establecer el abono y calcular el restante
             $abono = isset($abonos[$id]) ? floatval($abonos[$id]) : 0;
-            $nuevoRestante = $cotizacion->total - $abono;
+            $nuevoRestante = $cotizacion->restante - $abono;
 
             if ($nuevoRestante < 0) {
                 $nuevoRestante = 0;
@@ -98,15 +102,25 @@ class CuentasCobrarController extends Controller
             $cotizacion->restante = $nuevoRestante;
             $cotizacion->estatus_pago = ($nuevoRestante == 0) ? 1 : 0;
             $cotizacion->update();
+
+            // Agregar contenedor y abono al array
+            $contenedoresAbonos[] = [
+                'num_contenedor' => $cotizacion->DocCotizacion->num_contenedor,
+                'abono' => $abono
+            ];
         }
 
+        // Convertir el array de contenedores y abonos a JSON
+        $contenedoresAbonosJson = json_encode($contenedoresAbonos);
+
         $banco = new BancoDinero;
+        $banco->contenedores = $contenedoresAbonosJson;
         $banco->id_cliente = $request->get('id_cliente');
         $banco->monto1 = $request->get('monto1_varios');
         $banco->metodo_pago1 = $request->get('metodo_pago1_varios');
         $banco->id_banco1 = $request->get('id_banco1_varios');
         if ($request->hasFile("comprobante1_varios")) {
-            $file = $request->file('comprobante1');
+            $file = $request->file('comprobante1_varios');
             $path = public_path() . '/pagos';
             $fileName = uniqid() . $file->getClientOriginalName();
             $file->move($path, $fileName);
@@ -117,7 +131,7 @@ class CuentasCobrarController extends Controller
         $banco->metodo_pago2 = $request->get('metodo_pago2_varios');
         $banco->id_banco2 = $request->get('id_banco2_varios');
         if ($request->hasFile("comprobante2_varios")) {
-            $file = $request->file('comprobante2');
+            $file = $request->file('comprobante2_varios');
             $path = public_path() . '/pagos';
             $fileName = uniqid() . $file->getClientOriginalName();
             $file->move($path, $fileName);

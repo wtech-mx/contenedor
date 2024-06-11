@@ -162,7 +162,9 @@
                             @endforeach
                             @foreach ($banco_dinero_entrada as $item)
                                 <div class="col-3">
-                                    Varios
+                                    <a data-bs-toggle="collapse" href="#pagesEntrada{{ $item->id }}" aria-controls="pagesEntrada" role="button" aria-expanded="false">
+                                        Varios
+                                    </a>
                                 </div>
                                 <div class="col-3">{{ $item->Cliente->nombre }}</div>
                                 <div class="col-3">
@@ -171,11 +173,23 @@
                                     @else
                                         $ {{ number_format($item->monto2, 0, '.', ',') }}
                                     @endif
-
                                 </div>
                                 <div class="col-3">
                                     {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
                                 </div>
+                                @if ($item->contenedores != "null")
+                                    <div class="collapse " id="pagesEntrada{{ $item->id }}">
+                                        Contenedores y Abonos
+                                        <ul>
+                                            @php
+                                                $contenedoresAbonos = json_decode($item->contenedores, true);
+                                            @endphp
+                                            @foreach ($contenedoresAbonos as $contenedorAbono)
+                                                <li>{{ $contenedorAbono['num_contenedor'] }} - ${{ number_format($contenedorAbono['abono'], 2, '.', ',') }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                             @endforeach
 
                         </div>
@@ -264,7 +278,9 @@
 
                             @foreach ($banco_dinero_salida as $item)
                                 <div class="col-3">
-                                    Varios
+                                    <a data-bs-toggle="collapse" href="#pagesExamples{{ $item->id }}" aria-controls="pagesExamples" role="button" aria-expanded="false">
+                                        Varios
+                                    </a>
                                 </div>
                                 <div class="col-3">{{ $item->Cliente->nombre }}</div>
                                 <div class="col-3">
@@ -278,6 +294,20 @@
                                 <div class="col-3">
                                     {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
                                 </div>
+
+                                @if ($item->contenedores != "null")
+                                    <div class="collapse " id="pagesExamples{{ $item->id }}">
+                                        Contenedores y Abonos
+                                        <ul>
+                                            @php
+                                                $contenedoresAbonos = json_decode($item->contenedores, true);
+                                            @endphp
+                                            @foreach ($contenedoresAbonos as $contenedorAbono)
+                                                <li>{{ $contenedorAbono['num_contenedor'] }} - ${{ number_format($contenedorAbono['abono'], 2, '.', ',') }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                             @endforeach
 
                         </div>
