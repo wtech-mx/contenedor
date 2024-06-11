@@ -177,7 +177,7 @@
                                 <div class="col-3">
                                     {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
                                 </div>
-                                @if ($item->contenedores != "null")
+                                @if ($item->contenedores != null)
                                     <div class="collapse " id="pagesEntrada{{ $item->id }}">
                                         Contenedores y Abonos
                                         <ul>
@@ -295,7 +295,7 @@
                                     {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
                                 </div>
 
-                                @if ($item->contenedores != "null")
+                                @if ($item->contenedores != null)
                                     <div class="collapse " id="pagesExamples{{ $item->id }}">
                                         Contenedores y Abonos
                                         <ul>
