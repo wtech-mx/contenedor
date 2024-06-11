@@ -12,6 +12,12 @@
                 <input type="hidden" name="_method" value="PATCH">
                 <div class="modal-body">
                     <div class="row">
+                        @if ($item->id_subcliente != NULL)
+                           <h5> {{$item->Subcliente->nombre}} / {{$item->Subcliente->telefono}}</h5>
+                        @else
+                            -
+                        @endif
+
                         @if ($item->precio_viaje != NULL)
                             <div class="col-6 form-group">
                                 <label for="name">Precio Viaje</label>
