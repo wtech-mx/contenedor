@@ -134,12 +134,15 @@
                     </div>
                     <div class="card-body p-3">
                         <div class="row">
+                            <div class="col-3"><b>Fecha</b></div>
                             <div class="col-3"><b>Contenedor</b></div>
                             <div class="col-3"><b>Cliente</b></div>
                             <div class="col-3"><b>Cargo</b></div>
-                            <div class="col-3"><b>Fecha</b></div>
 
                             @foreach ($cotizaciones as $item)
+                                <div class="col-3">
+                                    {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
+                                </div>
                                 <div class="col-3">
                                     @can('bancos-entrar-cotizacion')
                                     <a class="btn btn-xs btn-success" href="{{ route('edit.cotizaciones', $item->id) }}">
@@ -156,11 +159,11 @@
                                     @endif
 
                                 </div>
+                            @endforeach
+                            @foreach ($banco_dinero_entrada as $item)
                                 <div class="col-3">
                                     {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
                                 </div>
-                            @endforeach
-                            @foreach ($banco_dinero_entrada as $item)
                                 <div class="col-3">
                                     <a data-bs-toggle="collapse" href="#pagesEntrada{{ $item->id }}" aria-controls="pagesEntrada" role="button" aria-expanded="false">
                                         Varios
@@ -173,9 +176,6 @@
                                     @else
                                         $ {{ number_format($item->monto2, 0, '.', ',') }}
                                     @endif
-                                </div>
-                                <div class="col-3">
-                                    {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
                                 </div>
                                 @if ($item->contenedores != null)
                                     <div class="collapse " id="pagesEntrada{{ $item->id }}">
@@ -204,12 +204,15 @@
                     </div>
                     <div class="card-body p-3">
                         <div class="row">
+                            <div class="col-3"><b>Fecha</b></div>
                             <div class="col-3"><b>Contenedor</b></div>
                             <div class="col-3"><b>Cliente</b></div>
                             <div class="col-3"><b>Cargo</b></div>
-                            <div class="col-3"><b>Fecha</b></div>
 
                             @foreach ($proveedores as $item)
+                                <div class="col-3">
+                                    {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
+                                </div>
                                 <div class="col-3">
                                     @can('bancos-entrar-cotizacion')
                                     <a class="btn btn-xs btn-success" href="{{ route('edit.cotizaciones', $item->id) }}">
@@ -225,12 +228,14 @@
                                         $ {{ number_format($item->prove_monto2, 0, '.', ',') }}
                                     @endif
                                 </div>
-                                <div class="col-3">
-                                    {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
-                                </div>
                             @endforeach
 
                             @foreach ($operadores_salida as $item)
+                                <div class="col-3">
+                                    @if ($item->fecha_pago_salida != NULL)
+                                    {{ \Carbon\Carbon::parse($item->fecha_pago_salida)->translatedFormat('j \d\e F') }}
+                                    @endif
+                                </div>
                                 <div class="col-3">
                                     @can('bancos-entrar-cotizacion')
                                     <a class="btn btn-xs btn-info" href="{{ route('edit.cotizaciones', $item->id) }}">
@@ -246,14 +251,14 @@
                                         $ {{ number_format($item->cantidad_banco2_dinero_viaje, 0, '.', ',') }}
                                     @endif
                                 </div>
-                                <div class="col-3">
-                                    @if ($item->fecha_pago_salida != NULL)
-                                    {{ \Carbon\Carbon::parse($item->fecha_pago_salida)->translatedFormat('j \d\e F') }}
-                                    @endif
-                                </div>
                             @endforeach
 
                             @foreach ($operadores_salida_pago as $item)
+                                <div class="col-3">
+                                    @if ($item->fecha_pago_operador != NULL)
+                                        {{ \Carbon\Carbon::parse($item->fecha_pago_operador)->translatedFormat('j \d\e F') }}
+                                    @endif
+                                </div>
                                 <div class="col-3">
                                     @can('bancos-entrar-cotizacion')
                                     <a class="btn btn-xs btn-denger" href="{{ route('edit.cotizaciones', $item->id) }}">
@@ -269,14 +274,12 @@
                                         $ {{ number_format($item->cantidad_banco2_pago_operador, 0, '.', ',') }}
                                     @endif
                                 </div>
-                                <div class="col-3">
-                                    @if ($item->fecha_pago_operador != NULL)
-                                        {{ \Carbon\Carbon::parse($item->fecha_pago_operador)->translatedFormat('j \d\e F') }}
-                                    @endif
-                                </div>
                             @endforeach
 
                             @foreach ($banco_dinero_salida as $item)
+                                <div class="col-3">
+                                    {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
+                                </div>
                                 <div class="col-3">
                                     <a data-bs-toggle="collapse" href="#pagesExamples{{ $item->id }}" aria-controls="pagesExamples" role="button" aria-expanded="false">
                                         Varios
@@ -290,9 +293,6 @@
                                         $ {{ number_format($item->monto2, 0, '.', ',') }}
                                     @endif
 
-                                </div>
-                                <div class="col-3">
-                                    {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
                                 </div>
 
                                 @if ($item->contenedores != null)
