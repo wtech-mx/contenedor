@@ -78,7 +78,7 @@
                             <td>{{$cotizacion->estadia}}</td>
                             <td>{{$cotizacion->sobrepeso}}</td>
                             <td>{{$cotizacion->otro}}</td>
-                            <td>{{$cotizacion->precio_viaje}}</td>
+                            <td>{{$cotizacion->total}}</td>
                         </tr>
                     </tbody>
                 </table>

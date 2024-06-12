@@ -125,13 +125,14 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('cuentas/pagar/update/varios', [App\Http\Controllers\CuentasPagarController::class, 'update_varios'])->name('update_varios.pagar');
 
     // ==================== R E P O R T E R I A ====================
-    Route::get('reporteria/cotizaciones', [App\Http\Controllers\ReporteriaController::class, 'index'])->name('index.reporteria');
-    Route::get('reporteria/cotizaciones/buscador', [App\Http\Controllers\ReporteriaController::class, 'advance'])->name('advance_search.buscador');
-    Route::post('reporteria/cotizaciones/export', [App\Http\Controllers\ReporteriaController::class, 'export'])->name('cotizaciones.export');
+    Route::get('reporteria/cotizaciones/cxc', [App\Http\Controllers\ReporteriaController::class, 'index'])->name('index.reporteria');
+    Route::get('reporteria/cotizaciones/cxc/buscador', [App\Http\Controllers\ReporteriaController::class, 'advance'])->name('advance_search.buscador');
+    Route::post('reporteria/cotizaciones/cxc/export', [App\Http\Controllers\ReporteriaController::class, 'export'])->name('cotizaciones.export');
 
-    Route::get('reporteria/cotizaciones/show/{id}', [App\Http\Controllers\ReporteriaController::class, 'show'])->name('show.reporteria');
-    Route::patch('reporteria/cotizaciones/update/{id}', [App\Http\Controllers\ReporteriaController::class, 'update'])->name('update.reporteria');
-    Route::post('reporteria/cotizaciones/update/varios', [App\Http\Controllers\ReporteriaController::class, 'update_varios'])->name('update_varios.reporteria');
+    Route::get('reporteria/cotizaciones/cxp', [App\Http\Controllers\ReporteriaController::class, 'index_cxp'])->name('index_cxp.reporteria');
+    Route::get('reporteria/cotizaciones/cxp/buscador', [App\Http\Controllers\ReporteriaController::class, 'advance_cxp'])->name('advance_search_cxp.buscador');
+    Route::post('reporteria/cotizaciones/cxp/export', [App\Http\Controllers\ReporteriaController::class, 'export_cxp'])->name('cotizaciones_cxp.export');
+
 });
 
 //Route Hooks - Do not delete//

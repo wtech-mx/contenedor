@@ -116,14 +116,29 @@
           @endcan
 
           @can('cuentas-pagar')
-            <li class="nav-item">
-                <a class="nav-link {{ (Request::is('reporteria/cotizaciones*') ? 'active' : '') }}" href="{{ route('index.reporteria') }}" target="">
+            <a data-bs-toggle="collapse" href="#pagesExamplesReporteria" class="nav-link {{ (Request::is('reporteria/cotizaciones*') ? 'active' : '') }}" aria-controls="pagesExamplesReporteria" role="button" aria-expanded="false">
                 <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
                     <img src="{{ asset('img/icon/pdf.webp') }}" alt="" width="20px">
                 </div>
                 <span class="nav-link-text ms-1"><b>X</b> Reporteria</span>
-                </a>
-            </li>
+            </a>
+
+            <div class="collapse " id="pagesExamplesReporteria">
+                <ul class="nav ms-4">
+                    <li class="nav-item ">
+                        <a class="nav-link {{ (Request::is('reporteria/cotizaciones/cxc*') ? 'show' : '') }}" href="{{ route('index.reporteria') }}">
+                        <span class="sidenav-mini-icon"> P </span>
+                        <span class="sidenav-normal">Cuentas por cobrar</span>
+                        </a>
+
+                        <a class="nav-link {{ (Request::is('reporteria/cotizaciones/cxp*') ? 'show' : '') }}" href="{{ route('index_cxp.reporteria') }}">
+                        <span class="sidenav-mini-icon"> P </span>
+                        <span class="sidenav-normal">Cuentas por pagar</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
           @endcan
 
           <a data-bs-toggle="collapse" href="#pagesExamples" class="nav-link {{ (Request::is('users*') ? 'active' : '') }}{{ (Request::is('roles*') ? 'active' : '') }}" aria-controls="pagesExamples" role="button" aria-expanded="false">
