@@ -7,6 +7,7 @@ use App\Models\BancoDinero;
 use App\Models\Bancos;
 use App\Models\Client;
 use App\Models\Cotizaciones;
+use App\Models\CuentasBancarias;
 use App\Models\DocumCotizacion;
 use App\Models\Proveedor;
 use Illuminate\Http\Request;
@@ -52,13 +53,14 @@ class CuentasPagarController extends Controller
         })
         ->where('asignaciones.id_proveedor', '=', $id)
         ->where('cotizaciones.prove_restante', '>', 0)
-        ->select('asignaciones.*', 'docum_cotizacion.num_contenedor', 'docum_cotizacion.id_cotizacion', 'cotizaciones.estatus', 'cotizaciones.prove_restante')
+        ->select('asignaciones.*', 'docum_cotizacion.num_contenedor', 'docum_cotizacion.id_cotizacion', 'cotizaciones.estatus', 'cotizaciones.prove_restante', 'cotizaciones.id_cuenta_prov', 'cotizaciones.dinero_cuenta_prov', 'cotizaciones.id_cuenta_prov2', 'cotizaciones.dinero_cuenta_prov2')
         ->get();
 
         $bancos = Bancos::where('id_empresa', '=',auth()->user()->id_empresa)->get();
         $cliente = Proveedor::where('id', '=', $id)->first();
+        $banco_proveedor = CuentasBancarias::where('id_proveedores', '=', $cliente->id)->get();
 
-        return view('cuentas_pagar.show', compact('cotizacionesPorPagar', 'bancos', 'cliente'));
+        return view('cuentas_pagar.show', compact('cotizacionesPorPagar', 'bancos', 'cliente', 'banco_proveedor'));
     }
 
     public function update(Request $request, $id){
@@ -88,6 +90,11 @@ class CuentasPagarController extends Controller
         $suma = $request->get('monto1') + $request->get('monto2');
         $resta = $cotizacion->prove_restante - $suma;
         $cotizacion->prove_restante = $resta;
+
+        $cotizacion->id_cuenta_prov = $request->get('id_cuenta_prov');
+        $cotizacion->dinero_cuenta_prov = $request->get('dinero_cuenta_prov');
+        $cotizacion->id_cuenta_prov2 = $request->get('id_cuenta_prov2');
+        $cotizacion->dinero_cuenta_prov2 = $request->get('dinero_cuenta_prov2');
         $cotizacion->update();
 
         return redirect()->back()->with('success', 'Comprobante de pago exitosamente');

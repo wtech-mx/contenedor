@@ -1,5 +1,5 @@
 <div class="modal fade" id="cobrarModal{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-dialog  modal-dialog-centered modal-lg">
       <div class="modal-content">
 
         <div class="modal-header">
@@ -158,15 +158,64 @@
                             </div>
                         </div>
 
-                        {{-- <div class="form-group">
-                            <label for="name">Restante</label>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1">
-                                    <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
-                                </span>
-                                <input type="float" class="form-control restante" id="restante_{{ $item->id }}" name="restante" readonly>
+                        <h5 class="modal-title mt-3">Banco del proveedor</h5>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name">Banco </label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                    </span>
+                                    <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_cuenta_prov" name="id_cuenta_prov">
+                                        @foreach ($banco_proveedor as $item)
+                                            <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                        </div> --}}
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name">Monto</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                    </span>
+                                    <input type="text" name="dinero_cuenta_prov" class="form-control" value="{{ $item->dinero_cuenta_prov }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name">Banco 2</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
+                                    </span>
+                                    <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_cuenta_prov2" name="id_cuenta_prov2">
+                                        @foreach ($banco_proveedor as $item)
+                                            <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name">Monto 2</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                    </span>
+                                    <input type="text" name="dinero_cuenta_prov2" class="form-control" value="{{ $item->dinero_cuenta_prov2 }}">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

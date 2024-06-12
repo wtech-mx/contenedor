@@ -37,6 +37,8 @@ class Cotizaciones extends Model
         'id_banco2',
         'id_empresa',
         'prove_restante',
+        'id_cuenta_prov',
+        'id_cuenta_prov2',
     ];
 
     public function Cliente()
@@ -62,6 +64,21 @@ class Cotizaciones extends Model
     public function Bancos2()
     {
         return $this->hasOne(Bancos::class, 'id_banco2');
+    }
+
+    public function BancoProv()
+    {
+        return $this->hasOne(CuentasBancarias::class, 'id_cuenta_prov');
+    }
+
+    public function BancoProv2()
+    {
+        return $this->hasOne(CuentasBancarias::class, 'id_cuenta_prov2');
+    }
+
+    public function Empresa()
+    {
+        return $this->hasOne(Empresas::class, 'id_empresa');
     }
 
     protected static function boot()

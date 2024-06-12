@@ -10,6 +10,7 @@ use App\Models\Configuracion;
 use App\Models\Coordenadas;
 use App\Models\Cotizaciones;
 use App\Models\DocumCotizacion;
+use App\Models\Empresas;
 use App\Models\Equipo;
 use App\Models\GastosExtras;
 use App\Models\Operador;
@@ -18,6 +19,7 @@ use App\Models\Subclientes;
 use Illuminate\Http\Request;
 use Session;
 use Carbon\Carbon;
+use DB;
 
 class CotizacionesController extends Controller
 {
@@ -35,9 +37,9 @@ class CotizacionesController extends Controller
         $operadores = Operador::get();
         $bancos = Bancos::get();
         $proveedores = Proveedor::get();
+        $empresas = Empresas::get();
 
-
-        return view('cotizaciones.index', compact('proveedores','bancos','operadores','equipos_dolys','equipos_chasis','equipos_camiones','cotizaciones','cotizaciones_aprovadas','cotizaciones_canceladas', 'cotizaciones_planeadas','cotizaciones_finalizadas'));
+        return view('cotizaciones.index', compact('empresas', 'proveedores','bancos','operadores','equipos_dolys','equipos_chasis','equipos_camiones','cotizaciones','cotizaciones_aprovadas','cotizaciones_canceladas', 'cotizaciones_planeadas','cotizaciones_finalizadas'));
     }
 
     public function create(){
@@ -404,5 +406,31 @@ class CotizacionesController extends Controller
         $asignacion->save();
 
         return redirect()->back()->with('success', 'Ha sido cambiado exitosamente.');
+    }
+
+    public function cambiar_empresa(Request $request, $id){
+
+        $cotizaciones = DB::table('cotizaciones')
+        ->where('id', $id)
+        ->update(['id_empresa' => $request->get('id_empresa')]);
+        $cotizacion = Cotizaciones::find($id);
+
+
+        $contenedores = DB::table('docum_cotizacion')
+        ->where('id_cotizacion',  '=', $cotizacion->id)
+        ->update(['id_empresa' => $request->get('id_empresa')]);
+        $contenedor = DocumCotizacion::where('id_cotizacion',  '=', $cotizacion->id)->first();
+
+        if ($contenedor) {
+            $asignacionExiste = Asignaciones::where('id_contenedor', '=', $contenedor->id)->exists();
+            if ($asignacionExiste) {
+                $asignacion = DB::table('asignaciones')
+                ->where('id_contenedor', '=', $contenedor->id)
+                ->update(['id_empresa' => $request->get('id_empresa')]);
+            }
+        }
+
+        return redirect()->route('index.cotizaciones')
+            ->with('success', 'Se ha editado sus datos con exito');
     }
 }
