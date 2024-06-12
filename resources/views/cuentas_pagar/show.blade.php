@@ -179,6 +179,20 @@
                                 </div>
 
                                 <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="name">Total abonos</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                            </span>
+                                            <input class="form-control" type="text" name="remaining_abonos" id="remaining_abonos" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="cotizacion_inputs"></div>
+
+                                <div class="col-3">
                                     <br>
                                     <button class="btn " type="submit" style="background-color: #babd24; color: #ffffff;">Cobrar</button>
                                 </div>
@@ -238,30 +252,64 @@
         });
 
         $(document).ready(function() {
-            function updateRemainingTotal() {
-                const totalSum = parseFloat($('#total_sum').val()) || 0;
-                const monto1 = parseFloat($('#monto1_varios').val()) || 0;
-                const monto2 = parseFloat($('#monto2_varios').val()) || 0;
-                const remainingTotal = totalSum - (monto1 + monto2);
+        function updateRemainingTotal() {
+            const totalSum = parseFloat($('#total_sum').val()) || 0;
+            const monto1 = parseFloat($('#monto1_varios').val()) || 0;
+            const monto2 = parseFloat($('#monto2_varios').val()) || 0;
+            const remainingTotal = totalSum - (monto1 + monto2);
 
-                $('#remaining_total').val(remainingTotal.toFixed(2));
-            }
+            $('#remaining_total').val(remainingTotal.toFixed(2));
+        }
 
-            $('#id_cotizacion').on('change', function() {
-                let totalSum = 0;
+        function updateRemainingAbonos() {
+            const monto1 = parseFloat($('#monto1_varios').val()) || 0;
+            const monto2 = parseFloat($('#monto2_varios').val()) || 0;
+            const totalAbonos = monto1 + monto2;
 
-                $('#id_cotizacion option:selected').each(function() {
-                    totalSum += parseFloat($(this).data('total'));
-                });
+            let abonos = 0;
 
-                $('#total_sum').val(totalSum.toFixed(2));
-                updateRemainingTotal();
+            $('#cotizacion_inputs input[data-type="abono"]').each(function() {
+                abonos += parseFloat($(this).val()) || 0;
             });
 
-            $('#monto1_varios, #monto2_varios').on('input', function() {
-                updateRemainingTotal();
+            const remainingAbonos = totalAbonos - abonos;
+
+            $('#total_abonos').val(totalAbonos.toFixed(2));
+            $('#remaining_abonos').val(remainingAbonos.toFixed(2));
+        }
+
+        $('#id_cotizacion').on('change', function() {
+            let totalSum = 0;
+            $('#cotizacion_inputs').empty();
+
+            $('#id_cotizacion option:selected').each(function() {
+                const total = parseFloat($(this).data('total')) || 0;
+                const id = $(this).val();
+                const numContenedor = $(this).data('numcontenedor');
+                totalSum += total;
+
+                $('#cotizacion_inputs').append(`
+                    <div col-4>
+                        <label for="abono_${id}">Abono para ${numContenedor}:</label>
+                        <input class="form-control" type="number" data-type="abono" name="abono[${id}]" id="abono_${id}" data-total="${total}" step="0.01" placeholder="Abono para ${numContenedor}">
+                    </div>
+                `);
             });
+
+            $('#total_sum').val(totalSum.toFixed(2));
+            updateRemainingTotal();
+            updateRemainingAbonos();
         });
+
+        $('#cotizacion_inputs').on('input', 'input[data-type="abono"]', function() {
+            updateRemainingAbonos();
+        });
+
+        $('#monto1_varios, #monto2_varios').on('input', function() {
+            updateRemainingTotal();
+            updateRemainingAbonos();
+        });
+    });
     </script>
 
 @endsection

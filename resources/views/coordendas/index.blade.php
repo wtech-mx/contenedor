@@ -690,7 +690,7 @@
                                                                 </div>
                                                             @else
                                                             <div class="col-12 mb-4 coordenadas_contestado">
-                                                                <h5 class="text-left">10) Recepción Doctos Firmados</h5>
+                                                                <h5 class="text-left">10) Recepción Doctos Firmados</h5>
 
                                                                 <div class="form-check" style="display: inline-block;">
                                                                     <input class="form-check-input" type="radio"  id="recepcion_doc_firmados_si" disabled checked>
@@ -745,10 +745,12 @@
                                 </button>
                             @endif
 
-                            @else
-
+                        @elseif($coordenadas->validaroperador == null)
+                            <button type="submit" class="btn btn-success w-100 my-4 mb-2">
+                                <img src="{{ asset('img/icon/disquete-imageonline.co-5785320.webp') }}" alt="" width="20px"> - Actualizar
+                            </button>
+                        @else
                             Este no es tu viaje
-
                         @endif
                     </div>
 

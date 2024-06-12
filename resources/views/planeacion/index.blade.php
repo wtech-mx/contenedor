@@ -126,6 +126,7 @@
                     // Completar los valores del formulario si existen
                     document.getElementById('nombreOperadorSub').value = info.event.extendedProps.nombreOperadorSub || '';
                     document.getElementById('telefonoOperadorSub').value = info.event.extendedProps.telefonoOperadorSub || '';
+                    document.getElementById('placasOperadorSub').value = info.event.extendedProps.placasOperadorSub || '';
 
 
                     // Mostrar u ocultar el formulario del operador según isOperadorNull
@@ -177,6 +178,7 @@
                         var idCoordenda = info.event.extendedProps.idCoordenda;
                         var nombreOperadorSub = document.getElementById('nombreOperadorSub').value;
                         var telefonoOperadorSub = document.getElementById('telefonoOperadorSub').value;
+                        var placasOperadorSub = document.getElementById('placasOperadorSub').value;
 
 
                         $.ajax({
@@ -188,6 +190,7 @@
                                 'nuevaFechaFin': nuevaFechaFin,
                                 'nombreOperadorSub': nombreOperadorSub,
                                 'telefonoOperadorSub': telefonoOperadorSub,
+                                'placasOperadorSub': placasOperadorSub,
                                 'urlId': urlId,
                                 'idCoordenda': idCoordenda,
                                 '_token': token // Agregar el token CSRF a los datos enviados

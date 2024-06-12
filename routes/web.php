@@ -123,6 +123,15 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('cuentas/pagar/show/{id}', [App\Http\Controllers\CuentasPagarController::class, 'show'])->name('show.pagar');
     Route::patch('cuentas/pagar/update/{id}', [App\Http\Controllers\CuentasPagarController::class, 'update'])->name('update.pagar');
     Route::post('cuentas/pagar/update/varios', [App\Http\Controllers\CuentasPagarController::class, 'update_varios'])->name('update_varios.pagar');
+
+    // ==================== R E P O R T E R I A ====================
+    Route::get('reporteria/cotizaciones', [App\Http\Controllers\ReporteriaController::class, 'index'])->name('index.reporteria');
+    Route::get('reporteria/cotizaciones/buscador', [App\Http\Controllers\ReporteriaController::class, 'advance'])->name('advance_search.buscador');
+    Route::post('reporteria/cotizaciones/export', [App\Http\Controllers\ReporteriaController::class, 'export'])->name('cotizaciones.export');
+
+    Route::get('reporteria/cotizaciones/show/{id}', [App\Http\Controllers\ReporteriaController::class, 'show'])->name('show.reporteria');
+    Route::patch('reporteria/cotizaciones/update/{id}', [App\Http\Controllers\ReporteriaController::class, 'update'])->name('update.reporteria');
+    Route::post('reporteria/cotizaciones/update/varios', [App\Http\Controllers\ReporteriaController::class, 'update_varios'])->name('update_varios.reporteria');
 });
 
 //Route Hooks - Do not delete//

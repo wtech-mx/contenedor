@@ -166,8 +166,8 @@ class CotizacionesController extends Controller
         $fechaCarbon = Carbon::parse($fecha);
 
         $pdf = \PDF::loadView('cotizaciones.pdf', compact('cotizacion', 'documentacion', 'clientes','gastos_extras', 'configuracion', 'fechaCarbon', 'bancos_oficiales', 'bancos_no_oficiales'));
-        return $pdf->stream();
-        //return $pdf->download('cotizacion'.$cotizacion->Cliente->nombre.'_#'.$cotizacion->id.'.pdf');
+        //return $pdf->stream();
+        return $pdf->download('cotizacion'.$cotizacion->Cliente->nombre.'_#'.$cotizacion->id.'.pdf');
     }
 
 

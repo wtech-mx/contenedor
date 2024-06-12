@@ -96,6 +96,7 @@ class CuentasPagarController extends Controller
     public function update_varios(Request $request){
         $cotizacionesData = $request->get('id_cotizacion');
         $remainingTotal = $request->get('remaining_total');
+        $abonos = $request->get('abono');
 
         for ($count = 0; $count < count($cotizacionesData); $count++) {
             $asignacion = Asignaciones::where('id', '=', $cotizacionesData[$count])->first();

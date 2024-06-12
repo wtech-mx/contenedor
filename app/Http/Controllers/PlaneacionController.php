@@ -74,6 +74,7 @@ class PlaneacionController extends Controller
                 'isOperadorNull' => $isOperadorNull,
                 'nombreOperadorSub' => $appointment->nombreOperadorSub ?? '',
                 'telefonoOperadorSub' => $appointment->telefonoOperadorSub ?? '',
+                'placasOperadorSub' => $appointment->placasOperadorSub ?? '',
             ];
 
 
@@ -265,6 +266,7 @@ class PlaneacionController extends Controller
 
         $asignaciones->nombreOperadorSub = $request->get('nombreOperadorSub');
         $asignaciones->telefonoOperadorSub = $request->get('telefonoOperadorSub');
+        $asignaciones->placasOperadorSub = $request->get('placasOperadorSub');
 
         $asignaciones->update();
 

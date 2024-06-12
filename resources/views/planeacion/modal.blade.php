@@ -35,7 +35,7 @@
                     <div class="row">
 
                         <div class="col-6 form-group">
-                            <label for="name">Nombre Completo*</label>
+                            <label for="name">Nombre Completo</label>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">
                                     <img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px">
@@ -45,12 +45,22 @@
                         </div>
 
                         <div class="col-6 form-group">
-                            <label for="name">Telefono *</label>
+                            <label for="name">Telefono </label>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">
                                     <img src="{{ asset('img/icon/telefono.png.webp') }}" alt="" width="25px">
                                 </span>
                                 <input name="telefonoOperadorSub" id="telefonoOperadorSub" type="text" class="form-control" maxlength="10" pattern="\d{10}">
+                            </div>
+                        </div>
+
+                        <div class="col-6 form-group">
+                            <label for="name">Placas </label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <img src="{{ asset('img/icon/sku.webp') }}" alt="" width="25px">
+                                </span>
+                                <input name="placasOperadorSub" id="placasOperadorSub" type="text" class="form-control">
                             </div>
                         </div>
 
