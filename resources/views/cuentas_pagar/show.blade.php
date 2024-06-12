@@ -32,7 +32,9 @@
                                 <div class="col-6" style="    display: grid;">
                                     <select class="form-control cotizaciones" name="id_cotizacion[]" id="id_cotizacion" multiple>
                                         @foreach($cotizacionesPorPagar as $item)
-                                            <option value="{{ $item->id }}" data-total="{{ $item->total_proveedor }}">{{ $item->num_contenedor }} / ${{ number_format($item->total_proveedor, 2, '.', ',') }}</option>
+                                        <option value="{{ $item->id_cotizacion }}" data-total="{{ $item->prove_restante }}" data-numcontenedor="{{ $item->num_contenedor }}">
+                                            {{ $item->num_contenedor }} / ${{ number_format($item->prove_restante, 2, '.', ',') }}
+                                        </option>
                                         @endforeach
                                     </select>
                                 </div>

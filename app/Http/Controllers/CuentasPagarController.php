@@ -98,24 +98,36 @@ class CuentasPagarController extends Controller
         $remainingTotal = $request->get('remaining_total');
         $abonos = $request->get('abono');
 
-        for ($count = 0; $count < count($cotizacionesData); $count++) {
-            $asignacion = Asignaciones::where('id', '=', $cotizacionesData[$count])->first();
-            $doc = DocumCotizacion::where('id', '=', $asignacion->id_contenedor)->first();
+        // Array para almacenar contenedor y abono
+        $contenedoresAbonos = [];
 
-            $cotizacion = Cotizaciones::where('id', '=', $doc->id_cotizacion)->first();
+        foreach ($cotizacionesData as $id) {
+            $cotizacion = Cotizaciones::where('id', '=', $id)->first();
 
-            if ($count == count($cotizacionesData) - 1 && $remainingTotal > 0) {
-                // Última cotización y remainingTotal es mayor a 0
-                $cotizacion->prove_restante = $remainingTotal;
-            } else {
-                // Para todas las demás cotizaciones o si remainingTotal es 0
-                $cotizacion->prove_restante = 0;
+            // Establecer el abono y calcular el restante
+            $abono = isset($abonos[$id]) ? floatval($abonos[$id]) : 0;
+            $nuevoRestante = $cotizacion->prove_restante - $abono;
+            if ($nuevoRestante < 0) {
+                $nuevoRestante = 0;
             }
 
+            $cotizacion->prove_restante = $nuevoRestante;
+
             $cotizacion->update();
+
+            // Agregar contenedor y abono al array
+            $contenedoresAbonos[] = [
+                'num_contenedor' => $cotizacion->DocCotizacion->num_contenedor,
+                'abono' => $abono
+            ];
         }
 
+        // Convertir el array de contenedores y abonos a JSON
+        $contenedoresAbonosJson = json_encode($contenedoresAbonos);
+
+
         $banco = new BancoDinero();
+        $banco->contenedores = $contenedoresAbonosJson;
         $banco->id_cliente = $request->get('id_cliente');
         $banco->monto1 = $request->get('monto1_varios');
         $banco->metodo_pago1 = $request->get('metodo_pago1_varios');
