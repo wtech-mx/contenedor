@@ -133,7 +133,7 @@
                                                                 @endif
                                                             @endif
 
-                                                            @can('cotizaciones-cambio-tipo')
+                                                            @can('cotizaciones-cambio-empresa')
                                                                 <button type="button" class="btn btn-outline-info btn-xs" data-bs-toggle="modal" data-bs-target="#cambioEmpresa{{ $cotizacion->id }}">
                                                                     <img src="{{ asset('img/icon/documento.png') }}" alt="" width="25px">
                                                                 </button>
@@ -141,9 +141,10 @@
 
                                                         </td>
                                                     </tr>
+                                                    @include('cotizaciones.modal_cambio_empresa')
+
                                                     @include('cotizaciones.modal_estatus')
                                                     @include('cotizaciones.modal_cambio')
-                                                    @include('cotizaciones.modal_cambio_empresa')
                                                 @endforeach
                                             </tbody>
 
