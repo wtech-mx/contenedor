@@ -60,6 +60,7 @@
 
                 <p>Subcontratado</p>
                 <p><strong>Telefono operador : </strong> {{ $coordenadas->Asignaciones->telefonoOperadorSub}}</p>
+                <p><strong>Num. placas : </strong> {{ $coordenadas->Asignaciones->placasOperadorSub }}</p>
                 <p><strong>Nombre del operador: </strong> {{ $coordenadas->Asignaciones->nombreOperadorSub }}</p>
 
                 @else
