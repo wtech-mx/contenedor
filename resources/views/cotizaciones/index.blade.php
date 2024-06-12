@@ -118,27 +118,32 @@
 
                                                             @if ($cotizacion->DocCotizacion->Asignaciones)
                                                                 @if ($cotizacion->DocCotizacion->Asignaciones->id_proveedor == NULL)
-                                                                @can('cotizaciones-cambio-tipo')
-                                                                    <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
-                                                                            Propio
-                                                                    </button>
-                                                                @endcan
+                                                                    @can('cotizaciones-cambio-tipo')
+                                                                        <button type="button" class="btn btn-outline-success btn-xs" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
+                                                                                Propio
+                                                                        </button>
+                                                                    @endcan
                                                                 @else
 
-                                                                @can('cotizaciones-cambio-tipo')
-                                                                    <button type="button" class="btn btn-outline-dark btn-xs" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
-                                                                        Subcontratado
-                                                                    </button>
-                                                                @endcan
+                                                                    @can('cotizaciones-cambio-tipo')
+                                                                        <button type="button" class="btn btn-outline-dark btn-xs" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
+                                                                            Subcontratado
+                                                                        </button>
+                                                                    @endcan
                                                                 @endif
                                                             @endif
 
-
+                                                            @can('cotizaciones-cambio-tipo')
+                                                                <button type="button" class="btn btn-outline-info btn-xs" data-bs-toggle="modal" data-bs-target="#cambioEmpresa{{ $cotizacion->id }}">
+                                                                    <img src="{{ asset('img/icon/documento.png') }}" alt="" width="25px">
+                                                                </button>
+                                                            @endcan
 
                                                         </td>
                                                     </tr>
                                                     @include('cotizaciones.modal_estatus')
                                                     @include('cotizaciones.modal_cambio')
+                                                    @include('cotizaciones.modal_cambio_empresa')
                                                 @endforeach
                                             </tbody>
 
