@@ -71,6 +71,7 @@ class CotizacionesController extends Controller
             $cliente->nombre = $request->get('nombre_cliente');
             $cliente->correo = $request->get('correo_cliente');
             $cliente->telefono = $request->get('telefono_cliente');
+            $cliente->id_empresa = auth()->user()->id_empresa;
             $cliente->save();
 
             $cliente = $cliente->id;
