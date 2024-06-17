@@ -57,7 +57,7 @@
                                     <table class="table table-flush" id="datatable-search">
                                         <thead class="thead">
                                             <tr>
-                                                <th><input type="checkbox" id="select-all"></th>
+                                                <th></th>
                                                 <th><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px">Cliente</th>
                                                 <th><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px">Subcliente</th>
                                                 <th><img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">Origen</th>
@@ -67,43 +67,40 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if(Route::currentRouteName() != 'index.reporteria')
-                                                @foreach ($cotizaciones as $cotizacion)
-                                                    <tr>
-                                                        <td>
-                                                            <input type="checkbox" name="cotizacion_ids[]" value="{{ $cotizacion->id }}" class="select-box">
-                                                        </td>
-                                                        <td>{{$cotizacion->id}}</td>
-                                                        <td>{{$cotizacion->Cliente->nombre}}</td>
-                                                        <td>
-                                                            @if ($cotizacion->id_subcliente != NULL)
-                                                                {{$cotizacion->Subcliente->nombre}} / {{$cotizacion->Subcliente->telefono}}
+                                            @foreach ($cotizaciones as $cotizacion)
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" name="cotizacion_ids[]" value="{{ $cotizacion->id }}" class="select-box" data-row-id="{{ $cotizacion->id }}">
+                                                    </td>
+                                                    <td>{{$cotizacion->Cliente->nombre}}</td>
+                                                    <td>
+                                                        @if ($cotizacion->id_subcliente != NULL)
+                                                            {{$cotizacion->Subcliente->nombre}} / {{$cotizacion->Subcliente->telefono}}
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    </td>
+                                                    <td>{{$cotizacion->origen}}</td>
+                                                    <td>{{$cotizacion->destino}}</td>
+                                                    <td>{{$cotizacion->DocCotizacion->num_contenedor}}</td>
+                                                    <td>
+                                                        @can('cotizaciones-estatus')
+                                                            @if ($cotizacion->estatus == 'Aprobada')
+                                                                <button type="button" class="btn btn-outline-info btn-xs">
                                                             @else
-                                                                -
+                                                                <button type="button" class="btn btn-outline-success btn-xs">
                                                             @endif
-                                                        </td>
-                                                        <td>{{$cotizacion->origen}}</td>
-                                                        <td>{{$cotizacion->destino}}</td>
-                                                        <td>{{$cotizacion->DocCotizacion->num_contenedor}}</td>
-
-                                                        <td>
-                                                            @can('cotizaciones-estatus')
-                                                                @if ($cotizacion->estatus == 'Aprobada')
-                                                                    <button type="button" class="btn btn-outline-info btn-xs">
-                                                                @else
-                                                                    <button type="button" class="btn btn-outline-success btn-xs">
-                                                                @endif
-                                                                    {{$cotizacion->estatus}}
-                                                                </button>
-                                                            @endcan
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
+                                                                {{$cotizacion->estatus}}
+                                                            </button>
+                                                        @endcan
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
-                                    <button type="submit" id="exportButton" class="btn btn-primary" disabled>Exportar a PDF</button>
+                                    <button type="submit" id="exportButton" class="btn btn-primary">Exportar a PDF</button>
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -128,24 +125,53 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             const selectAllCheckbox = document.getElementById('select-all');
-            const checkboxes = document.querySelectorAll('.select-box');
             const exportButton = document.getElementById('exportButton');
+            const selectedRows = new Set();
 
+            const table = $('#datatable-search').DataTable();
+
+            // Manejar el evento de cambio en el checkbox "select all"
             selectAllCheckbox.addEventListener('change', function() {
+                const checkboxes = document.querySelectorAll('.select-box');
+                const allChecked = selectAllCheckbox.checked;
+
                 checkboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllCheckbox.checked;
+                    checkbox.checked = allChecked;
+                    const rowId = checkbox.value;
+                    if (allChecked) {
+                        selectedRows.add(rowId);
+                    } else {
+                        selectedRows.delete(rowId);
+                    }
                 });
                 toggleExportButton();
             });
 
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', toggleExportButton);
+            // Manejar el evento de cambio en cada checkbox individual
+            $('#datatable-search tbody').on('change', '.select-box', function() {
+                const rowId = this.value;
+                if (this.checked) {
+                    selectedRows.add(rowId);
+                } else {
+                    selectedRows.delete(rowId);
+                }
+                toggleExportButton();
             });
 
             function toggleExportButton() {
-                const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-                exportButton.disabled = !anyChecked;
+                exportButton.disabled = selectedRows.size === 0;
             }
+
+            // Exportar los datos seleccionados a PDF
+            exportButton.addEventListener('click', function(event) {
+                const selectedData = Array.from(selectedRows);
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'selected_ids';
+                input.value = JSON.stringify(selectedData);
+                document.getElementById('exportForm').appendChild(input);
+            });
         });
+
     </script>
 @endsection

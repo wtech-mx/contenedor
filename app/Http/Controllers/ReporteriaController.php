@@ -55,7 +55,7 @@ class ReporteriaController extends Controller
         $bancos_oficiales = Bancos::where('tipo', '=', 'Oficial')->get();
         $bancos_no_oficiales = Bancos::where('tipo', '=', 'No Oficial')->get();
 
-        $pdf = PDF::loadView('reporteria.cxc.pdf', compact('cotizaciones', 'fechaCarbon', 'bancos_oficiales', 'bancos_no_oficiales'))->setPaper('a4', 'landscape');
+        $pdf = PDF::loadView('reporteria.cxc.pdf', compact('cotizaciones', 'fechaCarbon', 'bancos_oficiales', 'bancos_no_oficiales'))->setPaper([0, 0, 595, 1200], 'landscape');
         return $pdf->stream();
         // return $pdf->download('cotizaciones_seleccionadas.pdf');
     }
