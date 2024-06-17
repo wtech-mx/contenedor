@@ -67,35 +67,37 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($cotizaciones as $cotizacion)
-                                                <tr>
-                                                    <td>
-                                                        <input type="checkbox" name="cotizacion_ids[]" value="{{ $cotizacion->id }}" class="select-box" data-row-id="{{ $cotizacion->id }}">
-                                                    </td>
-                                                    <td>{{$cotizacion->Cliente->nombre}}</td>
-                                                    <td>
-                                                        @if ($cotizacion->id_subcliente != NULL)
-                                                            {{$cotizacion->Subcliente->nombre}} / {{$cotizacion->Subcliente->telefono}}
-                                                        @else
-                                                            -
-                                                        @endif
-                                                    </td>
-                                                    <td>{{$cotizacion->origen}}</td>
-                                                    <td>{{$cotizacion->destino}}</td>
-                                                    <td>{{$cotizacion->DocCotizacion->num_contenedor}}</td>
-                                                    <td>
-                                                        @can('cotizaciones-estatus')
-                                                            @if ($cotizacion->estatus == 'Aprobada')
-                                                                <button type="button" class="btn btn-outline-info btn-xs">
+                                            @if(Route::currentRouteName() != 'index.reporteria')
+                                                @foreach ($cotizaciones as $cotizacion)
+                                                    <tr>
+                                                        <td>
+                                                            <input type="checkbox" name="cotizacion_ids[]" value="{{ $cotizacion->id }}" class="select-box" data-row-id="{{ $cotizacion->id }}">
+                                                        </td>
+                                                        <td>{{$cotizacion->Cliente->nombre}}</td>
+                                                        <td>
+                                                            @if ($cotizacion->id_subcliente != NULL)
+                                                                {{$cotizacion->Subcliente->nombre}} / {{$cotizacion->Subcliente->telefono}}
                                                             @else
-                                                                <button type="button" class="btn btn-outline-success btn-xs">
+                                                                -
                                                             @endif
-                                                                {{$cotizacion->estatus}}
-                                                            </button>
-                                                        @endcan
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                                                        </td>
+                                                        <td>{{$cotizacion->origen}}</td>
+                                                        <td>{{$cotizacion->destino}}</td>
+                                                        <td>{{$cotizacion->DocCotizacion->num_contenedor}}</td>
+                                                        <td>
+                                                            @can('cotizaciones-estatus')
+                                                                @if ($cotizacion->estatus == 'Aprobada')
+                                                                    <button type="button" class="btn btn-outline-info btn-xs">
+                                                                @else
+                                                                    <button type="button" class="btn btn-outline-success btn-xs">
+                                                                @endif
+                                                                    {{$cotizacion->estatus}}
+                                                                </button>
+                                                            @endcan
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                     <button type="submit" id="exportButton" class="btn btn-primary">Exportar a PDF</button>
