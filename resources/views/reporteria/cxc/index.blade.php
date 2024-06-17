@@ -26,19 +26,16 @@
                                                                 <select class="form-control cliente" name="id_client" id="id_client">
                                                                     <option selected value="">seleccionar cliente</option>
                                                                     @foreach($clientes as $client)
-                                                                        <option value="{{ $client->id }}">{{ $client->nombre }} {{ $client->telefono }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                            {{-- <div class="col-3">
-                                                                <label for="user_id">Buscar subcliente:</label>
-                                                                <select class="form-control phone" name="phone" id="phone">
-                                                                    <option selected value="">seleccionar Telefono</option>
-                                                                    @foreach($subclientes as $client)
                                                                         <option value="{{ $client->id }}">{{ $client->nombre }}</option>
                                                                     @endforeach
                                                                 </select>
-                                                            </div> --}}
+                                                            </div>
+                                                            <div class="col-3">
+                                                                <label for="user_id">Buscar subcliente:</label>
+                                                                <select class="form-control subcliente" name="id_subcliente" id="id_subcliente">
+                                                                    <option selected value="">seleccionar cliente</option>
+                                                                </select>
+                                                            </div>
                                                             <div class="col-3">
                                                                 <br>
                                                                 <button class="btn btn-sm mb-0 mt-sm-0 mt-1" type="submit" style="background-color: #F82018; color: #ffffff;">Buscar</button>
@@ -123,6 +120,29 @@
         const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
         searchable: true,
         fixedHeight: false
+        });
+
+        $(document).ready(function() {
+            $('#id_client').on('change', function() {
+                var clientId = $(this).val();
+                if(clientId) {
+                    $.ajax({
+                        url: '/subclientes/' + clientId,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#id_subcliente').empty();
+                            $('#id_subcliente').append('<option selected value="">Seleccionar subcliente</option>');
+                            $.each(data, function(key, subcliente) {
+                                $('#id_subcliente').append('<option value="'+ subcliente.id +'">'+ subcliente.nombre +'</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#id_subcliente').empty();
+                    $('#id_subcliente').append('<option selected value="">Seleccionar subcliente</option>');
+                }
+            });
         });
 
         document.addEventListener('DOMContentLoaded', function() {
