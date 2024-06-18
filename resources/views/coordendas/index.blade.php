@@ -746,7 +746,7 @@
                                 </button>
                             @endif
 
-                        @elseif($coordenadas->validaroperador == null)
+                        @elseif($coordenadas->validaroperador == null && $coordenadas->Cotizacion->estatus == 'Aprobada')
                             <button type="submit" class="btn btn-success w-100 my-4 mb-2">
                                 <img src="{{ asset('img/icon/disquete-imageonline.co-5785320.webp') }}" alt="" width="20px"> - Actualizar
                             </button>

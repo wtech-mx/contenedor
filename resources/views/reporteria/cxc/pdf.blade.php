@@ -36,16 +36,7 @@
             $importeVtaSum = 0;
             $total_no_ofi = 0;
         @endphp
-        @foreach ($cotizaciones as $cotizacion)
-            @php
-                $total_oficial = ($cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
-                $base_taref = ($cotizacion->burreo + $cotizacion->maniobra + $cotizacion->sobrepeso + $cotizacion->otro + $cotizacion->precio_viaje) - $cotizacion->base_factura;
-                $importe_vta = $base_taref + $total_oficial;
 
-                $totalOficialSum += $total_oficial;
-                $totalnoofi += $base_taref;
-                $importeVtaSum += $importe_vta;
-            @endphp
                 <table class="table text-white tabla-completa"  style="color: #000;width: 100%;padding: 30px; margin: 6px; font-size: 12px">
                     <thead>
                         <tr>
@@ -70,49 +61,60 @@
                         </tr>
                     </thead>
                     <tbody style="text-align: center;font-size: 100%;">
-                        <tr>
-                            <td>{{ $cotizacion->DocCotizacion->num_contenedor }}</td>
-                            <td style="color: #020202; background: yellow;">
-                                @if ($cotizacion->id_subcliente != NULL)
-                                {{ $cotizacion->Subcliente->nombre }}
-                                @else
-                                {{ $cotizacion->Cliente->nombre }}
-                                @endif
-                            </td>
-                            <td style="color: #ffffff; background: #2778c4;">{{$cotizacion->destino}}</td>
-                            <td>{{$cotizacion->peso_contenedor}}</td>
-                            <td>{{$cotizacion->tamano}}</td>
-                            <td>$ {{ number_format($cotizacion->burreo, 1, '.', ',')}}</td>
-                            <td>$ {{ number_format($cotizacion->maniobra, 1, '.', ',')}}</td>
-                            <td>$ {{ number_format($cotizacion->sobrepeso, 1, '.', ',')}}</td>
-                            <td>$ {{ number_format($cotizacion->otro, 1, '.', ',')}}</td>
-                            <td>$ {{ number_format($cotizacion->precio_viaje, 1, '.', ',')}}</td>
+                        @foreach ($cotizaciones as $cotizacion)
+                            @php
+                                $total_oficial = ($cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
+                                $base_taref = ($cotizacion->burreo + $cotizacion->maniobra + $cotizacion->sobrepeso + $cotizacion->otro + $cotizacion->precio_viaje) - $cotizacion->base_factura;
+                                $importe_vta = $base_taref + $total_oficial;
 
-                            <td>$ {{ number_format($cotizacion->base_factura, 1, '.', ',')}}</td>
-                            <td>$ {{ number_format($cotizacion->iva, 1, '.', ',')}}</td>
-                            <td>$ {{ number_format($cotizacion->retencion, 1, '.', ',')}}</td>
-                            <td>$ {{ number_format($cotizacion->base_taref, 1, '.', ',')}}</td>
-                            <td>
-                                @php
-                                    $total_oficial = ($cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
-                                @endphp
-                                $ {{ number_format($total_oficial, 1, '.', ',')}}
-                            </td>
-                            <td>
-                                @php
-                                    $total_no_ofi = ($cotizacion->burreo + $cotizacion->maniobra + $cotizacion->sobrepeso + $cotizacion->otro + $cotizacion->precio_viaje) - $cotizacion->base_factura;
-                                @endphp
-                                $ {{ number_format($total_no_ofi, 1, '.', ',')}}</td>
-                            <td>
-                                @php
-                                    $importe_vta = $cotizacion->base_taref + $total_oficial;
-                                @endphp
-                                $ {{ number_format($importe_vta, 1, '.', ',')}}
-                            </td>
-                        </tr>
+                                $totalOficialSum += $total_oficial;
+                                $totalnoofi += $base_taref;
+                                $importeVtaSum += $importe_vta;
+                            @endphp
+                            <tr>
+                                <td>{{ $cotizacion->DocCotizacion->num_contenedor }}</td>
+                                <td style="color: #020202; background: yellow;">
+                                    @if ($cotizacion->id_subcliente != NULL)
+                                    {{ $cotizacion->Subcliente->nombre }}
+                                    @else
+                                    {{ $cotizacion->Cliente->nombre }}
+                                    @endif
+                                </td>
+                                <td style="color: #ffffff; background: #2778c4;">{{$cotizacion->destino}}</td>
+                                <td>{{$cotizacion->peso_contenedor}}</td>
+                                <td>{{$cotizacion->tamano}}</td>
+                                <td>$ {{ number_format($cotizacion->burreo, 1, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->maniobra, 1, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->sobrepeso, 1, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->otro, 1, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->precio_viaje, 1, '.', ',')}}</td>
+
+                                <td>$ {{ number_format($cotizacion->base_factura, 1, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->iva, 1, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->retencion, 1, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->base_taref, 1, '.', ',')}}</td>
+                                <td>
+                                    @php
+                                        $total_oficial = ($cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
+                                    @endphp
+                                    $ {{ number_format($total_oficial, 1, '.', ',')}}
+                                </td>
+                                <td>
+                                    @php
+                                        $total_no_ofi = ($cotizacion->burreo + $cotizacion->maniobra + $cotizacion->sobrepeso + $cotizacion->otro + $cotizacion->precio_viaje) - $cotizacion->base_factura;
+                                    @endphp
+                                    $ {{ number_format($total_no_ofi, 1, '.', ',')}}</td>
+                                <td>
+                                    @php
+                                        $importe_vta = $cotizacion->base_taref + $total_oficial;
+                                    @endphp
+                                    $ {{ number_format($importe_vta, 1, '.', ',')}}
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
-        @endforeach
+
         <h2 style="page-break-before: always; text-align: center;"></h2>
         <div class="totales">
             <h3 style="color: #000000; background: rgb(0, 174, 255);">Totales</h3>

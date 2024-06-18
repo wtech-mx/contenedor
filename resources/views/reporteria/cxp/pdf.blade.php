@@ -35,16 +35,7 @@
             $pagar1 = 0;
             $pagar2 = 0;
         @endphp
-        @foreach ($cotizaciones as $cotizacion)
-            @php
-                $total_oficial = ($cotizacion->burreo + $cotizacion->estadia + $cotizacion->Contenedor->Cotizacion->sobrepeso + $cotizacion->otro + $cotizacion->iva + $cotizacion->precio) - $cotizacion->retencion;
-                $base_factura = ($cotizacion->Contenedor->Cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
-                $importe_vta = $total_oficial - $base_factura;
 
-                $importeCT += $total_oficial;
-                $pagar1 += $base_factura;
-                $pagar2 += $importe_vta;
-            @endphp
             <table class="table text-white tabla-completa" style="color: #000;width: 100%;padding: 30px; font-size: 14px">
                 <thead>
                     <tr>
@@ -63,23 +54,34 @@
                     </tr>
                 </thead>
                 <tbody style="text-align: center;font-size: 100%;">
-                    <tr>
-                        <td>{{ $cotizacion->Contenedor->num_contenedor }}</td>
-                        <td>${{ number_format($total_oficial, 1, '.', ',') }}</td>
-                        <td>${{ number_format($base_factura, 1, '.', ',') }}</td>
-                        <td>${{ number_format($importe_vta, 1, '.', ',') }}</td>
-                        <td>${{ number_format($cotizacion->retencion, 1, '.', ',') }}</td>
-                        <td>${{ number_format($cotizacion->iva, 1, '.', ',') }}</td>
-                        <td>${{ number_format($cotizacion->Contenedor->Cotizacion->base_factura, 1, '.', ',') }}</td>
-                        <td>${{ number_format($cotizacion->precio, 1, '.', ',') }}</td>
-                        <td>${{ number_format($cotizacion->otro, 1, '.', ',') }}</td>
-                        <td>${{ number_format($cotizacion->Contenedor->Cotizacion->sobrepeso, 1, '.', ',') }}</td>
-                        <td>${{ number_format($cotizacion->estadia, 1, '.', ',') }}</td>
-                        <td>${{ number_format($cotizacion->burreo, 1, '.', ',') }}</td>
-                    </tr>
+                    @foreach ($cotizaciones as $cotizacion)
+                        @php
+                            $total_oficial = ($cotizacion->burreo + $cotizacion->estadia + $cotizacion->Contenedor->Cotizacion->sobrepeso + $cotizacion->otro + $cotizacion->iva + $cotizacion->precio) - $cotizacion->retencion;
+                            $base_factura = ($cotizacion->Contenedor->Cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
+                            $importe_vta = $total_oficial - $base_factura;
+
+                            $importeCT += $total_oficial;
+                            $pagar1 += $base_factura;
+                            $pagar2 += $importe_vta;
+                        @endphp
+                        <tr>
+                            <td>{{ $cotizacion->Contenedor->num_contenedor }}</td>
+                            <td>${{ number_format($total_oficial, 1, '.', ',') }}</td>
+                            <td>${{ number_format($base_factura, 1, '.', ',') }}</td>
+                            <td>${{ number_format($importe_vta, 1, '.', ',') }}</td>
+                            <td>${{ number_format($cotizacion->retencion, 1, '.', ',') }}</td>
+                            <td>${{ number_format($cotizacion->iva, 1, '.', ',') }}</td>
+                            <td>${{ number_format($cotizacion->Contenedor->Cotizacion->base_factura, 1, '.', ',') }}</td>
+                            <td>${{ number_format($cotizacion->precio, 1, '.', ',') }}</td>
+                            <td>${{ number_format($cotizacion->otro, 1, '.', ',') }}</td>
+                            <td>${{ number_format($cotizacion->Contenedor->Cotizacion->sobrepeso, 1, '.', ',') }}</td>
+                            <td>${{ number_format($cotizacion->estadia, 1, '.', ',') }}</td>
+                            <td>${{ number_format($cotizacion->burreo, 1, '.', ',') }}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
-        @endforeach
+
         <div class="totales">
             <h3 style="color: #000000; background: rgb(0, 174, 255);">Totales</h3>
             <p>A pagar oficial: <b> ${{ number_format($pagar1, 1, '.', ',') }} </b></p>
