@@ -37,6 +37,10 @@
             $total_no_ofi = 0;
         @endphp
 
+                <div class="contianer" style="position: relative">
+                    <h5 style="position: absolute;left:88%;">Generado el : {{ date("d-m-Y") }}</h5>
+                </div>
+
                 <table class="table text-white tabla-completa"  style="color: #000;width: 100%;padding: 30px; margin: 6px; font-size: 12px">
                     <thead>
                         <tr>
