@@ -83,32 +83,32 @@
                                 <td style="color: #ffffff; background: #2778c4;">{{$cotizacion->destino}}</td>
                                 <td>{{$cotizacion->peso_contenedor}}</td>
                                 <td>{{$cotizacion->tamano}}</td>
-                                <td>$ {{ number_format($cotizacion->burreo, 1, '.', ',')}}</td>
-                                <td>$ {{ number_format($cotizacion->maniobra, 1, '.', ',')}}</td>
-                                <td>$ {{ number_format($cotizacion->sobrepeso, 1, '.', ',')}}</td>
-                                <td>$ {{ number_format($cotizacion->otro, 1, '.', ',')}}</td>
-                                <td>$ {{ number_format($cotizacion->precio_viaje, 1, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->burreo, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->maniobra, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->sobrepeso, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->otro, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->precio_viaje, 2, '.', ',')}}</td>
 
-                                <td>$ {{ number_format($cotizacion->base_factura, 1, '.', ',')}}</td>
-                                <td>$ {{ number_format($cotizacion->iva, 1, '.', ',')}}</td>
-                                <td>$ {{ number_format($cotizacion->retencion, 1, '.', ',')}}</td>
-                                <td>$ {{ number_format($cotizacion->base_taref, 1, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->base_factura, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->iva, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->retencion, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->base_taref, 2, '.', ',')}}</td>
                                 <td>
                                     @php
                                         $total_oficial = ($cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
                                     @endphp
-                                    $ {{ number_format($total_oficial, 1, '.', ',')}}
+                                    $ {{ number_format($total_oficial, 2, '.', ',')}}
                                 </td>
                                 <td>
                                     @php
                                         $total_no_ofi = ($cotizacion->burreo + $cotizacion->maniobra + $cotizacion->sobrepeso + $cotizacion->otro + $cotizacion->precio_viaje) - $cotizacion->base_factura;
                                     @endphp
-                                    $ {{ number_format($total_no_ofi, 1, '.', ',')}}</td>
+                                    $ {{ number_format($total_no_ofi, 2, '.', ',')}}</td>
                                 <td>
                                     @php
                                         $importe_vta = $cotizacion->base_taref + $total_oficial;
                                     @endphp
-                                    $ {{ number_format($importe_vta, 1, '.', ',')}}
+                                    $ {{ number_format($importe_vta, 2, '.', ',')}}
                                 </td>
                             </tr>
                         @endforeach
@@ -118,9 +118,9 @@
         <h2 style="page-break-before: always; text-align: center;"></h2>
         <div class="totales">
             <h3 style="color: #000000; background: rgb(0, 174, 255);">Totales</h3>
-            <p>Total oficial: <b> ${{ number_format($totalOficialSum, 1, '.', ',') }} </b></p>
-            <p>Total no oficial: <b> ${{ number_format($totalnoofi, 1, '.', ',') }} </b></p>
-            <p>Importe vta: <b> ${{ number_format($importeVtaSum, 1, '.', ',') }} </b></p>
+            <p>Total oficial: <b> ${{ number_format($totalOficialSum, 2, '.', ',') }} </b></p>
+            <p>Total no oficial: <b> ${{ number_format($totalnoofi, 2, '.', ',') }} </b></p>
+            <p>Importe vta: <b> ${{ number_format($importeVtaSum, 2, '.', ',') }} </b></p>
         </div>
         <div class="totales">
             <h3 style="color: #000000; background: yellow;">Oficial</h3>

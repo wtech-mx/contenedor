@@ -70,38 +70,38 @@
                         @endphp
                         <tr>
                             <td>{{ $cotizacion->Contenedor->num_contenedor }}</td>
-                            <td>${{ number_format($total_oficial, 1, '.', ',') }}</td>
-                            <td>${{ number_format($base_factura, 1, '.', ',') }}</td>
-                            <td>${{ number_format($importe_vta, 1, '.', ',') }}</td>
-                            <td>${{ number_format($cotizacion->retencion, 1, '.', ',') }}</td>
-                            <td>${{ number_format($cotizacion->iva, 1, '.', ',') }}</td>
-                            <td>${{ number_format($cotizacion->Contenedor->Cotizacion->base_factura, 1, '.', ',') }}</td>
-                            <td>${{ number_format($cotizacion->precio, 1, '.', ',') }}</td>
-                            <td>${{ number_format($cotizacion->otro, 1, '.', ',') }}</td>
-                            <td>${{ number_format($cotizacion->Contenedor->Cotizacion->sobrepeso, 1, '.', ',') }}</td>
-                            <td>${{ number_format($cotizacion->estadia, 1, '.', ',') }}</td>
-                            <td>${{ number_format($cotizacion->burreo, 1, '.', ',') }}</td>
+                            <td>${{ number_format($total_oficial, 2, '.', ',') }}</td>
+                            <td>${{ number_format($base_factura, 2, '.', ',') }}</td>
+                            <td>${{ number_format($importe_vta, 2, '.', ',') }}</td>
+                            <td>${{ number_format($cotizacion->retencion, 2, '.', ',') }}</td>
+                            <td>${{ number_format($cotizacion->iva, 2, '.', ',') }}</td>
+                            <td>${{ number_format($cotizacion->Contenedor->Cotizacion->base_factura, 2, '.', ',') }}</td>
+                            <td>${{ number_format($cotizacion->precio, 2, '.', ',') }}</td>
+                            <td>${{ number_format($cotizacion->otro, 2, '.', ',') }}</td>
+                            <td>${{ number_format($cotizacion->Contenedor->Cotizacion->sobrepeso, 2, '.', ',') }}</td>
+                            <td>${{ number_format($cotizacion->estadia, 2, '.', ',') }}</td>
+                            <td>${{ number_format($cotizacion->burreo, 2, '.', ',') }}</td>
 
                             <td>
                                 @php
                                     $total_oficial = 0;
                                     $total_oficial = ($cotizacion->Contenedor->Cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
                                 @endphp
-                                $ {{ number_format($total_oficial, 1, '.', ',')}}
+                                $ {{ number_format($total_oficial, 2, '.', ',')}}
                             </td>
                             <td>
                                 @php
                                     $total_no_ofi = 0;
                                     $total_no_ofi = ($cotizacion->burreo + $cotizacion->estadia + $cotizacion->Contenedor->Cotizacion->sobrepeso + $cotizacion->otro + $cotizacion->precio) - $cotizacion->Contenedor->Cotizacion->base_factura;
                                 @endphp
-                                $ {{ number_format($total_no_ofi, 1, '.', ',')}}
+                                $ {{ number_format($total_no_ofi, 2, '.', ',')}}
                             </td>
                             <td>
                                 @php
                                     $importe_vta = 0;
                                     $importe_vta = $cotizacion->Contenedor->Cotizacion->base_taref + $total_oficial;
                                 @endphp
-                                $ {{ number_format($importe_vta, 1, '.', ',')}}
+                                $ {{ number_format($importe_vta, 2, '.', ',')}}
                             </td>
                         </tr>
                     @endforeach
@@ -110,9 +110,9 @@
 
         <div class="totales">
             <h3 style="color: #000000; background: rgb(0, 174, 255);">Totales</h3>
-            <p>A pagar oficial: <b> ${{ number_format($pagar1, 1, '.', ',') }} </b></p>
-            <p>A pagar no oficial: <b> ${{ number_format($pagar2, 1, '.', ',') }} </b></p>
-            <p>Importe CT: <b> ${{ number_format($importeCT, 1, '.', ',') }} </b></p>
+            <p>A pagar oficial: <b> ${{ number_format($pagar1, 2, '.', ',') }} </b></p>
+            <p>A pagar no oficial: <b> ${{ number_format($pagar2, 2, '.', ',') }} </b></p>
+            <p>Importe CT: <b> ${{ number_format($importeCT, 2, '.', ',') }} </b></p>
         </div>
     </body>
 </html>
