@@ -51,6 +51,10 @@
                         <th>Sobre peso</th>
                         <th>Estadia</th>
                         <th>Burreo</th>
+
+                        <th>Total oficial</th>
+                        <th>Total no oficial</th>
+                        <th>Importe CT</th>
                     </tr>
                 </thead>
                 <tbody style="text-align: center;font-size: 100%;">
@@ -77,6 +81,28 @@
                             <td>${{ number_format($cotizacion->Contenedor->Cotizacion->sobrepeso, 1, '.', ',') }}</td>
                             <td>${{ number_format($cotizacion->estadia, 1, '.', ',') }}</td>
                             <td>${{ number_format($cotizacion->burreo, 1, '.', ',') }}</td>
+
+                            <td>
+                                @php
+                                    $total_oficial = 0;
+                                    $total_oficial = ($cotizacion->Contenedor->Cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
+                                @endphp
+                                $ {{ number_format($total_oficial, 1, '.', ',')}}
+                            </td>
+                            <td>
+                                @php
+                                    $total_no_ofi = 0;
+                                    $total_no_ofi = ($cotizacion->burreo + $cotizacion->estadia + $cotizacion->Contenedor->Cotizacion->sobrepeso + $cotizacion->otro + $cotizacion->precio) - $cotizacion->Contenedor->Cotizacion->base_factura;
+                                @endphp
+                                $ {{ number_format($total_no_ofi, 1, '.', ',')}}
+                            </td>
+                            <td>
+                                @php
+                                    $importe_vta = 0;
+                                    $importe_vta = $cotizacion->Contenedor->Cotizacion->base_taref + $total_oficial;
+                                @endphp
+                                $ {{ number_format($importe_vta, 1, '.', ',')}}
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
