@@ -37,7 +37,7 @@
         @endphp
 
             <div class="contianer" style="position: relative">
-                <h5 style="position: absolute;left:88%;">Estado de cuenta Generado el : {{ date("d-m-Y") }}</h5>
+                <h5 style="position: absolute;left:75%;">Estado de cuenta por pagar : {{ date("d-m-Y") }}</h5>
             </div>
 
             <table class="table text-white tabla-completa" style="color: #000;width: 100%;padding: 30px; font-size: 14px">
