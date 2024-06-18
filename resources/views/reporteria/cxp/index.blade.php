@@ -43,7 +43,9 @@
                             <div class="table-responsive">
                                 <form id="exportForm" action="{{ route('cotizaciones_cxp.export') }}" method="POST">
                                     @csrf
-                                    <h3> {{$proveedor->nombre}} </h3>
+                                    @if(Route::currentRouteName() != 'index_cxp.reporteria')
+                                        <h3> {{$proveedor->nombre}} </h3>
+                                    @endif
                                     <table class="table table-flush" id="datatable-search">
                                         <thead class="thead">
                                             <tr>
@@ -81,7 +83,7 @@
                                             @endif
                                         </tbody>
                                     </table>
-                                    <button type="submit" id="exportButton" class="btn btn-primary" disabled>Exportar a PDF</button>
+                                    <button type="submit" id="exportButton" class="btn btn-primary">Exportar a PDF</button>
                                 </form>
                             </div>
                         </div>
@@ -107,24 +109,65 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             const selectAllCheckbox = document.getElementById('select-all');
-            const checkboxes = document.querySelectorAll('.select-box');
             const exportButton = document.getElementById('exportButton');
+            const selectedRows = new Set();
 
+            const table = $('#datatable-search').DataTable();
+
+            // Manejar el evento de cambio en el checkbox "select all"
             selectAllCheckbox.addEventListener('change', function() {
+                const checkboxes = document.querySelectorAll('.select-box');
+                const allChecked = selectAllCheckbox.checked;
+
                 checkboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllCheckbox.checked;
+                    checkbox.checked = allChecked;
+                    const rowId = checkbox.value;
+                    if (allChecked) {
+                        selectedRows.add(rowId);
+                    } else {
+                        selectedRows.delete(rowId);
+                    }
                 });
                 toggleExportButton();
             });
 
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', toggleExportButton);
+            // Manejar el evento de cambio en cada checkbox individual
+            $('#datatable-search tbody').on('change', '.select-box', function() {
+                const rowId = this.value;
+                if (this.checked) {
+                    selectedRows.add(rowId);
+                } else {
+                    selectedRows.delete(rowId);
+                }
+                toggleExportButton();
+            });
+
+            // Actualizar los checkboxes cuando se cambia de página
+            table.on('draw', function() {
+                const checkboxes = document.querySelectorAll('.select-box');
+                checkboxes.forEach(checkbox => {
+                    if (selectedRows.has(checkbox.value)) {
+                        checkbox.checked = true;
+                    }
+                });
             });
 
             function toggleExportButton() {
-                const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-                exportButton.disabled = !anyChecked;
+                exportButton.disabled = selectedRows.size === 0;
             }
+
+            // Enviar los datos seleccionados al servidor para la exportación
+            exportButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                const selectedData = Array.from(selectedRows);
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'selected_ids';
+                input.value = JSON.stringify(selectedData);
+                document.getElementById('exportForm').appendChild(input);
+                document.getElementById('exportForm').submit();
+            });
         });
+
     </script>
 @endsection

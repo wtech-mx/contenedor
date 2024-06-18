@@ -46,7 +46,7 @@
                 $totalnoofi += $base_taref;
                 $importeVtaSum += $importe_vta;
             @endphp
-                <table class="table text-white tabla-completa"  style="color: #000;width: 100%;padding: 30px; margin: 6px">
+                <table class="table text-white tabla-completa"  style="color: #000;width: 100%;padding: 30px; margin: 6px; font-size: 12px">
                     <thead>
                         <tr>
                             <th>Contenedor</th>
@@ -112,7 +112,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <hr>
         @endforeach
         <h2 style="page-break-before: always; text-align: center;"></h2>
         <div class="totales">
