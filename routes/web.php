@@ -136,6 +136,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('reporteria/cotizaciones/cxp/export', [App\Http\Controllers\ReporteriaController::class, 'export_cxp'])->name('cotizaciones_cxp.export');
     Route::get('/subclientes/{clienteId}', [App\Http\Controllers\ReporteriaController::class, 'getSubclientes']);
 
+    Route::get('reporteria/viajes', [App\Http\Controllers\ReporteriaController::class, 'index_viajes'])->name('index_viajes.reporteria');
+    Route::get('reporteria/viajes/buscador', [App\Http\Controllers\ReporteriaController::class, 'advance_viajes'])->name('advance_viajes.buscador');
+    Route::post('reporteria/viajes/export', [App\Http\Controllers\ReporteriaController::class, 'export_viajes'])->name('export_viajes.viajes');
+
 });
 
 //Route Hooks - Do not delete//

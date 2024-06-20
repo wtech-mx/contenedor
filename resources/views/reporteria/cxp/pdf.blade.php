@@ -37,10 +37,15 @@
         @endphp
 
             <div class="contianer" style="position: relative">
-                <h5 style="position: absolute;left:75%;">Estado de cuenta por pagar : {{ date("d-m-Y") }}</h5>
+                <h4>Empresa: {{ $user->Empresa->nombre }}</h4>
+                <h4>Estado de cuenta</h4>
+                <h4>Proveedor: {{ $cotizacion->Proveedor->nombre }}</h4>
+            </div>
+            <div class="contianer" style="position: relative">
+                <h5 style="position: absolute;left:75%;">Estado de cuenta por pagar : {{ date("d-m-Y") }}</h5><br>
             </div>
 
-            <table class="table text-white tabla-completa" style="color: #000;width: 100%;padding: 30px; font-size: 14px">
+            <table class="table text-white tabla-completa" style="color: #000;width: 100%;padding: 30px; font-size: 12px">
                 <thead>
                     <tr>
                         <th>Contenedor</th>

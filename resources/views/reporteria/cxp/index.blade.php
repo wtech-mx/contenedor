@@ -11,7 +11,9 @@
             <div class="col-sm-12">
                 <div class="card">
                         <div class="card-body">
-
+                            <a href="{{ route('dashboard') }}" class="btn" style="background: {{$configuracion->color_boton_close}}; color: #ffff; margin-right: 3rem;">
+                                Regresar
+                            </a>
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-sm-12">

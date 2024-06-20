@@ -18,11 +18,27 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="card">
-                                            <form action="{{ route('advance_search.buscador') }}" method="GET" >
+                                            <form action="{{ route('advance_viajes.buscador') }}" method="GET" >
 
                                                 <div class="card-body" style="padding-left: 1.5rem; padding-top: 1rem;">
                                                     <h5>Filtro</h5>
                                                         <div class="row">
+                                                            <div class="col-4 mb-3">
+                                                                <label for="user_id">Rango de fecha DE:</label>
+                                                                <input class="form-control" type="date" id="fecha_de" name="fecha_de">
+                                                            </div>
+                                                            <div class="col-4 mb-3">
+                                                                <label for="user_id">Rango de fecha Hasta:</label>
+                                                                <input class="form-control" type="date" id="fecha_hasta" name="fecha_hasta">
+                                                            </div>
+                                                            <div class="col-4 mb-3">
+                                                                <label for="user_id">Estatus:</label>
+                                                                <select class="form-control" name="estatus" id="estatus">
+                                                                    <option value="">seleccionar estatus</option>
+                                                                    <option value="Finalizado">Finalizado</option>
+                                                                    <option value="Aprobada">Aprobada</option>
+                                                                </select>
+                                                            </div>
                                                             <div class="col-3">
                                                                 <label for="user_id">Buscar cliente:</label>
                                                                 <select class="form-control cliente" name="id_client" id="id_client">
@@ -32,13 +48,13 @@
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-                                                            <div class="col-3">
+                                                            <div class="col-3 mb-5">
                                                                 <label for="user_id">Buscar subcliente:</label>
                                                                 <select class="form-control subcliente" name="id_subcliente" id="id_subcliente">
                                                                     <option selected value="">seleccionar cliente</option>
                                                                 </select>
                                                             </div>
-                                                            <div class="col-3">
+                                                            <div class="col-3 mb-5">
                                                                 <br>
                                                                 <button class="btn btn-sm mb-0 mt-sm-0 mt-1" type="submit" style="background-color: #F82018; color: #ffffff;">Buscar</button>
                                                             </div>
@@ -51,7 +67,7 @@
                             </div>
 
                             <div class="table-responsive">
-                                <form id="exportForm" action="{{ route('cotizaciones.export') }}" method="POST">
+                                <form id="exportForm" action="{{ route('export_viajes.viajes') }}" method="POST">
                                     @csrf
                                     <table class="table table-flush" id="datatable-search">
                                         <thead class="thead">
@@ -66,31 +82,31 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if(Route::currentRouteName() != 'index.reporteria')
-                                                @foreach ($cotizaciones as $cotizacion)
+                                            @if(Route::currentRouteName() != 'index_viajes.reporteria')
+                                                @foreach ($asignaciones as $cotizacion)
                                                     <tr>
                                                         <td>
                                                             <input type="checkbox" name="cotizacion_ids[]" value="{{ $cotizacion->id }}" class="select-box" data-row-id="{{ $cotizacion->id }}">
                                                         </td>
-                                                        <td>{{$cotizacion->Cliente->nombre}}</td>
+                                                        <td>{{$cotizacion->Contenedor->Cotizacion->Cliente->nombre}}</td>
                                                         <td>
-                                                            @if ($cotizacion->id_subcliente != NULL)
-                                                                {{$cotizacion->Subcliente->nombre}} / {{$cotizacion->Subcliente->telefono}}
+                                                            @if ($cotizacion->Contenedor->Cotizacion->id_subcliente != NULL)
+                                                                {{$cotizacion->Contenedor->Cotizacion->Subcliente->nombre}} / {{$cotizacion->Contenedor->Cotizacion->Subcliente->telefono}}
                                                             @else
                                                                 -
                                                             @endif
                                                         </td>
-                                                        <td>{{$cotizacion->origen}}</td>
-                                                        <td>{{$cotizacion->destino}}</td>
-                                                        <td>{{$cotizacion->DocCotizacion->num_contenedor}}</td>
+                                                        <td>{{$cotizacion->Contenedor->Cotizacion->origen}}</td>
+                                                        <td>{{$cotizacion->Contenedor->Cotizacion->destino}}</td>
+                                                        <td>{{$cotizacion->Contenedor->num_contenedor}}</td>
                                                         <td>
                                                             @can('cotizaciones-estatus')
-                                                                @if ($cotizacion->estatus == 'Aprobada')
+                                                                @if ($cotizacion->Contenedor->Cotizacion->estatus == 'Aprobada')
                                                                     <button type="button" class="btn btn-outline-info btn-xs">
                                                                 @else
                                                                     <button type="button" class="btn btn-outline-success btn-xs">
                                                                 @endif
-                                                                    {{$cotizacion->estatus}}
+                                                                    {{$cotizacion->Contenedor->Cotizacion->estatus}}
                                                                 </button>
                                                             @endcan
                                                         </td>

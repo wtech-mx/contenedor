@@ -135,6 +135,11 @@
                         <span class="sidenav-mini-icon"> P </span>
                         <span class="sidenav-normal">Cuentas por pagar</span>
                         </a>
+
+                        <a class="nav-link {{ (Request::is('reporteria/viajes*') ? 'show' : '') }}" href="{{ route('index_viajes.reporteria') }}">
+                        <span class="sidenav-mini-icon"> P </span>
+                        <span class="sidenav-normal">Viajes</span>
+                        </a>
                     </li>
                 </ul>
             </div>

@@ -38,7 +38,12 @@
         @endphp
 
                 <div class="contianer" style="position: relative">
-                    <h5 style="position: absolute;left:88%;">Generado el : {{ date("d-m-Y") }}</h5>
+                    <h4>Empresa: {{ $user->Empresa->nombre }}</h4>
+                    <h4>Estado de cuenta</h4>
+                    <h4>Cliente: {{ $cotizacion->Cliente->nombre }}</h4>
+                </div>
+                <div class="contianer" style="position: relative">
+                    <h5 style="position: absolute;left:88%;">Generado el : {{ date("d-m-Y") }}</h5><br>
                 </div>
 
                 <table class="table text-white tabla-completa"  style="color: #000;width: 100%;padding: 30px; margin: 6px; font-size: 12px">
@@ -125,24 +130,6 @@
             <p>Total oficial: <b> ${{ number_format($totalOficialSum, 2, '.', ',') }} </b></p>
             <p>Total no oficial: <b> ${{ number_format($totalnoofi, 2, '.', ',') }} </b></p>
             <p>Importe vta: <b> ${{ number_format($importeVtaSum, 2, '.', ',') }} </b></p>
-        </div>
-        <div class="totales">
-            <h3 style="color: #000000; background: yellow;">Oficial</h3>
-            @foreach ($bancos_oficiales as $banco_oficial)
-                <p>Nombre: <b> {{$banco_oficial->nombre_beneficiario}} </b></p>
-                <p>Banco: <b> {{$banco_oficial->nombre_banco}} </b></p>
-                <p>No. CLABE: <b> {{$banco_oficial->clabe}} </b></p>
-                <p>No. CTA : <b> {{$banco_oficial->cuenta_bancaria}} </b></p>
-            @endforeach
-        </div>
-        <div class="totales">
-            <h3 style="color: #000000; background: rgb(255, 145, 0);">No oficial</h3>
-            @foreach ($bancos_no_oficiales as $banco_oficial)
-                <p>Nombre: <b> {{$banco_oficial->nombre_beneficiario}} </b></p>
-                <p>Banco: <b> {{$banco_oficial->nombre_banco}} </b></p>
-                <p>No. CLABE: <b> {{$banco_oficial->clabe}} </b></p>
-                <p>No. CTA : <b> {{$banco_oficial->cuenta_bancaria}} </b></p>
-            @endforeach
         </div>
     </body>
 </html>
