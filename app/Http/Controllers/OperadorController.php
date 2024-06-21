@@ -10,6 +10,7 @@ use App\Models\DocumCotizacion;
 use App\Models\Asignaciones;
 use App\Models\Bancos;
 use App\Models\ComprobanteGastos;
+use App\Models\GastosOperadores;
 use Session;
 
 class OperadorController extends Controller
@@ -111,18 +112,50 @@ class OperadorController extends Controller
 
     public function update_pago(Request $request, $id){
 
-        $cotizaciones = Asignaciones::where('id', '=', $id)->first();
-        $cotizaciones->gasolina = $request->get('gasolina');
-        $cotizaciones->casetas = $request->get('casetas');
-        $cotizaciones->otros = $request->get('otros');
-        $cotizaciones->estatus_pagado = 'Pagado';
+        $asignaciones = Asignaciones::where('id', '=', $id)->first();
+        $asignaciones->id_banco1_pago_operador = $request->get('id_banco1_pago_operador');
+        $asignaciones->cantidad_banco1_pago_operador = $request->get('cantidad_banco1_pago_operador');
+        $asignaciones->id_banco2_pago_operador = $request->get('id_banco2_pago_operador');
+        $asignaciones->cantidad_banco2_pago_operador = $request->get('cantidad_banco2_pago_operador');
+        $asignaciones->fecha_pago_operador = date('Y-m-d');
+      //  $asignaciones->estatus_pagado = 'Pagado';
+        $asignaciones->update();
 
-        $cotizaciones->id_banco1_pago_operador = $request->get('id_banco1_pago_operador');
-        $cotizaciones->cantidad_banco1_pago_operador = $request->get('cantidad_banco1_pago_operador');
-        $cotizaciones->id_banco2_pago_operador = $request->get('id_banco2_pago_operador');
-        $cotizaciones->cantidad_banco2_pago_operador = $request->get('cantidad_banco2_pago_operador');
-        $cotizaciones->fecha_pago_operador = date('Y-m-d');
-        $cotizaciones->update();
+        $gasolina = $request->get('gasolina');
+        dd( $gasolina);
+        $casetas = $request->get('casetas');
+        $otros = $request->get('otros');
+
+        for ($count = 0; $count < count($gasolina); $count++) {
+            $data = array(
+                'id_asignacion' => $asignaciones->id,
+                'id_operador' => $request->get('id_operador'),
+                'gasolina' => $gasolina[$count],
+            );
+
+            GastosOperadores::create($data);
+        }
+
+        for ($count = 0; $count < count($casetas); $count++) {
+            $data = array(
+                'id_asignacion' => $asignaciones->id,
+                'id_operador' => $request->get('id_operador'),
+                'casetas' => $casetas[$count],
+            );
+
+            GastosOperadores::create($data);
+        }
+
+        for ($count = 0; $count < count($otros); $count++) {
+            $data = array(
+                'id_asignacion' => $asignaciones->id,
+                'id_operador' => $request->get('id_operador'),
+                'otros' => $otros[$count],
+            );
+
+            GastosOperadores::create($data);
+        }
+
 
         if ($request->hasFile('comprobante_gasolina')) {
             // Itera sobre cada imagen cargada
