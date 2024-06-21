@@ -124,7 +124,6 @@
                     </tbody>
                 </table>
 
-        <h2 style="page-break-before: always; text-align: center;"></h2>
         <div class="totales">
             <h3 style="color: #000000; background: rgb(0, 174, 255);">Totales</h3>
             <p>Total oficial: <b> ${{ number_format($totalOficialSum, 2, '.', ',') }} </b></p>
