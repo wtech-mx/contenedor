@@ -86,7 +86,7 @@
                                     @if ($cotizacion->id_subcliente != NULL)
                                     {{ $cotizacion->Subcliente->nombre }}
                                     @else
-                                    {{ $cotizacion->Cliente->nombre }}
+                                    
                                     @endif
                                 </td>
                                 <td style="color: #ffffff; background: #2778c4;">{{$cotizacion->destino}}</td>
