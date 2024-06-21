@@ -115,7 +115,7 @@
                                     $ {{ number_format($total_no_ofi, 2, '.', ',')}}</td>
                                 <td>
                                     @php
-                                        $importe_vta2 = $cotizacion->base_taref + $total_oficial;
+                                        $importe_vta2 = $total_oficial + $total_no_ofi;
                                     @endphp
                                     $ {{ number_format($importe_vta2, 2, '.', ',')}}
                                 </td>
