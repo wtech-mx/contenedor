@@ -225,14 +225,15 @@
                     success: function(response) { // Agrega "async" aquí
                         // El formulario se ha enviado correctamente, ahora realiza la impresión
                         console.log('OK');
-                        Swal.fire({
-                            title: "Planeacion Guardada <strong>¡Exitosamente!</strong>",
-                            icon: "success",
-                            showCloseButton: true,
-                            showCancelButton: true,
-                            focusConfirm: false,
-                            cancelButtonText: `<a  class="btn_swalater_cancel" style="text-decoration: none;color: #fff;" href="{{ route('index.planeaciones') }}" >Cerrar</a>`,
-                        });
+                        // Swal.fire({
+                        //     title: "Planeacion Guardada <strong>¡Exitosamente!</strong>",
+                        //     icon: "success",
+                        //     showCloseButton: true,
+                        //     showCancelButton: true,
+                        //     focusConfirm: false,
+                        //     cancelButtonText: `<a  class="btn_swalater_cancel" style="text-decoration: none;color: #fff;" href="{{ route('index.planeaciones') }}" >Cerrar</a>`,
+                        // });
+                        alert('Agregada con Exito');
                         location.reload();
 
                     },
