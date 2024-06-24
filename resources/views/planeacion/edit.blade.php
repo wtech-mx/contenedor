@@ -7,7 +7,8 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
-            <form method="POST" action="{{ route('asignacion.planeaciones') }}" id="miFormulario" enctype="multipart/form-data" role="form">
+            <form method="POST" action="{{ route('asignacion.planeaciones') }}" id="miFormulario{{$cotizacion->id}}" enctype="multipart/form-data" role="form">
+
                 @csrf
                 <div class="modal-body">
                     <div class="row">
@@ -141,7 +142,7 @@
 
                             <div class="col-12 form-group">
                                 <label for="name">Proveedor</label>
-                                <select class="form-select d-inline-block" id="id_proveedor" name="id_proveedor" value="{{ old('id_proveedor') }}" required>
+                                <select class="form-select d-inline-block" id="id_proveedor" name="id_proveedor" value="{{ old('id_proveedor') }}">
                                     <option  value="">Seleccionar Proveedor</option>
                                     @foreach ($proveedores as $item)
                                         <option value="{{$item->id}}">{{$item->nombre}}</option>
@@ -237,7 +238,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" id="btnEnviar">Guardar</button>
+                    <button type="submit" class="btn btn-primary btnEnviar" id="btnEnviar{{$cotizacion->id}}">Guardar</button>
                 </div>
             </form>
 

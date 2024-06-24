@@ -214,50 +214,49 @@
 
             });
 
-            $("#miFormulario").on("submit", function (event) {
+            @foreach ($cotizaciones as $cotizacion)
+            $("#miFormulario{{$cotizacion->id}}").on("submit", function (event) {
                 event.preventDefault();
+                var form = $(this);
+                var btnEnviar = form.find('.btnEnviar');
+                var spinner = form.find('#loadingSpinner');
+
+                btnEnviar.prop('disabled', true);
+                spinner.show();
+
                 $.ajax({
-                    url: $(this).attr("action"),
+                    url: form.attr("action"),
                     type: "POST",
                     data: new FormData(this),
                     contentType: false,
                     processData: false,
-                    success: function(response) { // Agrega "async" aquí
-                        // El formulario se ha enviado correctamente, ahora realiza la impresión
-                        console.log('OK');
-                        // Swal.fire({
-                        //     title: "Planeacion Guardada <strong>¡Exitosamente!</strong>",
-                        //     icon: "success",
-                        //     showCloseButton: true,
-                        //     showCancelButton: true,
-                        //     focusConfirm: false,
-                        //     cancelButtonText: `<a  class="btn_swalater_cancel" style="text-decoration: none;color: #fff;" href="{{ route('index.planeaciones') }}" >Cerrar</a>`,
-                        // });
+                    success: function(response) {
                         alert('Agregada con Exito');
                         location.reload();
-
                     },
                     error: function (xhr, status, error) {
-                            var errors = xhr.responseJSON.errors;
-                            var errorMessage = '';
+                        var errors = xhr.responseJSON.errors;
+                        var errorMessage = '';
 
-                            // Itera a través de los errores y agrega cada mensaje de error al mensaje final
-                            for (var key in errors) {
-                                if (errors.hasOwnProperty(key)) {
-                                    var errorMessages = errors[key].join('<br>'); // Usamos <br> para separar los mensajes
-                                    errorMessage += '<strong>' + key + ':</strong><br>' + errorMessages + '<br>';
-                                }
+                        for (var key in errors) {
+                            if (errors.hasOwnProperty(key)) {
+                                var errorMessages = errors[key].join('<br>');
+                                errorMessage += '<strong>' + key + ':</strong><br>' + errorMessages + '<br>';
                             }
-                            console.log(errorMessage);
-                            // Muestra el mensaje de error en una SweetAlert
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Faltan Campos',
-                                html: errorMessage, // Usa "html" para mostrar el mensaje con formato HTML
-                            });
+                        }
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Faltan Campos',
+                            html: errorMessage,
+                        });
+
+                        btnEnviar.prop('disabled', false);
+                        spinner.hide();
                     }
                 });
             });
+            @endforeach
+
             calendar.render();
 
             $('[id^="tipo"]').change(function() {
@@ -277,6 +276,38 @@
                 nuevoCampoDolyGroup.show();
             }
         });
+
+        $('[id^="tipo"]').change(function() {
+            // Obtén el valor seleccionado del elemento actual
+            var tipo = $(this).val();
+            // Obtén el número de ID eliminando 'tipo' del ID del elemento actual
+            var idNum = $(this).attr('id').replace('tipo', '');
+            // Construye los selectores de los grupos de elementos adicionales utilizando el número de ID
+            var chasisAdicional1Group = $('#chasisAdicional1Group');
+            var nuevoCampoDolyGroup = $('#nuevoCampoDolyGroup');
+
+            if (tipo === 'Sencillo') {
+                chasisAdicional1Group.hide();
+                nuevoCampoDolyGroup.hide();
+            } else if (tipo === 'Full') {
+                chasisAdicional1Group.show();
+                nuevoCampoDolyGroup.show();
+            }
+        });
+
+        $('[id^="viaje"]').change(function() {
+            var elementId = $(this).attr('id');
+            var idNum = elementId.replace('viaje', '');
+            var viaje = $('#viaje' + idNum).val();
+            var idProveedor = $('#id_proveedor' + idNum);
+
+            if (viaje === 'Camion Subcontratado') {
+                idProveedor.prop('required', true);
+            } else {
+                idProveedor.prop('required', false);
+            }
+        });
+
 
         $('[id^="btn_clientes_search"]').click(function() {
             var cotizacionId = $(this).data('cotizacion-id'); // Obtener el ID de la cotización del atributo data
