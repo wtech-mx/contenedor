@@ -51,6 +51,7 @@ class CuentasPagarController extends Controller
             $query->where('cotizaciones.estatus', '=', 'Aprobada')
                   ->orWhere('cotizaciones.estatus', '=', 'Finalizado');
         })
+        ->where('cotizaciones.id_empresa', '=', auth()->user()->id_empresa)
         ->where('asignaciones.id_proveedor', '=', $id)
         ->where('cotizaciones.prove_restante', '>', 0)
         ->select('asignaciones.*', 'docum_cotizacion.num_contenedor', 'docum_cotizacion.id_cotizacion', 'cotizaciones.estatus', 'cotizaciones.prove_restante', 'cotizaciones.id_cuenta_prov', 'cotizaciones.dinero_cuenta_prov', 'cotizaciones.id_cuenta_prov2', 'cotizaciones.dinero_cuenta_prov2')
