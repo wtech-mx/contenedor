@@ -141,7 +141,7 @@
 
                             <div class="col-12 form-group">
                                 <label for="name">Proveedor</label>
-                                <select class="form-select d-inline-block" id="id_proveedor" name="id_proveedor" value="{{ old('id_proveedor') }}" >
+                                <select class="form-select d-inline-block" id="id_proveedor" name="id_proveedor" value="{{ old('id_proveedor') }}" required>
                                     <option  value="">Seleccionar Proveedor</option>
                                     @foreach ($proveedores as $item)
                                         <option value="{{$item->id}}">{{$item->nombre}}</option>
