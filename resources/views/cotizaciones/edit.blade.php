@@ -285,6 +285,9 @@
 
                                 <div class="tab-pane fade" id="nav-Bloque" role="tabpanel" aria-labelledby="nav-Bloque-tab" tabindex="0">
                                     <h3 class="mb-5 mt-3">Bloque de Entrada</h3>
+                                    @if ($documentacion->num_contenedor != NULL)
+                                        <label style="font-size: 20px;">Num contenedor:  {{$documentacion->num_contenedor}} </label>
+                                    @endif
                                     <div class="row">
                                         <div class="col-4 form-group">
                                             <label for="name">Block</label>
@@ -320,6 +323,9 @@
 
                                 <div class="tab-pane fade" id="nav-Contenedor" role="tabpanel" aria-labelledby="nav-Contenedor-tab" tabindex="0">
                                     <h3 class="mb-5 mt-3">Contenedor</h3>
+                                    @if ($documentacion->num_contenedor != NULL)
+                                        <label style="font-size: 20px;">Num contenedor:  {{$documentacion->num_contenedor}} </label>
+                                    @endif
                                     <div class="row">
                                         <div class="col-4 form-group">
                                             <label for="name">Num. Contenedor</label>
@@ -410,6 +416,9 @@
 
                                 <div class="tab-pane fade" id="nav-Documentacion" role="tabpanel" aria-labelledby="nav-Documentacion-tab" tabindex="0">
                                     <h3 class="mt-3 mb-5">Documentación</h3>
+                                    @if ($documentacion->num_contenedor != NULL)
+                                        <label style="font-size: 20px;">Num contenedor:  {{$documentacion->num_contenedor}} </label>
+                                    @endif
                                     <div class="row">
                                         <div class="col-6 form-group">
                                             <label for="name">Num. Boleta de Liberación</label>
@@ -691,6 +700,9 @@
 
                                 <div class="tab-pane fade" id="nav-Gastos" role="tabpanel" aria-labelledby="nav-Gastos-tab" tabindex="0">
                                     <h3 class="mt-3 mb-5">Gastos Extras</h3>
+                                    @if ($documentacion->num_contenedor != NULL)
+                                        <label style="font-size: 20px;">Num contenedor:  {{$documentacion->num_contenedor}} </label>
+                                    @endif
                                     <div class="row">
                                         @foreach ($gastos_extras as $gasto_extra)
                                             <input type="hidden" name="ticket_id[]" value="{{ $gasto_extra->id }}">

@@ -338,6 +338,7 @@ class CotizacionesController extends Controller
             }
         }
 
+
         $asignacion = Asignaciones::find($id);
 
         if ($tipo_cambio  == 'propio') {
@@ -371,6 +372,7 @@ class CotizacionesController extends Controller
             $asignacion->cantidad_banco2_pago_operador = $request->cantidad_banco2_pago_operador;
             $asignacion->fecha_pago_salida = date('Y-m-d');
             $asignacion->estatus_pagado = 'Pendiente Pago';
+
         } else if ($tipo_cambio  == 'subcontratado'){
             // Cambiar a subcontratado
             $asignacion->id_camion = null;
@@ -411,27 +413,114 @@ class CotizacionesController extends Controller
 
     public function cambiar_empresa(Request $request, $id){
 
-        $cotizaciones = DB::table('cotizaciones')
-        ->where('id', $id)
-        ->update(['id_empresa' => $request->get('id_empresa')]);
-        $cotizacion = Cotizaciones::find($id);
+        // Obtener la cotización actual
+        $cotizacion = DB::table('cotizaciones')->where('id', $id)->first();
 
+        // Obtener el id_cliente actual de la empresa anterior
+        $idClienteAnterior = DB::table('clients')
+            ->where('id', $cotizacion->id_cliente)
+            ->value('id');
 
-        $contenedores = DB::table('docum_cotizacion')
-        ->where('id_cotizacion',  '=', $cotizacion->id)
-        ->update(['id_empresa' => $request->get('id_empresa')]);
-        $contenedor = DocumCotizacion::where('id_cotizacion',  '=', $cotizacion->id)->first();
+        // Obtener el correo del cliente anterior
+        $correoCliente = DB::table('clients')
+            ->where('id', $idClienteAnterior)
+            ->value('correo');
 
-        if ($contenedor) {
-            $asignacionExiste = Asignaciones::where('id_contenedor', '=', $contenedor->id)->exists();
-            if ($asignacionExiste) {
-                $asignacion = DB::table('asignaciones')
-                ->where('id_contenedor', '=', $contenedor->id)
-                ->update(['id_empresa' => $request->get('id_empresa')]);
+        // Verificar si hay un cliente con el mismo correo en la nueva empresa
+        $nuevoIdEmpresa = $request->get('id_empresa');
+        $nuevoIdCliente = DB::table('clients')
+            ->where('correo', $correoCliente)
+            ->where('id_empresa', $nuevoIdEmpresa)
+            ->value('id');
+
+        if ($nuevoIdCliente) {
+            $contenedor = DocumCotizacion::where('id_cotizacion',  '=', $cotizacion->id)->first();
+            
+            if ($contenedor) {
+                $asignacionExiste = Asignaciones::where('id_contenedor', '=', $contenedor->id)->exists();
+
+                if ($asignacionExiste) {
+                    // Obtener la asignación correspondiente
+                    $asignacion = Asignaciones::where('id_contenedor', '=', $contenedor->id)->first();
+
+                    // Obtener los datos necesarios del request
+                    $nuevoIdEmpresa = $request->get('id_empresa');
+
+                    // Verificar si id_operador es null y actualizar id_proveedor
+                    if (is_null($asignacion->id_operador)) {
+                        // Obtener el id_proveedor actual
+                        $idProveedorAnterior = $asignacion->id_proveedor;
+
+                        // Obtener el correo del proveedor anterior
+                        $correoProveedor = DB::table('proveedores')
+                            ->where('id', $idProveedorAnterior)
+                            ->value('correo');
+
+                        // Buscar el nuevo id_proveedor en la nueva empresa
+                        $nuevoIdProveedor = DB::table('proveedores')
+                            ->where('correo', $correoProveedor)
+                            ->where('id_empresa', $nuevoIdEmpresa)
+                            ->value('id');
+
+                        if ($nuevoIdProveedor) {
+                            // Actualizar id_proveedor y id_empresa
+                            DB::table('asignaciones')
+                                ->where('id_contenedor', '=', $contenedor->id)
+                                ->update([
+                                    'id_empresa' => $nuevoIdEmpresa,
+                                    'id_proveedor' => $nuevoIdProveedor
+                                ]);
+                        }
+                    }
+
+                    // Verificar si id_proveedor es null y actualizar id_operador
+                    if (is_null($asignacion->id_proveedor)) {
+                        // Obtener el id_operador actual
+                        $idOperadorAnterior = $asignacion->id_operador;
+
+                        // Obtener el correo del operador anterior
+                        $correoOperador = DB::table('operadores')
+                            ->where('id', $idOperadorAnterior)
+                            ->value('correo');
+
+                        // Buscar el nuevo id_operador en la nueva empresa
+                        $nuevoIdOperador = DB::table('operadores')
+                            ->where('correo', $correoOperador)
+                            ->where('id_empresa', $nuevoIdEmpresa)
+                            ->value('id');
+
+                        if ($nuevoIdOperador) {
+                            // Actualizar id_operador y id_empresa
+                            DB::table('asignaciones')
+                                ->where('id_contenedor', '=', $contenedor->id)
+                                ->update([
+                                    'id_empresa' => $nuevoIdEmpresa,
+                                    'id_operador' => $nuevoIdOperador
+                                ]);
+                        }
+                    }
+                }
             }
+
+            // Actualizar la cotización con el nuevo id_empresa y id_cliente
+            $cotizaciones = DB::table('cotizaciones')
+            ->where('id', $id)
+            ->update([
+                'id_empresa' => $nuevoIdEmpresa,
+                'id_cliente' => $nuevoIdCliente
+            ]);
+
+            $contenedores = DB::table('docum_cotizacion')
+            ->where('id_cotizacion',  '=', $cotizacion->id)
+            ->update(['id_empresa' => $request->get('id_empresa')]);
+
+            return redirect()->route('index.cotizaciones')
+                ->with('success', 'Se ha editado sus datos con exito');
+        } else {
+            return redirect()->route('index.cotizaciones')
+                ->with('error', 'No tiene cliente con el mismo correo a la empresa que quiere cambiar');
         }
 
-        return redirect()->route('index.cotizaciones')
-            ->with('success', 'Se ha editado sus datos con exito');
+
     }
 }
