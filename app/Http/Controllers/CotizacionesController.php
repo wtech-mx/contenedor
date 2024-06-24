@@ -352,7 +352,6 @@ class CotizacionesController extends Controller
             $asignacion->iva = null;
             $asignacion->retencion = null;
             $asignacion->total_proveedor = null;
-            // Actualizar otros campos según el formulario de propio
             $asignacion->id_camion = $request->camion;
             $asignacion->id_chasis = $request->chasis;
             $asignacion->id_dolys = $request->nuevoCampoDoly;
@@ -372,7 +371,7 @@ class CotizacionesController extends Controller
             $asignacion->cantidad_banco2_pago_operador = $request->cantidad_banco2_pago_operador;
             $asignacion->fecha_pago_salida = date('Y-m-d');
             $asignacion->estatus_pagado = 'Pendiente Pago';
-
+            $asignacion->update();
         } else if ($tipo_cambio  == 'subcontratado'){
             // Cambiar a subcontratado
             $asignacion->id_camion = null;
@@ -404,9 +403,16 @@ class CotizacionesController extends Controller
             $asignacion->total_proveedor = $request->total_proveedor;
             $asignacion->fecha_inicio = $request->fecha_inicio_proveedor;
             $asignacion->fecha_fin = $request->fecha_fin_proveedor . ' 23:00:00';
+            $asignacion->update();
+
+            $doc = DocumCotizacion::where('id',  '=', $asignacion->id_contenedor)->first();
+
+            $cotizacionesPorPagar = Cotizaciones::where('id', '=', $doc->id_cotizacion)->first();
+            $cotizacionesPorPagar->prove_restante = $request->total_proveedor;
+            $cotizacionesPorPagar->update();
         }
 
-        $asignacion->save();
+
 
         return redirect()->back()->with('success', 'Ha sido cambiado exitosamente.');
     }
@@ -435,7 +441,7 @@ class CotizacionesController extends Controller
 
         if ($nuevoIdCliente) {
             $contenedor = DocumCotizacion::where('id_cotizacion',  '=', $cotizacion->id)->first();
-            
+
             if ($contenedor) {
                 $asignacionExiste = Asignaciones::where('id_contenedor', '=', $contenedor->id)->exists();
 
