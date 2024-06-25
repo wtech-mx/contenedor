@@ -133,13 +133,17 @@ class CotizacionesController extends Controller
 
 
         if($request->get('estatus') == 'Cancelada' || $request->get('estatus') == 'Pendiente'){
-            $asignaciones_id = $cotizaciones->DocCotizacion->Asignaciones->id;
-            $asignaciones = Asignaciones::find($asignaciones_id);
+            if($cotizaciones->DocCotizacion){
+                if($cotizaciones->DocCotizacion->Asignaciones){
+                    $asignaciones_id = $cotizaciones->DocCotizacion->Asignaciones->id;
+                    $asignaciones = Asignaciones::find($asignaciones_id);
 
-                $asignaciones->fecha_inicio = null;
-                $asignaciones->fecha_fin = null;
+                        $asignaciones->fecha_inicio = null;
+                        $asignaciones->fecha_fin = null;
 
-            $asignaciones->update();
+                    $asignaciones->update();
+                }
+            }
         }
 
         Session::flash('edit', 'Se ha editado sus datos con exito');
