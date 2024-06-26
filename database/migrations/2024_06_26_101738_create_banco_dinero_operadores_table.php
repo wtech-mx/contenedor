@@ -55,7 +55,7 @@ return new class extends Migration
             $table->foreign('id_empresa')
                 ->references('id')->on('empresas')
                 ->inDelete('set null');
-            });
+                
             $table->timestamps();
         });
     }
