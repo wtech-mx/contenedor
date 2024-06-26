@@ -207,27 +207,50 @@
     </div>
     @endcan
     @can('cuentas-pagar')
-    <div class="col-4">
-        <div class="card p-3 mb-4">
-            <div class="row">
-                <div class="col-2 my-auto">
-                    <a href="{{ route('index.pagar') }}">
-                        <img src="{{ asset('img/icon/gastos.png.webp') }}" alt="" width="35px">
-                    </a>
-                </div>
+        <div class="col-4">
+            <div class="card p-3 mb-4">
+                <div class="row">
+                    <div class="col-2 my-auto">
+                        <a href="{{ route('index.pagar') }}">
+                            <img src="{{ asset('img/icon/gastos.png.webp') }}" alt="" width="35px">
+                        </a>
+                    </div>
 
-                <div class="col-8">
-                    <a href="{{ route('index.pagar') }}">
-                        <p style="margin: 0">Consulta</p>
-                        <h5>IX Cuentas por pagar</h5>
-                    </a>
-                </div>
+                    <div class="col-8">
+                        <a href="{{ route('index.pagar') }}">
+                            <p style="margin: 0">Consulta</p>
+                            <h5>IX Cuentas por pagar</h5>
+                        </a>
+                    </div>
 
-                <div class="col-2 my-auto">
+                    <div class="col-2 my-auto">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endcan
+    @can('liquidaciones')
+        <div class="col-4">
+            <div class="card p-3 mb-4">
+                <div class="row">
+                    <div class="col-2 my-auto">
+                        <a href="{{ route('index.liquidacion') }}">
+                            <img src="{{ asset('img/icon/pago-en-efectivo.png') }}" alt="" width="35px">
+                        </a>
+                    </div>
+
+                    <div class="col-8">
+                        <a href="{{ route('index.liquidacion') }}">
+                            <p style="margin: 0">Consulta</p>
+                            <h5>XI Liquidaciones</h5>
+                        </a>
+                    </div>
+
+                    <div class="col-2 my-auto">
+                    </div>
+                </div>
+            </div>
+        </div>
     @endcan
 
 </div>
