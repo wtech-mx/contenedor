@@ -41,6 +41,10 @@
                               <button class="nav-link custom-tab" id="nav-Gastos-tab" data-bs-toggle="tab" data-bs-target="#nav-Gastos" type="button" role="tab" aria-controls="nav-Gastos" aria-selected="false">
                                 <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="40px"> Gastos
                               </button>
+
+                              <button class="nav-link custom-tab" id="nav-GastosOpe-tab" data-bs-toggle="tab" data-bs-target="#nav-GastosOpe" type="button" role="tab" aria-controls="nav-GastosOpe" aria-selected="false">
+                                <img src="{{ asset('img/icon/efectivo.webp') }}" alt="" width="40px"> Gastos Operador
+                              </button>
                             </div>
                         </nav>
 
@@ -764,6 +768,92 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="tab-pane fade" id="nav-GastosOpe" role="tabpanel" aria-labelledby="nav-GastosOpe-tab" tabindex="0">
+                                    <h3 class="mt-3 mb-5">Gastos Operadores</h3>
+                                    @if ($documentacion->num_contenedor != NULL)
+                                        <label style="font-size: 20px;">Num contenedor:  {{$documentacion->num_contenedor}} </label>
+                                    @endif
+                                    <div class="row">
+                                        @foreach ($gastos_ope as $gasto_extra)
+                                            <input type="hidden" name="ticket_id_ope[]" value="{{ $gasto_extra->id }}">
+                                            <div class="col-4 form-group">
+                                                <label for="name">Cantidad:</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="cantidad_ope[]" id="cantidad_ope[]" type="text" class="form-control" value="{{$gasto_extra->cantidad}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4 form-group">
+                                                <label for="name">Tipo:</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/efectivo.webp') }}" alt="" width="25px">
+                                                    </span>
+                                                    <select class="form-select d-inline-block" id="tipo_ope" name="tipo_ope[]">
+                                                        <option value="{{$gasto_extra->tipo}}">{{$gasto_extra->tipo}}</option>
+                                                        <option value="Gasolina">Gasolina</option>
+                                                        <option value="Casetas">Casetas</option>
+                                                        <option value="Otros">Otros</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4 form-group">
+                                                <label for="name">Comprobante</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                                    </span>
+                                                    <input name="comrpobante_ope[]" id="comrpobante_ope" type="file" class="form-control">
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        <div id="formulario2" class="mt-4">
+                                            <button type="button" class="clonar2 btn btn-secondary btn-sm">Agregar</button>
+                                            <div class="clonars2">
+                                                <div class="row">
+                                                    <div class="col-4 form-group">
+                                                        <label for="name">Cantidad:</label>
+                                                        <div class="input-group mb-3">
+                                                            <span class="input-group-text" id="basic-addon1">
+                                                                <img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">
+                                                            </span>
+                                                            <input name="cantidad_ope[]" id="cantidad_ope[]" type="text" class="form-control" >
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-4 form-group">
+                                                        <label for="name">Tipo:</label>
+                                                        <div class="input-group mb-3">
+                                                            <span class="input-group-text" id="basic-addon1">
+                                                                <img src="{{ asset('img/icon/efectivo.webp') }}" alt="" width="25px">
+                                                            </span>
+                                                            <select class="form-select d-inline-block" id="tipo_ope" name="tipo_ope[]">
+                                                                <option value="Gasolina">Gasolina</option>
+                                                                <option value="Casetas">Casetas</option>
+                                                                <option value="Otros">Otros</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-4 form-group">
+                                                        <label for="name">Comprobante</label>
+                                                        <div class="input-group mb-3">
+                                                            <span class="input-group-text" id="basic-addon1">
+                                                                <img src="{{ asset('img/icon/monedas.webp') }}" alt="" width="25px">
+                                                            </span>
+                                                            <input name="comrpobante_ope[]" id="comrpobante_ope" type="file" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="modal-footer">
@@ -888,6 +978,27 @@
             calcularSobrepeso();
         });
     </script>
+
+    <script>
+        // ============= Agregar mas inputs dinamicamente =============
+        $('.clonar2').click(function() {
+        // Clona el .input-group
+        var $clone = $('#formulario2 .clonars2').last().clone();
+
+        // Borra los valores de los inputs clonados
+        $clone.find(':input').each(function () {
+            if ($(this).is('select')) {
+            this.selectedIndex = 0;
+            } else {
+            this.value = '';
+            }
+        });
+
+        // Agrega lo clonado al final del #formulario2
+        $clone.appendTo('#formulario2');
+        });
+    </script>
+
     <script>
          document.addEventListener('DOMContentLoaded', function () {
             // Obtener referencias a los elementos

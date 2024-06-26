@@ -146,6 +146,17 @@
 
           @endcan
 
+          @can('cuentas-pagar')
+            <li class="nav-item">
+                <a class="nav-link {{ (Request::is('liquidaciones*') ? 'active' : '') }}" href="{{ route('index.liquidacion') }}" target="">
+                <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
+                    <img src="{{ asset('img/icon/pago-en-efectivo.png') }}" alt="" width="20px">
+                </div>
+                <span class="nav-link-text ms-1"><b>XI</b> Liquidaciones</span>
+                </a>
+            </li>
+            @endcan
+
           <a data-bs-toggle="collapse" href="#pagesExamples" class="nav-link {{ (Request::is('users*') ? 'active' : '') }}{{ (Request::is('roles*') ? 'active' : '') }}" aria-controls="pagesExamples" role="button" aria-expanded="false">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
               <i class="ni ni-settings text-sm opacity-10" style="color: {{$configuracion->color_iconos_sidebar}}"></i>

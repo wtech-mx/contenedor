@@ -105,35 +105,48 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-4 form-group">
-                                                <label for="name">Gasolina</label>
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text" id="basic-addon1">
-                                                        <img src="{{ asset('img/icon/bomba-de-gas.png') }}" alt="" width="25px">
-                                                    </span>
-                                                    <input name="gasolina" id="gasolina_{{ $item->id }}" type="text" class="form-control">
+                                            <div class="col-1">
+                                                <div class="form-group">
+                                                    <button class="mt-5" type="button" id="agregarCampo2" style="border-radius: 9px;width: 36px;height: 40px;">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
                                                 </div>
                                             </div>
 
-                                            <div class="col-4 form-group">
-                                                <label for="name">Casetas</label>
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text" id="basic-addon1">
-                                                        <img src="{{ asset('img/icon/guardia.png') }}" alt="" width="25px">
-                                                    </span>
-                                                    <input name="casetas" id="casetas_{{ $item->id }}" type="text" class="form-control">
-                                                </div>
-                                            </div>
+                                            <div id="camposContainer2">
+                                                <div class="campo2 mt-3">
 
-                                            <div class="col-4 form-group">
-                                                <label for="name">Otros</label>
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text" id="basic-addon1">
-                                                        <img src="{{ asset('img/icon/menu.png') }}" alt="" width="25px">
-                                                    </span>
-                                                    <input name="otros" id="otros_{{ $item->id }}" type="text" class="form-control">
+                                                <div class="col-4 form-group">
+                                                    <label for="name">Gasolina</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            <img src="{{ asset('img/icon/bomba-de-gas.png') }}" alt="" width="25px">
+                                                        </span>
+                                                        <input name="gasolina_{{ $item->id }}[]" id="gasolina_{{ $item->id }}" type="text" class="form-control gasolina">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4 form-group">
+                                                    <label for="name">Casetas</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            <img src="{{ asset('img/icon/guardia.png') }}" alt="" width="25px">
+                                                        </span>
+                                                        <input name="casetas" id="casetas_{{ $item->id }}" type="text" class="form-control casetas">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4 form-group">
+                                                    <label for="name">Otros</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            <img src="{{ asset('img/icon/menu.png') }}" alt="" width="25px">
+                                                        </span>
+                                                        <input name="otros" id="otros_{{ $item->id }}" type="text" class="form-control otros">
+                                                    </div>
                                                 </div>
                                             </div>
+                                        </div>
 
                                             <div class="col-4 form-group">
                                                 <label for="name">Comprobante gasolina</label>

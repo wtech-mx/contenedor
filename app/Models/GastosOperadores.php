@@ -13,9 +13,10 @@ class GastosOperadores extends Model
     protected $fillable = [
         'id_asignacion',
         'id_operador',
-        'otros',
-        'casetas',
-        'gasolina',
+        'id_cotizacion',
+        'cantidad',
+        'tipo',
+        'comprobante',
     ];
 
     public function Asignaciones()
@@ -26,5 +27,10 @@ class GastosOperadores extends Model
     public function Operador()
     {
         return $this->belongsTo(Operador::class, 'id_operador');
+    }
+
+    public function Cotizacion()
+    {
+        return $this->belongsTo(Cotizaciones::class, 'id_cotizacion');
     }
 }

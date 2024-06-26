@@ -110,5 +110,20 @@
                 }
             });
 
+            document.addEventListener('DOMContentLoaded', function() {
+                var agregarCampoBtn2 = document.getElementById('agregarCampo2');
+                var camposContainer2 = document.getElementById('camposContainer2');
+                var campoExistente2 = camposContainer2.querySelector('.campo2');
+
+                agregarCampoBtn2.addEventListener('click', function() {
+                    var nuevoCampo2 = campoExistente2.cloneNode(true);
+                    camposContainer2.appendChild(nuevoCampo2);
+
+                    // Limpiar los valores en el nuevo campo
+                    nuevoCampo2.querySelector('.gasolina').value = '';
+                    nuevoCampo2.querySelector('.casetas').value = '';
+                    nuevoCampo2.querySelector('.otros').value = '';
+                });
+            });
         </script>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Asignaciones;
 use App\Models\BancoDinero;
+use App\Models\BancoDineroOpe;
 use App\Models\Bancos;
 use App\Models\Configuracion;
 use App\Models\Cotizaciones;
@@ -43,17 +44,13 @@ class AppServiceProvider extends ServiceProvider
                             ->select('cotizaciones.*')
                             ->get();
 
-                $operadores_salida = Asignaciones::where('id_banco1_dinero_viaje', '=', $banco->id)->orwhere('id_banco2_dinero_viaje', '=', $banco->id)->get();
-
-                $operadores_salida_pago = Asignaciones::where('id_banco1_dinero_viaje', '=', $banco->id)->orwhere('id_banco2_dinero_viaje', '=', $banco->id)->get();
-
                 $banco_dinero_entrada = BancoDinero::where('tipo', '=', 'Entrada')
                 ->where(function($query) use ($banco) {
                     $query->where('id_banco1', '=', $banco->id)
                           ->orWhere('id_banco2', '=', $banco->id);
                 })
                 ->get();
-                
+
                 $banco_dinero_salida = BancoDinero::where('tipo', '=', 'Salida')
                 ->where(function($query) use ($banco) {
                     $query->where('id_banco1', '=', $banco->id)
@@ -61,15 +58,12 @@ class AppServiceProvider extends ServiceProvider
                 })
                 ->get();
 
-                $total = 0;
-
-                foreach ($cotizaciones as $item){
-                    if ($item->id_banco1 == $banco->id){
-                        $total += $item->monto1;
-                    }elseif ($item->id_banco2 == $banco->id){
-                        $total += $item->monto2;
-                    }
-                }
+                $banco_dinero_salida_ope = BancoDineroOpe::where('tipo', '=', 'Salida')
+                ->where(function($query) use ($banco) {
+                    $query->where('id_banco1', '=', $banco->id)
+                          ->orWhere('id_banco2', '=', $banco->id);
+                })
+                ->get();
 
                 $banco_entrada = 0;
                 $banco_salida = 0;
@@ -92,28 +86,42 @@ class AppServiceProvider extends ServiceProvider
                     }
                 }
 
+                $total = 0;
+
+                foreach ($cotizaciones as $item){
+                    if ($item->id_banco1 == $banco->id){
+                        $total += $item->monto1;
+                    }
+                    if ($item->id_banco2 == $banco->id){
+                        $total += $item->monto2;
+                    }
+                }
+
                 $pagos = 0;
                 $pagos_salida = 0;
 
                 foreach ($proveedores as $item){
                     if ($item->id_prove_banco1 == $banco->id){
                         $pagos += $item->prove_monto1;
-                    }elseif ($item->id_prove_banco2 == $banco->id){
+                    }
+                    if ($item->id_prove_banco2 == $banco->id){
                         $pagos += $item->prove_monto2;
                     }
                 }
 
-                foreach ($operadores_salida as $item){
-                    if ($item->id_banco1_dinero_viaje == $banco->id){
-                        $pagos_salida += $item->cantidad_banco1_dinero_viaje;
-                    }elseif ($item->id_banco2_dinero_viaje == $banco->id){
-                        $pagos_salida += $item->cantidad_banco2_dinero_viaje;
+                foreach ($banco_dinero_salida_ope as $item){
+                    if ($item->id_banco1 == $banco->id){
+                        $pagos_salida += $item->monto1;
+                    }
+                    if ($item->id_banco2 == $banco->id){
+                        $pagos_salida += $item->monto2;
                     }
                 }
 
+                $total_pagos = 0;
                 $total_pagos = $pagos + $pagos_salida + $banco_salida;
                 $saldo = 0;
-                $saldo = ($banco->saldo_inicial + $total + $banco_entrada)- $total_pagos;
+                $saldo = ($banco->saldo_inicial + $total + $banco_entrada) - $total_pagos;
 
                 // Actualizar el saldo del banco actual en la base de datos
                 $banco->saldo = $saldo;

@@ -34,7 +34,8 @@
         foreach ($cotizaciones as $item){
             if ($item->id_banco1 == $banco->id){
                 $total += $item->monto1;
-            }elseif ($item->id_banco2 == $banco->id){
+            }
+            if ($item->id_banco2 == $banco->id){
                 $total += $item->monto2;
             }
         }
@@ -45,22 +46,26 @@
         foreach ($proveedores as $item){
             if ($item->id_prove_banco1 == $banco->id){
                 $pagos += $item->prove_monto1;
-            }elseif ($item->id_prove_banco2 == $banco->id){
+            }
+            if ($item->id_prove_banco2 == $banco->id){
                 $pagos += $item->prove_monto2;
             }
         }
 
-        foreach ($operadores_salida as $item){
-            if ($item->id_banco1_dinero_viaje == $banco->id){
-                $pagos_salida += $item->cantidad_banco1_dinero_viaje;
-            }elseif ($item->id_banco2_dinero_viaje == $banco->id){
-                $pagos_salida += $item->cantidad_banco2_dinero_viaje;
+        foreach ($banco_dinero_salida_ope as $item){
+            if ($item->id_banco1 == $banco->id){
+                $pagos_salida += $item->monto1;
+            }
+            if ($item->id_banco2 == $banco->id){
+                $pagos_salida += $item->monto2;
             }
         }
 
+        $total_pagos = 0;
         $total_pagos = $pagos + $pagos_salida + $banco_salida;
         $saldo = 0;
-        $saldo = ($banco->saldo_inicial + $total + $banco_entrada)- $total_pagos;
+        $saldo = ($banco->saldo_inicial + $total + $banco_entrada) - $total_pagos;
+        $cargo = $banco->saldo_inicial + $total + $banco_entrada;
     @endphp
 
     <div class="col-lg-4 col-md-6 col-12 mt-4 mt-md-0">
@@ -73,7 +78,7 @@
                             <img class="w-60 mt-2" src="{{ asset('img/icon/efectivo.webp') }}" alt="logo">
                         </div>
                         <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                            $ {{ number_format($total, 0, '.', ',') }}
+                            $ {{ number_format($cargo, 0, '.', ',') }}
                         </h5>
                         <span class="text-white text-sm">Cargo</span>
                     </div>
@@ -230,48 +235,25 @@
                                 </div>
                             @endforeach
 
-                            @foreach ($operadores_salida as $item)
+                            @foreach ($banco_dinero_salida_ope as $item)
                                 <div class="col-3">
-                                    @if ($item->fecha_pago_salida != NULL)
-                                    {{ \Carbon\Carbon::parse($item->fecha_pago_salida)->translatedFormat('j \d\e F') }}
+                                    @if ($item->fecha_pago != NULL)
+                                    {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
                                     @endif
                                 </div>
                                 <div class="col-3">
                                     @can('bancos-entrar-cotizacion')
-                                    <a class="btn btn-xs btn-info" href="{{ route('edit.cotizaciones', $item->id) }}">
-                                        {{ $item->Contenedor->num_contenedor }}
+                                    <a class="btn btn-xs btn-info" href="{{ route('edit.cotizaciones', $item->id_cotizacion) }}">
+                                        {{ $item->Asignacion->Contenedor->num_contenedor }}
                                     </a>
                                     @endcan
                                 </div>
                                 <div class="col-3">{{ $item->Operador->nombre }}</div>
                                 <div class="col-3">
-                                    @if ($item->id_banco1_dinero_viaje  == $banco->id)
-                                        $ {{ number_format($item->cantidad_banco1_dinero_viaje, 0, '.', ',') }}
+                                    @if ($item->id_banco1 == $banco->id)
+                                        $ {{ number_format($item->monto1, 0, '.', ',') }}
                                     @else
-                                        $ {{ number_format($item->cantidad_banco2_dinero_viaje, 0, '.', ',') }}
-                                    @endif
-                                </div>
-                            @endforeach
-
-                            @foreach ($operadores_salida_pago as $item)
-                                <div class="col-3">
-                                    @if ($item->fecha_pago_operador != NULL)
-                                        {{ \Carbon\Carbon::parse($item->fecha_pago_operador)->translatedFormat('j \d\e F') }}
-                                    @endif
-                                </div>
-                                <div class="col-3">
-                                    @can('bancos-entrar-cotizacion')
-                                    <a class="btn btn-xs btn-denger" href="{{ route('edit.cotizaciones', $item->id) }}">
-                                        {{ $item->Contenedor->num_contenedor }}
-                                    </a>
-                                    @endcan
-                                </div>
-                                <div class="col-3">{{ $item->Operador->nombre }}</div>
-                                <div class="col-3">
-                                    @if ($item->id_banco1_pago_operador  == $banco->id)
-                                        $ {{ number_format($item->cantidad_banco1_pago_operador, 0, '.', ',') }}
-                                    @else
-                                        $ {{ number_format($item->cantidad_banco2_pago_operador, 0, '.', ',') }}
+                                        $ {{ number_format($item->monto2, 0, '.', ',') }}
                                     @endif
                                 </div>
                             @endforeach
@@ -315,7 +297,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 col-xl-6 mt-md-0 mt-4">
+            {{-- <div class="col-12 col-md-6 col-xl-6 mt-md-0 mt-4">
                 <div class="card h-100">
                     <div class="card-header pb-0 p-3">
                         <h6 class="mb-0">Datos Bancarios</h6>
@@ -404,7 +386,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection

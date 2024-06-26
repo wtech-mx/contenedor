@@ -220,6 +220,11 @@ class PlaneacionController extends Controller
         $asignaciones->cantidad_banco1_dinero_viaje = $request->get('cantidad_banco1_dinero_viaje');
         $asignaciones->id_banco2_dinero_viaje = $request->get('id_banco2_dinero_viaje');
         $asignaciones->cantidad_banco2_dinero_viaje = $request->get('cantidad_banco2_dinero_viaje');
+
+        if($request->get('sueldo_viaje') > $request->get('dinero_viaje')){
+           $resta = $request->get('sueldo_viaje') - $request->get('dinero_viaje');
+           $asignaciones->pago_operador = $resta;
+        }
         $asignaciones->save();
 
         $cotizacion = Cotizaciones::where('id', '=',  $request->get('cotizacion'))->first();

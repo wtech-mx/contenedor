@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('gastos_operadores', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_cotizacion');
+            $table->foreign('id_cotizacion')
+                ->references('id')->on('cotizaciones')
+                ->inDelete('set null');
+
             $table->unsignedBigInteger('id_asignacion');
             $table->foreign('id_asignacion')
                 ->references('id')->on('asignaciones')
@@ -25,9 +30,9 @@ return new class extends Migration
                 ->references('id')->on('operadores')
                 ->inDelete('set null');
 
-            $table->text('otros')->nullable();
-            $table->text('casetas')->nullable();
-            $table->text('gasolina')->nullable();
+            $table->text('cantidad')->nullable();
+            $table->text('tipo')->nullable();
+            $table->text('comprobante')->nullable();
             $table->timestamps();
         });
     }
