@@ -327,36 +327,38 @@ class CotizacionesController extends Controller
             $asignacion = Asignaciones::where('id_contenedor', '=', $doc_cotizaciones->id)->first();
 
             if ($asignacion) {
-                $cantidad_ope = $request->input('cantidad_ope');
-                $tipo_ope = $request->input('tipo_ope');
-                $ticket_ids_ope = $request->input('ticket_id_ope');
-                $suma_cantidad_ope = 0;
+                if($asignacion->id_proveedor == NULL){
+                    $cantidad_ope = $request->input('cantidad_ope');
+                    $tipo_ope = $request->input('tipo_ope');
+                    $ticket_ids_ope = $request->input('ticket_id_ope');
+                    $suma_cantidad_ope = 0;
 
-                for ($count = 0; $count < count($cantidad_ope); $count++) {
-                    $suma_cantidad_ope += $cantidad_ope[$count];
+                    for ($count = 0; $count < count($cantidad_ope); $count++) {
+                        $suma_cantidad_ope += $cantidad_ope[$count];
 
-                    $data = array(
-                        'id_asignacion' => $asignacion->id,
-                        'id_operador' => $asignacion->id_operador,
-                        'id_cotizacion' => $cotizaciones->id,
-                        'cantidad' => $cantidad_ope[$count],
-                        'tipo' => $tipo_ope[$count],
-                    );
+                        $data = array(
+                            'id_asignacion' => $asignacion->id,
+                            'id_operador' => $asignacion->id_operador,
+                            'id_cotizacion' => $cotizaciones->id,
+                            'cantidad' => $cantidad_ope[$count],
+                            'tipo' => $tipo_ope[$count],
+                        );
 
-                    if (isset($ticket_ids_ope[$count])) {
-                        // Actualizar el ticket existente
-                        $ticket = GastosOperadores::findOrFail($ticket_ids_ope[$count]);
-                        $ticket->update($data);
-                    } elseif($cantidad_ope[$count] != NULL) {
-                        // Crear un nuevo ticket
-                        GastosOperadores::create($data);
+                        if (isset($ticket_ids_ope[$count])) {
+                            // Actualizar el ticket existente
+                            $ticket = GastosOperadores::findOrFail($ticket_ids_ope[$count]);
+                            $ticket->update($data);
+                        } elseif($cantidad_ope[$count] != NULL) {
+                            // Crear un nuevo ticket
+                            GastosOperadores::create($data);
+                        }
                     }
+
+                    $suma_ope = ($asignacion->sueldo_viaje + $suma_cantidad_ope) - $asignacion->dinero_viaje;
+                    $asignacion->pago_operador = $suma_ope;
+                    $asignacion->restante_pago_operador = $suma_ope;
+                    $asignacion->update();
                 }
-                
-                $suma_ope = ($asignacion->sueldo_viaje + $suma_cantidad_ope) - $asignacion->dinero_viaje;
-                $asignacion->pago_operador = $suma_ope;
-                $asignacion->restante_pago_operador = $suma_ope;
-                $asignacion->update();
             }
 
         Session::flash('edit', 'Se ha editado sus datos con exito');
