@@ -59,13 +59,22 @@ class BancosController extends Controller
         ->get();
 
         $banco_dinero_salida_ope = BancoDineroOpe::where('tipo', '=', 'Salida')
+        ->where('contenedores', '=', NULL)
         ->where(function($query) use ($id) {
             $query->where('id_banco1', '=', $id)
                   ->orWhere('id_banco2', '=', $id);
         })
         ->get();
 
-        return view('bancos.edit', compact('banco', 'cotizaciones', 'proveedores', 'banco_dinero_entrada', 'banco_dinero_salida', 'banco_dinero_salida_ope'));
+        $banco_dinero_salida_ope_varios = BancoDineroOpe::where('tipo', '=', 'Salida')
+        ->where('id_cotizacion', '=', NULL)
+        ->where(function($query) use ($id) {
+            $query->where('id_banco1', '=', $id)
+                  ->orWhere('id_banco2', '=', $id);
+        })
+        ->get();
+
+        return view('bancos.edit', compact('banco', 'cotizaciones', 'proveedores', 'banco_dinero_entrada', 'banco_dinero_salida', 'banco_dinero_salida_ope', 'banco_dinero_salida_ope_varios'));
     }
 
     public function update(Request $request, Bancos $id)

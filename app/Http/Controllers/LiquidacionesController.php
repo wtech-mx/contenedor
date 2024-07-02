@@ -109,7 +109,7 @@ class LiquidacionesController extends Controller
 
         foreach ($cotizacionesData as $id) {
             $cotizacion = Asignaciones::where('id', '=', $id)->first();
-      
+
             // Establecer el abono y calcular el restante
             $abono = isset($abonos[$id]) ? floatval($abonos[$id]) : 0;
             $nuevoRestante = $cotizacion->restante_pago_operador - $abono;
@@ -138,6 +138,7 @@ class LiquidacionesController extends Controller
         if($request->get('monto1_varios') != NULL){
             $banco = new BancoDineroOpe;
             $banco->contenedores = $contenedoresAbonosJson;
+            $banco->id_operador = $request->get('id_cliente');
             $banco->monto1 = $request->get('monto1_varios');
             $banco->metodo_pago1 = $request->get('metodo_pago1_varios');
             $banco->id_banco1 = $request->get('id_banco1_varios');

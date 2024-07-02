@@ -258,6 +258,40 @@
                                 </div>
                             @endforeach
 
+                            @foreach ($banco_dinero_salida_ope_varios as $item)
+                                <div class="col-3">
+                                    {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
+                                </div>
+                                <div class="col-3">
+                                    <a data-bs-toggle="collapse" href="#pagesOperadores{{ $item->id }}" aria-controls="pagesOperadores" role="button" aria-expanded="false">
+                                        Liquidación Varios
+                                    </a>
+                                </div>
+                                <div class="col-3">{{ $item->Operador->nombre }}</div>
+                                <div class="col-3">
+                                    @if ($item->id_banco1  == $banco->id)
+                                        $ {{ number_format($item->monto1, 0, '.', ',') }}
+                                    @else
+                                        $ {{ number_format($item->monto2, 0, '.', ',') }}
+                                    @endif
+
+                                </div>
+
+                                @if ($item->contenedores != null)
+                                    <div class="collapse " id="pagesOperadores{{ $item->id }}">
+                                        Contenedores y Abonos
+                                        <ul>
+                                            @php
+                                                $contenedoresAbonos = json_decode($item->contenedores, true);
+                                            @endphp
+                                            @foreach ($contenedoresAbonos as $contenedorAbono)
+                                                <li>{{ $contenedorAbono['num_contenedor'] }} - ${{ number_format($contenedorAbono['abono'], 2, '.', ',') }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                            @endforeach
+
                             @foreach ($banco_dinero_salida as $item)
                                 <div class="col-3">
                                     {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
