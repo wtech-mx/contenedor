@@ -18,9 +18,9 @@
                         </div>
                         <h3 class="text-center">{{$operador->nombre}}</h3>
 
-                        {{-- <a class="btn btn_filter" data-bs-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">
-                            <img class="icon_search" src="{{ asset('img/icon/depositar.png') }}" alt="" width="25px"> Pagar varios
-                        </a> --}}
+                        <a class="btn btn_filter" data-bs-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">
+                            <img class="icon_search" src="{{ asset('img/icon/depositar.png') }}" alt="" width="25px"> Liquidar varios
+                        </a>
 
                         <div class="collapse container_filter " id="collapseFilter" style="background: #ffffff;">
                             <form method="POST" action="{{ route('update_varios.liquidacion') }}" enctype="multipart/form-data" role="form">

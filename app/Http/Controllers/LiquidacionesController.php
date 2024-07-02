@@ -108,23 +108,25 @@ class LiquidacionesController extends Controller
         $contenedoresAbonos = [];
 
         foreach ($cotizacionesData as $id) {
-            $cotizacion = Cotizaciones::where('id', '=', $id)->first();
-
+            $cotizacion = Asignaciones::where('id', '=', $id)->first();
+      
             // Establecer el abono y calcular el restante
             $abono = isset($abonos[$id]) ? floatval($abonos[$id]) : 0;
-            $nuevoRestante = $cotizacion->restante - $abono;
+            $nuevoRestante = $cotizacion->restante_pago_operador - $abono;
 
             if ($nuevoRestante < 0) {
                 $nuevoRestante = 0;
             }
 
-            $cotizacion->restante = $nuevoRestante;
-            $cotizacion->estatus_pago = ($nuevoRestante == 0) ? 1 : 0;
+            $cotizacion->restante_pago_operador = $nuevoRestante;
+            if($nuevoRestante == 0){
+                $cotizacion->estatus_pagado = 'Pagado';
+            }
             $cotizacion->update();
 
             // Agregar contenedor y abono al array
             $contenedoresAbonos[] = [
-                'num_contenedor' => $cotizacion->DocCotizacion->num_contenedor,
+                'num_contenedor' => $cotizacion->Contenedor->num_contenedor,
                 'abono' => $abono
             ];
         }
@@ -132,36 +134,44 @@ class LiquidacionesController extends Controller
         // Convertir el array de contenedores y abonos a JSON
         $contenedoresAbonosJson = json_encode($contenedoresAbonos);
 
-        $banco = new BancoDinero;
-        $banco->contenedores = $contenedoresAbonosJson;
-        $banco->id_cliente = $request->get('id_cliente');
-        $banco->monto1 = $request->get('monto1_varios');
-        $banco->metodo_pago1 = $request->get('metodo_pago1_varios');
-        $banco->id_banco1 = $request->get('id_banco1_varios');
-        if ($request->hasFile("comprobante1_varios")) {
-            $file = $request->file('comprobante1_varios');
-            $path = public_path() . '/pagos';
-            $fileName = uniqid() . $file->getClientOriginalName();
-            $file->move($path, $fileName);
-            $banco->comprobante_pago1 = $fileName;
+        $banco = new BancoDineroOpe;
+        if($request->get('monto1_varios') != NULL){
+            $banco = new BancoDineroOpe;
+            $banco->contenedores = $contenedoresAbonosJson;
+            $banco->monto1 = $request->get('monto1_varios');
+            $banco->metodo_pago1 = $request->get('metodo_pago1_varios');
+            $banco->id_banco1 = $request->get('id_banco1_varios');
+            if ($request->hasFile("comprobante1_varios")) {
+                $file = $request->file('comprobante1_varios');
+                $path = public_path() . '/pagos';
+                $fileName = uniqid() . $file->getClientOriginalName();
+                $file->move($path, $fileName);
+                $banco->comprobante_pago1 = $fileName;
+            }
+            $banco->tipo = 'Salida';
+            $banco->fecha_pago = date('Y-m-d');
+            $banco->save();
         }
 
-        $banco->monto2 = $request->get('monto2_varios');
-        $banco->metodo_pago2 = $request->get('metodo_pago2_varios');
-        $banco->id_banco2 = $request->get('id_banco2_varios');
-        if ($request->hasFile("comprobante2_varios")) {
-            $file = $request->file('comprobante2_varios');
-            $path = public_path() . '/pagos';
-            $fileName = uniqid() . $file->getClientOriginalName();
-            $file->move($path, $fileName);
-            $banco->comprobante_pago2 = $fileName;
+        if($request->get('monto2_varios') != NULL){
+            $banco = new BancoDineroOpe;
+            $banco->contenedores = $contenedoresAbonosJson;
+            $banco->monto2 = $request->get('monto2_varios');
+            $banco->metodo_pago2 = $request->get('metodo_pago2_varios');
+            $banco->id_banco2 = $request->get('id_banco2_varios');
+            if ($request->hasFile("comprobante2_varios")) {
+                $file = $request->file('comprobante2_varios');
+                $path = public_path() . '/pagos';
+                $fileName = uniqid() . $file->getClientOriginalName();
+                $file->move($path, $fileName);
+                $banco->comprobante_pago2 = $fileName;
+            }
+           $banco->tipo = 'Salida';
+           $banco->fecha_pago = date('Y-m-d');
         }
-
-        $banco->fecha_pago = date('Y-m-d');
-        $banco->tipo = 'Entrada';
 
         $banco->save();
 
-        return redirect()->back()->with('success', 'Cobro exitoso');
+        return redirect()->back()->with('success', 'Liquedaciones exitosas');
     }
 }
