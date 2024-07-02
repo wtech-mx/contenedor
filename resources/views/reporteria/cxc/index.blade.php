@@ -71,6 +71,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if(Route::currentRouteName() != 'index.reporteria')
+
                                     @foreach ($cotizaciones as $cotizacion)
                                     <tr>
                                         <td><input type="checkbox" name="cotizacion_ids[]" value="{{ $cotizacion->id }}" class="select-checkbox visually-hidden"></td>
@@ -89,6 +91,7 @@
                                         </td>
                                     </tr>
                                     @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                             <button type="button" id="exportButton" class="btn btn-primary">Exportar a PDF</button>
