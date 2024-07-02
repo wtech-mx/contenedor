@@ -5,6 +5,12 @@
     CXP
 @endsection
 
+@section('css')
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/5.0.1/css/fixedColumns.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/select/2.0.3/css/select.bootstrap5.min.css">
+@endsection
+
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -51,7 +57,8 @@
                                     <table class="table table-flush" id="datatable-search">
                                         <thead class="thead">
                                             <tr>
-                                                <th><input type="checkbox" id="select-all"></th>
+                                                <th></th>
+                                                <th>#</th>
                                                 <th><img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">Origen</th>
                                                 <th><img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px">Destino</th>
                                                 <th><img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="25px"># Contenedor</th>
@@ -62,9 +69,8 @@
                                             @if(Route::currentRouteName() != 'index_cxp.reporteria')
                                                 @foreach ($cotizaciones as $cotizacion)
                                                     <tr>
-                                                        <td>
-                                                            <input type="checkbox" name="cotizacion_ids[]" value="{{ $cotizacion->id }}" class="select-box">
-                                                        </td>
+                                                        <td><input type="checkbox" name="cotizacion_ids[]" value="{{ $cotizacion->id }}" class="select-checkbox visually-hidden"></td>
+                                                        <td>{{$cotizacion->id}}</td>
                                                         <td>{{$cotizacion->origen}}</td>
                                                         <td>{{$cotizacion->destino}}</td>
                                                         <td>{{$cotizacion->num_contenedor}}</td>
@@ -85,6 +91,7 @@
                                             @endif
                                         </tbody>
                                     </table>
+
                                     <button type="submit" id="exportButton" class="btn btn-primary">Exportar a PDF</button>
                                 </form>
                             </div>
@@ -96,80 +103,91 @@
 @endsection
 
 @section('datatable')
-    <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js')}}"></script>
-    <script src="{{ asset('assets/vendor/select2/dist/js/select2.min.js')}}"></script>
+<script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{ asset('assets/vendor/select2/dist/js/select2.min.js')}}"></script>
+
+<!-- JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/5.0.1/js/dataTables.fixedColumns.min.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/5.0.1/js/fixedColumns.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/select/2.0.3/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/select/2.0.3/js/select.bootstrap5.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $('.cliente').select2();
-        });
+    $(document).ready(function() {
+        $('.cliente').select2();
 
-        const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
-        searchable: true,
-        fixedHeight: false
-        });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const selectAllCheckbox = document.getElementById('select-all');
-            const exportButton = document.getElementById('exportButton');
-            const selectedRows = new Set();
+        const table = $('#datatable-search').DataTable({
+            columnDefs: [{
+                orderable: false,
+                className: 'select-checkbox',
+                targets: 0
+            }],
+            fixedColumns: {
+                start: 2
+            },
+            order: [
+                [1, 'asc']
+            ],
+            paging: true,
+            pageLength: 30,
 
-            const table = $('#datatable-search').DataTable();
-
-            // Manejar el evento de cambio en el checkbox "select all"
-            selectAllCheckbox.addEventListener('change', function() {
-                const checkboxes = document.querySelectorAll('.select-box');
-                const allChecked = selectAllCheckbox.checked;
-
-                checkboxes.forEach(checkbox => {
-                    checkbox.checked = allChecked;
-                    const rowId = checkbox.value;
-                    if (allChecked) {
-                        selectedRows.add(rowId);
-                    } else {
-                        selectedRows.delete(rowId);
-                    }
-                });
-                toggleExportButton();
-            });
-
-            // Manejar el evento de cambio en cada checkbox individual
-            $('#datatable-search tbody').on('change', '.select-box', function() {
-                const rowId = this.value;
-                if (this.checked) {
-                    selectedRows.add(rowId);
-                } else {
-                    selectedRows.delete(rowId);
-                }
-                toggleExportButton();
-            });
-
-            // Actualizar los checkboxes cuando se cambia de página
-            table.on('draw', function() {
-                const checkboxes = document.querySelectorAll('.select-box');
-                checkboxes.forEach(checkbox => {
-                    if (selectedRows.has(checkbox.value)) {
-                        checkbox.checked = true;
-                    }
-                });
-            });
-
-            function toggleExportButton() {
-                exportButton.disabled = selectedRows.size === 0;
+            select: {
+                style: 'multi',
+                selector: 'td:first-child'
             }
+        });
 
-            // Enviar los datos seleccionados al servidor para la exportación
-            exportButton.addEventListener('click', function(event) {
-                event.preventDefault();
-                const selectedData = Array.from(selectedRows);
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'selected_ids';
-                input.value = JSON.stringify(selectedData);
-                document.getElementById('exportForm').appendChild(input);
-                document.getElementById('exportForm').submit();
+        $('#exportButton').on('click', function() {
+            const selectedIds = table.rows('.selected').data().toArray().map(row => row[1]); // Obtener los IDs seleccionados
+
+            console.log(selectedIds); // Verificar en la consola del navegador
+
+            // Enviar los IDs seleccionados al controlador por Ajax
+            $.ajax({
+                url: '{{ route('cotizaciones_cxp.export') }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    selected_ids: selectedIds
+                },
+                xhrFields: {
+                        responseType: 'blob' // Indicar que esperamos una respuesta tipo blob (archivo)
+                    },
+                success: function(response) {
+                    // Crear un objeto URL del blob recibido
+                    var blob = new Blob([response], { type: 'application/pdf' });
+                    var url = URL.createObjectURL(blob);
+
+                    // Crear un elemento <a> para simular el clic de descarga
+                    var a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'cotizaciones_seleccionadas.pdf';
+                    document.body.appendChild(a);
+
+                    // Simular el clic en el enlace para iniciar la descarga
+                    a.click();
+
+                    // Limpiar después de la descarga
+                    window.URL.revokeObjectURL(url);
+
+                    // Alerta opcional para indicar que se ha descargado correctamente
+                    alert('El archivo se ha descargado correctamente.');
+
+                    // Opcional: eliminar el elemento <a> después de la descarga
+                    document.body.removeChild(a);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    alert('Ocurrió un error al exportar los datos.');
+                }
             });
         });
+    });
 
     </script>
 @endsection

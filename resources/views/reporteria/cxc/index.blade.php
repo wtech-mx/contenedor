@@ -115,6 +115,9 @@
 <script src="https://cdn.datatables.net/select/2.0.3/js/select.bootstrap5.min.js"></script>
 <script>
     $(document).ready(function() {
+        $('.cliente').select2();
+
+
         const table = $('#datatable-search').DataTable({
             columnDefs: [{
                 orderable: false,
