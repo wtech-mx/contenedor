@@ -358,6 +358,17 @@ class CotizacionesController extends Controller
                     $asignacion->pago_operador = $suma_ope;
                     $asignacion->restante_pago_operador = $suma_ope;
                     $asignacion->update();
+                }else if($asignacion->id_operador == NULL){
+
+                    $asignacion->precio = $request->get('precio_proveedor');
+                    $asignacion->burreo = $request->get('burreo_proveedor');
+                    $asignacion->maniobra = $request->get('maniobra_proveedor');
+                    $asignacion->estadia = $request->get('estadia_proveedor');
+                    $asignacion->otro = $request->get('otro_proveedor');
+                    $asignacion->iva = $request->get('iva_proveedor');
+                    $asignacion->retencion = $request->get('retencion_proveedor');
+                    $asignacion->total_proveedor = $request->get('total_proveedor');
+                    $asignacion->update();
                 }
             }
 
