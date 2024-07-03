@@ -93,7 +93,7 @@
                 headerToolbar:{
                     left:'prev,next today',
                     center:'title',
-                    right: 'listMonth,dayGridMonth,timeGridWeek'
+                    right: 'listMonth,dayGridMonth'
 
                     },
 

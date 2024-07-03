@@ -528,6 +528,24 @@ class CotizacionesController extends Controller
                                     'id_empresa' => $nuevoIdEmpresa,
                                     'id_proveedor' => $nuevoIdProveedor
                                 ]);
+                        }else{
+                            $ProveedorAnterior = DB::table('proveedores')
+                            ->where('id', $idProveedorAnterior)
+                            ->first();
+
+                            $proveedor = new Proveedor;
+                            $proveedor->nombre = $ProveedorAnterior->nombre;
+                            $proveedor->correo = $ProveedorAnterior->correo;
+                            $proveedor->telefono = $ProveedorAnterior->telefono;
+                            $proveedor->id_empresa = $request->get('id_empresa');
+                            $proveedor->save();
+                            
+                            DB::table('asignaciones')
+                            ->where('id_contenedor', '=', $contenedor->id)
+                            ->update([
+                                'id_empresa' => $nuevoIdEmpresa,
+                                'id_proveedor' => $proveedor->id
+                            ]);
                         }
                     }
 
