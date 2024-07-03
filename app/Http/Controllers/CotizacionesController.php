@@ -539,7 +539,7 @@ class CotizacionesController extends Controller
                             $proveedor->telefono = $ProveedorAnterior->telefono;
                             $proveedor->id_empresa = $request->get('id_empresa');
                             $proveedor->save();
-                            
+
                             DB::table('asignaciones')
                             ->where('id_contenedor', '=', $contenedor->id)
                             ->update([
@@ -573,6 +573,24 @@ class CotizacionesController extends Controller
                                     'id_empresa' => $nuevoIdEmpresa,
                                     'id_operador' => $nuevoIdOperador
                                 ]);
+                        }else{
+                            $OperadorAnterior = DB::table('operadores')
+                            ->where('id', $idOperadorAnterior)
+                            ->first();
+
+                            $proveedor = new Operador;
+                            $proveedor->nombre = $OperadorAnterior->nombre;
+                            $proveedor->correo = $OperadorAnterior->correo;
+                            $proveedor->telefono = $OperadorAnterior->telefono;
+                            $proveedor->id_empresa = $request->get('id_empresa');
+                            $proveedor->save();
+
+                            DB::table('asignaciones')
+                            ->where('id_contenedor', '=', $contenedor->id)
+                            ->update([
+                                'id_empresa' => $nuevoIdEmpresa,
+                                'id_operador' => $proveedor->id
+                            ]);
                         }
                     }
                 }
