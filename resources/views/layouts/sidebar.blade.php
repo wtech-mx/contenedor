@@ -40,16 +40,6 @@
           </li>
           @endcan
 
-        @can('equipos-list')
-          <li class="nav-item">
-            <a class="nav-link {{ (Request::is('equipos*') ? 'active' : '') }}" href="{{ route('index.equipos') }}" target="">
-              <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
-                <img src="{{ asset('img/icon/referencia.webp') }}" alt="" width="20px">
-              </div>
-              <span class="nav-link-text ms-1"><b>III</b> Equipos</span>
-            </a>
-          </li>
-          @endcan
 
         @can('operadores-list')
           <li class="nav-item">
@@ -70,81 +60,9 @@
               <span class="nav-link-text ms-1"><b>V</b> Cotizaciones</span>
             </a>
           </li>
-          @endcan
-        @can('planeacion-list')
-          <li class="nav-item">
-            <a class="nav-link {{ (Request::is('planeaciones*') ? 'active' : '') }}" href="{{ route('index.planeaciones') }}" target="">
-              <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
-                <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="20px">
-              </div>
-              <span class="nav-link-text ms-1"><b>VI</b> Planeación</span>
-            </a>
-          </li>
-          @endcan
+         @endcan
 
-          @can('bancos-list')
-            <li class="nav-item">
-                <a class="nav-link {{ (Request::is('bancos*') ? 'active' : '') }}" href="{{ route('index.bancos') }}" target="">
-                <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
-                    <img src="{{ asset('img/icon/banco.png') }}" alt="" width="20px">
-                </div>
-                <span class="nav-link-text ms-1"><b>VII</b> Bancos</span>
-                </a>
-            </li>
-          @endcan
-
-          @can('cuentas-cobrar')
-            <li class="nav-item">
-                <a class="nav-link {{ (Request::is('cuentas/cobrar*') ? 'active' : '') }}" href="{{ route('index.cobrar') }}" target="">
-                <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
-                    <img src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="" width="20px">
-                </div>
-                <span class="nav-link-text ms-1"><b>VIII</b> Cuentas por cobrar</span>
-                </a>
-            </li>
-          @endcan
-
-          @can('cuentas-pagar')
-            <li class="nav-item">
-                <a class="nav-link {{ (Request::is('cuentas/pagar*') ? 'active' : '') }}" href="{{ route('index.pagar') }}" target="">
-                <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
-                    <img src="{{ asset('img/icon/gastos.png.webp') }}" alt="" width="20px">
-                </div>
-                <span class="nav-link-text ms-1"><b>IX</b> Cuentas por pagar</span>
-                </a>
-            </li>
-          @endcan
-
-          @can('cuentas-pagar')
-            <a data-bs-toggle="collapse" href="#pagesExamplesReporteria" class="nav-link {{ (Request::is('reporteria/cotizaciones*') ? 'active' : '') }}" aria-controls="pagesExamplesReporteria" role="button" aria-expanded="false">
-                <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
-                    <img src="{{ asset('img/icon/pdf.webp') }}" alt="" width="20px">
-                </div>
-                <span class="nav-link-text ms-1"><b>X</b> Reporteria</span>
-            </a>
-
-            <div class="collapse " id="pagesExamplesReporteria">
-                <ul class="nav ms-4">
-                    <li class="nav-item ">
-                        <a class="nav-link {{ (Request::is('reporteria/cotizaciones/cxc*') ? 'show' : '') }}" href="{{ route('index.reporteria') }}">
-                        <span class="sidenav-mini-icon"> P </span>
-                        <span class="sidenav-normal">Cuentas por cobrar</span>
-                        </a>
-
-                        <a class="nav-link {{ (Request::is('reporteria/cotizaciones/cxp*') ? 'show' : '') }}" href="{{ route('index_cxp.reporteria') }}">
-                        <span class="sidenav-mini-icon"> P </span>
-                        <span class="sidenav-normal">Cuentas por pagar</span>
-                        </a>
-
-                        <a class="nav-link {{ (Request::is('reporteria/viajes*') ? 'show' : '') }}" href="{{ route('index_viajes.reporteria') }}">
-                        <span class="sidenav-mini-icon"> P </span>
-                        <span class="sidenav-normal">Viajes</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-          @endcan
+         @can('roles-permisos-users')
 
           <a data-bs-toggle="collapse" href="#pagesExamples" class="nav-link {{ (Request::is('users*') ? 'active' : '') }}{{ (Request::is('roles*') ? 'active' : '') }}" aria-controls="pagesExamples" role="button" aria-expanded="false">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
@@ -155,31 +73,22 @@
 
           <div class="collapse " id="pagesExamples">
             <ul class="nav ms-4">
-               @can('roles-permisos-users')
                 <li class="nav-item ">
                     <a class="nav-link {{ (Request::is('users*') ? 'show' : '') }}" href="{{ route('users.index') }}">
                     <span class="sidenav-mini-icon"> P </span>
                     <span class="sidenav-normal">Usuarios</span>
                     </a>
-                    @endcan
 
-                    @can('roles-permisos-users')
                     <a class="nav-link {{ (Request::is('roles*') ? 'show' : '') }}" href="{{ route('roles.index') }}">
                     <span class="sidenav-mini-icon"> P </span>
                     <span class="sidenav-normal">Roles</span>
                     </a>
-                    @endcan
 
-                    @can('empresas-list')
-                    <a class="nav-link {{ (Request::is('empresas*') ? 'show' : '') }}" href="{{ route('empresas.index') }}">
-                        <span class="sidenav-mini-icon"> P </span>
-                        <span class="sidenav-normal">Empresas</span>
-                    </a>
                 </li>
-               @endcan
             </ul>
           </div>
         </li>
+        @endcan
 
         @can('configuracion-list')
         <li class="nav-item mt-3">

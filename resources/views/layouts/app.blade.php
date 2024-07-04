@@ -74,8 +74,7 @@
         @include('client.modal_create')
         @include('operadores.modal_create')
         @include('proveedores.modal_create')
-        @include('equipos.modal_create')
-        @include('bancos.modal_create')
+
 
 
        <!-- Modal lateral Congif -->
