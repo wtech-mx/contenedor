@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('personal_contacto', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_empleados');
-            $table->foreign('id_empleados')
-                ->references('id')->on('empleados')
+            $table->unsignedBigInteger('id_operadores');
+            $table->foreign('id_operadores')
+                ->references('id')->on('operadores')
                 ->inDelete('set null');
 
             $table->text('telefono')->nullable();

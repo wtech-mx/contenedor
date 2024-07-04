@@ -33,4 +33,16 @@ class Subclientes extends Model
         return $this->belongsTo(Client::class, 'id_cliente');
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($client) {
+            $client->id_empresa = Auth::user()->id_empresa;
+        });
+
+        static::updating(function ($client) {
+            $client->id_empresa = Auth::user()->id_empresa;
+        });
+    }
 }

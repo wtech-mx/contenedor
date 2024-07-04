@@ -21,6 +21,20 @@ class Client extends Model
         'email',
         'nombre_empresa',
         'fecha',
+        'id_empresa',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($client) {
+            $client->id_empresa = Auth::user()->id_empresa;
+        });
+
+        static::updating(function ($client) {
+            $client->id_empresa = Auth::user()->id_empresa;
+        });
+    }
 
 }

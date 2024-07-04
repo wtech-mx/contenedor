@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/img/apple-icon.png')}}">
-  <link rel="icon" type="image/png" href="https://imaginarte3d.com.mx/wp-content/uploads/2022/01/cropped-cropped-new-log-32x32.png">
+  <link rel="icon" type="image/png" href="https://paradisus.mx/favicon/639893ee3d1ff63891f2fbd91b277248048_670190130923536_7018383830884135385_n__1_-removebg-preview.png">
   <title>
     SGT
   </title>
@@ -24,7 +24,7 @@
 <body class="">
 
   <main class="main-content main-content-bg mt-0">
-    <div class="page-header min-vh-100" style="background-image: url('{{ asset('img/background.webp') }}');">
+    <div class="page-header min-vh-100" style="background-image: url('{{ asset('img/contenedores.jpg') }}');">
       <span class="mask bg-gradient-dark opacity-6"></span>
       <div class="container">
         <div class="row justify-content-center">
@@ -34,8 +34,7 @@
                 <h5 class="text-dark text-center mt-2 mb-3">¡Bienvenido!</h5>
 
                 <h4 class="text-dark text-center mt-2 mb-3">
-                    Imaginarte 3D <br>
-                    System
+                    Sistema de Gestion de Transporte
                 </h4>
 
               </div>

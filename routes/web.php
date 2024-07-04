@@ -40,11 +40,20 @@ Auth::routes();
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
 
-Route::group(['middleware' => ['auth']], function() {
+// ==================== C O O R D E N A D A S ====================
 
+Route::get('coordenadas/{id}', [App\Http\Controllers\CoordenadasController::class, 'index'])->name('index.cooredenadas');
+Route::post('coordenadas/edit/{id}', [App\Http\Controllers\CoordenadasController::class, 'edit'])->name('edit.cooredenadas');
+
+Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);
     Route::resource('permisos', PermisosController::class);
     Route::resource('users', UserController::class);
+
+    // ==================== E M P R E S A S ====================
+    Route::resource('empresas', EmpresasController::class);
+    Route::post('empresas/create', [App\Http\Controllers\EmpresasController::class, 'store'])->name('store.empresas');
+    Route::patch('empresas/update/{id}', [App\Http\Controllers\EmpresasController::class, 'update'])->name('update.empresas');
 
     // ==================== C L I E N T E S ====================
     Route::resource('clients', ClientController::class);
@@ -60,8 +69,13 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('proveedores/create/cuenta', [App\Http\Controllers\ProveedorController::class, 'cuenta'])->name('cuenta.proveedores');
     Route::patch('proveedores/update/{id}', [App\Http\Controllers\ProveedorController::class, 'update'])->name('update.proveedores');
 
+    // ==================== E Q U I P O S ====================
+    Route::get('equipos/index', [App\Http\Controllers\EquiposController::class, 'index'])->name('index.equipos');
+    Route::post('equipos/create', [App\Http\Controllers\EquiposController::class, 'store'])->name('store.equipos');
+    Route::patch('equipos/update/{id}', [App\Http\Controllers\EquiposController::class, 'update'])->name('update.equipos');
+    Route::patch('equipos/desactivar/{id}', [App\Http\Controllers\EquiposController::class, 'desactivar'])->name('desactivar.equipos');
 
-    // ==================== E M P L E A D O S ====================
+    // ==================== O P E R A D O R E S ====================
     Route::get('operadores', [App\Http\Controllers\OperadorController::class, 'index'])->name('index.operadores');
     Route::post('operadores/create', [App\Http\Controllers\OperadorController::class, 'store'])->name('store.operadores');
     Route::patch('operadores/update/{id}', [App\Http\Controllers\OperadorController::class, 'update'])->name('update.operadores');
@@ -86,13 +100,53 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::patch('cotizaciones/cambiar/empresa/{id}', [App\Http\Controllers\CotizacionesController::class, 'cambiar_empresa'])->name('cambiar_empresa.cotizaciones');
 
-    /*|--------------------------------------------------------------------------
-    |Configuracion
-    |--------------------------------------------------------------------------*/
+    // ==================== P L A N E A C I O N ====================
+    Route::get('planeaciones', [App\Http\Controllers\PlaneacionController::class, 'index'])->name('index.planeaciones');
+    Route::post('planeaciones/create', [App\Http\Controllers\PlaneacionController::class, 'store'])->name('store.planeaciones');
+    Route::patch('planeaciones/update/{id}', [App\Http\Controllers\PlaneacionController::class, 'update'])->name('update.planeaciones');
+    Route::get('/planeaciones/equipos', [App\Http\Controllers\PlaneacionController::class, 'equipos'])->name('equipos.planeaciones');
+    Route::post('planeaciones/asignacion/create', [App\Http\Controllers\PlaneacionController::class, 'asignacion'])->name('asignacion.planeaciones');
+    Route::get('planeaciones/cambio/fecha', [App\Http\Controllers\PlaneacionController::class, 'edit_fecha'])->name('asignacion.edit_fecha');
 
-    Route::get('/configuracion', [App\Http\Controllers\ConfiguracionController::class, 'index'])->name('index.configuracion');
-    Route::patch('/configuracion/update', [App\Http\Controllers\ConfiguracionController::class, 'update'])->name('update.configuracion');
+    // ==================== B A N C O S ====================
+    Route::get('bancos', [App\Http\Controllers\BancosController::class, 'index'])->name('index.bancos');
+    Route::post('bancos/create', [App\Http\Controllers\BancosController::class, 'store'])->name('store.bancos');
+    Route::get('bancos/edit/{id}', [App\Http\Controllers\BancosController::class, 'edit'])->name('edit.bancos');
+    Route::patch('bancos/update/{id}', [App\Http\Controllers\BancosController::class, 'update'])->name('update.bancos');
+
+    // ==================== C U E N T A S  P O R  C O B R A R ====================
+    Route::get('cuentas/cobrar', [App\Http\Controllers\CuentasCobrarController::class, 'index'])->name('index.cobrar');
+    Route::get('cuentas/cobrar/show/{id}', [App\Http\Controllers\CuentasCobrarController::class, 'show'])->name('show.cobrar');
+    Route::patch('cuentas/cobrar/update/{id}', [App\Http\Controllers\CuentasCobrarController::class, 'update'])->name('update.cobrar');
+    Route::post('cuentas/cobrar/update/varios', [App\Http\Controllers\CuentasCobrarController::class, 'update_varios'])->name('update_varios.cobrar');
+
+    // ==================== C U E N T A S  P O R  P A G A R ====================
+    Route::get('cuentas/pagar', [App\Http\Controllers\CuentasPagarController::class, 'index'])->name('index.pagar');
+    Route::get('cuentas/pagar/show/{id}', [App\Http\Controllers\CuentasPagarController::class, 'show'])->name('show.pagar');
+    Route::patch('cuentas/pagar/update/{id}', [App\Http\Controllers\CuentasPagarController::class, 'update'])->name('update.pagar');
+    Route::post('cuentas/pagar/update/varios', [App\Http\Controllers\CuentasPagarController::class, 'update_varios'])->name('update_varios.pagar');
+
+    // ==================== R E P O R T E R I A ====================
+    Route::get('reporteria/cotizaciones/cxc', [App\Http\Controllers\ReporteriaController::class, 'index'])->name('index.reporteria');
+    Route::get('reporteria/cotizaciones/cxc/buscador', [App\Http\Controllers\ReporteriaController::class, 'advance'])->name('advance_search.buscador');
+    Route::post('reporteria/cotizaciones/cxc/export', [App\Http\Controllers\ReporteriaController::class, 'export'])->name('cotizaciones.export');
+
+    Route::get('reporteria/cotizaciones/cxp', [App\Http\Controllers\ReporteriaController::class, 'index_cxp'])->name('index_cxp.reporteria');
+    Route::get('reporteria/cotizaciones/cxp/buscador', [App\Http\Controllers\ReporteriaController::class, 'advance_cxp'])->name('advance_search_cxp.buscador');
+    Route::post('reporteria/cotizaciones/cxp/export', [App\Http\Controllers\ReporteriaController::class, 'export_cxp'])->name('cotizaciones_cxp.export');
+    Route::get('/subclientes/{clienteId}', [App\Http\Controllers\ReporteriaController::class, 'getSubclientes']);
+
+    Route::get('reporteria/viajes', [App\Http\Controllers\ReporteriaController::class, 'index_viajes'])->name('index_viajes.reporteria');
+    Route::get('reporteria/viajes/buscador', [App\Http\Controllers\ReporteriaController::class, 'advance_viajes'])->name('advance_viajes.buscador');
+    Route::post('reporteria/viajes/export', [App\Http\Controllers\ReporteriaController::class, 'export_viajes'])->name('export_viajes.viajes');
+
 });
 
+//Route Hooks - Do not delete//
+Route::view('/especialists', 'livewire.especialists.index')->middleware('auth');
 
-
+/*|--------------------------------------------------------------------------
+|Configuracion
+|--------------------------------------------------------------------------*/
+Route::get('/configuracion', [App\Http\Controllers\ConfiguracionController::class, 'index'])->name('index.configuracion');
+Route::patch('/configuracion/update', [App\Http\Controllers\ConfiguracionController::class, 'update'])->name('update.configuracion');

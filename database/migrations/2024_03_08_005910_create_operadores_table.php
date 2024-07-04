@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('empleados', function (Blueprint $table) {
+        Schema::create('operadores', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->nullable();
             $table->text('domicilio')->nullable();

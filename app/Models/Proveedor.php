@@ -23,4 +23,16 @@ class Proveedor extends Model
         'id_empresa',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($empresa) {
+            $empresa->id_empresa = Auth::user()->id_empresa;
+        });
+
+        static::updating(function ($empresa) {
+            $empresa->id_empresa = Auth::user()->id_empresa;
+        });
+    }
 }

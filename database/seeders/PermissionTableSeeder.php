@@ -22,23 +22,7 @@ class PermissionTableSeeder extends Seeder
            'client-list',
            'client-create',
            'client-edit',
-           'client-delete',
-           'clientes-list',
-           'clientes-create',
-           'clientes-edit',
-           'clientes-delete',
-           'subclientes-create',
-           'subclientes-view',
-           'proovedores-create',
-           'proovedores-edit',
-           'proovedores-cuentas',
-           'proovedores-cuentas-create',
-           'operadores-create',
-           'operadores-edit',
-           'cotizaciones-create',
-           'cotizaciones-edit',
-           'cotizaciones-estatus',
-           'roles-permisos-users',
+           'client-delete'
         ];
 
         foreach ($permissions as $permission) {
