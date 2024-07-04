@@ -36,7 +36,6 @@
                                         <th class="text-center">No</th>
                                         <th class="text-center">Nombre <img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px"></th>
                                         <th class="text-center">Telefono <img src="{{ asset('img/icon/fuente.webp') }}" alt="" width="25px"></th>
-                                        <th class="text-center">Seldos Pendientes <img src="{{ asset('img/icon/billetera.png') }}" alt="" width="25px"></th>
                                         <th class="text-center">Acciones <img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px"></th>
                                     </tr>
                                 </thead>
@@ -51,26 +50,9 @@
                                                 <td>{{$operador->nombre}}</td>
                                                 <td>{{$operador->telefono}}</td>
                                                 <td>
-                                                    <button class="btn btn-xs btn-danger">{{$registrosPendientes}}</button>
-                                                </td>
-                                                <td>
                                                     @can('operadores-edit')
                                                     <a type="button" class="btn btn-xs btn-outline-primary" data-bs-toggle="modal" data-bs-target="#operadoresModal_Edit{{$operador->id}}">
                                                         <img src="{{ asset('img/icon/editar.webp') }}" alt="" width="25px">
-                                                    </a>
-                                                    @endcan
-
-                                                    @can('operadores-pagos-p')
-
-                                                    <a type="button" class="btn btn-xs btn-outline-success" href="{{ route('show_pagos.operadores', $operador->id) }}">
-                                                        <img src="{{ asset('img/icon/depositar.png') }}" alt="" width="25px"> Pagos P.
-                                                    </a>
-                                                    @endcan
-
-                                                    @can('operadores-pagos-s')
-
-                                                    <a type="button" class="btn btn-xs btn-outline-info" href="{{ route('show.operadores', $operador->id) }}">
-                                                        <img src="{{ asset('img/icon/logistica.png') }}" alt="" width="25px"> Pagos S.
                                                     </a>
                                                     @endcan
                                                 </td>

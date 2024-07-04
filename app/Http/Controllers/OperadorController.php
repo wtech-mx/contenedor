@@ -118,11 +118,10 @@ class OperadorController extends Controller
         $asignaciones->id_banco2_pago_operador = $request->get('id_banco2_pago_operador');
         $asignaciones->cantidad_banco2_pago_operador = $request->get('cantidad_banco2_pago_operador');
         $asignaciones->fecha_pago_operador = date('Y-m-d');
-      //  $asignaciones->estatus_pagado = 'Pagado';
+        $asignaciones->estatus_pagado = 'Pagado';
         $asignaciones->update();
 
-        $gasolina = $request->get('gasolina');
-        dd( $gasolina);
+        $gasolina = $request->get('gasolina_'.$id);
         $casetas = $request->get('casetas');
         $otros = $request->get('otros');
 

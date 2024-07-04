@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use PDF;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 class ReporteriaController extends Controller
 {
@@ -55,11 +57,12 @@ class ReporteriaController extends Controller
         return response()->json($subclientes);
     }
 
-    public function export(Request $request){
+    public function export(Request $request)
+    {
         $fecha = date('Y-m-d');
         $fechaCarbon = Carbon::parse($fecha);
 
-        $cotizacionIds = $request->input('cotizacion_ids', []);
+        $cotizacionIds = $request->input('selected_ids', []);
         if (empty($cotizacionIds)) {
             return redirect()->back()->with('error', 'No se seleccionaron cotizaciones.');
         }
@@ -72,9 +75,17 @@ class ReporteriaController extends Controller
         $bancos_no_oficiales = Bancos::where('tipo', '=', 'No Oficial')->get();
 
         $pdf = PDF::loadView('reporteria.cxc.pdf', compact('cotizaciones', 'fechaCarbon', 'bancos_oficiales', 'bancos_no_oficiales', 'cotizacion', 'user'))->setPaper([0, 0, 595, 1200], 'landscape');
-        return $pdf->stream();
-        // return $pdf->download('cotizaciones_seleccionadas.pdf');
+
+        // Generar el nombre del archivo
+        $fileName = 'cxc_' . implode('_', $cotizacionIds) . '.pdf';
+        // Guardar el PDF en la carpeta storage
+        $pdf->save(storage_path('app/public/' . $fileName));
+
+        // Devolver el archivo PDF como respuesta
+        $filePath = storage_path('app/public/' . $fileName);
+        return Response::download($filePath, $fileName)->deleteFileAfterSend(true);
     }
+
 
     // ==================== C U E N T A S  P O R  P A G A R ====================
     public function index_cxp(){
@@ -111,7 +122,7 @@ class ReporteriaController extends Controller
         $fecha = date('Y-m-d');
         $fechaCarbon = Carbon::parse($fecha);
 
-        $cotizacionIds = $request->input('cotizacion_ids', []);
+        $cotizacionIds = $request->input('selected_ids', []);
         if (empty($cotizacionIds)) {
             return redirect()->back()->with('error', 'No se seleccionaron cotizaciones.');
         }
@@ -124,8 +135,15 @@ class ReporteriaController extends Controller
         $user = User::where('id', '=', auth()->user()->id)->first();
 
         $pdf = PDF::loadView('reporteria.cxp.pdf', compact('cotizaciones', 'fechaCarbon', 'bancos_oficiales', 'bancos_no_oficiales', 'cotizacion', 'user'))->setPaper('a4', 'landscape');
-        return $pdf->stream();
-        // return $pdf->download('cotizaciones_seleccionadas.pdf');
+
+        $fileName = 'cxp_' . implode('_', $cotizacionIds) . '.pdf';
+
+        // Guardar el PDF en la carpeta storage
+        $pdf->save(storage_path('app/public/' . $fileName));
+
+        // Devolver el archivo PDF como respuesta
+        $filePath = storage_path('app/public/' . $fileName);
+        return Response::download($filePath, $fileName)->deleteFileAfterSend(true);        // return $pdf->download('cotizaciones_seleccionadas.pdf');
     }
 
     // ==================== V I A J E S ====================

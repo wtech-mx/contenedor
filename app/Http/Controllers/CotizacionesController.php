@@ -13,6 +13,7 @@ use App\Models\DocumCotizacion;
 use App\Models\Empresas;
 use App\Models\Equipo;
 use App\Models\GastosExtras;
+use App\Models\GastosOperadores;
 use App\Models\Operador;
 use App\Models\Proveedor;
 use App\Models\Subclientes;
@@ -26,7 +27,11 @@ class CotizacionesController extends Controller
     public function index(){
 
         $cotizaciones = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Pendiente')->orderBy('created_at', 'desc')->get();
-        $cotizaciones_aprovadas = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Aprobada')->where('estatus_planeacion','=', NULL)->orderBy('created_at', 'desc')->get();
+        $cotizaciones_aprovadas = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Aprobada')
+        ->where(function($query) {
+            $query->where('estatus_planeacion', '=', 0)
+                  ->orWhere('estatus_planeacion', '=', NULL);
+        })->orderBy('created_at', 'desc')->get();
         $cotizaciones_canceladas = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Cancelada')->orderBy('created_at', 'desc')->get();
         $cotizaciones_planeadas = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Aprobada')->where('estatus_planeacion','=', 1)->orderBy('created_at', 'desc')->get();
         $cotizaciones_finalizadas = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Finalizado')->orderBy('created_at', 'desc')->get();
@@ -133,13 +138,17 @@ class CotizacionesController extends Controller
 
 
         if($request->get('estatus') == 'Cancelada' || $request->get('estatus') == 'Pendiente'){
-            $asignaciones_id = $cotizaciones->DocCotizacion->Asignaciones->id;
-            $asignaciones = Asignaciones::find($asignaciones_id);
+            if($cotizaciones->DocCotizacion){
+                if($cotizaciones->DocCotizacion->Asignaciones){
+                    $asignaciones_id = $cotizaciones->DocCotizacion->Asignaciones->id;
+                    $asignaciones = Asignaciones::find($asignaciones_id);
 
-                $asignaciones->fecha_inicio = null;
-                $asignaciones->fecha_fin = null;
+                        $asignaciones->fecha_inicio = null;
+                        $asignaciones->fecha_fin = null;
 
-            $asignaciones->update();
+                    $asignaciones->update();
+                }
+            }
         }
 
         Session::flash('edit', 'Se ha editado sus datos con exito');
@@ -152,8 +161,9 @@ class CotizacionesController extends Controller
         $documentacion = DocumCotizacion::where('id_cotizacion', '=', $cotizacion->id)->first();
         $gastos_extras = GastosExtras::where('id_cotizacion', '=', $cotizacion->id)->get();
         $clientes = Client::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
+        $gastos_ope = GastosOperadores::where('id_cotizacion', '=', $cotizacion->id)->get();
 
-        return view('cotizaciones.edit', compact('cotizacion', 'documentacion', 'clientes','gastos_extras'));
+        return view('cotizaciones.edit', compact('cotizacion', 'documentacion', 'clientes','gastos_extras', 'gastos_ope'));
     }
 
     public function pdf($id){
@@ -176,23 +186,23 @@ class CotizacionesController extends Controller
 
     public function update(Request $request, $id){
 
-        $cotizaciones = DocumCotizacion::where('id_cotizacion', '=', $id)->first();
-        $cotizaciones->num_contenedor = $request->get('num_contenedor');
-        $cotizaciones->terminal = $request->get('terminal');
-        $cotizaciones->num_autorizacion = $request->get('num_autorizacion');
-        $cotizaciones->num_boleta_liberacion = $request->get('num_boleta_liberacion');
-        $cotizaciones->num_doda = $request->get('num_doda');
-        $cotizaciones->num_carta_porte = $request->get('num_carta_porte');
-        $cotizaciones->boleta_vacio = $request->get('boleta_vacio');
-        $cotizaciones->fecha_boleta_vacio = $request->get('fecha_boleta_vacio');
-        $cotizaciones->eir = $request->get('eir');
+        $doc_cotizaciones = DocumCotizacion::where('id_cotizacion', '=', $id)->first();
+        $doc_cotizaciones->num_contenedor = $request->get('num_contenedor');
+        $doc_cotizaciones->terminal = $request->get('terminal');
+        $doc_cotizaciones->num_autorizacion = $request->get('num_autorizacion');
+        $doc_cotizaciones->num_boleta_liberacion = $request->get('num_boleta_liberacion');
+        $doc_cotizaciones->num_doda = $request->get('num_doda');
+        $doc_cotizaciones->num_carta_porte = $request->get('num_carta_porte');
+        $doc_cotizaciones->boleta_vacio = $request->get('boleta_vacio');
+        $doc_cotizaciones->fecha_boleta_vacio = $request->get('fecha_boleta_vacio');
+        $doc_cotizaciones->eir = $request->get('eir');
 
         if ($request->hasFile("doc_eir")) {
             $file = $request->file('doc_eir');
             $path = public_path() . '/cotizaciones/cotizacion'. $id;
             $fileName = uniqid() . $file->getClientOriginalName();
             $file->move($path, $fileName);
-            $cotizaciones->doc_eir = $fileName;
+            $doc_cotizaciones->doc_eir = $fileName;
         }
 
         if ($request->hasFile("boleta_liberacion")) {
@@ -200,7 +210,7 @@ class CotizacionesController extends Controller
             $path = public_path() . '/cotizaciones/cotizacion'. $id;
             $fileName = uniqid() . $file->getClientOriginalName();
             $file->move($path, $fileName);
-            $cotizaciones->boleta_liberacion = $fileName;
+            $doc_cotizaciones->boleta_liberacion = $fileName;
         }
 
         if ($request->hasFile("doda")) {
@@ -208,20 +218,20 @@ class CotizacionesController extends Controller
             $path = public_path() . '/cotizaciones/cotizacion'. $id;
             $fileName = uniqid() . $file->getClientOriginalName();
             $file->move($path, $fileName);
-            $cotizaciones->doda = $fileName;
+            $doc_cotizaciones->doda = $fileName;
         }
 
-        $cotizaciones->ccp = $request->get('ccp');
+        $doc_cotizaciones->ccp = $request->get('ccp');
 
         if ($request->hasFile("doc_ccp")) {
             $file = $request->file('doc_ccp');
             $path = public_path() . '/cotizaciones/cotizacion'. $id;
             $fileName = uniqid() . $file->getClientOriginalName();
             $file->move($path, $fileName);
-            $cotizaciones->doc_ccp = $fileName;
+            $doc_cotizaciones->doc_ccp = $fileName;
         }
 
-        $cotizaciones->update();
+        $doc_cotizaciones->update();
 
         $cotizaciones = Cotizaciones::where('id', '=', $id)->first();
         $cotizaciones->id_cliente = $request->get('id_cliente');
@@ -318,7 +328,53 @@ class CotizacionesController extends Controller
             $cotizaciones->restante = $cotizaciones->total;
             $cotizaciones->update();
 
+            $asignacion = Asignaciones::where('id_contenedor', '=', $doc_cotizaciones->id)->first();
 
+            if ($asignacion) {
+                if($asignacion->id_proveedor == NULL){
+                    $cantidad_ope = $request->input('cantidad_ope');
+                    $tipo_ope = $request->input('tipo_ope');
+                    $ticket_ids_ope = $request->input('ticket_id_ope');
+                    $suma_cantidad_ope = 0;
+
+                    for ($count = 0; $count < count($cantidad_ope); $count++) {
+                        $suma_cantidad_ope += $cantidad_ope[$count];
+
+                        $data = array(
+                            'id_asignacion' => $asignacion->id,
+                            'id_operador' => $asignacion->id_operador,
+                            'id_cotizacion' => $cotizaciones->id,
+                            'cantidad' => $cantidad_ope[$count],
+                            'tipo' => $tipo_ope[$count],
+                        );
+
+                        if (isset($ticket_ids_ope[$count])) {
+                            // Actualizar el ticket existente
+                            $ticket = GastosOperadores::findOrFail($ticket_ids_ope[$count]);
+                            $ticket->update($data);
+                        } elseif($cantidad_ope[$count] != NULL) {
+                            // Crear un nuevo ticket
+                            GastosOperadores::create($data);
+                        }
+                    }
+
+                    $suma_ope = ($asignacion->sueldo_viaje + $suma_cantidad_ope) - $asignacion->dinero_viaje;
+                    $asignacion->pago_operador = $suma_ope;
+                    $asignacion->restante_pago_operador = $suma_ope;
+                    $asignacion->update();
+                }else if($asignacion->id_operador == NULL){
+
+                    $asignacion->precio = $request->get('precio_proveedor');
+                    $asignacion->burreo = $request->get('burreo_proveedor');
+                    $asignacion->maniobra = $request->get('maniobra_proveedor');
+                    $asignacion->estadia = $request->get('estadia_proveedor');
+                    $asignacion->otro = $request->get('otro_proveedor');
+                    $asignacion->iva = $request->get('iva_proveedor');
+                    $asignacion->retencion = $request->get('retencion_proveedor');
+                    $asignacion->total_proveedor = $request->get('total_proveedor');
+                    $asignacion->update();
+                }
+            }
 
         Session::flash('edit', 'Se ha editado sus datos con exito');
         return redirect()->back()
@@ -476,6 +532,24 @@ class CotizacionesController extends Controller
                                     'id_empresa' => $nuevoIdEmpresa,
                                     'id_proveedor' => $nuevoIdProveedor
                                 ]);
+                        }else{
+                            $ProveedorAnterior = DB::table('proveedores')
+                            ->where('id', $idProveedorAnterior)
+                            ->first();
+
+                            $proveedor = new Proveedor;
+                            $proveedor->nombre = $ProveedorAnterior->nombre;
+                            $proveedor->correo = $ProveedorAnterior->correo;
+                            $proveedor->telefono = $ProveedorAnterior->telefono;
+                            $proveedor->id_empresa = $request->get('id_empresa');
+                            $proveedor->save();
+
+                            DB::table('asignaciones')
+                            ->where('id_contenedor', '=', $contenedor->id)
+                            ->update([
+                                'id_empresa' => $nuevoIdEmpresa,
+                                'id_proveedor' => $proveedor->id
+                            ]);
                         }
                     }
 
@@ -503,6 +577,24 @@ class CotizacionesController extends Controller
                                     'id_empresa' => $nuevoIdEmpresa,
                                     'id_operador' => $nuevoIdOperador
                                 ]);
+                        }else{
+                            $OperadorAnterior = DB::table('operadores')
+                            ->where('id', $idOperadorAnterior)
+                            ->first();
+
+                            $proveedor = new Operador;
+                            $proveedor->nombre = $OperadorAnterior->nombre;
+                            $proveedor->correo = $OperadorAnterior->correo;
+                            $proveedor->telefono = $OperadorAnterior->telefono;
+                            $proveedor->id_empresa = $request->get('id_empresa');
+                            $proveedor->save();
+
+                            DB::table('asignaciones')
+                            ->where('id_contenedor', '=', $contenedor->id)
+                            ->update([
+                                'id_empresa' => $nuevoIdEmpresa,
+                                'id_operador' => $proveedor->id
+                            ]);
                         }
                     }
                 }
