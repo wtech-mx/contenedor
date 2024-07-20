@@ -5,6 +5,9 @@
 @endsection
 
 @section('content')
+@php
+use Carbon\Carbon;
+@endphp
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -25,6 +28,74 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <form action="{{ route('advance_planeaciones.buscador') }}" method="GET">
+                                    <div class="card-body" style="padding-left: 1.5rem; padding-top: 1rem;">
+                                        <h5>Filtro</h5>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <label for="user_id">Buscar cliente:</label>
+                                                <select class="form-control contenedor" name="contenedor" id="contenedor">
+                                                    <option selected value="">seleccionar cliente</option>
+                                                    @foreach($planeaciones as $planeacion)
+                                                    <option value="{{ $planeacion->id }}">{{ $planeacion->num_contenedor }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-3">
+                                                <br>
+                                                <button class="btn btn-sm mb-0 mt-sm-0 mt-1" type="submit" style="background-color: #F82018; color: #ffffff;">Buscar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            @if(Route::currentRouteName() != 'index.planeaciones')
+                                <table class="table table-flush" id="datatable-search">
+                                    <thead class="thead">
+                                        <tr>
+                                            <th>#</th>
+                                            <th><img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">Fecha Inicio</th>
+                                            <th><img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">Fecha Fin</th>
+                                            <th><img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">Origen</th>
+                                            <th><img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px">Destino</th>
+                                            <th><img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="25px"># Contenedor</th>
+                                            <th><img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">Accion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            <tr>
+                                                <td>{{ $asignaciones->id }}</td>
+                                                <td>{{ Carbon::parse($asignaciones->fecha_inicio)->format('d-m-Y') }}</td>
+                                                <td>
+                                                    @if ($asignaciones->fecha_fin == NULL)
+                                                        {{ Carbon::parse($asignaciones->fecha_inicio)->format('d-m-Y') }}
+                                                    @else
+                                                        {{ Carbon::parse($asignaciones->fecha_fin)->format('d-m-Y') }}
+                                                    @endif
+                                                </td>
+                                                <td>{{$asignaciones->Contenedor->Cotizacion->origen}}</td>
+                                                <td>{{$asignaciones->Contenedor->Cotizacion->destino}}</td>
+                                                <td>{{$asignaciones->Contenedor->num_contenedor}}</td>
+                                                <td>
+                                                    <a type="button" class="btn btn-xs" href="{{ route('edit.cotizaciones', $asignaciones->Contenedor->id_cotizacion) }}">
+                                                        <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
+                                                    </a>
+                                                    <a type="button" class="btn btn-xs" href="{{ route('index.cooredenadas', $asignaciones->id) }}">
+                                                        <img src="{{ asset('img/icon/coordenadas.png') }}" alt="" width="25px">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                    </tbody>
+                                </table>
+                            @endif
+                        </div>
+                    </div>
 
                     <div class="card-body">
                         <div class="row">
@@ -62,7 +133,14 @@
 @section('fullcalendar')
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+
+    <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{ asset('assets/vendor/select2/dist/js/select2.min.js')}}"></script>
     <script>
+        $(document).ready(function() {
+            $('.contenedor').select2();
+        });
+
         document.addEventListener('DOMContentLoaded', function () {
             const formulario = document.getElementById('miFormulario');
             const btnEnviar = document.getElementById('btnEnviar');

@@ -36,7 +36,6 @@ class PlaneacionController extends Controller
 
         $appointments = Asignaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
 
-
         foreach ($appointments as $appointment) {
             if($appointment->id_operador == NULL){
                 $description = 'Proveedor: ' . $appointment->Proveedor->nombre . ' - ' . $appointment->Proveedor->telefono . '<br>' . 'Costo viaje: ' . $appointment->precio;
@@ -94,7 +93,14 @@ class PlaneacionController extends Controller
 
         }
 
-        return view('planeacion.index', compact('equipos', 'operadores', 'events',  'cotizaciones', 'proveedores', 'numCotizaciones'));
+        $planeaciones = Asignaciones::join('docum_cotizacion', 'asignaciones.id_contenedor', '=', 'docum_cotizacion.id')
+        ->join('cotizaciones', 'docum_cotizacion.id_cotizacion', '=', 'cotizaciones.id')
+        ->where('asignaciones.fecha_inicio', '!=', NULL)->where('asignaciones.id_empresa' ,'=',auth()->user()->id_empresa)
+        ->select('cotizaciones.estatus', 'Aprobada')
+        ->select('asignaciones.*', 'docum_cotizacion.num_contenedor')
+        ->get();
+
+        return view('planeacion.index', compact('equipos', 'operadores', 'events',  'cotizaciones', 'proveedores', 'numCotizaciones', 'planeaciones'));
     }
 
     public function equipos(Request $request){
@@ -283,6 +289,96 @@ class PlaneacionController extends Controller
 
         // Devuelve una respuesta, por ejemplo:
         return response()->json(['message' => 'Fechas actualizadas correctamente']);
+    }
+
+    public function advance_planeaciones(Request $request) {
+        $cotizaciones = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus', '=', 'Aprobada')->where('estatus_planeacion', '=', NULL)->get();
+        $numCotizaciones = $cotizaciones->count();
+        $proveedores = Proveedor::where('id_empresa' ,'=',auth()->user()->id_empresa)
+        ->where(function ($query) {
+            $query->where('tipo', '=', 'servicio de burreo')
+                  ->orwhere('tipo', '>=', 'servicio de viaje');
+        })
+        ->get();
+
+        $equipos = Equipo::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
+        $operadores = Operador::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
+        $events = [];
+
+        $appointments = Asignaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
+
+
+        foreach ($appointments as $appointment) {
+            if($appointment->id_operador == NULL){
+                $description = 'Proveedor: ' . $appointment->Proveedor->nombre . ' - ' . $appointment->Proveedor->telefono . '<br>' . 'Costo viaje: ' . $appointment->precio;
+                $tipo = 'S';
+            }else{
+                if($appointment->Contenedor->Cotizacion->tipo_viaje == 'Sencillo'){
+                    $description = 'Tipo viaje: ' . $appointment->Contenedor->Cotizacion->tipo_viaje . '<br> <br>' .
+                    'Operador: ' . $appointment->Operador->nombre . ' - ' . $appointment->Operador->telefono . '<br>' .
+                    'Camion: ' . ' #' . $appointment->Camion->id_equipo . ' - ' . $appointment->Camion->num_serie . ' - ' . $appointment->Camion->modelo . '<br>' .
+                    'Chasis: ' . $appointment->Chasis->num_serie . ' - ' . $appointment->Chasis->modelo . '<br>';
+                }elseif($appointment->Contenedor->Cotizacion->tipo_viaje == 'Full'){
+                    $description = 'Tipo viaje: ' . $appointment->Contenedor->Cotizacion->tipo_viaje . '<br> <br>' .
+                    'Operador: ' . $appointment->Operador->nombre . ' - ' . $appointment->Operador->telefono . '<br>' .
+                    'Camion: ' . ' #' . $appointment->Camion->id_equipo . ' - ' . $appointment->Camion->num_serie . ' - ' . $appointment->Camion->modelo . '<br>' .
+                    'Chasis: ' . $appointment->Chasis->num_serie . ' - ' . $appointment->Chasis->modelo . '<br>' .
+                    'Chasis 2: ' . $appointment->Chasis2->num_serie . ' - ' . $appointment->Chasis2->modelo . '<br>' .
+                    'Doly: ' . $appointment->Doly->num_serie . ' - ' . $appointment->Doly->modelo . '<br>';
+                }
+                $tipo = 'P';
+            }
+
+            $coordenadas = Coordenadas::where('id_asignacion', '=', $appointment->id)->first();
+
+            $description = str_replace('<br>', "\n", $description);
+
+            $isOperadorNull = $appointment->id_operador === NULL;
+
+            $event = [
+                'title' => $tipo .' / '. $appointment->Contenedor->Cotizacion->Cliente->nombre . ' / #' . $appointment->Contenedor->Cotizacion->DocCotizacion->num_contenedor,
+                'description' => $description,
+                'start' => $appointment->fecha_inicio,
+                'end' => $appointment->fecha_fin,
+                'urlId' => $appointment->id,
+                'idCotizacion' => $appointment->Contenedor->id_cotizacion,
+                'isOperadorNull' => $isOperadorNull,
+                'nombreOperadorSub' => $appointment->nombreOperadorSub ?? '',
+                'telefonoOperadorSub' => $appointment->telefonoOperadorSub ?? '',
+                'placasOperadorSub' => $appointment->placasOperadorSub ?? '',
+            ];
+
+
+            // Verificar si $coordenadas no es null antes de acceder a su propiedad id
+            if ($coordenadas !== null) {
+                $event['idCoordenda'] = $appointment->id;
+            }
+
+            if ($appointment->Operador !== null) {
+                $event['telOperador'] = $appointment->Operador->telefono;
+            }
+            // else{
+            //     $event['telOperador'] = '5585314498';
+            // }
+
+            $events[] = $event;
+
+        }
+
+        $planeaciones = Asignaciones::join('docum_cotizacion', 'asignaciones.id_contenedor', '=', 'docum_cotizacion.id')
+        ->where('asignaciones.fecha_inicio', '!=', NULL)->where('asignaciones.id_empresa' ,'=',auth()->user()->id_empresa)
+        ->select('asignaciones.*', 'docum_cotizacion.num_contenedor')
+        ->get();
+
+        $asignaciones = Asignaciones::where('id_empresa' ,'=', auth()->user()->id_empresa);
+
+        if ($request->contenedor !== null) {
+            $asignaciones = $asignaciones->where('id', $request->contenedor);
+        }
+
+        $asignaciones = $asignaciones->first();
+
+        return view('planeacion.index', compact('equipos', 'operadores', 'events',  'cotizaciones', 'proveedores', 'numCotizaciones', 'asignaciones', 'planeaciones'));
     }
 
 

@@ -140,6 +140,11 @@
                         <span class="sidenav-mini-icon"> P </span>
                         <span class="sidenav-normal">Viajes</span>
                         </a>
+
+                        <a class="nav-link {{ (Request::is('reporteria/utilidad*') ? 'show' : '') }}" href="{{ route('index_utilidad.reporteria') }}">
+                            <span class="sidenav-mini-icon"> P </span>
+                            <span class="sidenav-normal">Reporte de utilidad</span>
+                        </a>
                     </li>
                 </ul>
             </div>

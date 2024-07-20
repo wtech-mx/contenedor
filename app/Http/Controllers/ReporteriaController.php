@@ -6,6 +6,7 @@ use App\Models\Asignaciones;
 use App\Models\Bancos;
 use App\Models\Client;
 use App\Models\Cotizaciones;
+use App\Models\DocumCotizacion;
 use App\Models\Proveedor;
 use App\Models\Subclientes;
 use App\Models\User;
@@ -210,6 +211,89 @@ class ReporteriaController extends Controller
         $user = User::where('id', '=', auth()->user()->id)->first();
 
         $pdf = PDF::loadView('reporteria.asignaciones.pdf', compact('cotizaciones', 'fechaCarbon', 'bancos_oficiales', 'bancos_no_oficiales', 'cotizacion', 'user'))->setPaper('a4', 'landscape');
+        return $pdf->stream();
+        // return $pdf->download('cotizaciones_seleccionadas.pdf');
+    }
+
+    // ==================== V I A J E S ====================
+    public function index_utilidad(){
+
+        $clientes = Client::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
+
+        $subclientes = Subclientes::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
+
+        $contenedores = DocumCotizacion::
+        join('cotizaciones', 'docum_cotizacion.id_cotizacion', '=', 'cotizaciones.id')
+        ->where('docum_cotizacion.num_contenedor' ,'!=', NULL)
+        ->where('docum_cotizacion.id_empresa' ,'=',auth()->user()->id_empresa)
+        ->where('cotizaciones.estatus' ,'=', 'Aprobada')
+        ->orderBy('docum_cotizacion.created_at', 'desc')->get();
+
+        return view('reporteria.utilidad.index', compact('clientes', 'subclientes', 'contenedores'));
+    }
+
+    public function advance_utilidad(Request $request) {
+        $clientes = Client::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
+        $subclientes = Subclientes::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
+        $contenedores = DocumCotizacion::
+        join('cotizaciones', 'docum_cotizacion.id_cotizacion', '=', 'cotizaciones.id')
+        ->where('docum_cotizacion.num_contenedor' ,'!=', NULL)
+        ->where('docum_cotizacion.id_empresa' ,'=',auth()->user()->id_empresa)
+        ->where('cotizaciones.estatus' ,'=', 'Aprobada')
+        ->orderBy('docum_cotizacion.created_at', 'desc')->get();
+
+        $id_client = $request->id_client;
+        $id_subcliente = $request->id_subcliente;
+        $contenedor = $request->contenedor;
+
+        // Construir la consulta inicial
+        $asignaciones = Asignaciones::join('docum_cotizacion', 'asignaciones.id_contenedor', '=', 'docum_cotizacion.id')
+            ->join('cotizaciones', 'docum_cotizacion.id_cotizacion', '=', 'cotizaciones.id')
+            ->where('cotizaciones.id_empresa', auth()->user()->id_empresa)
+            ->where('cotizaciones.estatus', 'Aprobada')
+            ->select('asignaciones.*', 'cotizaciones.total');
+
+        // Agregar filtros opcionales
+        if ($request->fecha_de && $request->fecha_hasta) {
+            $inicio = $request->fecha_de;
+            $fin = $request->fecha_hasta;
+            $asignaciones = $asignaciones->where('asignaciones.fecha_inicio', '>=', $inicio)
+                                         ->where('asignaciones.fecha_fin', '<=', $fin);
+        }
+
+        if ($id_client !== null) {
+            $asignaciones = $asignaciones->where('cotizaciones.id_cliente', $id_client);
+
+            if ($id_subcliente !== null && $id_subcliente !== '') {
+                $asignaciones = $asignaciones->where('cotizaciones.id_subcliente', $id_subcliente);
+            }
+        }
+
+        if ($contenedor !== null) {
+            $asignaciones = $asignaciones->where('docum_cotizacion.num_contenedor', $contenedor);
+        }
+
+        // Obtener los resultados
+        $asignaciones = $asignaciones->get();
+
+        return view('reporteria.utilidad.index', compact('asignaciones', 'clientes', 'subclientes', 'contenedores'));
+    }
+
+    public function export_utilidad(Request $request){
+        $fecha = date('Y-m-d');
+        $fechaCarbon = Carbon::parse($fecha);
+
+        $cotizacionIds = $request->input('cotizacion_ids', []);
+        if (empty($cotizacionIds)) {
+            return redirect()->back()->with('error', 'No se seleccionaron cotizaciones.');
+        }
+
+        $cotizaciones = Asignaciones::whereIn('id', $cotizacionIds)->get();
+
+        $cotizacion = Asignaciones::where('id', $cotizacionIds)->first();
+        $user = User::where('id', '=', auth()->user()->id)->first();
+
+        $pdf = PDF::loadView('reporteria.utilidad.pdf', compact('cotizaciones', 'fechaCarbon', 'cotizacion', 'user'))->setPaper('a4', 'landscape');
         return $pdf->stream();
         // return $pdf->download('cotizaciones_seleccionadas.pdf');
     }

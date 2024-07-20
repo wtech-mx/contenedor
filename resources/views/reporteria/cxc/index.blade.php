@@ -192,26 +192,26 @@
     });
 
     $(document).ready(function() {
-            $('#id_client').on('change', function() {
-                var clientId = $(this).val();
-                if(clientId) {
-                    $.ajax({
-                        url: '/subclientes/' + clientId,
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function(data) {
-                            $('#id_subcliente').empty();
-                            $('#id_subcliente').append('<option selected value="">Seleccionar subcliente</option>');
-                            $.each(data, function(key, subcliente) {
-                                $('#id_subcliente').append('<option value="'+ subcliente.id +'">'+ subcliente.nombre +'</option>');
-                            });
-                        }
-                    });
-                } else {
-                    $('#id_subcliente').empty();
-                    $('#id_subcliente').append('<option selected value="">Seleccionar subcliente</option>');
-                }
-            });
+        $('#id_client').on('change', function() {
+            var clientId = $(this).val();
+            if(clientId) {
+                $.ajax({
+                    url: '/subclientes/' + clientId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#id_subcliente').empty();
+                        $('#id_subcliente').append('<option selected value="">Seleccionar subcliente</option>');
+                        $.each(data, function(key, subcliente) {
+                            $('#id_subcliente').append('<option value="'+ subcliente.id +'">'+ subcliente.nombre +'</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#id_subcliente').empty();
+                $('#id_subcliente').append('<option selected value="">Seleccionar subcliente</option>');
+            }
         });
+    });
 </script>
 @endsection

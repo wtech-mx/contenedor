@@ -127,7 +127,7 @@
 
                                                                     @can('cotizaciones-cambio-tipo')
                                                                         <button type="button" class="btn btn-outline-dark btn-xs" data-bs-toggle="modal" data-bs-target="#cambioModal{{ $cotizacion->DocCotizacion->Asignaciones->id }}">
-                                                                            Subcontratado
+                                                                            Sub.
                                                                         </button>
                                                                     @endcan
                                                                 @endif
@@ -139,12 +139,20 @@
                                                                 </button>
                                                             @endcan
 
+                                                            @if ($cotizacion->DocCotizacion)
+                                                                <button type="button" class="btn btn-outline-warning btn-xs" data-bs-toggle="modal" data-bs-target="#esatusDoc{{ $cotizacion->DocCotizacion->id }}">
+                                                                    <img src="{{ asset('img/icon/catalogo.webp') }}" alt="" width="25px">
+                                                                </button>
+                                                            @endif
+
                                                         </td>
                                                     </tr>
+                                                    @include('cotizaciones.modal_estatus_doc')
                                                     @include('cotizaciones.modal_cambio_empresa')
 
                                                     @include('cotizaciones.modal_estatus')
                                                     @include('cotizaciones.modal_cambio')
+
                                                 @endforeach
                                             </tbody>
 
@@ -222,8 +230,15 @@
                                                                 @endif
                                                             @endif
 
+                                                            @if ($cotizacion->DocCotizacion)
+                                                                <button type="button" class="btn btn-outline-warning btn-xs" data-bs-toggle="modal" data-bs-target="#esatusDoc{{ $cotizacion->DocCotizacion->id }}">
+                                                                    <img src="{{ asset('img/icon/catalogo.webp') }}" alt="" width="25px">
+                                                                </button>
+                                                            @endif
+
                                                         </td>
                                                     </tr>
+                                                    @include('cotizaciones.modal_estatus_doc')
                                                     @include('cotizaciones.modal_estatus')
                                                     @include('cotizaciones.modal_cambio')
                                                 @endforeach
@@ -284,8 +299,15 @@
                                                                 </a>
                                                                 @endcan
                                                             @endif
+                                                            @if ($cotizacion->DocCotizacion)
+                                                                <button type="button" class="btn btn-outline-warning btn-xs" data-bs-toggle="modal" data-bs-target="#esatusDoc{{ $cotizacion->DocCotizacion->id }}">
+                                                                    <img src="{{ asset('img/icon/catalogo.webp') }}" alt="" width="25px">
+                                                                </button>
+                                                            @endif
+
                                                         </td>
                                                     </tr>
+                                                    @include('cotizaciones.modal_estatus_doc')
                                                     @include('cotizaciones.modal_estatus')
                                                 @endforeach
                                             </tbody>
@@ -356,8 +378,15 @@
                                                             </button>
                                                         @endcan
 
+                                                        @if ($cotizacion->DocCotizacion)
+                                                            <button type="button" class="btn btn-outline-warning btn-xs" data-bs-toggle="modal" data-bs-target="#esatusDoc{{ $cotizacion->DocCotizacion->id }}">
+                                                                <img src="{{ asset('img/icon/catalogo.webp') }}" alt="" width="25px">
+                                                            </button>
+                                                        @endif
+
                                                     </td>
                                                 </tr>
+                                            @include('cotizaciones.modal_estatus_doc')
                                                 @include('cotizaciones.modal_cambio_empresa')
                                                 @include('cotizaciones.modal_estatus')
                                             @endforeach
@@ -415,8 +444,14 @@
                                                             </a>
                                                             @endcan
                                                         @endif
+                                                        @if ($cotizacion->DocCotizacion)
+                                                            <button type="button" class="btn btn-outline-warning btn-xs" data-bs-toggle="modal" data-bs-target="#esatusDoc{{ $cotizacion->DocCotizacion->id }}">
+                                                                <img src="{{ asset('img/icon/catalogo.webp') }}" alt="" width="25px">
+                                                            </button>
+                                                        @endif
                                                     </td>
                                                 </tr>
+                                                @include('cotizaciones.modal_estatus_doc')
                                                 @include('cotizaciones.modal_estatus')
                                             @endforeach
                                         </tbody>
