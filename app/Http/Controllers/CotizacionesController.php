@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 use Session;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Validator;
 
 class CotizacionesController extends Controller
 {
@@ -63,12 +64,19 @@ class CotizacionesController extends Controller
     }
 
     public function store(Request $request){
-        $this->validate($request, [
+
+        $validator = Validator::make($request->all(), [
             'origen' => 'required',
             'destino' => 'required',
             'tamano' => 'required',
             'num_contenedor' => 'unique:docum_cotizacion,num_contenedor',
         ]);
+
+        if ($validator->fails()) {
+            return back()
+            ->withErrors($validator)
+            ->withInput();
+        }
 
         if($request->get('nombre_cliente') == NULL){
             $cliente = $request->get('id_cliente');

@@ -103,7 +103,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">
                                             </span>
-                                            <input name="origen" id="origen" type="text" class="form-control">
+                                            <input name="origen" id="origen" type="text" class="form-control"value="{{old('origen')}}">@error('origen') <span class="error text-danger">{{ $message }}</span> @enderror
                                         </div>
                                     </div>
 
@@ -113,7 +113,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px">
                                             </span>
-                                            <input name="destino" id="destino" type="text" class="form-control" value="APARTADO">
+                                            <input name="destino" id="destino" type="text" class="form-control" value="APARTADO">@error('destino') <span class="error text-danger">{{ $message }}</span> @enderror
                                         </div>
                                     </div>
 
@@ -123,7 +123,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="25px">
                                             </span>
-                                            <input name="num_contenedor" id="num_contenedor" type="text" class="form-control">
+                                            <input name="num_contenedor" id="num_contenedor" type="text" class="form-control" value="{{old('num_contenedor')}}">@error('num_contenedor') <span class="error text-danger">{{ $message }}</span> @enderror
                                         </div>
                                     </div>
 
@@ -133,7 +133,7 @@
                                             <span class="input-group-text" id="basic-addon1">
                                                 <img src="{{ asset('img/icon/escala.png') }}" alt="" width="25px">
                                             </span>
-                                            <input name="tamano" id="tamano" type="text" class="form-control">
+                                            <input name="tamano" id="tamano" type="text" class="form-control"value="{{old('tamano')}}">@error('tamano') <span class="error text-danger">{{ $message }}</span> @enderror
                                         </div>
                                     </div>
 
