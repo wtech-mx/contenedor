@@ -66,7 +66,8 @@ class CotizacionesController extends Controller
         $this->validate($request, [
             'origen' => 'required',
             'destino' => 'required',
-            'tamano' => 'required'
+            'tamano' => 'required',
+            'num_contenedor' => 'unique:docum_cotizacion,num_contenedor',
         ]);
 
         if($request->get('nombre_cliente') == NULL){
@@ -185,200 +186,209 @@ class CotizacionesController extends Controller
 
 
     public function update(Request $request, $id){
+        $contenedor = DocumCotizacion::where('id_cotizacion', '=', $id)->first();
 
-        $doc_cotizaciones = DocumCotizacion::where('id_cotizacion', '=', $id)->first();
-        $doc_cotizaciones->num_contenedor = $request->get('num_contenedor');
-        $doc_cotizaciones->terminal = $request->get('terminal');
-        $doc_cotizaciones->num_autorizacion = $request->get('num_autorizacion');
-        $doc_cotizaciones->num_boleta_liberacion = $request->get('num_boleta_liberacion');
-        $doc_cotizaciones->num_doda = $request->get('num_doda');
-        $doc_cotizaciones->num_carta_porte = $request->get('num_carta_porte');
-        $doc_cotizaciones->boleta_vacio = $request->get('boleta_vacio');
-        $doc_cotizaciones->fecha_boleta_vacio = $request->get('fecha_boleta_vacio');
-        $doc_cotizaciones->eir = $request->get('eir');
+        $request->validate([
+            'num_contenedor' => 'unique:docum_cotizacion,num_contenedor,' . $contenedor->id,
+        ]);
 
-        if ($request->hasFile("doc_eir")) {
-            $file = $request->file('doc_eir');
-            $path = public_path() . '/cotizaciones/cotizacion'. $id;
-            $fileName = uniqid() . $file->getClientOriginalName();
-            $file->move($path, $fileName);
-            $doc_cotizaciones->doc_eir = $fileName;
-        }
+        try {
+            $doc_cotizaciones = DocumCotizacion::where('id_cotizacion', '=', $id)->first();
+            $doc_cotizaciones->num_contenedor = $request->get('num_contenedor');
+            $doc_cotizaciones->terminal = $request->get('terminal');
+            $doc_cotizaciones->num_autorizacion = $request->get('num_autorizacion');
+            $doc_cotizaciones->num_boleta_liberacion = $request->get('num_boleta_liberacion');
+            $doc_cotizaciones->num_doda = $request->get('num_doda');
+            $doc_cotizaciones->num_carta_porte = $request->get('num_carta_porte');
+            $doc_cotizaciones->boleta_vacio = $request->get('boleta_vacio');
+            $doc_cotizaciones->fecha_boleta_vacio = $request->get('fecha_boleta_vacio');
+            $doc_cotizaciones->eir = $request->get('eir');
 
-        if ($request->hasFile("boleta_liberacion")) {
-            $file = $request->file('boleta_liberacion');
-            $path = public_path() . '/cotizaciones/cotizacion'. $id;
-            $fileName = uniqid() . $file->getClientOriginalName();
-            $file->move($path, $fileName);
-            $doc_cotizaciones->boleta_liberacion = $fileName;
-        }
-
-        if ($request->hasFile("doda")) {
-            $file = $request->file('doda');
-            $path = public_path() . '/cotizaciones/cotizacion'. $id;
-            $fileName = uniqid() . $file->getClientOriginalName();
-            $file->move($path, $fileName);
-            $doc_cotizaciones->doda = $fileName;
-        }
-
-        $doc_cotizaciones->ccp = $request->get('ccp');
-
-        if ($request->hasFile("doc_ccp")) {
-            $file = $request->file('doc_ccp');
-            $path = public_path() . '/cotizaciones/cotizacion'. $id;
-            $fileName = uniqid() . $file->getClientOriginalName();
-            $file->move($path, $fileName);
-            $doc_cotizaciones->doc_ccp = $fileName;
-        }
-
-        $doc_cotizaciones->update();
-
-        $cotizaciones = Cotizaciones::where('id', '=', $id)->first();
-        $cotizaciones->id_cliente = $request->get('id_cliente');
-        $cotizaciones->id_subcliente = $request->get('id_subcliente');
-        $cotizaciones->origen = $request->get('cot_origen');
-        $cotizaciones->destino = $request->get('cot_destino');
-        $cotizaciones->burreo = $request->get('cot_burreo');
-        $cotizaciones->estadia = $request->get('cot_estadia');
-        $cotizaciones->fecha_modulacion = $request->get('cot_fecha_modulacion');
-        $cotizaciones->fecha_entrega = $request->get('cot_fecha_entrega');
-        $cotizaciones->precio_viaje = $request->get('cot_precio_viaje');
-        $cotizaciones->tamano = $request->get('cot_tamano');
-        $cotizaciones->peso_contenedor = $request->get('cot_peso_contenedor');
-        $cotizaciones->maniobra = $request->get('cot_maniobra');
-        $cotizaciones->otro = $request->get('cot_otro');
-        $cotizaciones->iva = $request->get('cot_iva');
-        $cotizaciones->retencion = $request->get('cot_retencion');
-        $cotizaciones->bloque = $request->get('bloque');
-        $cotizaciones->bloque_hora_i = $request->get('bloque_hora_i');
-        $cotizaciones->bloque_hora_f = $request->get('bloque_hora_f');
-        $cotizaciones->peso_reglamentario = $request->get('peso_reglamentario');
-        $cotizaciones->fecha_eir = $request->get('fecha_eir');
-        $cotizaciones->base_factura = $request->get('base_factura');
-        $cotizaciones->base_taref = $request->get('base_taref');
-
-        if($request->get('cot_peso_contenedor') > $request->get('peso_reglamentario')){
-            $sobrepeso = $request->get('cot_peso_contenedor') - $request->get('peso_reglamentario');
-        }else{
-            $sobrepeso = 0;
-        }
-        $cotizaciones->sobrepeso = $sobrepeso;
-        $precio_tonelada = str_replace(',', '', $request->get('precio_sobre_peso'));
-        $cotizaciones->precio_sobre_peso = $precio_tonelada;
-        $cotizaciones->precio_tonelada = $precio_tonelada * $sobrepeso;
-        $total = ($cotizaciones->precio_tonelada + $request->get('cot_precio_viaje') + $request->get('cot_burreo') + $request->get('cot_maniobra') + $request->get('cot_estadia') + $request->get('cot_otro') + $request->get('cot_iva')) - $request->get('cot_retencion');
-        $cotizaciones->total = $total;
-
-        if ($request->hasFile("carta_porte")) {
-            $file = $request->file('carta_porte');
-            $path = public_path() . '/cotizaciones/cotizacion'. $id;
-            $fileName = uniqid() . $file->getClientOriginalName();
-            $file->move($path, $fileName);
-            $cotizaciones->carta_porte = $fileName;
-        }
-
-        if ($request->hasFile("img_boleta")) {
-            $file = $request->file('img_boleta');
-            $path = public_path() . '/cotizaciones/cotizacion'. $id;
-            $fileName = uniqid() . $file->getClientOriginalName();
-            $file->move($path, $fileName);
-            $cotizaciones->img_boleta = $fileName;
-        }
-
-        $cotizaciones->update();
-
-        $gasto_descripcion = $request->input('gasto_descripcion');
-        $gasto_monto = $request->input('gasto_monto');
-        $ticket_ids = $request->input('ticket_id');
-
-        for ($count = 0; $count < count($gasto_descripcion); $count++) {
-            $data = array(
-                'id_cotizacion' => $cotizaciones->id,
-                'descripcion' => $gasto_descripcion[$count],
-                'monto' => $gasto_monto[$count],
-            );
-
-            if (isset($ticket_ids[$count])) {
-                // Actualizar el ticket existente
-                $ticket = GastosExtras::findOrFail($ticket_ids[$count]);
-                $ticket->update($data);
-            } elseif($gasto_descripcion[$count] != NULL) {
-                // Crear un nuevo ticket
-                GastosExtras::create($data);
+            if ($request->hasFile("doc_eir")) {
+                $file = $request->file('doc_eir');
+                $path = public_path() . '/cotizaciones/cotizacion'. $id;
+                $fileName = uniqid() . $file->getClientOriginalName();
+                $file->move($path, $fileName);
+                $doc_cotizaciones->doc_eir = $fileName;
             }
-        }
 
-            // Convertir los valores a números si son cadenas
-            // $maniobra = is_numeric($cotizaciones->maniobra) ? $cotizaciones->maniobra : 0;
-            // $burreo = is_numeric($cotizaciones->burreo) ? $cotizaciones->burreo : 0;
-            // $otro = is_numeric($cotizaciones->otro) ? $cotizaciones->otro : 0;
-            // $estadia = is_numeric($cotizaciones->estadia) ? $cotizaciones->estadia : 0;
-            // $precio_viaje = is_numeric($cotizaciones->precio_viaje) ? $cotizaciones->precio_viaje : 0;
-            // $iva = is_numeric($cotizaciones->iva) ? $cotizaciones->iva : 0;
-
-            // SUMA TOTAL DE COTIZACION
-            $suma =  $cotizaciones->total;
-
-            foreach ($gasto_monto as $monto) {
-                // Convertir el valor a número si es una cadena
-                $monto = is_numeric($monto) ? $monto : 0; // Si $monto no es numérico, se asume 0
-                $suma += $monto;
+            if ($request->hasFile("boleta_liberacion")) {
+                $file = $request->file('boleta_liberacion');
+                $path = public_path() . '/cotizaciones/cotizacion'. $id;
+                $fileName = uniqid() . $file->getClientOriginalName();
+                $file->move($path, $fileName);
+                $doc_cotizaciones->boleta_liberacion = $fileName;
             }
-            $cotizaciones->total = $suma;
-            $cotizaciones->restante = $cotizaciones->total;
+
+            if ($request->hasFile("doda")) {
+                $file = $request->file('doda');
+                $path = public_path() . '/cotizaciones/cotizacion'. $id;
+                $fileName = uniqid() . $file->getClientOriginalName();
+                $file->move($path, $fileName);
+                $doc_cotizaciones->doda = $fileName;
+            }
+
+            $doc_cotizaciones->ccp = $request->get('ccp');
+
+            if ($request->hasFile("doc_ccp")) {
+                $file = $request->file('doc_ccp');
+                $path = public_path() . '/cotizaciones/cotizacion'. $id;
+                $fileName = uniqid() . $file->getClientOriginalName();
+                $file->move($path, $fileName);
+                $doc_cotizaciones->doc_ccp = $fileName;
+            }
+
+            $doc_cotizaciones->update();
+
+            $cotizaciones = Cotizaciones::where('id', '=', $id)->first();
+            $cotizaciones->id_cliente = $request->get('id_cliente');
+            $cotizaciones->id_subcliente = $request->get('id_subcliente');
+            $cotizaciones->origen = $request->get('cot_origen');
+            $cotizaciones->destino = $request->get('cot_destino');
+            $cotizaciones->burreo = $request->get('cot_burreo');
+            $cotizaciones->estadia = $request->get('cot_estadia');
+            $cotizaciones->fecha_modulacion = $request->get('cot_fecha_modulacion');
+            $cotizaciones->fecha_entrega = $request->get('cot_fecha_entrega');
+            $cotizaciones->precio_viaje = $request->get('cot_precio_viaje');
+            $cotizaciones->tamano = $request->get('cot_tamano');
+            $cotizaciones->peso_contenedor = $request->get('cot_peso_contenedor');
+            $cotizaciones->maniobra = $request->get('cot_maniobra');
+            $cotizaciones->otro = $request->get('cot_otro');
+            $cotizaciones->iva = $request->get('cot_iva');
+            $cotizaciones->retencion = $request->get('cot_retencion');
+            $cotizaciones->bloque = $request->get('bloque');
+            $cotizaciones->bloque_hora_i = $request->get('bloque_hora_i');
+            $cotizaciones->bloque_hora_f = $request->get('bloque_hora_f');
+            $cotizaciones->peso_reglamentario = $request->get('peso_reglamentario');
+            $cotizaciones->fecha_eir = $request->get('fecha_eir');
+            $cotizaciones->base_factura = $request->get('base_factura');
+            $cotizaciones->base_taref = $request->get('base_taref');
+
+            if($request->get('cot_peso_contenedor') > $request->get('peso_reglamentario')){
+                $sobrepeso = $request->get('cot_peso_contenedor') - $request->get('peso_reglamentario');
+            }else{
+                $sobrepeso = 0;
+            }
+            $cotizaciones->sobrepeso = $sobrepeso;
+            $precio_tonelada = str_replace(',', '', $request->get('precio_sobre_peso'));
+            $cotizaciones->precio_sobre_peso = $precio_tonelada;
+            $cotizaciones->precio_tonelada = $precio_tonelada * $sobrepeso;
+            $total = ($cotizaciones->precio_tonelada + $request->get('cot_precio_viaje') + $request->get('cot_burreo') + $request->get('cot_maniobra') + $request->get('cot_estadia') + $request->get('cot_otro') + $request->get('cot_iva')) - $request->get('cot_retencion');
+            $cotizaciones->total = $total;
+
+            if ($request->hasFile("carta_porte")) {
+                $file = $request->file('carta_porte');
+                $path = public_path() . '/cotizaciones/cotizacion'. $id;
+                $fileName = uniqid() . $file->getClientOriginalName();
+                $file->move($path, $fileName);
+                $cotizaciones->carta_porte = $fileName;
+            }
+
+            if ($request->hasFile("img_boleta")) {
+                $file = $request->file('img_boleta');
+                $path = public_path() . '/cotizaciones/cotizacion'. $id;
+                $fileName = uniqid() . $file->getClientOriginalName();
+                $file->move($path, $fileName);
+                $cotizaciones->img_boleta = $fileName;
+            }
+
             $cotizaciones->update();
 
-            $asignacion = Asignaciones::where('id_contenedor', '=', $doc_cotizaciones->id)->first();
+            $gasto_descripcion = $request->input('gasto_descripcion');
+            $gasto_monto = $request->input('gasto_monto');
+            $ticket_ids = $request->input('ticket_id');
 
-            if ($asignacion) {
-                if($asignacion->id_proveedor == NULL){
-                    $cantidad_ope = $request->input('cantidad_ope');
-                    $tipo_ope = $request->input('tipo_ope');
-                    $ticket_ids_ope = $request->input('ticket_id_ope');
-                    $suma_cantidad_ope = 0;
+            for ($count = 0; $count < count($gasto_descripcion); $count++) {
+                $data = array(
+                    'id_cotizacion' => $cotizaciones->id,
+                    'descripcion' => $gasto_descripcion[$count],
+                    'monto' => $gasto_monto[$count],
+                );
 
-                    for ($count = 0; $count < count($cantidad_ope); $count++) {
-                        $suma_cantidad_ope += $cantidad_ope[$count];
-
-                        $data = array(
-                            'id_asignacion' => $asignacion->id,
-                            'id_operador' => $asignacion->id_operador,
-                            'id_cotizacion' => $cotizaciones->id,
-                            'cantidad' => $cantidad_ope[$count],
-                            'tipo' => $tipo_ope[$count],
-                        );
-
-                        if (isset($ticket_ids_ope[$count])) {
-                            // Actualizar el ticket existente
-                            $ticket = GastosOperadores::findOrFail($ticket_ids_ope[$count]);
-                            $ticket->update($data);
-                        } elseif($cantidad_ope[$count] != NULL) {
-                            // Crear un nuevo ticket
-                            GastosOperadores::create($data);
-                        }
-                    }
-
-                    $suma_ope = ($asignacion->sueldo_viaje + $suma_cantidad_ope) - $asignacion->dinero_viaje;
-                    $asignacion->pago_operador = $suma_ope;
-                    $asignacion->restante_pago_operador = $suma_ope;
-                    $asignacion->update();
-                }else if($asignacion->id_operador == NULL){
-
-                    $asignacion->precio = $request->get('precio_proveedor');
-                    $asignacion->burreo = $request->get('burreo_proveedor');
-                    $asignacion->maniobra = $request->get('maniobra_proveedor');
-                    $asignacion->estadia = $request->get('estadia_proveedor');
-                    $asignacion->otro = $request->get('otro_proveedor');
-                    $asignacion->iva = $request->get('iva_proveedor');
-                    $asignacion->retencion = $request->get('retencion_proveedor');
-                    $asignacion->total_proveedor = $request->get('total_proveedor');
-                    $asignacion->update();
+                if (isset($ticket_ids[$count])) {
+                    // Actualizar el ticket existente
+                    $ticket = GastosExtras::findOrFail($ticket_ids[$count]);
+                    $ticket->update($data);
+                } elseif($gasto_descripcion[$count] != NULL) {
+                    // Crear un nuevo ticket
+                    GastosExtras::create($data);
                 }
             }
 
-        Session::flash('edit', 'Se ha editado sus datos con exito');
-        return redirect()->back()
-            ->with('success', 'Estatus updated successfully');
+                // Convertir los valores a números si son cadenas
+                // $maniobra = is_numeric($cotizaciones->maniobra) ? $cotizaciones->maniobra : 0;
+                // $burreo = is_numeric($cotizaciones->burreo) ? $cotizaciones->burreo : 0;
+                // $otro = is_numeric($cotizaciones->otro) ? $cotizaciones->otro : 0;
+                // $estadia = is_numeric($cotizaciones->estadia) ? $cotizaciones->estadia : 0;
+                // $precio_viaje = is_numeric($cotizaciones->precio_viaje) ? $cotizaciones->precio_viaje : 0;
+                // $iva = is_numeric($cotizaciones->iva) ? $cotizaciones->iva : 0;
+
+                // SUMA TOTAL DE COTIZACION
+                $suma =  $cotizaciones->total;
+
+                foreach ($gasto_monto as $monto) {
+                    // Convertir el valor a número si es una cadena
+                    $monto = is_numeric($monto) ? $monto : 0; // Si $monto no es numérico, se asume 0
+                    $suma += $monto;
+                }
+                $cotizaciones->total = $suma;
+                $cotizaciones->restante = $cotizaciones->total;
+                $cotizaciones->update();
+
+                $asignacion = Asignaciones::where('id_contenedor', '=', $doc_cotizaciones->id)->first();
+
+                if ($asignacion) {
+                    if($asignacion->id_proveedor == NULL){
+                        $cantidad_ope = $request->input('cantidad_ope');
+                        $tipo_ope = $request->input('tipo_ope');
+                        $ticket_ids_ope = $request->input('ticket_id_ope');
+                        $suma_cantidad_ope = 0;
+
+                        for ($count = 0; $count < count($cantidad_ope); $count++) {
+                            $suma_cantidad_ope += $cantidad_ope[$count];
+
+                            $data = array(
+                                'id_asignacion' => $asignacion->id,
+                                'id_operador' => $asignacion->id_operador,
+                                'id_cotizacion' => $cotizaciones->id,
+                                'cantidad' => $cantidad_ope[$count],
+                                'tipo' => $tipo_ope[$count],
+                            );
+
+                            if (isset($ticket_ids_ope[$count])) {
+                                // Actualizar el ticket existente
+                                $ticket = GastosOperadores::findOrFail($ticket_ids_ope[$count]);
+                                $ticket->update($data);
+                            } elseif($cantidad_ope[$count] != NULL) {
+                                // Crear un nuevo ticket
+                                GastosOperadores::create($data);
+                            }
+                        }
+
+                        $suma_ope = ($asignacion->sueldo_viaje + $suma_cantidad_ope) - $asignacion->dinero_viaje;
+                        $asignacion->pago_operador = $suma_ope;
+                        $asignacion->restante_pago_operador = $suma_ope;
+                        $asignacion->update();
+                    }else if($asignacion->id_operador == NULL){
+
+                        $asignacion->precio = $request->get('precio_proveedor');
+                        $asignacion->burreo = $request->get('burreo_proveedor');
+                        $asignacion->maniobra = $request->get('maniobra_proveedor');
+                        $asignacion->estadia = $request->get('estadia_proveedor');
+                        $asignacion->otro = $request->get('otro_proveedor');
+                        $asignacion->iva = $request->get('iva_proveedor');
+                        $asignacion->retencion = $request->get('retencion_proveedor');
+                        $asignacion->total_proveedor = $request->get('total_proveedor');
+                        $asignacion->update();
+                    }
+                }
+
+            Session::flash('edit', 'Se ha editado sus datos con exito');
+            return redirect()->back()
+                ->with('success', 'Estatus updated successfully');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->with('error', 'El número de contenedor ya existe');
+        }
     }
 
     public function update_cambio(Request $request, $id){
