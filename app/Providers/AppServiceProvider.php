@@ -8,6 +8,7 @@ use App\Models\BancoDineroOpe;
 use App\Models\Bancos;
 use App\Models\Configuracion;
 use App\Models\Cotizaciones;
+use App\Models\GastosGenerales;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -65,6 +66,8 @@ class AppServiceProvider extends ServiceProvider
                 })
                 ->get();
 
+                $gastos_generales = GastosGenerales::where('id_banco1', '=', $banco->id)->get();
+
                 $banco_entrada = 0;
                 $banco_salida = 0;
 
@@ -118,8 +121,13 @@ class AppServiceProvider extends ServiceProvider
                     }
                 }
 
+                $gastos_extras = 0;
+                foreach ($gastos_generales as $item){
+                   $gastos_extras += $item->monto1;
+                }
+
                 $total_pagos = 0;
-                $total_pagos = $pagos + $pagos_salida + $banco_salida;
+                $total_pagos = $pagos + $pagos_salida + $banco_salida + $gastos_extras;
                 $saldo = 0;
                 $saldo = ($banco->saldo_inicial + $total + $banco_entrada) - $total_pagos;
 

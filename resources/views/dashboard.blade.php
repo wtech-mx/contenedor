@@ -229,6 +229,31 @@
             </div>
         </div>
     @endcan
+
+    @can('gastos-generales')
+        <div class="col-4">
+            <div class="card p-3 mb-4">
+                <div class="row">
+                    <div class="col-2 my-auto">
+                        <a href="{{ route('index.gastos_generales') }}">
+                            <img src="{{ asset('img/icon/billetera.png') }}" alt="" width="35px">
+                        </a>
+                    </div>
+
+                    <div class="col-8">
+                        <a href="{{ route('index.gastos_generales') }}">
+                            <p style="margin: 0">Consulta</p>
+                            <h5>X Gastos Generales</h5>
+                        </a>
+                    </div>
+
+                    <div class="col-2 my-auto">
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endcan
+
     @can('liquidaciones')
         <div class="col-4">
             <div class="card p-3 mb-4">
@@ -242,7 +267,7 @@
                     <div class="col-8">
                         <a href="{{ route('index.liquidacion') }}">
                             <p style="margin: 0">Consulta</p>
-                            <h5>XI Liquidaciones</h5>
+                            <h5>XII Liquidaciones</h5>
                         </a>
                     </div>
 

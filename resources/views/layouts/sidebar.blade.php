@@ -115,12 +115,23 @@
             </li>
           @endcan
 
+          @can('gastos-generales')
+            <li class="nav-item">
+                <a class="nav-link {{ (Request::is('gastos/generales*') ? 'active' : '') }}" href="{{ route('index.gastos_generales') }}" target="">
+                <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
+                    <img src="{{ asset('img/icon/billetera.png') }}" alt="" width="20px">
+                </div>
+                <span class="nav-link-text ms-1"><b>X</b> Gastos Generales</span>
+                </a>
+            </li>
+          @endcan
+
           @can('cuentas-pagar')
             <a data-bs-toggle="collapse" href="#pagesExamplesReporteria" class="nav-link {{ (Request::is('reporteria/cotizaciones*') ? 'active' : '') }}" aria-controls="pagesExamplesReporteria" role="button" aria-expanded="false">
                 <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
                     <img src="{{ asset('img/icon/pdf.webp') }}" alt="" width="20px">
                 </div>
-                <span class="nav-link-text ms-1"><b>X</b> Reporteria</span>
+                <span class="nav-link-text ms-1"><b>XI</b> Reporteria</span>
             </a>
 
             <div class="collapse " id="pagesExamplesReporteria">
@@ -157,7 +168,7 @@
                 <div class="icon icon-shape icon-sm text-center  me-2 d-flex align-items-center justify-content-center">
                     <img src="{{ asset('img/icon/pago-en-efectivo.png') }}" alt="" width="20px">
                 </div>
-                <span class="nav-link-text ms-1"><b>XI</b> Liquidaciones</span>
+                <span class="nav-link-text ms-1"><b>XII</b> Liquidaciones</span>
                 </a>
             </li>
             @endcan

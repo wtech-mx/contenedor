@@ -61,8 +61,13 @@
             }
         }
 
+        $gastos_extras = 0;
+        foreach ($gastos_generales as $item){
+           $gastos_extras += $item->monto1;
+        }
+
         $total_pagos = 0;
-        $total_pagos = $pagos + $pagos_salida + $banco_salida;
+        $total_pagos = $pagos + $pagos_salida + $banco_salida + $gastos_extras;
         $saldo = 0;
         $saldo = ($banco->saldo_inicial + $total + $banco_entrada) - $total_pagos;
         $cargo = $banco->saldo_inicial + $total + $banco_entrada;
@@ -216,7 +221,7 @@
 
                             @foreach ($proveedores as $item)
                                 <div class="col-3">
-                                    {{ \Carbon\Carbon::parse($item->fecha_pago)->translatedFormat('j \d\e F') }}
+                                    {{ \Carbon\Carbon::parse($item->fecha_pago_proveedor)->translatedFormat('j \d\e F') }}
                                 </div>
                                 <div class="col-3">
                                     @can('bancos-entrar-cotizacion')
@@ -326,6 +331,15 @@
                                 @endif
                             @endforeach
 
+                            @foreach ($gastos_generales as $item)
+                                <div class="col-3">
+                                    {{ \Carbon\Carbon::parse($item->fecha)->translatedFormat('j \d\e F') }}
+                                </div>
+                                <div class="col-6">{{ $item->motivo }}</div>
+                                <div class="col-3">
+                                    $ {{ number_format($item->monto1, 0, '.', ',') }}
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

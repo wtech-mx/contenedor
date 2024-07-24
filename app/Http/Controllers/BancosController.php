@@ -7,6 +7,7 @@ use App\Models\BancoDinero;
 use App\Models\BancoDineroOpe;
 use App\Models\Bancos;
 use App\Models\Cotizaciones;
+use App\Models\GastosGenerales;
 use Session;
 use Illuminate\Http\Request;
 
@@ -74,7 +75,9 @@ class BancosController extends Controller
         })
         ->get();
 
-        return view('bancos.edit', compact('banco', 'cotizaciones', 'proveedores', 'banco_dinero_entrada', 'banco_dinero_salida', 'banco_dinero_salida_ope', 'banco_dinero_salida_ope_varios'));
+        $gastos_generales = GastosGenerales::where('id_banco1', '=', $id)->get();
+
+        return view('bancos.edit', compact('banco', 'cotizaciones', 'proveedores', 'banco_dinero_entrada', 'banco_dinero_salida', 'banco_dinero_salida_ope', 'banco_dinero_salida_ope_varios', 'gastos_generales'));
     }
 
     public function update(Request $request, Bancos $id)
