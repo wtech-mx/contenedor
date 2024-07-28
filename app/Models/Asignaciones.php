@@ -26,7 +26,15 @@ class Asignaciones extends Model
         'dinero_viaje',
         'id_empresa',
         'id_banco1_dinero_viaje',
-        'id_banco2_dinero_viaje'
+        'id_banco2_dinero_viaje',
+        'otro2',
+        'otro3',
+        'otro4',
+        'otro5',
+        'otro6',
+        'otro7',
+        'otro8',
+        'otro9',
     ];
 
     public function Camion()

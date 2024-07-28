@@ -192,7 +192,6 @@ class CotizacionesController extends Controller
         return $pdf->download('cotizacion'.$cotizacion->Cliente->nombre.'_#'.$cotizacion->id.'.pdf');
     }
 
-
     public function update(Request $request, $id){
 
 
@@ -394,6 +393,16 @@ class CotizacionesController extends Controller
                         $asignacion->maniobra = $request->get('maniobra_proveedor');
                         $asignacion->estadia = $request->get('estadia_proveedor');
                         $asignacion->otro = $request->get('otro_proveedor');
+
+                        $asignacion->otro2 = $request->get('otro2');
+                        $asignacion->otro3 = $request->get('otro3');
+                        $asignacion->otro4 = $request->get('otro4');
+                        $asignacion->otro5 = $request->get('otro5');
+                        $asignacion->otro6 = $request->get('otro6');
+                        $asignacion->otro7 = $request->get('otro7');
+                        $asignacion->otro8 = $request->get('otro8');
+                        $asignacion->otro9 = $request->get('otro9');
+
                         $asignacion->iva = $request->get('iva_proveedor');
                         $asignacion->retencion = $request->get('retencion_proveedor');
                         $asignacion->total_proveedor = $request->get('total_proveedor');

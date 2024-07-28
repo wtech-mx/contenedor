@@ -841,6 +841,100 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <p class="d-inline-flex gap-1">
+                                                            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                             Agregar mas campos de Otros
+                                                            </a>
+
+                                                          </p>
+                                                          <div class="collapse row" id="collapseExample">
+
+                                                                <div class="col-3 form-group">
+                                                                    <label for="name">Otros 2 </label>
+                                                                    <div class="input-group mb-3">
+                                                                        <span class="input-group-text" id="basic-addon1">
+                                                                            <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
+                                                                        </span>
+                                                                        <input name="otro2" id="otro2" type="float" class="form-control" value="{{$documentacion->Asignaciones->otro2}}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-3 form-group">
+                                                                    <label for="name">Otros 3 </label>
+                                                                    <div class="input-group mb-3">
+                                                                        <span class="input-group-text" id="basic-addon1">
+                                                                            <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
+                                                                        </span>
+                                                                        <input name="otro3" id="otro3" type="float" class="form-control" value="{{$documentacion->Asignaciones->otro3}}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-3 form-group">
+                                                                    <label for="name">Otros 4 </label>
+                                                                    <div class="input-group mb-3">
+                                                                        <span class="input-group-text" id="basic-addon1">
+                                                                            <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
+                                                                        </span>
+                                                                        <input name="otro4" id="otro4" type="float" class="form-control" value="{{$documentacion->Asignaciones->otro4}}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-3 form-group">
+                                                                    <label for="name">Otros 5 </label>
+                                                                    <div class="input-group mb-3">
+                                                                        <span class="input-group-text" id="basic-addon1">
+                                                                            <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
+                                                                        </span>
+                                                                        <input name="otro5" id="otro5" type="float" class="form-control" value="{{$documentacion->Asignaciones->otro5}}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-3 form-group">
+                                                                    <label for="name">Otros 6 </label>
+                                                                    <div class="input-group mb-3">
+                                                                        <span class="input-group-text" id="basic-addon1">
+                                                                            <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
+                                                                        </span>
+                                                                        <input name="otro6" id="otro6" type="float" class="form-control" value="{{$documentacion->Asignaciones->otro6}}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-3 form-group">
+                                                                    <label for="name">Otros 7 </label>
+                                                                    <div class="input-group mb-3">
+                                                                        <span class="input-group-text" id="basic-addon1">
+                                                                            <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
+                                                                        </span>
+                                                                        <input name="otro7" id="otro7" type="float" class="form-control" value="{{$documentacion->Asignaciones->otro7}}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-3 form-group">
+                                                                    <label for="name">Otros 8 </label>
+                                                                    <div class="input-group mb-3">
+                                                                        <span class="input-group-text" id="basic-addon1">
+                                                                            <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
+                                                                        </span>
+                                                                        <input name="otro8" id="otro8" type="float" class="form-control" value="{{$documentacion->Asignaciones->otro8}}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-3 form-group">
+                                                                    <label for="name">Otros 9 </label>
+                                                                    <div class="input-group mb-3">
+                                                                        <span class="input-group-text" id="basic-addon1">
+                                                                            <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
+                                                                        </span>
+                                                                        <input name="otro9" id="otro9" type="float" class="form-control" value="{{$documentacion->Asignaciones->otro9}}">
+                                                                    </div>
+                                                                </div>
+
+                                                          </div>
+                                                    </div>
+                                                </div>
+
                                                 <div class="col-4 form-group">
                                                     <label for="name">IVA</label>
                                                     <div class="input-group mb-3">
@@ -1221,48 +1315,71 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Seleccionar todos los inputs relevantes
-            const precioInput = document.getElementById('precio_proveedor');
-            const burreoInput = document.getElementById('burreo_proveedor');
-            const maniobraInput = document.getElementById('maniobra_proveedor');
-            const estadiaInput = document.getElementById('estadia_proveedor');
-            const otroInput = document.getElementById('otro_proveedor');
-            const ivaInput = document.getElementById('iva_proveedor');
-            const retencionInput = document.getElementById('retencion_proveedor');
-            const totalInput = document.getElementById('total_proveedor');
+document.addEventListener('DOMContentLoaded', function () {
+    // Seleccionar todos los inputs relevantes
+    const precioInput = document.getElementById('precio_proveedor');
+    const burreoInput = document.getElementById('burreo_proveedor');
+    const maniobraInput = document.getElementById('maniobra_proveedor');
+    const estadiaInput = document.getElementById('estadia_proveedor');
+    const otroInput = document.getElementById('otro_proveedor');
+    const otro2Input = document.getElementById('otro2');
+    const otro3Input = document.getElementById('otro3');
+    const otro4Input = document.getElementById('otro4');
+    const otro5Input = document.getElementById('otro5');
+    const otro6Input = document.getElementById('otro6');
+    const otro7Input = document.getElementById('otro7');
+    const otro8Input = document.getElementById('otro8');
+    const otro9Input = document.getElementById('otro9');
+    const ivaInput = document.getElementById('iva_proveedor');
+    const retencionInput = document.getElementById('retencion_proveedor');
+    const totalInput = document.getElementById('total_proveedor');
 
-            // Array de todos los inputs menos el de retencion
-            const inputs = [precioInput, burreoInput, maniobraInput, estadiaInput, otroInput, ivaInput, retencionInput];
+    // Array de todos los inputs relevantes
+    const inputs = [
+        precioInput, burreoInput, maniobraInput, estadiaInput, otroInput,
+        otro2Input, otro3Input, otro4Input, otro5Input, otro6Input,
+        otro7Input, otro8Input, otro9Input, ivaInput, retencionInput
+    ];
 
-            // Función para actualizar el total
-            function updateTotal() {
-                let precio = parseFloat(precioInput.value) || 0;
-                let burreo = parseFloat(burreoInput.value) || 0;
-                let maniobra = parseFloat(maniobraInput.value) || 0;
-                let estadia = parseFloat(estadiaInput.value) || 0;
-                let otro = parseFloat(otroInput.value) || 0;
-                let iva = parseFloat(ivaInput.value) || 0;
-                let retencion = parseFloat(retencionInput.value) || 0;
+    // Función para actualizar el total
+    function updateTotal() {
+        let precio = parseFloat(precioInput.value) || 0;
+        let burreo = parseFloat(burreoInput.value) || 0;
+        let maniobra = parseFloat(maniobraInput.value) || 0;
+        let estadia = parseFloat(estadiaInput.value) || 0;
+        let otro = parseFloat(otroInput.value) || 0;
+        let otro2 = parseFloat(otro2Input.value) || 0;
+        let otro3 = parseFloat(otro3Input.value) || 0;
+        let otro4 = parseFloat(otro4Input.value) || 0;
+        let otro5 = parseFloat(otro5Input.value) || 0;
+        let otro6 = parseFloat(otro6Input.value) || 0;
+        let otro7 = parseFloat(otro7Input.value) || 0;
+        let otro8 = parseFloat(otro8Input.value) || 0;
+        let otro9 = parseFloat(otro9Input.value) || 0;
+        let iva = parseFloat(ivaInput.value) || 0;
+        let retencion = parseFloat(retencionInput.value) || 0;
 
-                // Sumar todos menos retencion
-                let subtotal = precio + burreo + maniobra + estadia + otro + iva;
+        // Sumar todos menos retencion
+        let subtotal = precio + burreo + maniobra + estadia + otro +
+                       otro2 + otro3 + otro4 + otro5 + otro6 +
+                       otro7 + otro8 + otro9 + iva;
 
-                // Restar retencion
-                let total = subtotal - retencion;
+        // Restar retencion
+        let total = subtotal - retencion;
 
-                // Actualizar el input de total
-                totalInput.value = total.toFixed(2);
-            }
+        // Actualizar el input de total
+        totalInput.value = total.toFixed(2);
+    }
 
-            // Asignar evento de input a todos los inputs
-            inputs.forEach(input => {
-                input.addEventListener('input', updateTotal);
-            });
+    // Asignar evento de input a todos los inputs
+    inputs.forEach(input => {
+        input.addEventListener('input', updateTotal);
+    });
 
-            // Calcular el total inicial
-            updateTotal();
-        });
+    // Calcular el total inicial
+    updateTotal();
+});
+
     </script>
 
 @endsection
