@@ -65,6 +65,10 @@
                             <div class="tab-content" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="nav-cotizacion" role="tabpanel" aria-labelledby="nav-cotizacion-tab" tabindex="0">
                                     <h3 class="mb-5">Datos de cotizacion</h3>
+
+                                    @error('num_contenedor') <h4 class="error text-danger">{{ $message }}</h4> @enderror
+
+
                                     <div class="row">
                                             @if ($documentacion->num_contenedor != NULL)
                                                 <label style="font-size: 20px;">Num contenedor:  {{$documentacion->num_contenedor}} </label>
@@ -346,7 +350,8 @@
                                                 <span class="input-group-text" id="basic-addon1">
                                                     <img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="25px">
                                                 </span>
-                                                <input name="num_contenedor" id="num_contenedor" type="text" class="form-control" value="{{$documentacion->num_contenedor}}">
+                                                <input name="num_contenedor" id="num_contenedor" type="text" class="form-control" value="{{$documentacion->num_contenedor}}">@error('num_contenedor') <span class="error text-danger">{{ $message }}</span> @enderror
+
                                             </div>
                                         </div>
 

@@ -194,11 +194,21 @@ class CotizacionesController extends Controller
 
 
     public function update(Request $request, $id){
+
+
         $contenedor = DocumCotizacion::where('id_cotizacion', '=', $id)->first();
 
-        $request->validate([
-            'num_contenedor' => 'unique:docum_cotizacion,num_contenedor,' . $contenedor->id,
+        $validator = Validator::make($request->all(), [
+            'num_contenedor' => 'unique:docum_cotizacion,num_contenedor,' . $contenedor->id . ',id',
         ]);
+
+        if ($validator->fails()) {
+
+            return back()
+            ->withErrors($validator)
+            ->withInput()
+            ->with('error', 'El Num de contenedor esta repetido');
+        }
 
         try {
             $doc_cotizaciones = DocumCotizacion::where('id_cotizacion', '=', $id)->first();
