@@ -21,10 +21,11 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $data = User::orderBy('id','DESC')->paginate(5);
+
+        $data = User::where('id_empresa','=',auth()->user()->Empresa->id)->orderBy('id','DESC')->paginate(10);
 
         return view('users.index',compact('data',))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+            ->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     /**
@@ -35,7 +36,9 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name','name')->all();
-        $empresas = Empresas::orderBy('id','DESC')->get();
+
+
+        $empresas = Empresas::where('id','=',auth()->user()->Empresa->id)->orderBy('id','DESC')->get();
 
         return view('users.create',compact('roles','empresas'));
     }
@@ -92,7 +95,7 @@ class UserController extends Controller
 
         $userRole = $user->roles->pluck('name','name')->all();
 
-        $empresas = Empresas::orderBy('id','DESC')->get();
+        $empresas = Empresas::where('id','=',auth()->user()->Empresa->id)->orderBy('id','DESC')->get();
 
         return view('users.edit',compact('user','roles','userRole','empresas'));
     }

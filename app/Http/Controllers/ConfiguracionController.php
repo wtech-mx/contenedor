@@ -9,21 +9,21 @@ use Session;
 
 class ConfiguracionController extends Controller
 {
-    public function index()
+    public function index(Request $request ,$id)
     {
-        $configuracion = Configuracion::first();
+        $configuracion = Configuracion::find($id);
 
         return view('configuracion.index', compact('configuracion'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
         $this->validate($request, [
             'nombre_sistema' => 'required',
             'color_principal' => 'required',
         ]);
 
-        $configuracion = Configuracion::first();
+        $configuracion = Configuracion::find($id);
         $configuracion->nombre_sistema = $request->get('nombre_sistema');
         $configuracion->color_principal = $request->get('color_principal');
         $configuracion->color_iconos_sidebar = $request->get('color_iconos_sidebar');
@@ -57,7 +57,7 @@ class ConfiguracionController extends Controller
         $configuracion->update();
 
         Session::flash('edit', 'Se ha editado sus datos con exito');
-        return redirect()->route('index.configuracion')
-            ->with('success', 'Client updated successfully');
+        return redirect()->back()
+        ->with('success', 'empresae created successfully.');
     }
 }

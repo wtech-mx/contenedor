@@ -31,7 +31,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('*', function ($view) {
-            $configuracion = Configuracion::first();
+
+
+            if( auth()->user() == null){
+                $configuracion = Configuracion::first();
+
+            }else{
+                $configuracion = auth()->user()->Empresa->Configuracion;
+
+            }
 
             $bancos = Bancos::all();
 

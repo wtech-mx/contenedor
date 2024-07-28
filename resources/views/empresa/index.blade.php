@@ -43,7 +43,6 @@ Empresas
                                     @foreach ($empresas as $item)
                                         <tr>
                                             <td>{{ $item->id }}</td>
-
 											<td>{{ $item->nombre }}</td>
 											<td>{{ $item->telefono }}</td>
 											<td>{{ $item->correo }}</td>

@@ -1,5 +1,7 @@
 <?php
 
+// App\Models\Empresas.php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,7 +22,11 @@ class Empresas extends Model
         'regimen_fiscal',
         'email',
         'fecha',
+        'id_configuracion',
     ];
 
-
+    public function configuracion()
+    {
+        return $this->belongsTo(Configuracion::class, 'id_configuracion');
+    }
 }

@@ -72,6 +72,25 @@
                         </div>
                     </div>
 
+
+                    <div class="col-12 form-group">
+                        <label for="name">Selecinar configracion *</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                                <img src="{{ asset('img/icon/gear.webp') }}" alt="" width="25px">
+                            </span>
+                            <select class="form-select" name="id_configuracion" id="">
+
+                                <option value="{{ $item->configuracion->nombre_sistema }}">{{ $item->configuracion->nombre_sistema }}</option>
+
+                                @foreach ($configuraciones as $config)
+                                    <option value="{{ $config->id }}" >{{ $config->nombre_sistema }}</option>
+                                @endforeach
+
+                            </select>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 

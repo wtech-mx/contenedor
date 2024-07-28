@@ -15,9 +15,10 @@
               <h3 class="mb-3">Configuracion Sistema</h3>
             </div>
 
+
             <div class="card-body mb-5">
 
-                <form method="POST" action="{{ route('update.configuracion') }}" enctype="multipart/form-data" role="form">
+                <form method="POST" action="{{ route('update.configuracion',auth()->user()->Empresa->Configuracion->id) }}" enctype="multipart/form-data" role="form">
                     @csrf
                     <input type="hidden" name="_method" value="PATCH">
                     <div class="row">

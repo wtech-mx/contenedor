@@ -233,7 +233,7 @@
           <div class="collapse " id="sistem">
             <ul class="nav ms-4">
               <li class="nav-item ">
-                <a class="nav-link {{ (Request::is('configuracion*') ? 'show' : '') }}" href="{{ route('index.configuracion') }}">
+                <a class="nav-link {{ (Request::is('configuracion*') ? 'show' : '') }}" href="{{ route('index.configuracion',auth()->user()->Empresa->Configuracion->id) }}">
                   <span class="sidenav-mini-icon">U</span>
                   <span class="sidenav-normal">Pagina</span>
                 </a>
