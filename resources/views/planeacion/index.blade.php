@@ -192,13 +192,26 @@ use Carbon\Carbon;
                     var fechaInicio = formatDate(info.event.start);
                     var fechaFin = formatDate(info.event.end);
                     var urlId = info.event.extendedProps.urlId;
-                    var telOperadorUrl = 'https://gologipro.com/coordenadas/' + info.event.extendedProps.idCoordenda;
+
+                    // Obteniendo la URL de la ruta sin el parámetro
+                    var telOperadorBaseUrl = '{{ route('index.cooredenadas', ['id' => 'ID_PLACEHOLDER']) }}';
+                    // Reemplazando 'ID_PLACEHOLDER' con el ID real en JavaScript
+                    telOperadorBaseUrl = telOperadorBaseUrl.replace('ID_PLACEHOLDER', info.event.extendedProps.idCoordenda);
+                    // Ahora puedes usar la URL completa
+                    var telOperadorUrl = telOperadorBaseUrl;
+
+                    var cotizacionBaseUrl = '{{ route('edit.cotizaciones', ['id' => 'ID_PLACEHOLDER']) }}';
+                    cotizacionBaseUrl = cotizacionBaseUrl.replace('ID_PLACEHOLDER', info.event.extendedProps.idCotizacion);
+
 
                     // Establecer los valores en los inputs del formulario
                     document.getElementById('eventoFechaStart').value = fechaInicio;
                     document.getElementById('eventoFechaEnd').value = fechaFin;
-                    document.getElementById('idCotizacion').setAttribute('href', 'cotizaciones/edit/' + info.event.extendedProps.idCotizacion);
-                    document.getElementById('idCoordenda').setAttribute('href', 'coordenadas/' + info.event.extendedProps.idCoordenda);
+                    document.getElementById('idCotizacion').setAttribute('href', cotizacionBaseUrl);
+
+                    // Establecer el atributo href del elemento
+                    document.getElementById('idCoordenda').setAttribute('href', telOperadorBaseUrl);
+
                     document.getElementById('urlId').value = urlId;
                     document.getElementById('telOperadorUrl').value = telOperadorUrl;
                     // Completar los valores del formulario si existen
