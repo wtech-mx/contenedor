@@ -40,7 +40,10 @@ class UserController extends Controller
 
         $empresas = Empresas::where('id','=',auth()->user()->Empresa->id)->orderBy('id','DESC')->get();
 
-        return view('users.create',compact('roles','empresas'));
+        $empresas_base = Empresas::orderBy('id','DESC')->get();
+
+
+        return view('users.create',compact('roles','empresas','empresas_base'));
     }
 
     /**
@@ -97,7 +100,10 @@ class UserController extends Controller
 
         $empresas = Empresas::where('id','=',auth()->user()->Empresa->id)->orderBy('id','DESC')->get();
 
-        return view('users.edit',compact('user','roles','userRole','empresas'));
+        $empresas_base = Empresas::orderBy('id','DESC')->get();
+
+
+        return view('users.edit',compact('user','roles','userRole','empresas','empresas_base'));
     }
 
     /**

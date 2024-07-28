@@ -44,6 +44,24 @@
                         </div>
                     </div>
 
+                    @if(auth()->user()->Empresa->id == 1)
+
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="">Empresa</label>
+                            <select name="id_empresa" id="" class="form-select">
+                                <option value="">Seleciona una opcion</option>
+                                @foreach ($empresas_base as  $item)
+                                    @if($item->id == $user->id_empresa)
+                                        <option value="{{ $item->id }}" selected>{{ $item->nombre }}</option>
+                                    @endif
+                                    <option value="{{ $item->id }}">{{ $item->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    @else
 
                     <div class="col-xs-12 col-sm-12 col-md-6">
                         <div class="form-group">
@@ -59,6 +77,10 @@
                             </select>
                         </div>
                     </div>
+
+                    @endif
+
+
 
 
                     <div class="col-xs-12 col-sm-12 col-md-6">
