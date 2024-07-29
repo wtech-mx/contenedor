@@ -34,7 +34,9 @@ class PlaneacionController extends Controller
         $operadores = Operador::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
         $events = [];
 
-        $appointments = Asignaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
+        $appointments = Asignaciones::join('docum_cotizacion', 'asignaciones.id_contenedor', '=', 'docum_cotizacion.id')
+        ->join('cotizaciones', 'docum_cotizacion.id_cotizacion', '=', 'cotizaciones.id')
+        ->where('asignaciones.id_empresa' ,'=',auth()->user()->id_empresa)->where('cotizaciones.estatus', '=', 'Aprobada')->get();
 
         foreach ($appointments as $appointment) {
             if($appointment->id_operador == NULL){

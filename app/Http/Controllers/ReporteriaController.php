@@ -167,14 +167,21 @@ class ReporteriaController extends Controller
         $asignaciones = Asignaciones::
         join('docum_cotizacion', 'asignaciones.id_contenedor', '=', 'docum_cotizacion.id') // Unir con la tabla 'docum_cotizacion' primero
         ->join('cotizaciones', 'docum_cotizacion.id_cotizacion', '=', 'cotizaciones.id') // Luego unir con 'cotizaciones'
-        ->where('cotizaciones.id_empresa' ,'=', auth()->user()->id_empresa)
+        ->where('asignaciones.id_empresa' ,'=', auth()->user()->id_empresa)
         ->select('asignaciones.*');
 
         if ($request->fecha_de && $request->fecha_hasta) {
-            $inicio = $request->fecha_de;
-            $fin = $request->fecha_hasta ; // Corrige el formato de tiempo final para incluir todo el día
-            $asignaciones = $asignaciones->where('asignaciones.fecha_inicio', '>=', $inicio)
-                                         ->where('asignaciones.fecha_fin', '<=', $fin);
+            $inicio = Carbon::parse($request->fecha_de)->startOfDay();
+            $fin = Carbon::parse($request->fecha_hasta)->endOfDay();
+
+            $asignaciones = $asignaciones->where(function($query) use ($inicio, $fin) {
+                $query->whereBetween('asignaciones.fecha_inicio', [$inicio, $fin])
+                      ->orWhere(function($query) use ($inicio, $fin) {
+                          $query->where('asignaciones.fecha_inicio', '>=', $inicio)
+                                ->where('asignaciones.fecha_inicio', '<=', $fin);
+                      });
+            });
+
         }
 
         if ($id_client !== null) {
@@ -215,7 +222,7 @@ class ReporteriaController extends Controller
         // return $pdf->download('cotizaciones_seleccionadas.pdf');
     }
 
-    // ==================== V I A J E S ====================
+    // ==================== U T I L I D A D E S ====================
     public function index_utilidad(){
 
         $clientes = Client::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
@@ -258,7 +265,7 @@ class ReporteriaController extends Controller
             $inicio = $request->fecha_de;
             $fin = $request->fecha_hasta;
             $asignaciones = $asignaciones->where('asignaciones.fecha_inicio', '>=', $inicio)
-                                         ->where('asignaciones.fecha_fin', '<=', $fin);
+                                         ->where('asignaciones.fecha_inicio', '<=', $fin);
         }
 
         if ($id_client !== null) {
