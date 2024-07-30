@@ -29,7 +29,7 @@ class CuentasCobrarController extends Controller
     }
 
     public function show($id){
-        $cliente = Client::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('id', '=', $id)->first();
+        $cliente = Client::where('id', '=', $id)->first();
         $cotizacionesPorPagar = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
         ->where('cotizaciones.id_empresa', '=', auth()->user()->id_empresa)
         ->where('cotizaciones.estatus_pago', '=', '0')
