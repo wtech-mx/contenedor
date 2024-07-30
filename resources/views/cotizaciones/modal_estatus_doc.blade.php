@@ -11,9 +11,9 @@
                     <div class="col-6">
                         <div class="form-check">
                             @if ($cotizacion->DocCotizacion->num_contenedor == NULL)
-                                <input class="form-check-input" type="checkbox">
+                                <input class="form-check-input" type="checkbox" disabled>
                             @else
-                                <input class="form-check-input" type="checkbox" checked>
+                                <input class="form-check-input" type="checkbox" checked disabled>
                             @endif
                             <label for="input">Num contenedor</label>
                         </div>
@@ -22,9 +22,9 @@
                     <div class="col-6">
                         <div class="form-check">
                             @if ($cotizacion->DocCotizacion->doc_ccp == NULL)
-                                <input class="form-check-input" type="checkbox">
+                                <input class="form-check-input" type="checkbox" disabled>
                             @else
-                                <input class="form-check-input" type="checkbox" checked>
+                                <input class="form-check-input" type="checkbox" checked disabled>
                             @endif
                             <label for="input">Documento CCP</label>
                         </div>
@@ -33,9 +33,9 @@
                     <div class="col-6">
                         <div class="form-check">
                             @if ($cotizacion->DocCotizacion->boleta_liberacion == NULL)
-                                <input class="form-check-input" type="checkbox">
+                                <input class="form-check-input" type="checkbox" disabled>
                             @else
-                                <input class="form-check-input" type="checkbox" checked>
+                                <input class="form-check-input" type="checkbox" checked disabled>
                             @endif
                             <label for="input">Boleta de Liberación</label>
                         </div>
@@ -44,9 +44,9 @@
                     <div class="col-6">
                         <div class="form-check">
                             @if ($cotizacion->DocCotizacion->doda == NULL)
-                                <input class="form-check-input" type="checkbox">
+                                <input class="form-check-input" type="checkbox" disabled>
                             @else
-                                <input class="form-check-input" type="checkbox" checked>
+                                <input class="form-check-input" type="checkbox" checked disabled>
                             @endif
                             <label for="input">Doda</label>
                         </div>
@@ -55,10 +55,10 @@
                     <div class="col-6">
                         <div class="form-check">
                             @if ($cotizacion->carta_porte == NULL)
-                            <input class="form-check-input" type="checkbox">
+                            <input class="form-check-input" type="checkbox" disabled>
 
                             @else
-                            <input class="form-check-input" type="checkbox" checked>
+                            <input class="form-check-input" type="checkbox" checked disabled>
 
                             @endif
                             <label for="input">Carta Porte</label>
@@ -69,10 +69,10 @@
                         <div class="form-check">
 
                             @if ($cotizacion->DocCotizacion->boleta_vacio == 'si')
-                            <input class="form-check-input" type="checkbox" checked>
+                            <input class="form-check-input" type="checkbox" checked disabled>
 
                             @else
-                                <input class="form-check-input" type="checkbox">
+                                <input class="form-check-input" type="checkbox" disabled>
 
                             @endif
                             <label for="input">Boleta Vacio</label>
@@ -82,9 +82,9 @@
                     <div class="col-6">
                         <div class="form-check">
                             @if ($cotizacion->doc_eir == NULL)
-                                <input class="form-check-input" type="checkbox">
+                                <input class="form-check-input" type="checkbox" disabled>
                             @else
-                                <input class="form-check-input" type="checkbox" checked>
+                                <input class="form-check-input" type="checkbox" checked disabled>
                             @endif
                             <label for="input">EIR</label>
                         </div>
