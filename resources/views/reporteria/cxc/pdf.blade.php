@@ -86,7 +86,7 @@
                                     @if ($cotizacion->id_subcliente != NULL)
                                     {{ $cotizacion->Subcliente->nombre }}
                                     @else
-                                    
+
                                     @endif
                                 </td>
                                 <td style="color: #ffffff; background: #2778c4;">{{$cotizacion->destino}}</td>
@@ -94,7 +94,7 @@
                                 <td>{{$cotizacion->tamano}}</td>
                                 <td>$ {{ number_format($cotizacion->burreo, 2, '.', ',')}}</td>
                                 <td>$ {{ number_format($cotizacion->maniobra, 2, '.', ',')}}</td>
-                                <td>$ {{ number_format($cotizacion->sobrepeso, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->precio_sobre_peso, 2, '.', ',')}}</td>
                                 <td>$ {{ number_format($cotizacion->otro, 2, '.', ',')}}</td>
                                 <td>$ {{ number_format($cotizacion->precio_viaje, 2, '.', ',')}}</td>
 
