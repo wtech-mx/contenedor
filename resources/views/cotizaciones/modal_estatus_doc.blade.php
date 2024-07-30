@@ -81,7 +81,7 @@
 
                     <div class="col-6">
                         <div class="form-check">
-                            @if ($cotizacion->DocCotizacion->eir == NULL)
+                            @if ($cotizacion->doc_eir == NULL)
                                 <input class="form-check-input" type="checkbox">
                             @else
                                 <input class="form-check-input" type="checkbox" checked>
