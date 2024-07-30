@@ -54,10 +54,12 @@
 
                     <div class="col-6">
                         <div class="form-check">
-                            @if ($cotizacion->DocCotizacion->carta_porte == NULL)
-                                <input class="form-check-input" type="checkbox">
+                            @if ($cotizacion->carta_porte == NULL)
+                            <input class="form-check-input" type="checkbox">
+
                             @else
-                                <input class="form-check-input" type="checkbox" checked>
+                            <input class="form-check-input" type="checkbox" checked>
+
                             @endif
                             <label for="input">Carta Porte</label>
                         </div>
@@ -65,10 +67,13 @@
 
                     <div class="col-6">
                         <div class="form-check">
-                            @if ($cotizacion->DocCotizacion->img_boleta == NULL)
-                                <input class="form-check-input" type="checkbox">
+
+                            @if ($cotizacion->DocCotizacion->boleta_vacio == 'si')
+                            <input class="form-check-input" type="checkbox" checked>
+
                             @else
-                                <input class="form-check-input" type="checkbox" checked>
+                                <input class="form-check-input" type="checkbox">
+
                             @endif
                             <label for="input">Boleta Vacio</label>
                         </div>
