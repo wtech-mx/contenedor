@@ -841,6 +841,16 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="col-3 form-group">
+                                                    <label for="name">Descripcion Otros</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            <img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">
+                                                        </span>
+                                                        <input name="descripcion_otro1" id="descripcion_otro1" type="text" class="form-control" value="{{$documentacion->Asignaciones->descripcion_otro1}}">
+                                                    </div>
+                                                </div>
+
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <p class="d-inline-flex gap-1">
@@ -862,12 +872,32 @@
                                                                 </div>
 
                                                                 <div class="col-3 form-group">
+                                                                    <label for="name">Descripcion Otros 2</label>
+                                                                    <div class="input-group mb-3">
+                                                                        <span class="input-group-text" id="basic-addon1">
+                                                                            <img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">
+                                                                        </span>
+                                                                        <input name="descripcion_otro2" id="descripcion_otro2" type="text" class="form-control" value="{{$documentacion->Asignaciones->descripcion_otro2}}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-3 form-group">
                                                                     <label for="name">Otros 3 </label>
                                                                     <div class="input-group mb-3">
                                                                         <span class="input-group-text" id="basic-addon1">
                                                                             <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
                                                                         </span>
                                                                         <input name="otro3" id="otro3" type="float" class="form-control" value="{{$documentacion->Asignaciones->otro3}}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-3 form-group">
+                                                                    <label for="name">Descripcion Otros 3</label>
+                                                                    <div class="input-group mb-3">
+                                                                        <span class="input-group-text" id="basic-addon1">
+                                                                            <img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">
+                                                                        </span>
+                                                                        <input name="descripcion_otro3" id="descripcion_otro3" type="text" class="form-control" value="{{$documentacion->Asignaciones->descripcion_otro3}}">
                                                                     </div>
                                                                 </div>
 
@@ -882,12 +912,32 @@
                                                                 </div>
 
                                                                 <div class="col-3 form-group">
+                                                                    <label for="name">Descripcion Otros 4</label>
+                                                                    <div class="input-group mb-3">
+                                                                        <span class="input-group-text" id="basic-addon1">
+                                                                            <img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">
+                                                                        </span>
+                                                                        <input name="descripcion_otro4" id="descripcion_otro4" type="text" class="form-control" value="{{$documentacion->Asignaciones->descripcion_otro4}}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-3 form-group">
                                                                     <label for="name">Otros 5 </label>
                                                                     <div class="input-group mb-3">
                                                                         <span class="input-group-text" id="basic-addon1">
                                                                             <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
                                                                         </span>
                                                                         <input name="otro5" id="otro5" type="float" class="form-control" value="{{$documentacion->Asignaciones->otro5}}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-3 form-group">
+                                                                    <label for="name">Descripcion Otros 5</label>
+                                                                    <div class="input-group mb-3">
+                                                                        <span class="input-group-text" id="basic-addon1">
+                                                                            <img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">
+                                                                        </span>
+                                                                        <input name="descripcion_otro5" id="descripcion_otro5" type="text" class="form-control" value="{{$documentacion->Asignaciones->descripcion_otro5}}">
                                                                     </div>
                                                                 </div>
 
@@ -902,12 +952,32 @@
                                                                 </div>
 
                                                                 <div class="col-3 form-group">
+                                                                    <label for="name">Descripcion Otros 6</label>
+                                                                    <div class="input-group mb-3">
+                                                                        <span class="input-group-text" id="basic-addon1">
+                                                                            <img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">
+                                                                        </span>
+                                                                        <input name="descripcion_otro6" id="descripcion_otro6" type="text" class="form-control" value="{{$documentacion->Asignaciones->descripcion_otro6}}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-3 form-group">
                                                                     <label for="name">Otros 7 </label>
                                                                     <div class="input-group mb-3">
                                                                         <span class="input-group-text" id="basic-addon1">
                                                                             <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
                                                                         </span>
                                                                         <input name="otro7" id="otro7" type="float" class="form-control" value="{{$documentacion->Asignaciones->otro7}}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-3 form-group">
+                                                                    <label for="name">Descripcion Otros 7</label>
+                                                                    <div class="input-group mb-3">
+                                                                        <span class="input-group-text" id="basic-addon1">
+                                                                            <img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">
+                                                                        </span>
+                                                                        <input name="descripcion_otro7" id="descripcion_otro7" type="text" class="form-control" value="{{$documentacion->Asignaciones->descripcion_otro7}}">
                                                                     </div>
                                                                 </div>
 
@@ -922,12 +992,32 @@
                                                                 </div>
 
                                                                 <div class="col-3 form-group">
+                                                                    <label for="name">Descripcion Otros 8</label>
+                                                                    <div class="input-group mb-3">
+                                                                        <span class="input-group-text" id="basic-addon1">
+                                                                            <img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">
+                                                                        </span>
+                                                                        <input name="descripcion_otro8" id="descripcion_otro8" type="text" class="form-control" value="{{$documentacion->Asignaciones->descripcion_otro8}}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-3 form-group">
                                                                     <label for="name">Otros 9 </label>
                                                                     <div class="input-group mb-3">
                                                                         <span class="input-group-text" id="basic-addon1">
                                                                             <img src="{{ asset('img/icon/inventario.png.webp') }}" alt="" width="25px">
                                                                         </span>
                                                                         <input name="otro9" id="otro9" type="float" class="form-control" value="{{$documentacion->Asignaciones->otro9}}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-3 form-group">
+                                                                    <label for="name">Descripcion Otros 9</label>
+                                                                    <div class="input-group mb-3">
+                                                                        <span class="input-group-text" id="basic-addon1">
+                                                                            <img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">
+                                                                        </span>
+                                                                        <input name="descripcion_otro10" id="descripcion_otro10" type="text" class="form-control" value="{{$documentacion->Asignaciones->descripcion_otro10}}">
                                                                     </div>
                                                                 </div>
 

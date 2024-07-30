@@ -403,6 +403,17 @@ class CotizacionesController extends Controller
                         $asignacion->otro8 = $request->get('otro8');
                         $asignacion->otro9 = $request->get('otro9');
 
+                        $asignacion->descripcion_otro1 = $request->get('descripcion_otro1');
+                        $asignacion->descripcion_otro2 = $request->get('descripcion_otro2');
+                        $asignacion->descripcion_otro3 = $request->get('descripcion_otro3');
+                        $asignacion->descripcion_otro4 = $request->get('descripcion_otro4');
+                        $asignacion->descripcion_otro5 = $request->get('descripcion_otro5');
+                        $asignacion->descripcion_otro6 = $request->get('descripcion_otro6');
+                        $asignacion->descripcion_otro7 = $request->get('descripcion_otro7');
+                        $asignacion->descripcion_otro8 = $request->get('descripcion_otro8');
+                        $asignacion->descripcion_otro9 = $request->get('descripcion_otro9');
+                        $asignacion->descripcion_otro10 = $request->get('descripcion_otro10');
+
                         $asignacion->iva = $request->get('iva_proveedor');
                         $asignacion->retencion = $request->get('retencion_proveedor');
                         $asignacion->total_proveedor = $request->get('total_proveedor');
