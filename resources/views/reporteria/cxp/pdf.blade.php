@@ -65,7 +65,7 @@
                 <tbody style="text-align: center;font-size: 100%;">
                     @foreach ($cotizaciones as $cotizacion)
                         @php
-                            $total_oficial = ($cotizacion->burreo + $cotizacion->estadia + $cotizacion->Contenedor->Cotizacion->precio_sobre_peso + $cotizacion->otro + $cotizacion->iva + $cotizacion->precio) - $cotizacion->retencion;
+                            $total_oficial = ($cotizacion->burreo + $cotizacion->estadia + $cotizacion->Contenedor->Cotizacion->precio_tonelada + $cotizacion->otro + $cotizacion->iva + $cotizacion->precio) - $cotizacion->retencion;
                             $base_factura = ($cotizacion->Contenedor->Cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
                             $importe_vta = $total_oficial - $base_factura;
 
@@ -83,7 +83,7 @@
                             <td>${{ number_format($cotizacion->Contenedor->Cotizacion->base_factura, 2, '.', ',') }}</td>
                             <td>${{ number_format($cotizacion->precio, 2, '.', ',') }}</td>
                             <td>${{ number_format($cotizacion->otro, 2, '.', ',') }}</td>
-                            <td>${{ number_format($cotizacion->Contenedor->Cotizacion->precio_sobre_peso, 2, '.', ',') }}</td>
+                            <td>${{ number_format($cotizacion->Contenedor->Cotizacion->precio_tonelada, 2, '.', ',') }}</td>
                             <td>${{ number_format($cotizacion->estadia, 2, '.', ',') }}</td>
                             <td>${{ number_format($cotizacion->burreo, 2, '.', ',') }}</td>
                         </tr>

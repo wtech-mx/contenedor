@@ -73,7 +73,7 @@
                         @foreach ($cotizaciones as $cotizacion)
                             @php
                                 $total_oficial = ($cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
-                                $base_taref = ($cotizacion->burreo + $cotizacion->maniobra + $cotizacion->precio_sobre_peso + $cotizacion->otro + $cotizacion->precio_viaje) - $cotizacion->base_factura;
+                                $base_taref = ($cotizacion->burreo + $cotizacion->maniobra + $cotizacion->precio_tonelada + $cotizacion->otro + $cotizacion->precio_viaje) - $cotizacion->base_factura;
                                 $importe_vta = $base_taref + $total_oficial;
 
                                 $totalOficialSum += $total_oficial;
@@ -94,7 +94,7 @@
                                 <td>{{$cotizacion->tamano}}</td>
                                 <td>$ {{ number_format($cotizacion->burreo, 2, '.', ',')}}</td>
                                 <td>$ {{ number_format($cotizacion->maniobra, 2, '.', ',')}}</td>
-                                <td>$ {{ number_format($cotizacion->precio_sobre_peso, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->precio_tonelada, 2, '.', ',')}}</td>
                                 <td>$ {{ number_format($cotizacion->otro, 2, '.', ',')}}</td>
                                 <td>$ {{ number_format($cotizacion->precio_viaje, 2, '.', ',')}}</td>
 
