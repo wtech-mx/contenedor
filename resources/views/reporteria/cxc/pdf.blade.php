@@ -73,7 +73,7 @@
                         @foreach ($cotizaciones as $cotizacion)
                             @php
                                 $total_oficial = ($cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
-                                $base_taref = ($cotizacion->burreo + $cotizacion->maniobra + $cotizacion->sobrepeso + $cotizacion->otro + $cotizacion->precio_viaje) - $cotizacion->base_factura;
+                                $base_taref = ($cotizacion->burreo + $cotizacion->maniobra + $cotizacion->precio_sobre_peso + $cotizacion->otro + $cotizacion->precio_viaje) - $cotizacion->base_factura;
                                 $importe_vta = $base_taref + $total_oficial;
 
                                 $totalOficialSum += $total_oficial;
