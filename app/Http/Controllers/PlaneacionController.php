@@ -266,14 +266,14 @@ class PlaneacionController extends Controller
     public function edit_fecha(Request $request)
     {
         $id = $request->get('urlId');
-        $idCoordenda = $request->get('idCoordenda');
+        $urlId = $request->get('urlId');
 
-        $cotizaciones = Cotizaciones::find($idCoordenda);
+
+        $cotizaciones = Cotizaciones::find($urlId);
         $cotizaciones->estatus = $request->get('finzalizar_vieje');
         $cotizaciones->update();
 
-
-        $asignaciones = Asignaciones::find($id);
+        $asignaciones = Asignaciones::where('id_contenedor','=',$cotizaciones->id)->first();
 
         if($request->get('finzalizar_vieje') == 'Finalizado'){
             $asignaciones->fecha_inicio = null;
