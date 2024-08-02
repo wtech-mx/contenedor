@@ -18,7 +18,7 @@
   <link href="{{ asset('assets/css/nucleo-icons.css')}}" rel="stylesheet" />
   <link href="{{ asset('assets/css/nucleo-svg.css')}}" rel="stylesheet" />
   <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=6LflbR0qAAAAADzEpS4m9oo_7Mftvt7K1OPHjC-D"></script>
   <link href="{{ asset('assets/css/nucleo-svg.css')}}" rel="stylesheet" />
   @yield('css')
    <!-- Select2  -->
