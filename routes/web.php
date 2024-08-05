@@ -109,6 +109,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('planeaciones/cambio/fecha', [App\Http\Controllers\PlaneacionController::class, 'edit_fecha'])->name('asignacion.edit_fecha');
     Route::get('planeaciones/buscador', [App\Http\Controllers\PlaneacionController::class, 'advance_planeaciones'])->name('advance_planeaciones.buscador');
 
+    Route::get('planeaciones/buscador/faltantes', [App\Http\Controllers\PlaneacionController::class, 'advance_planeaciones_faltantes'])->name('advance_planeaciones_faltantes.buscador');
+
     // ==================== B A N C O S ====================
     Route::get('bancos', [App\Http\Controllers\BancosController::class, 'index'])->name('index.bancos');
     Route::post('bancos/create', [App\Http\Controllers\BancosController::class, 'store'])->name('store.bancos');

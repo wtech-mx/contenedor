@@ -29,23 +29,44 @@ use Carbon\Carbon;
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <div class="card">
                                 <form action="{{ route('advance_planeaciones.buscador') }}" method="GET">
                                     <div class="card-body" style="padding-left: 1.5rem; padding-top: 1rem;">
-                                        <h5>Filtro</h5>
+                                        <h5>Buscar en Almanaque</h5>
                                         <div class="row">
-                                            <div class="col-3">
-                                                <label for="user_id">Buscar cliente:</label>
+                                            <div class="col-6">
                                                 <select class="form-control contenedor" name="contenedor" id="contenedor">
-                                                    <option selected value="">seleccionar cliente</option>
+                                                    <option selected value="">Seleccionar contenedor</option>
                                                     @foreach($planeaciones as $planeacion)
                                                     <option value="{{ $planeacion->id }}">{{ $planeacion->num_contenedor }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
+                                            <div class="col-6">
+                                                <button class="btn btn-sm mb-0 mt-sm-0 mt-1" type="submit" style="background-color: #F82018; color: #ffffff;">Buscar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <form action="{{ route('advance_planeaciones_faltantes.buscador') }}" method="GET">
+                                    <div class="card-body" style="padding-left: 1.5rem; padding-top: 1rem;">
+                                        <h5>Buscar en Faltantes</h5>
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <select class="form-control contenedor_faltantes" name="contenedor_faltantes" id="contenedor_faltantes">
+                                                    <option selected value="">seleccionar contenedor</option>
+                                                    @foreach($cotizaciones as $cotizacion)
+                                                    <option value="{{ $cotizacion->id }}">{{$cotizacion->Cliente->nombre}} / #{{ $cotizacion->DocCotizacion->num_contenedor }}
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                             <div class="col-3">
-                                                <br>
                                                 <button class="btn btn-sm mb-0 mt-sm-0 mt-1" type="submit" style="background-color: #F82018; color: #ffffff;">Buscar</button>
                                             </div>
                                         </div>
@@ -55,7 +76,7 @@ use Carbon\Carbon;
                         </div>
 
                         <div class="col-12">
-                            @if(Route::currentRouteName() != 'index.planeaciones')
+                            @if(Route::currentRouteName() == 'advance_planeaciones.buscador')
                                 <table class="table table-flush" id="datatable-search">
                                     <thead class="thead">
                                         <tr>
@@ -89,6 +110,38 @@ use Carbon\Carbon;
                                                     <a type="button" class="btn btn-xs" href="{{ route('index.cooredenadas', $asignaciones->id) }}">
                                                         <img src="{{ asset('img/icon/coordenadas.png') }}" alt="" width="25px">
                                                     </a>
+                                                </td>
+                                            </tr>
+                                    </tbody>
+                                </table>
+                            @endif
+                        </div>
+
+                        <div class="col-12">
+                            @if(Route::currentRouteName() == 'advance_planeaciones_faltantes.buscador')
+                                <table class="table table-flush" id="datatable-search">
+                                    <thead class="thead">
+                                        <tr>
+                                            <th>#</th>
+                                            <th><img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">Origen</th>
+                                            <th><img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px">Destino</th>
+                                            <th><img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="25px"># Contenedor</th>
+                                            <th><img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px">Accion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            <tr>
+                                                <td>{{ $cotizaciones_faltantes->id }}</td>
+                                                <td>{{$cotizaciones_faltantes->origen}}</td>
+                                                <td>{{$cotizaciones_faltantes->destino}}</td>
+                                                <td>{{$cotizaciones_faltantes->DocCotizacion->num_contenedor}}</td>
+                                                <td>
+                                                    <a type="button" class="btn btn-xs" href="{{ route('edit.cotizaciones', $cotizaciones_faltantes->id) }}">
+                                                        <img src="{{ asset('img/icon/quotes.webp') }}" alt="" width="25px">
+                                                    </a>
+                                                    <button type="button" class="btn btn-xs" data-bs-toggle="modal" data-bs-target="#planeacionModal{{$cotizaciones_faltantes->id}}">
+                                                        <img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">
+                                                    </button>
                                                 </td>
                                             </tr>
                                     </tbody>
@@ -139,6 +192,10 @@ use Carbon\Carbon;
     <script>
         $(document).ready(function() {
             $('.contenedor').select2();
+        });
+
+        $(document).ready(function() {
+            $('.contenedor_faltantes').select2();
         });
 
         document.addEventListener('DOMContentLoaded', function () {
