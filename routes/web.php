@@ -154,6 +154,12 @@ Route::group(['middleware' => ['auth']], function() {
     // ==================== G A S T O S  G E N E R A L E S ====================
     Route::get('gastos/generales', [App\Http\Controllers\GastosGeneralesController::class, 'index'])->name('index.gastos_generales');
     Route::post('gastos/generales/create', [App\Http\Controllers\GastosGeneralesController::class, 'store'])->name('store.gastos_generales');
+
+    // ==================== C A T A L O G O ====================
+    Route::get('catalogo', [App\Http\Controllers\CatalogoController::class, 'index'])->name('index.catalogo');
+    Route::get('catalogo/create', [App\Http\Controllers\CatalogoController::class, 'create'])->name('create.catalogo');
+    Route::post('catalogo/store', [App\Http\Controllers\CatalogoController::class, 'store'])->name('store.catalogo');
+    Route::get('catalogo/pdf/{id}', [App\Http\Controllers\CatalogoController::class, 'pdf'])->name('pdf.catalogo');
 });
 
 //Route Hooks - Do not delete//
