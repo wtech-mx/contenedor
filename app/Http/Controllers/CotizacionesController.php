@@ -543,6 +543,33 @@ class CotizacionesController extends Controller
             ->where('id_empresa', $nuevoIdEmpresa)
             ->value('id');
 
+        if($cotizacion->id_subcliente != NULL){
+            // Obtener el id_subcliente actual de la empresa anterior
+            $idSubClienteAnterior = DB::table('subclientes')
+            ->where('id', $cotizacion->id_subcliente)
+            ->value('id');
+
+            // Obtener el correo del cliente anterior
+            $correoSubCliente = DB::table('subclientes')
+            ->where('id', $idSubClienteAnterior)
+            ->value('correo');
+
+            // Verificar si hay un cliente con el mismo correo en la nueva empresa
+            $nuevoIdSubCliente = DB::table('subclientes')
+                ->where('correo', $correoSubCliente)
+                ->where('id_empresa', $nuevoIdEmpresa)
+                ->value('id');
+
+            if ($nuevoIdSubCliente) {
+
+            } else {
+                return redirect()->route('index.cotizaciones')
+                    ->with('error', 'No tiene SubCliente con el mismo correo a la empresa que quiere cambiar');
+            }
+        }else{
+            $nuevoIdSubCliente = NULL;
+        }
+
         if ($nuevoIdCliente) {
             $contenedor = DocumCotizacion::where('id_cotizacion',  '=', $cotizacion->id)->first();
 
@@ -653,6 +680,7 @@ class CotizacionesController extends Controller
             ->where('id', $id)
             ->update([
                 'id_empresa' => $nuevoIdEmpresa,
+                'id_subcliente' => $nuevoIdSubCliente,
                 'id_cliente' => $nuevoIdCliente
             ]);
 
