@@ -786,7 +786,7 @@
                                 @if ($cotizacion->estatus_planeacion == 1)
                                     @if ($documentacion->Asignaciones->id_operador == NULL)
                                         <div class="tab-pane fade" id="nav-Proveedor" role="tabpanel" aria-labelledby="nav-Proveedor-tab" tabindex="0">
-                                            <h3 class="mt-3 mb-5">Proveedor</h3>
+                                            <h3 class="mt-3 mb-5">Proveedor - {{$documentacion->Asignaciones->Proveedor->nombre}} </h3>
                                             @if ($documentacion->num_contenedor != NULL)
                                                 <label style="font-size: 20px;">Num contenedor:  {{$documentacion->num_contenedor}} </label>
                                             @endif
@@ -828,6 +828,36 @@
                                                             <img src="{{ asset('img/icon/servidor-en-la-nube.png') }}" alt="" width="25px">
                                                         </span>
                                                         <input name="estadia_proveedor" id="estadia_proveedor" type="float" class="form-control" value="{{$documentacion->Asignaciones->estadia}}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4 form-group">
+                                                    <label for="name">Sobrepeso</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            <img src="{{ asset('img/icon/tonelada.png') }}" alt="" width="25px">
+                                                        </span>
+                                                        <input id="cantidad_sobrepeso_proveedor" name="cantidad_sobrepeso_proveedor" type="float" class="form-control" value="{{$cotizacion->sobrepeso}}" disabled>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4 form-group">
+                                                    <label for="name">Precio Sobre Peso</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            <img src="{{ asset('img/icon/pago-en-efectivo.png') }}" alt="" width="25px">
+                                                        </span>
+                                                        <input id="sobrepeso_proveedor" name="sobrepeso_proveedor" value="{{$documentacion->Asignaciones->sobrepeso_proveedor}}" type="float" class="form-control">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4 form-group">
+                                                    <label for="name">Total tonelada</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            <img src="{{ asset('img/icon/pago-en-efectivo.png') }}" alt="" width="25px">
+                                                        </span>
+                                                        <input id="total_tonelada" name="total_tonelada" type="float" class="form-control" readonly>
                                                     </div>
                                                 </div>
 
@@ -1406,7 +1436,10 @@
 
     <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Seleccionar todos los inputs relevantes
+    const cantidadSobrepesoInput = document.getElementById('cantidad_sobrepeso_proveedor');
+    const valorSobrepesoInput = document.getElementById('sobrepeso_proveedor');
+    const sobrepesoProbInput = document.getElementById('total_tonelada');
+
     const precioInput = document.getElementById('precio_proveedor');
     const burreoInput = document.getElementById('burreo_proveedor');
     const maniobraInput = document.getElementById('maniobra_proveedor');
@@ -1424,19 +1457,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const retencionInput = document.getElementById('retencion_proveedor');
     const totalInput = document.getElementById('total_proveedor');
 
-    // Array de todos los inputs relevantes
-    const inputs = [
-        precioInput, burreoInput, maniobraInput, estadiaInput, otroInput,
-        otro2Input, otro3Input, otro4Input, otro5Input, otro6Input,
-        otro7Input, otro8Input, otro9Input, ivaInput, retencionInput
-    ];
-
     // Función para actualizar el total
     function updateTotal() {
         let precio = parseFloat(precioInput.value) || 0;
         let burreo = parseFloat(burreoInput.value) || 0;
         let maniobra = parseFloat(maniobraInput.value) || 0;
         let estadia = parseFloat(estadiaInput.value) || 0;
+        let sobrepesoProb = parseFloat(sobrepesoProbInput.value) || 0;
         let otro = parseFloat(otroInput.value) || 0;
         let otro2 = parseFloat(otro2Input.value) || 0;
         let otro3 = parseFloat(otro3Input.value) || 0;
@@ -1452,22 +1479,53 @@ document.addEventListener('DOMContentLoaded', function () {
         // Sumar todos menos retencion
         let subtotal = precio + burreo + maniobra + estadia + otro +
                        otro2 + otro3 + otro4 + otro5 + otro6 +
-                       otro7 + otro8 + otro9 + iva;
+                       otro7 + otro8 + otro9 + iva + sobrepesoProb;
 
+        console.log(`Subtotal: ${subtotal}`);
         // Restar retencion
         let total = subtotal - retencion;
+        console.log(`Total: ${total}`);
 
         // Actualizar el input de total
         totalInput.value = total.toFixed(2);
     }
 
-    // Asignar evento de input a todos los inputs
-    inputs.forEach(input => {
-        input.addEventListener('input', updateTotal);
+    // Función para actualizar el resultado y el total
+    function updateResultado() {
+        const cantidadSobrepeso = parseFloat(cantidadSobrepesoInput.value) || 0;
+        const valorSobrepeso = parseFloat(valorSobrepesoInput.value) || 0;
+
+        console.log(`Cantidad sobrepeso: ${cantidadSobrepeso}, Valor sobrepeso: ${valorSobrepeso}`);
+
+        // Multiplicar los valores
+        const resultado = cantidadSobrepeso * valorSobrepeso;
+
+        console.log(`Resultado sobrepeso: ${resultado}`);
+
+        // Colocar el resultado en el input correspondiente
+        sobrepesoProbInput.value = resultado.toFixed(2); // Redondear a dos decimales
+
+        // Actualizar el total
+        updateTotal();
+    }
+
+    // Asignar evento de input a todos los inputs relevantes
+    const allInputs = [
+        precioInput, burreoInput, maniobraInput, estadiaInput, otroInput,
+        otro2Input, otro3Input, otro4Input, otro5Input, otro6Input,
+        otro7Input, otro8Input, otro9Input, ivaInput, retencionInput,
+        valorSobrepesoInput, cantidadSobrepesoInput
+    ];
+
+    allInputs.forEach(input => {
+        input.addEventListener('input', () => {
+            updateResultado();
+            updateTotal();
+        });
     });
 
-    // Calcular el total inicial
-    updateTotal();
+    // Calcular el resultado y el total iniciales
+    updateResultado();
 });
 
     </script>

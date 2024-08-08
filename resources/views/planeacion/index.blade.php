@@ -545,15 +545,19 @@ use Carbon\Carbon;
                 var otro = parseFloat($('#otro_proveedor_' + cotizacionId).val()) || 0;
                 var iva = parseFloat($('#iva_proveedor_' + cotizacionId).val()) || 0;
                 var retencion = parseFloat($('#retencion_proveedor_' + cotizacionId).val()) || 0;
+                var sobrepeso = parseFloat($('#sobrepeso_proveedor_' + cotizacionId).val()) || 0;
+                var cantidadsob = parseFloat($('#cantidad_sobrepeso_proveedor_' + cotizacionId).val()) || 0;
 
-                var total = precio + burreo + maniobra + estadia + otro + iva - retencion;
+                var sobre = cantidadsob * sobrepeso;
+
+                var total = precio + burreo + maniobra + estadia + otro + iva + sobre - retencion;
 
                 $('#total_proveedor_' + cotizacionId).val(total.toFixed(2));
             }
 
             @foreach($cotizaciones as $cotizacion)
                 (function(cotizacionId) {
-                    $('#precio_proveedor_' + cotizacionId + ', #burreo_proveedor_' + cotizacionId + ', #maniobra_proveedor_' + cotizacionId + ', #estadia_proveedor_' + cotizacionId + ', #otro_proveedor_' + cotizacionId + ', #iva_proveedor_' + cotizacionId + ', #retencion_proveedor_' + cotizacionId).on('input', function() {
+                    $('#precio_proveedor_' + cotizacionId + ', #burreo_proveedor_' + cotizacionId + ', #maniobra_proveedor_' + cotizacionId + ', #estadia_proveedor_' + cotizacionId + ', #otro_proveedor_' + cotizacionId + ', #iva_proveedor_' + cotizacionId + ', #sobrepeso_proveedor_' + cotizacionId + ', #retencion_proveedor_' + cotizacionId).on('input', function() {
                         calculateTotal(cotizacionId);
                     });
 

@@ -220,7 +220,7 @@ class PlaneacionController extends Controller
             $asignaciones->fehca_inicio_guard = $request->get('fecha_inicio_proveedor');
             $asignaciones->fehca_fin_guard = $request->get('fecha_fin_proveedor') . ' 23:00:00';
         }
-
+        
         $asignaciones->precio = $request->get('precio_proveedor');
         $asignaciones->burreo = $request->get('burreo_proveedor');
         $asignaciones->maniobra = $request->get('maniobra_proveedor');
@@ -229,6 +229,7 @@ class PlaneacionController extends Controller
         $asignaciones->iva = $request->get('iva_proveedor');
         $asignaciones->retencion = $request->get('retencion_proveedor');
         $asignaciones->total_proveedor = $request->get('total_proveedor');
+        $asignaciones->sobrepeso_proveedor = $request->get('sobrepeso_proveedor');
 
         $asignaciones->id_banco1_dinero_viaje = $request->get('id_banco1_dinero_viaje');
         $asignaciones->cantidad_banco1_dinero_viaje = $request->get('cantidad_banco1_dinero_viaje');
