@@ -134,6 +134,31 @@
     <div class="container-fluid py-4">
         <div class="row mt-3">
 
+            <div class="col-12 mb-2">
+                <div class="card h-100">
+                    <div class="card-header pb-0 p-3">
+                        <h6 class="mb-0">Filtro</h6>
+                    </div>
+                    <div class="card-body p-3">
+                        <form action="{{ route('advance_planeaciones.buscador') }}" method="GET">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="user_id">Rango de fecha DE:</label>
+                                        <input class="form-control" type="date" id="fecha_de" name="fecha_de">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="user_id">Rango de fecha Hasta:</label>
+                                        <input class="form-control" type="date" id="fecha_hasta" name="fecha_hasta">
+                                    </div>
+                                    <div class="col-4">
+                                        <button class="btn btn-sm mb-0 mt-sm-0 mt-1" type="submit" style="background-color: #F82018; color: #ffffff;">Buscar</button>
+                                    </div>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-12 col-md-6 col-xl-6 mb-4"">
                 <div class="card h-100">
                     <div class="card-header pb-0 p-3">
@@ -345,7 +370,7 @@
                 </div>
             </div>
 
-            {{-- <div class="col-12 col-md-6 col-xl-6 mt-md-0 mt-4">
+            <div class="col-12 col-md-6 col-xl-6 mt-md-0 mt-4">
                 <div class="card h-100">
                     <div class="card-header pb-0 p-3">
                         <h6 class="mb-0">Datos Bancarios</h6>
@@ -398,7 +423,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-6 form-group">
+                                    {{-- <div class="col-6 form-group">
                                         <label for="name">Tipo *</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">
@@ -414,7 +439,7 @@
                                                 <option value="No Oficial">No Oficial</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col-12 form-group">
                                         <label for="name">Clabe *</label>
@@ -434,7 +459,7 @@
                         </form>
                     </div>
                 </div>
-            </div> --}}
+            </div>
         </div>
     </div>
 @endsection

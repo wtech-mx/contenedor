@@ -147,6 +147,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('reporteria/utilidad/buscador', [App\Http\Controllers\ReporteriaController::class, 'advance_utilidad'])->name('advance_utilidad.buscador');
     Route::post('reporteria/utilidad/export', [App\Http\Controllers\ReporteriaController::class, 'export_utilidad'])->name('export_utilidad.export');
 
+    Route::get('reporteria/documentos', [App\Http\Controllers\ReporteriaController::class, 'index_documentos'])->name('index_documentos.reporteria');
+    Route::get('reporteria/documentos/buscador', [App\Http\Controllers\ReporteriaController::class, 'advance_documentos'])->name('advance_documentos.buscador');
+    Route::post('reporteria/documentos/export', [App\Http\Controllers\ReporteriaController::class, 'export_documentos'])->name('export_documentos.export');
+
     // ==================== L I Q U I D A C I O N E S ====================
     Route::get('liquidaciones', [App\Http\Controllers\LiquidacionesController::class, 'index'])->name('index.liquidacion');
     Route::get('liquidaciones/show/{id}', [App\Http\Controllers\LiquidacionesController::class, 'show'])->name('show.liquidacion');

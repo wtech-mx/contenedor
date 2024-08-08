@@ -9,6 +9,7 @@ use App\Models\Bancos;
 use App\Models\Cotizaciones;
 use App\Models\GastosGenerales;
 use Session;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BancosController extends Controller
@@ -36,12 +37,21 @@ class BancosController extends Controller
 
     public function edit($id){
         $banco = Bancos::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('id', '=', $id)->first();
-        $cotizaciones = Cotizaciones::where('id_banco1', '=', $id)->orwhere('id_banco2', '=', $id)->get();
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+
+        $cotizaciones = Cotizaciones::where('id_banco1', '=', $id)->orwhere('id_banco2', '=', $id)
+        ->whereMonth('created_at', '=', $currentMonth)
+        ->whereYear('created_at', '=', $currentYear)
+        ->get();
+
         $proveedores = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
                     ->join('asignaciones', 'docum_cotizacion.id', '=', 'asignaciones.id_contenedor')
                     ->where('asignaciones.id_camion', '=', NULL)
                     ->where('cotizaciones.id_prove_banco1', '=', $id)
                     ->orWhere('cotizaciones.id_prove_banco2', '=', $id)
+                    ->whereMonth('cotizaciones.created_at', '=', $currentMonth)
+                    ->whereYear('cotizaciones.created_at', '=', $currentYear)
                     ->select('cotizaciones.*')
                     ->get();
 
@@ -50,6 +60,8 @@ class BancosController extends Controller
             $query->where('id_banco1', '=', $id)
                   ->orWhere('id_banco2', '=', $id);
         })
+        ->whereMonth('created_at', '=', $currentMonth)
+        ->whereYear('created_at', '=', $currentYear)
         ->get();
 
         $banco_dinero_salida = BancoDinero::where('tipo', '=', 'Salida')
@@ -57,6 +69,8 @@ class BancosController extends Controller
             $query->where('id_banco1', '=', $id)
                   ->orWhere('id_banco2', '=', $id);
         })
+        ->whereMonth('created_at', '=', $currentMonth)
+        ->whereYear('created_at', '=', $currentYear)
         ->get();
 
         $banco_dinero_salida_ope = BancoDineroOpe::where('tipo', '=', 'Salida')
@@ -65,6 +79,8 @@ class BancosController extends Controller
             $query->where('id_banco1', '=', $id)
                   ->orWhere('id_banco2', '=', $id);
         })
+        ->whereMonth('created_at', '=', $currentMonth)
+        ->whereYear('created_at', '=', $currentYear)
         ->get();
 
         $banco_dinero_salida_ope_varios = BancoDineroOpe::where('tipo', '=', 'Salida')
@@ -73,9 +89,14 @@ class BancosController extends Controller
             $query->where('id_banco1', '=', $id)
                   ->orWhere('id_banco2', '=', $id);
         })
+        ->whereMonth('created_at', '=', $currentMonth)
+        ->whereYear('created_at', '=', $currentYear)
         ->get();
 
-        $gastos_generales = GastosGenerales::where('id_banco1', '=', $id)->get();
+        $gastos_generales = GastosGenerales::where('id_banco1', '=', $id)
+        ->whereMonth('created_at', '=', $currentMonth)
+        ->whereYear('created_at', '=', $currentYear)
+        ->get();
 
         return view('bancos.edit', compact('banco', 'cotizaciones', 'proveedores', 'banco_dinero_entrada', 'banco_dinero_salida', 'banco_dinero_salida_ope', 'banco_dinero_salida_ope_varios', 'gastos_generales'));
     }

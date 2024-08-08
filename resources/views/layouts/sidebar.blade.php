@@ -156,6 +156,11 @@
                             <span class="sidenav-mini-icon"> P </span>
                             <span class="sidenav-normal">Reporte de utilidad</span>
                         </a>
+
+                        <a class="nav-link {{ (Request::is('reporteria/documentos*') ? 'show' : '') }}" href="{{ route('index_documentos.reporteria') }}">
+                            <span class="sidenav-mini-icon"> P </span>
+                            <span class="sidenav-normal">Reporte de documentos</span>
+                        </a>
                     </li>
                 </ul>
             </div>

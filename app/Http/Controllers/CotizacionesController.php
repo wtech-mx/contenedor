@@ -69,13 +69,25 @@ class CotizacionesController extends Controller
             'origen' => 'required',
             'destino' => 'required',
             'tamano' => 'required',
-            'num_contenedor' => 'unique:docum_cotizacion,num_contenedor',
         ]);
 
         if ($validator->fails()) {
             return back()
             ->withErrors($validator)
             ->withInput();
+        }
+
+        if($request->get('num_contenedor') != NULL){
+            $numContenedor = $request->input('num_contenedor');
+            $idEmpresa = auth()->user()->id_empresa;
+
+            $contenedorExistente = DocumCotizacion::where('num_contenedor', $numContenedor)
+                                                ->where('id_empresa', $idEmpresa)
+                                                ->first();
+
+            if ($contenedorExistente) {
+                return redirect()->back()->with('error', 'El contenedor ya existe en la empresa.');
+            }
         }
 
         if($request->get('nombre_cliente') == NULL){
@@ -194,22 +206,23 @@ class CotizacionesController extends Controller
 
     public function update(Request $request, $id){
 
+            $numContenedor = $request->input('num_contenedor');
+            $idEmpresa = auth()->user()->id_empresa;
 
-        $contenedor = DocumCotizacion::where('id_cotizacion', '=', $id)->first();
+            // Verificar si se está editando un registro existente
+            if ($numContenedor != NULL) {
+                // Verificar si el contenedor ya existe en la misma empresa, excluyendo el registro actual
+                $contenedorExistente = DocumCotizacion::where('num_contenedor', $numContenedor)
+                                                    ->where('id_empresa', $idEmpresa)
+                                                    ->where('id_cotizacion', '!=', $id) // Excluir el registro actual
+                                                    ->first();
 
-        $validator = Validator::make($request->all(), [
-            'num_contenedor' => 'unique:docum_cotizacion,num_contenedor,' . $contenedor->id . ',id',
-        ]);
+                if ($contenedorExistente) {
+                    // Si el contenedor ya existe, redirigir a la vista con un mensaje de error
+                    return redirect()->back()->with('error', 'El contenedor ya existe en la empresa.');
+                }
+            }
 
-        if ($validator->fails()) {
-
-            return back()
-            ->withErrors($validator)
-            ->withInput()
-            ->with('error', 'El Num de contenedor esta repetido');
-        }
-
-        try {
             $doc_cotizaciones = DocumCotizacion::where('id_cotizacion', '=', $id)->first();
             $doc_cotizaciones->num_contenedor = $request->get('num_contenedor');
             $doc_cotizaciones->terminal = $request->get('terminal');
@@ -424,9 +437,6 @@ class CotizacionesController extends Controller
             Session::flash('edit', 'Se ha editado sus datos con exito');
             return redirect()->back()
                 ->with('success', 'Estatus updated successfully');
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return redirect()->back()->with('error', 'El número de contenedor ya existe');
-        }
     }
 
     public function update_cambio(Request $request, $id){
@@ -525,6 +535,20 @@ class CotizacionesController extends Controller
 
         // Obtener la cotización actual
         $cotizacion = DB::table('cotizaciones')->where('id', $id)->first();
+        $doc = DocumCotizacion::where('id_cotizacion', $id)->first();
+
+        if($doc->num_contenedor != NULL){
+            $numContenedor = $doc->num_contenedor;
+            $idEmpresa = $request->get('id_empresa');
+
+            $contenedorExistente = DocumCotizacion::where('num_contenedor', $numContenedor)
+                                                ->where('id_empresa', $idEmpresa)
+                                                ->first();
+
+            if ($contenedorExistente) {
+                return redirect()->back()->with('error', 'El contenedor ya existe en la empresa a la que se iba a asignar.');
+            }
+        }
 
         // Obtener el id_cliente actual de la empresa anterior
         $idClienteAnterior = DB::table('clients')

@@ -31,7 +31,7 @@
                                                                 <label for="user_id">Rango de fecha Hasta:</label>
                                                                 <input class="form-control" type="date" id="fecha_hasta" name="fecha_hasta">
                                                             </div>
-                                                            <div class="col-4 mb-3">
+                                                            {{-- <div class="col-4 mb-3">
                                                                 <label for="user_id">Contenedor:</label>
                                                                 <select class="form-control contenedor" name="contenedor" id="contenedor">
                                                                     <option value="">seleccionar contenedor</option>
@@ -39,22 +39,7 @@
                                                                         <option value="{{ $contenedor->num_contenedor }}">{{ $contenedor->num_contenedor }}</option>
                                                                     @endforeach
                                                                 </select>
-                                                            </div>
-                                                            <div class="col-3">
-                                                                <label for="user_id">Buscar cliente:</label>
-                                                                <select class="form-control cliente" name="id_client" id="id_client">
-                                                                    <option selected value="">seleccionar cliente</option>
-                                                                    @foreach($clientes as $client)
-                                                                        <option value="{{ $client->id }}">{{ $client->nombre }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-3 mb-5">
-                                                                <label for="user_id">Buscar subcliente:</label>
-                                                                <select class="form-control subcliente" name="id_subcliente" id="id_subcliente">
-                                                                    <option selected value="">seleccionar cliente</option>
-                                                                </select>
-                                                            </div>
+                                                            </div> --}}
                                                             <div class="col-3 mb-5">
                                                                 <br>
                                                                 <button class="btn btn-sm mb-0 mt-sm-0 mt-1" type="submit" style="background-color: #F82018; color: #ffffff;">Buscar</button>
@@ -70,6 +55,8 @@
                             <div class="table-responsive">
                                 <form id="exportForm" action="{{ route('export_utilidad.export') }}" method="POST">
                                     @csrf
+                                    <input type="date" id="fecha_de" name="fecha_de" value="{{$fechaDe}}">
+                                    <input type="date" id="fecha_hasta" name="fecha_hasta" value="{{$fechaHasta}}">
                                     <table class="table table-flush" id="datatable-search">
                                         <thead class="thead">
                                             <tr>

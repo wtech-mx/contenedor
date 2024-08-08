@@ -84,5 +84,62 @@
                     @endforeach
                 </tbody>
             </table>
+
+            <h4>Gatos generales</h4>
+            <table class="table text-white tabla-completa" style="color: #000;width: 35%;padding: 30px; font-size: 12px">
+                <thead>
+                    <tr>
+                        <th>Motivo</th>
+                        <th>Monto</th>
+                    </tr>
+                </thead>
+                <tbody style="text-align: center;font-size: 100%;">
+                    @foreach ($gastos as $gasto)
+                        <tr>
+                            <td>{{$gasto->motivo}}</td>
+                            <td><b> ${{ number_format($gasto->monto1, 2, '.', ',') }} </b></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+            <table class="table text-white tabla-completa" style="color: #000;width: 35%;padding: 30px; font-size: 12px">
+                <thead>
+                    <tr>
+                        <th>Total <br> Utilidades</th>
+                        <th>Total <br> Gastos<</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody style="text-align: center;font-size: 100%;">
+                    @php
+                        $utilidades = 0;
+                        foreach ($cotizaciones as $cotizacion) {
+                            if($cotizacion->total_proveedor == NULL){
+                                $utilidad = $cotizacion->Contenedor->Cotizacion->total - $cotizacion->pago_operador;
+                            }elseif($cotizacion->total_proveedor != NULL){
+                                $utilidad = $cotizacion->Contenedor->Cotizacion->total - $cotizacion->total_proveedor;
+                            }else{
+                                $utilidad = 0;
+                            }
+
+                            $utilidades += $utilidad;
+                        }
+
+                        $suma_gastos = 0;
+                        foreach ($gastos as $gasto) {
+                            $suma_gastos += $gasto->monto1;
+                        }
+
+                        $resta = 0;
+                        $resta = $utilidades - $suma_gastos;
+                    @endphp
+                        <tr>
+                            <td>${{ number_format($utilidades, 2, '.', ',') }}</td>
+                            <td>${{ number_format($suma_gastos, 2, '.', ',') }}</td>
+                            <td>${{ number_format($resta, 2, '.', ',') }}</td>
+                        </tr>
+                </tbody>
+            </table>
     </body>
 </html>
