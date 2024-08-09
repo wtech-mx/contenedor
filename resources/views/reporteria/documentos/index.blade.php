@@ -5,6 +5,12 @@
     Buscador
 @endsection
 
+@section('css')
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/5.0.1/css/fixedColumns.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/select/2.0.3/css/select.bootstrap5.min.css">
+@endsection
+
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -57,6 +63,7 @@
                                         <thead class="thead">
                                             <tr>
                                                 <th></th>
+                                                <th>#</th>
                                                 <th><img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="25px"># Contenedor</th>
                                                 <th><img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">CCP</th>
                                                 <th><img src="{{ asset('img/icon/9.webp') }}" alt="" width="25px">Boleta liberacion</th>
@@ -64,7 +71,7 @@
                                                 <th><img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">Carta porte</th>
                                                 <th><img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">Boleta vacio</th>
                                                 <th><img src="{{ asset('img/icon/boleto.png') }}" alt="" width="25px">EIR</th>
-                                                <th></th>
+                                                <th>Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -72,8 +79,12 @@
                                                 @foreach ($cotizaciones as $cotizacion)
                                                     <tr>
                                                         <td>
-                                                            <input type="checkbox" name="cotizacion_ids[]" value="{{ $cotizacion->id }}" class="select-box" data-row-id="{{ $cotizacion->id }}">
+
+                                                            <input type="checkbox" name="cotizacion_ids[]" value="{{ $cotizacion->id }}" class="select-checkbox visually-hidden">
+                                                            {{-- <input type="checkbox" name="cotizacion_ids[]" value="{{ $cotizacion->id }}" class="select-box" data-row-id="{{ $cotizacion->id }}"> --}}
+
                                                         </td>
+                                                        <td>{{$cotizacion->id}}</td>
                                                         <td>{{$cotizacion->num_contenedor}}</td>
                                                         <td>
                                                             <div class="form-check">
@@ -139,6 +150,7 @@
                                             @endif
                                         </tbody>
                                     </table>
+
                                     <button type="submit" id="exportButton" class="btn btn-primary">Exportar a PDF</button>
                                 </form>
 
@@ -151,92 +163,113 @@
 @endsection
 
 @section('datatable')
-    <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js')}}"></script>
-    <script src="{{ asset('assets/vendor/select2/dist/js/select2.min.js')}}"></script>
+<script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{ asset('assets/vendor/select2/dist/js/select2.min.js')}}"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('.cliente').select2();
-            $('.contenedor').select2();
+<!-- JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/5.0.1/js/dataTables.fixedColumns.min.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/5.0.1/js/fixedColumns.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/select/2.0.3/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/select/2.0.3/js/select.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.cliente').select2();
+
+
+        const table = $('#datatable-search').DataTable({
+            columnDefs: [{
+                orderable: false,
+                className: 'select-checkbox',
+                targets: 0
+            }],
+            fixedColumns: {
+                start: 2
+            },
+            order: [
+                [1, 'asc']
+            ],
+            paging: true,
+            pageLength: 30,
+
+            select: {
+                style: 'multi',
+                selector: 'td:first-child'
+            }
         });
 
-        const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
-        searchable: true,
-        fixedHeight: false
-        });
+        $('#exportButton').on('click', function() {
+            const selectedIds = table.rows('.selected').data().toArray().map(row => row[1]); // Obtener los IDs seleccionados
 
-        $(document).ready(function() {
-            $('#id_client').on('change', function() {
-                var clientId = $(this).val();
-                if(clientId) {
-                    $.ajax({
-                        url: '/subclientes/' + clientId,
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function(data) {
-                            $('#id_subcliente').empty();
-                            $('#id_subcliente').append('<option selected value="">Seleccionar subcliente</option>');
-                            $.each(data, function(key, subcliente) {
-                                $('#id_subcliente').append('<option value="'+ subcliente.id +'">'+ subcliente.nombre +'</option>');
-                            });
-                        }
-                    });
-                } else {
-                    $('#id_subcliente').empty();
-                    $('#id_subcliente').append('<option selected value="">Seleccionar subcliente</option>');
+            console.log(selectedIds); // Verificar en la consola del navegador
+
+            // Enviar los IDs seleccionados al controlador por Ajax
+            $.ajax({
+                url: '{{ route('export_documentos.export') }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    selected_ids: selectedIds
+                },
+                xhrFields: {
+                        responseType: 'blob' // Indicar que esperamos una respuesta tipo blob (archivo)
+                    },
+                success: function(response) {
+                    // Crear un objeto URL del blob recibido
+                    var blob = new Blob([response], { type: 'application/pdf' });
+                    var url = URL.createObjectURL(blob);
+
+                    // Crear un elemento <a> para simular el clic de descarga
+                    var a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'cotizaciones_seleccionadas.pdf';
+                    document.body.appendChild(a);
+
+                    // Simular el clic en el enlace para iniciar la descarga
+                    a.click();
+
+                    // Limpiar después de la descarga
+                    window.URL.revokeObjectURL(url);
+
+                    // Alerta opcional para indicar que se ha descargado correctamente
+                    alert('El archivo se ha descargado correctamente.');
+
+                    // Opcional: eliminar el elemento <a> después de la descarga
+                    document.body.removeChild(a);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    alert('Ocurrió un error al exportar los datos.');
                 }
             });
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const selectAllCheckbox = document.getElementById('select-all');
-            const exportButton = document.getElementById('exportButton');
-            const selectedRows = new Set();
+    });
 
-            const table = $('#datatable-search').DataTable();
-
-            // Manejar el evento de cambio en el checkbox "select all"
-            selectAllCheckbox.addEventListener('change', function() {
-                const checkboxes = document.querySelectorAll('.select-box');
-                const allChecked = selectAllCheckbox.checked;
-
-                checkboxes.forEach(checkbox => {
-                    checkbox.checked = allChecked;
-                    const rowId = checkbox.value;
-                    if (allChecked) {
-                        selectedRows.add(rowId);
-                    } else {
-                        selectedRows.delete(rowId);
+    $(document).ready(function() {
+        $('#id_client').on('change', function() {
+            var clientId = $(this).val();
+            if(clientId) {
+                $.ajax({
+                    url: '/subclientes/' + clientId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#id_subcliente').empty();
+                        $('#id_subcliente').append('<option selected value="">Seleccionar subcliente</option>');
+                        $.each(data, function(key, subcliente) {
+                            $('#id_subcliente').append('<option value="'+ subcliente.id +'">'+ subcliente.nombre +'</option>');
+                        });
                     }
                 });
-                toggleExportButton();
-            });
-
-            // Manejar el evento de cambio en cada checkbox individual
-            $('#datatable-search tbody').on('change', '.select-box', function() {
-                const rowId = this.value;
-                if (this.checked) {
-                    selectedRows.add(rowId);
-                } else {
-                    selectedRows.delete(rowId);
-                }
-                toggleExportButton();
-            });
-
-            function toggleExportButton() {
-                exportButton.disabled = selectedRows.size === 0;
+            } else {
+                $('#id_subcliente').empty();
+                $('#id_subcliente').append('<option selected value="">Seleccionar subcliente</option>');
             }
-
-            // Exportar los datos seleccionados a PDF
-            exportButton.addEventListener('click', function(event) {
-                const selectedData = Array.from(selectedRows);
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'selected_ids';
-                input.value = JSON.stringify(selectedData);
-                document.getElementById('exportForm').appendChild(input);
-            });
         });
-
-    </script>
+    });
+</script>
 @endsection

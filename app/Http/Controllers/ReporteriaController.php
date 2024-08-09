@@ -89,7 +89,6 @@ class ReporteriaController extends Controller
         return Response::download($filePath, $fileName)->deleteFileAfterSend(true);
     }
 
-
     // ==================== C U E N T A S  P O R  P A G A R ====================
     public function index_cxp(){
 
@@ -347,13 +346,16 @@ class ReporteriaController extends Controller
     }
 
     public function export_documentos(Request $request){
+
         $fecha = date('Y-m-d');
         $fechaCarbon = Carbon::parse($fecha);
 
-        $cotizacionIds = $request->input('cotizacion_ids', []);
+        $cotizacionIds = $request->input('selected_ids', []);
+
         if (empty($cotizacionIds)) {
-            return redirect()->back()->with('error', 'No se seleccionaron cotizaciones.');
+            // return redirect()->back()->with('error', 'No se seleccionaron cotizaciones.');
         }
+
 
         $cotizaciones = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
         ->where('cotizaciones.id', $cotizacionIds)
