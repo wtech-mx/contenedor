@@ -353,12 +353,12 @@ class ReporteriaController extends Controller
         $cotizacionIds = $request->input('selected_ids', []);
 
         if (empty($cotizacionIds)) {
-            // return redirect()->back()->with('error', 'No se seleccionaron cotizaciones.');
+            return redirect()->back()->with('error', 'se seleccionaron cotizaciones.');
         }
 
 
         $cotizaciones = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
-        ->where('cotizaciones.id', $cotizacionIds)
+        ->whereIn('cotizaciones.id', $cotizacionIds)
         ->select('docum_cotizacion.num_contenedor', 'docum_cotizacion.doc_ccp', 'docum_cotizacion.boleta_liberacion', 'docum_cotizacion.doda', 'cotizaciones.carta_porte', 'docum_cotizacion.boleta_vacio', 'docum_cotizacion.doc_eir')
         ->get();
 
