@@ -367,11 +367,12 @@ class CotizacionesController extends Controller
 
                 $asignacion = Asignaciones::where('id_contenedor', '=', $doc_cotizaciones->id)->first();
 
-                if($asignacion->id_operador == NULL){
-                    $cotizaciones->prove_restante = $request->get('total_proveedor');
-                }
-                $cotizaciones->update();
                 if ($asignacion) {
+                    if($asignacion->id_proveedor != NULL){
+                        $cotizaciones->prove_restante = $request->get('total_proveedor');
+                    }
+                    $cotizaciones->update();
+                    
                     if($asignacion->id_proveedor == NULL){
                         $cantidad_ope = $request->input('cantidad_ope');
                         $tipo_ope = $request->input('tipo_ope');
