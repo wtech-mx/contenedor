@@ -168,6 +168,7 @@
                                         <img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="25px">
                                     </span>
                                     <select class="form-select cliente d-inline-block"  data-toggle="select" id="id_cuenta_prov" name="id_cuenta_prov" required>
+                                        <option value="">Seleccionar banco</option>
                                         @foreach ($banco_proveedor as $item)
                                             <option value="{{$item->id}}">{{$item->nombre_banco}}</option>
                                         @endforeach
