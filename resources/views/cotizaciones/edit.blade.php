@@ -1090,6 +1090,8 @@
                                         <div class="tab-pane fade" id="nav-GastosOpe" role="tabpanel" aria-labelledby="nav-GastosOpe-tab" tabindex="0">
                                             <h3 class="mt-3 mb-5">Gastos Operadores</h3>
                                             @if ($documentacion->num_contenedor != NULL)
+
+                                                <label style="font-size: 20px;">Num contenedor:  {{$documentacion->Asignaciones->Operador->nombre}} </label>
                                                 <label style="font-size: 20px;">Num contenedor:  {{$documentacion->num_contenedor}} </label>
                                             @endif
                                             <div class="row">
