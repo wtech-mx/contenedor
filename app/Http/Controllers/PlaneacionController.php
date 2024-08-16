@@ -21,36 +21,6 @@ use Illuminate\Support\Facades\Validator;
 class PlaneacionController extends Controller
 {
     public function index(){
-        DB::transaction(function () {
-            // Paso 1: Identificar las asignaciones duplicadas, excluyendo la más reciente
-            $duplicatedIds = Asignaciones::select('id')
-                ->whereIn('id', function ($query) {
-                    $query->select('id')
-                        ->from('asignaciones as a1')
-                        ->whereRaw('a1.id_contenedor IN (
-                            SELECT a2.id_contenedor
-                            FROM asignaciones as a2
-                            GROUP BY a2.id_contenedor
-                            HAVING COUNT(*) > 1
-                        )')
-                        ->whereRaw('a1.id < (
-                            SELECT MAX(a3.id)
-                            FROM asignaciones as a3
-                            WHERE a3.id_contenedor = a1.id_contenedor
-                        )');
-                })
-                ->pluck('id')
-                ->toArray();
-
-            // Paso 2: Eliminar las coordenadas relacionadas con los IDs duplicados
-            Coordenadas::whereIn('id_asignacion', $duplicatedIds)->delete();
-
-            // Paso 3: Eliminar los registros en `gastos_operadores` relacionados con los IDs duplicados
-            GastosOperadores::whereIn('id_asignacion', $duplicatedIds)->delete();
-
-            // Paso 4: Eliminar las asignaciones duplicadas
-            Asignaciones::whereIn('id', $duplicatedIds)->delete();
-        });
 
         $cotizaciones = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus', '=', 'Aprobada')->where('estatus_planeacion', '=', NULL)->get();
         $numCotizaciones = $cotizaciones->count();
