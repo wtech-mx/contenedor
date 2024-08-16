@@ -197,67 +197,125 @@ class PlaneacionController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $asignaciones = new Asignaciones;
-        $asignaciones->id_chasis = $request->get('chasis');
-        $asignaciones->id_chasis2 = $request->get('chasisAdicional1');
-        $asignaciones->id_dolys = $request->get('nuevoCampoDoly');
-        $asignaciones->id_camion = $request->get('camion');
-        $asignaciones->id_contenedor = $request->get('num_contenedor');
-        $asignaciones->id_operador = $request->get('operador');
-        $asignaciones->id_proveedor = $request->get('id_proveedor');
-        $asignaciones->sueldo_viaje = $request->get('sueldo_viaje');
-        $asignaciones->estatus_pagado = 'Pendiente Pago';
-        $asignaciones->dinero_viaje = $request->get('dinero_viaje');
-        if($request->get('id_proveedor') == NULL){
-            $asignaciones->fecha_inicio = $request->get('fecha_inicio');
-            $asignaciones->fecha_fin = $request->get('fecha_fin') . ' 23:00:00';
+        $numContenedor = $request->get('num_contenedor');
+        $exists = Asignaciones::where('id_contenedor', $numContenedor)->exists();
+        if ($exists) {
+            $asignaciones = Asignaciones::where('id_contenedor','=',$numContenedor)->first();
+            $asignaciones->id_chasis = $request->get('chasis');
+            $asignaciones->id_chasis2 = $request->get('chasisAdicional1');
+            $asignaciones->id_dolys = $request->get('nuevoCampoDoly');
+            $asignaciones->id_camion = $request->get('camion');
+            $asignaciones->id_contenedor = $request->get('num_contenedor');
+            $asignaciones->id_operador = $request->get('operador');
+            $asignaciones->id_proveedor = $request->get('id_proveedor');
+            $asignaciones->sueldo_viaje = $request->get('sueldo_viaje');
+            $asignaciones->estatus_pagado = 'Pendiente Pago';
+            $asignaciones->dinero_viaje = $request->get('dinero_viaje');
+            if($request->get('id_proveedor') == NULL){
+                $asignaciones->fecha_inicio = $request->get('fecha_inicio');
+                $asignaciones->fecha_fin = $request->get('fecha_fin') . ' 23:00:00';
 
-            $asignaciones->fehca_inicio_guard = $request->get('fecha_inicio');
-            $asignaciones->fehca_fin_guard = $request->get('fecha_fin') . ' 23:00:00';
-        }else{
-            $asignaciones->fecha_inicio = $request->get('fecha_inicio_proveedor');
-            $asignaciones->fecha_fin = $request->get('fecha_fin_proveedor') . ' 23:00:00';
+                $asignaciones->fehca_inicio_guard = $request->get('fecha_inicio');
+                $asignaciones->fehca_fin_guard = $request->get('fecha_fin') . ' 23:00:00';
+            }else{
+                $asignaciones->fecha_inicio = $request->get('fecha_inicio_proveedor');
+                $asignaciones->fecha_fin = $request->get('fecha_fin_proveedor') . ' 23:00:00';
 
-            $asignaciones->fehca_inicio_guard = $request->get('fecha_inicio_proveedor');
-            $asignaciones->fehca_fin_guard = $request->get('fecha_fin_proveedor') . ' 23:00:00';
+                $asignaciones->fehca_inicio_guard = $request->get('fecha_inicio_proveedor');
+                $asignaciones->fehca_fin_guard = $request->get('fecha_fin_proveedor') . ' 23:00:00';
+            }
+
+            $asignaciones->precio = $request->get('precio_proveedor');
+            $asignaciones->burreo = $request->get('burreo_proveedor');
+            $asignaciones->maniobra = $request->get('maniobra_proveedor');
+            $asignaciones->estadia = $request->get('estadia_proveedor');
+            $asignaciones->otro = $request->get('otro_proveedor');
+            $asignaciones->iva = $request->get('iva_proveedor');
+            $asignaciones->retencion = $request->get('retencion_proveedor');
+            $asignaciones->total_proveedor = $request->get('total_proveedor');
+            $asignaciones->sobrepeso_proveedor = $request->get('sobrepeso_proveedor');
+
+            $asignaciones->id_banco1_dinero_viaje = $request->get('id_banco1_dinero_viaje');
+            $asignaciones->cantidad_banco1_dinero_viaje = $request->get('cantidad_banco1_dinero_viaje');
+            $asignaciones->id_banco2_dinero_viaje = $request->get('id_banco2_dinero_viaje');
+            $asignaciones->cantidad_banco2_dinero_viaje = $request->get('cantidad_banco2_dinero_viaje');
+
+            if($request->get('sueldo_viaje') > $request->get('dinero_viaje')){
+            $resta = $request->get('sueldo_viaje') - $request->get('dinero_viaje');
+            $asignaciones->pago_operador = $resta;
+            }
+            $asignaciones->update();
+
+            $cotizacion = Cotizaciones::where('id', '=',  $request->get('cotizacion'))->first();
+            if($request->get('id_proveedor') == NULL){
+            }else{
+                $cotizacion->prove_restante = $asignaciones->total_proveedor;
+            }
+            $cotizacion->estatus_planeacion = 1;
+            $cotizacion->tipo_viaje = $request->get('tipo');
+            $cotizacion->update();
+        } else {
+            $asignaciones = new Asignaciones;
+            $asignaciones->id_chasis = $request->get('chasis');
+            $asignaciones->id_chasis2 = $request->get('chasisAdicional1');
+            $asignaciones->id_dolys = $request->get('nuevoCampoDoly');
+            $asignaciones->id_camion = $request->get('camion');
+            $asignaciones->id_contenedor = $request->get('num_contenedor');
+            $asignaciones->id_operador = $request->get('operador');
+            $asignaciones->id_proveedor = $request->get('id_proveedor');
+            $asignaciones->sueldo_viaje = $request->get('sueldo_viaje');
+            $asignaciones->estatus_pagado = 'Pendiente Pago';
+            $asignaciones->dinero_viaje = $request->get('dinero_viaje');
+            if($request->get('id_proveedor') == NULL){
+                $asignaciones->fecha_inicio = $request->get('fecha_inicio');
+                $asignaciones->fecha_fin = $request->get('fecha_fin') . ' 23:00:00';
+
+                $asignaciones->fehca_inicio_guard = $request->get('fecha_inicio');
+                $asignaciones->fehca_fin_guard = $request->get('fecha_fin') . ' 23:00:00';
+            }else{
+                $asignaciones->fecha_inicio = $request->get('fecha_inicio_proveedor');
+                $asignaciones->fecha_fin = $request->get('fecha_fin_proveedor') . ' 23:00:00';
+
+                $asignaciones->fehca_inicio_guard = $request->get('fecha_inicio_proveedor');
+                $asignaciones->fehca_fin_guard = $request->get('fecha_fin_proveedor') . ' 23:00:00';
+            }
+
+            $asignaciones->precio = $request->get('precio_proveedor');
+            $asignaciones->burreo = $request->get('burreo_proveedor');
+            $asignaciones->maniobra = $request->get('maniobra_proveedor');
+            $asignaciones->estadia = $request->get('estadia_proveedor');
+            $asignaciones->otro = $request->get('otro_proveedor');
+            $asignaciones->iva = $request->get('iva_proveedor');
+            $asignaciones->retencion = $request->get('retencion_proveedor');
+            $asignaciones->total_proveedor = $request->get('total_proveedor');
+            $asignaciones->sobrepeso_proveedor = $request->get('sobrepeso_proveedor');
+
+            $asignaciones->id_banco1_dinero_viaje = $request->get('id_banco1_dinero_viaje');
+            $asignaciones->cantidad_banco1_dinero_viaje = $request->get('cantidad_banco1_dinero_viaje');
+            $asignaciones->id_banco2_dinero_viaje = $request->get('id_banco2_dinero_viaje');
+            $asignaciones->cantidad_banco2_dinero_viaje = $request->get('cantidad_banco2_dinero_viaje');
+
+            if($request->get('sueldo_viaje') > $request->get('dinero_viaje')){
+            $resta = $request->get('sueldo_viaje') - $request->get('dinero_viaje');
+            $asignaciones->pago_operador = $resta;
+            }
+            $asignaciones->save();
+
+            $cotizacion = Cotizaciones::where('id', '=',  $request->get('cotizacion'))->first();
+            if($request->get('id_proveedor') == NULL){
+            }else{
+                $cotizacion->prove_restante = $asignaciones->total_proveedor;
+            }
+            $cotizacion->estatus_planeacion = 1;
+            $cotizacion->tipo_viaje = $request->get('tipo');
+            $cotizacion->update();
+
+            $coordenada = new Coordenadas;
+            $coordenada->id_cotizacion = $cotizacion->id;
+            $coordenada->id_asignacion = $asignaciones->id;
+            $coordenada->save();
+
         }
-
-        $asignaciones->precio = $request->get('precio_proveedor');
-        $asignaciones->burreo = $request->get('burreo_proveedor');
-        $asignaciones->maniobra = $request->get('maniobra_proveedor');
-        $asignaciones->estadia = $request->get('estadia_proveedor');
-        $asignaciones->otro = $request->get('otro_proveedor');
-        $asignaciones->iva = $request->get('iva_proveedor');
-        $asignaciones->retencion = $request->get('retencion_proveedor');
-        $asignaciones->total_proveedor = $request->get('total_proveedor');
-        $asignaciones->sobrepeso_proveedor = $request->get('sobrepeso_proveedor');
-
-        $asignaciones->id_banco1_dinero_viaje = $request->get('id_banco1_dinero_viaje');
-        $asignaciones->cantidad_banco1_dinero_viaje = $request->get('cantidad_banco1_dinero_viaje');
-        $asignaciones->id_banco2_dinero_viaje = $request->get('id_banco2_dinero_viaje');
-        $asignaciones->cantidad_banco2_dinero_viaje = $request->get('cantidad_banco2_dinero_viaje');
-
-        if($request->get('sueldo_viaje') > $request->get('dinero_viaje')){
-           $resta = $request->get('sueldo_viaje') - $request->get('dinero_viaje');
-           $asignaciones->pago_operador = $resta;
-        }
-        $asignaciones->save();
-
-        $cotizacion = Cotizaciones::where('id', '=',  $request->get('cotizacion'))->first();
-        if($request->get('id_proveedor') == NULL){
-        }else{
-            $cotizacion->prove_restante = $asignaciones->total_proveedor;
-        }
-        $cotizacion->estatus_planeacion = 1;
-        $cotizacion->tipo_viaje = $request->get('tipo');
-        $cotizacion->update();
-
-        $coordenada = new Coordenadas;
-        $coordenada->id_cotizacion = $cotizacion->id;
-        $coordenada->id_asignacion = $asignaciones->id;
-        $coordenada->save();
-
-
         $cotizacion_data = [
             "tipo_viaje" => $cotizacion->tipo_viaje,
         ];
@@ -271,9 +329,11 @@ class PlaneacionController extends Controller
         $urlId = $request->get('urlId');
 
 
-        $cotizaciones = Cotizaciones::find($urlId);
-        $cotizaciones->estatus = $request->get('finzalizar_vieje');
-        $cotizaciones->update();
+        if($request->get('finzalizar_vieje') != NULL){
+            $cotizaciones = Cotizaciones::find($urlId);
+            $cotizaciones->estatus = $request->get('finzalizar_vieje');
+            $cotizaciones->update();
+        }
 
         $asignaciones = Asignaciones::where('id_contenedor','=',$cotizaciones->id)->first();
 
