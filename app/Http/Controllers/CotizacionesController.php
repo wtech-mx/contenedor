@@ -27,15 +27,24 @@ class CotizacionesController extends Controller
 {
     public function index(){
 
-        $cotizaciones = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Pendiente')->orderBy('created_at', 'desc')->get();
+        $cotizaciones = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Pendiente')->orderBy('created_at', 'desc')
+        ->select('id_cliente', 'origen', 'destino', 'id', 'estatus')->get();
+
         $cotizaciones_aprovadas = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Aprobada')
         ->where(function($query) {
             $query->where('estatus_planeacion', '=', 0)
                   ->orWhere('estatus_planeacion', '=', NULL);
-        })->orderBy('created_at', 'desc')->get();
-        $cotizaciones_canceladas = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Cancelada')->orderBy('created_at', 'desc')->get();
-        $cotizaciones_planeadas = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Aprobada')->where('estatus_planeacion','=', 1)->orderBy('created_at', 'desc')->get();
-        $cotizaciones_finalizadas = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Finalizado')->orderBy('created_at', 'desc')->get();
+        })->orderBy('created_at', 'desc')
+        ->select('id_cliente', 'origen', 'destino', 'id', 'estatus')->get();
+
+        $cotizaciones_canceladas = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Cancelada')->orderBy('created_at', 'desc')
+        ->select('id_cliente', 'origen', 'destino', 'id', 'estatus')->get();
+
+        $cotizaciones_planeadas = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Aprobada')->where('estatus_planeacion','=', 1)->orderBy('created_at', 'desc')
+        ->select('id_cliente', 'origen', 'destino', 'id', 'estatus')->get();
+
+        $cotizaciones_finalizadas = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('estatus','=','Finalizado')->orderBy('created_at', 'desc')
+        ->select('id_cliente', 'origen', 'destino', 'id', 'estatus')->get();
 
         $equipos_dolys = Equipo::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('tipo','=','Dolys')->get();
         $equipos_chasis = Equipo::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('tipo','=','Chasis / Plataforma')->get();
@@ -372,7 +381,7 @@ class CotizacionesController extends Controller
                         $cotizaciones->prove_restante = $request->get('total_proveedor');
                     }
                     $cotizaciones->update();
-                    
+
                     if($asignacion->id_proveedor == NULL){
                         $cantidad_ope = $request->input('cantidad_ope');
                         $tipo_ope = $request->input('tipo_ope');
