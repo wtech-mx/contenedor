@@ -43,7 +43,36 @@
                                 @if(isset($item->DocCotizacion))
                                         {{ $item->DocCotizacion->num_contenedor }} <br> {{ $item->Cliente->nombre }}
                                 @elseif(isset($item->Cliente))
+                                    {{-- Provisional --}}
+                                    @if($item->tipo == 'Salida')
+                                        Varios <br> {{ $item->Cliente2->nombre }} <br>
+                                        @if ($item->contenedores != null)
+                                                Contenedores y Abonos
+                                            <ul>
+                                                @php
+                                                    $contenedoresAbonos = json_decode($item->contenedores, true);
+                                                @endphp
+                                                @foreach ($contenedoresAbonos as $contenedorAbono)
+                                                    <li>{{ $contenedorAbono['num_contenedor'] }} - ${{ number_format($contenedorAbono['abono'], 2, '.', ',') }}</li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    @else
                                         Varios <br> {{ $item->Cliente->nombre }} <br>
+                                        @if ($item->contenedores != null)
+                                                Contenedores y Abonos
+                                            <ul>
+                                                @php
+                                                    $contenedoresAbonos = json_decode($item->contenedores, true);
+                                                @endphp
+                                                @foreach ($contenedoresAbonos as $contenedorAbono)
+                                                    <li>{{ $contenedorAbono['num_contenedor'] }} - ${{ number_format($contenedorAbono['abono'], 2, '.', ',') }}</li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    @endif
+                                @elseif(isset($item->Proveedor))
+                                    Varios <br> {{ $item->Proveedor->nombre }} <br>
                                     @if ($item->contenedores != null)
                                             Contenedores y Abonos
                                         <ul>
