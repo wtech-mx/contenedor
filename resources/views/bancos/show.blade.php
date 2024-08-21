@@ -5,136 +5,34 @@
 @endsection
 
 @section('content')
-<div class="row">
-
-    @php
-        $banco_entrada = 0;
-        $banco_salida = 0;
-
-        foreach ($banco_dinero_entrada as $item){
-            if ($item->id_banco1 == $banco->id){
-                $banco_entrada += $item->monto1;
-            }
-            if ($item->id_banco2 == $banco->id){
-                $banco_entrada += $item->monto2;
-            }
-        }
-
-        foreach ($banco_dinero_salida as $item){
-            if ($item->id_banco1 == $banco->id){
-                $banco_salida += $item->monto1;
-            }
-            if ($item->id_banco2 == $banco->id){
-                $banco_salida += $item->monto2;
-            }
-        }
-
-        $total = 0;
-
-        foreach ($cotizaciones as $item){
-            if ($item->id_banco1 == $banco->id){
-                $total += $item->monto1;
-            }
-            if ($item->id_banco2 == $banco->id){
-                $total += $item->monto2;
-            }
-        }
-
-        $pagos = 0;
-        $pagos_salida = 0;
-
-        foreach ($proveedores as $item){
-            if ($item->id_prove_banco1 == $banco->id){
-                $pagos += $item->prove_monto1;
-            }
-            if ($item->id_prove_banco2 == $banco->id){
-                $pagos += $item->prove_monto2;
-            }
-        }
-
-        foreach ($banco_dinero_salida_ope as $item){
-            if ($item->id_banco1 == $banco->id){
-                $pagos_salida += $item->monto1;
-            }
-            if ($item->id_banco2 == $banco->id){
-                $pagos_salida += $item->monto2;
-            }
-        }
-
-        $gastos_extras = 0;
-        foreach ($gastos_generales as $item){
-           $gastos_extras += $item->monto1;
-        }
-
-        $total_pagos = 0;
-        $total_pagos = $pagos + $pagos_salida + $banco_salida + $gastos_extras;
-        $saldo = 0;
-        $saldo = ($banco->saldo_inicial + $total + $banco_entrada) - $total_pagos;
-        $cargo = $banco->saldo_inicial + $total + $banco_entrada;
-    @endphp
-
-    <div class="col-lg-4 col-md-6 col-12 mt-4 mt-md-0">
-        <div class="card overflow-hidden shadow-lg" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/reports2.jpg'); background-size: cover;">
-            <span class="mask bg-gradient-dark"></span>
-            <div class="card-body p-3 position-relative">
-                <div class="row">
-                    <div class="col-8 text-start">
-                        <div class="icon icon-shape bg-white shadow text-center border-radius-md">
-                            <img class="w-60 mt-2" src="{{ asset('img/icon/efectivo.webp') }}" alt="logo">
-                        </div>
-                        <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                            $ {{ number_format($cargo, 0, '.', ',') }}
-                        </h5>
-                        <span class="text-white text-sm">Cargo</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6 col-12 mt-4 mt-md-0">
-        <div class="card overflow-hidden shadow-lg" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/reports3.jpg'); background-size: cover;">
-            <span class="mask bg-gradient-dark"></span>
-            <div class="card-body p-3 position-relative">
-                <div class="row">
-                    <div class="col-8 text-start">
-                        <div class="icon icon-shape bg-white shadow text-center border-radius-md">
-                            <img class="w-60 mt-2" src="{{ asset('img/icon/gastos.png.webp') }}" alt="logo">
-                        </div>
-                        <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                            $ {{ number_format($total_pagos, 0, '.', ',') }}
-                        </h5>
-                        <span class="text-white text-sm">Abono</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6 col-12 mt-4 mt-md-0">
-        <div class="card overflow-hidden shadow-lg" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/reports1.jpg'); background-size: cover;">
-            <span class="mask bg-gradient-dark"></span>
-            <div class="card-body p-3 position-relative">
-                <div class="row">
-                    <div class="col-8 text-start">
-                        <div class="icon icon-shape bg-white shadow text-center border-radius-md">
-                            <img class="w-60 mt-2" src="{{ asset('img/icon/bolsa-de-dinero.webp') }}" alt="logo">
-                        </div>
-                        <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                            $ {{ number_format($saldo, 0, '.', ',') }}
-                        </h5>
-                        <span class="text-white text-sm">Saldo</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="container-fluid my-5 py-2">
     <div class="row">
-      <div class="col-md-8 col-sm-10 mx-auto">
-        <form class="" action="index.html" method="post">
+        <div class="col-12">
+            <div class="card">
+                <form action="{{ route('advance_bancos.buscador', $banco->id) }}" method="GET">
+                    <div class="card-body" style="padding-left: 1.5rem; padding-top: 1rem;">
+                        <h5>Buscador por fechas</h5>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="user_id">Rango de fecha DE:</label>
+                                <input class="form-control" type="date" id="fecha_de" name="fecha_de" required>
+                            </div>
+                            <div class="col-4">
+                                <label for="user_id">Rango de fecha Hasta:</label>
+                                <input class="form-control" type="date" id="fecha_hasta" name="fecha_hasta" required>
+                            </div>
+                            <div class="col-4">
+                                <br><br>
+                                <button class="btn btn-sm mb-0 mt-sm-0 mt-1" type="submit" style="background-color: #F82018; color: #ffffff;">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+      <div class="col-md-8 col-sm-10 mx-auto mt-3">
           <div class="card my-sm-5 my-lg-0">
             <div class="card-header text-center">
               <div class="row justify-content-between">
@@ -149,9 +47,18 @@
                     Reporte de Banco
                   </h6>
                   <p class="d-block text-secondary">{{$banco->nombre_banco}}</p>
-                    <a href="{{ route('pdf.print_banco', $banco->id) }}" class="btn" style="background: {{$configuracion->color_boton_close}}; color: #ffff; margin-right: 3rem;">
-                        Reporte
-                    </a>
+
+                    @if(Route::currentRouteName() == 'advance_bancos.buscador')
+                        <form action="{{ route('pdf.print_banco', $banco->id) }}" method="GET">
+                            <input class="form-control" type="hidden" id="fecha_de" name="fecha_de" value="{{$startOfWeek}}">
+                            <input class="form-control" type="hidden" id="fecha_hasta" name="fecha_hasta" value="{{$endOfWeek }}">
+                            <button class="btn btn-sm mb-0 mt-sm-0 mt-1" type="submit" style="background-color: #000000; color: #ffffff;">Reporte</button>
+                        </form>
+                        @else
+                        <form action="{{ route('pdf.print_banco', $banco->id) }}" method="GET">
+                            <button class="btn btn-sm mb-0 mt-sm-0 mt-1" type="submit" style="background-color: #000000; color: #ffffff;">Reporte</button>
+                        </form>
+                    @endif
                 </div>
                 <div class="col-lg-3 col-md-7 text-md-end text-start mt-5">
                   <h6 class="d-block mt-2 mb-0">Nombre Beneficiario:</h6>
@@ -165,7 +72,7 @@
                     Saldo
                   </h6>
                   <h5 class="text-start mb-0">
-                   ${{ number_format($saldo, 0, '.', ',') }}
+                   <span id="diferenciaColumna"></span>
                   </h5>
                 </div>
                 <div class="col-lg-5 col-md-7 mt-auto">
@@ -313,7 +220,7 @@
                             <th></th>
                             <th></th>
                             <th class="h5 ps-4" colspan="2">Total</th>
-                            <td id="diferenciaColumna" colspan="1" class="text-right h5 ps-4"></td>
+                            <td id="diferenciaColumna2" colspan="1" class="text-right h5 ps-4"></td>
                           </tr>
                       </tfoot>
                     </table>
@@ -322,7 +229,6 @@
               </div>
             </div>
           </div>
-        </form>
       </div>
     </div>
 </div>
@@ -350,6 +256,7 @@
         // Calcular la diferencia y mostrarla
         let diferencia = totalPenultima - totalUltima;
         document.getElementById('diferenciaColumna').textContent = `$ ${diferencia.toLocaleString('en-US')}`;
+        document.getElementById('diferenciaColumna2').textContent = `$ ${diferencia.toLocaleString('en-US')}`;
     });
 </script>
 
