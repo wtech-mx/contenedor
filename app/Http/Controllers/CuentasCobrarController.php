@@ -75,6 +75,7 @@ class CuentasCobrarController extends Controller
         $resta = $cotizacion->restante - $suma;
         $cotizacion->restante = $resta;
         $cotizacion->estatus_pago = 1;
+        $cotizacion->fecha_pago = date('Y-m-d');
         $cotizacion->update();
 
         return redirect()->back()->with('success', 'Comprobante de pago exitosamente');
@@ -102,6 +103,7 @@ class CuentasCobrarController extends Controller
 
             $cotizacion->restante = $nuevoRestante;
             $cotizacion->estatus_pago = ($nuevoRestante == 0) ? 1 : 0;
+            $cotizacion->fecha_pago = date('Y-m-d');
             $cotizacion->update();
 
             // Agregar contenedor y abono al array

@@ -114,9 +114,11 @@ Route::group(['middleware' => ['auth']], function() {
     // ==================== B A N C O S ====================
     Route::get('bancos', [App\Http\Controllers\BancosController::class, 'index'])->name('index.bancos');
     Route::post('bancos/create', [App\Http\Controllers\BancosController::class, 'store'])->name('store.bancos');
-    Route::get('bancos/edit/{id}', [App\Http\Controllers\BancosController::class, 'edit'])->name('edit.bancos');
+   // Route::get('bancos/edit/{id}', [App\Http\Controllers\BancosController::class, 'edit'])->name('edit.bancos');
     Route::patch('bancos/update/{id}', [App\Http\Controllers\BancosController::class, 'update'])->name('update.bancos');
 
+    Route::get('bancos/show/{id}', [App\Http\Controllers\BancosController::class, 'edit'])->name('edit.bancos');
+    Route::get('/bancos/imprimir/{id}', [App\Http\Controllers\BancosController::class, 'pdf'])->name('pdf.print_banco');
     // ==================== C U E N T A S  P O R  C O B R A R ====================
     Route::get('cuentas/cobrar', [App\Http\Controllers\CuentasCobrarController::class, 'index'])->name('index.cobrar');
     Route::get('cuentas/cobrar/show/{id}', [App\Http\Controllers\CuentasCobrarController::class, 'show'])->name('show.cobrar');

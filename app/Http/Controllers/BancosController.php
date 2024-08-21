@@ -136,21 +136,25 @@ class BancosController extends Controller
 
     public function edit($id){
         $banco = Bancos::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('id', '=', $id)->first();
-        $currentMonth = Carbon::now()->month;
-        $currentYear = Carbon::now()->year;
+        $startOfWeek = Carbon::now()->startOfWeek();
+        $endOfWeek = Carbon::now()->endOfWeek();
+        $fecha = date('Y-m-d');
 
-        $cotizaciones = Cotizaciones::where('id_banco1', '=', $id)->orwhere('id_banco2', '=', $id)
-        ->whereMonth('created_at', '=', $currentMonth)
-        ->whereYear('created_at', '=', $currentYear)
+        $cotizaciones = Cotizaciones::where(function($query) use ($id) {
+            $query->where('id_banco1', '=', $id)
+                  ->orWhere('id_banco2', '=', $id);
+        })
+        ->whereBetween('fecha_pago', [$startOfWeek, $endOfWeek])
         ->get();
 
         $proveedores = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
                     ->join('asignaciones', 'docum_cotizacion.id', '=', 'asignaciones.id_contenedor')
+                    ->whereBetween('cotizaciones.fecha_pago_proveedor', [$startOfWeek, $endOfWeek])
                     ->where('asignaciones.id_camion', '=', NULL)
-                    ->where('cotizaciones.id_prove_banco1', '=', $id)
-                    ->orWhere('cotizaciones.id_prove_banco2', '=', $id)
-                    ->whereMonth('cotizaciones.created_at', '=', $currentMonth)
-                    ->whereYear('cotizaciones.created_at', '=', $currentYear)
+                    ->where(function($query) use ($id) {
+                        $query->where('cotizaciones.id_prove_banco1', '=', $id)
+                              ->orWhere('cotizaciones.id_prove_banco2', '=', $id);
+                    })
                     ->select('cotizaciones.*')
                     ->get();
 
@@ -159,8 +163,7 @@ class BancosController extends Controller
             $query->where('id_banco1', '=', $id)
                   ->orWhere('id_banco2', '=', $id);
         })
-        ->whereMonth('created_at', '=', $currentMonth)
-        ->whereYear('created_at', '=', $currentYear)
+        ->whereBetween('fecha_pago', [$startOfWeek, $endOfWeek])
         ->get();
 
         $banco_dinero_salida = BancoDinero::where('tipo', '=', 'Salida')
@@ -168,8 +171,7 @@ class BancosController extends Controller
             $query->where('id_banco1', '=', $id)
                   ->orWhere('id_banco2', '=', $id);
         })
-        ->whereMonth('created_at', '=', $currentMonth)
-        ->whereYear('created_at', '=', $currentYear)
+        ->whereBetween('fecha_pago', [$startOfWeek, $endOfWeek])
         ->get();
 
         $banco_dinero_salida_ope = BancoDineroOpe::where('tipo', '=', 'Salida')
@@ -178,8 +180,7 @@ class BancosController extends Controller
             $query->where('id_banco1', '=', $id)
                   ->orWhere('id_banco2', '=', $id);
         })
-        ->whereMonth('created_at', '=', $currentMonth)
-        ->whereYear('created_at', '=', $currentYear)
+        ->whereBetween('fecha_pago', [$startOfWeek, $endOfWeek])
         ->get();
 
         $banco_dinero_salida_ope_varios = BancoDineroOpe::where('tipo', '=', 'Salida')
@@ -188,16 +189,33 @@ class BancosController extends Controller
             $query->where('id_banco1', '=', $id)
                   ->orWhere('id_banco2', '=', $id);
         })
-        ->whereMonth('created_at', '=', $currentMonth)
-        ->whereYear('created_at', '=', $currentYear)
+        ->whereBetween('fecha_pago', [$startOfWeek, $endOfWeek])
         ->get();
 
         $gastos_generales = GastosGenerales::where('id_banco1', '=', $id)
-        ->whereMonth('created_at', '=', $currentMonth)
-        ->whereYear('created_at', '=', $currentYear)
+        ->whereBetween('fecha', [$startOfWeek, $endOfWeek])
         ->get();
 
-        return view('bancos.edit', compact('banco', 'cotizaciones', 'proveedores', 'banco_dinero_entrada', 'banco_dinero_salida', 'banco_dinero_salida_ope', 'banco_dinero_salida_ope_varios', 'gastos_generales'));
+        $combined = collect()
+        ->merge($cotizaciones)
+        ->merge($banco_dinero_entrada)
+        ->merge($proveedores)
+        ->merge($banco_dinero_salida_ope)
+        ->merge($banco_dinero_salida_ope_varios)
+        ->merge($banco_dinero_salida)
+        ->merge($gastos_generales)
+        ->sortBy(function ($item) {
+            if (isset($item->fecha_pago)) {
+                return Carbon::parse($item->fecha_pago);
+            } elseif (isset($item->fecha_pago_proveedor)) {
+                return Carbon::parse($item->fecha_pago_proveedor);
+            } elseif (isset($item->fecha)) {
+                return Carbon::parse($item->fecha);
+            }
+            return null;
+        });
+
+        return view('bancos.show', compact('combined', 'startOfWeek', 'fecha', 'banco', 'cotizaciones', 'proveedores', 'banco_dinero_entrada', 'banco_dinero_salida', 'banco_dinero_salida_ope', 'banco_dinero_salida_ope_varios', 'gastos_generales'));
     }
 
     public function update(Request $request, Bancos $id)
@@ -206,5 +224,118 @@ class BancosController extends Controller
         $id->update($request->all());
 
         return redirect()->back()->with('success', 'Banco editado exitosamente');
+    }
+
+    public function pdf($id){
+        $banco = Bancos::where('id_empresa' ,'=',auth()->user()->id_empresa)->where('id', '=', $id)->first();
+        $startOfWeek = Carbon::now()->startOfWeek();
+        $endOfWeek = Carbon::now()->endOfWeek();
+        $fecha = date('Y-m-d');
+
+        $cotizaciones = Cotizaciones::where(function($query) use ($id) {
+            $query->where('id_banco1', '=', $id)
+                  ->orWhere('id_banco2', '=', $id);
+        })
+        ->whereBetween('fecha_pago', [$startOfWeek, $endOfWeek])
+        ->get();
+
+        $proveedores = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
+                    ->join('asignaciones', 'docum_cotizacion.id', '=', 'asignaciones.id_contenedor')
+                    ->whereBetween('cotizaciones.fecha_pago_proveedor', [$startOfWeek, $endOfWeek])
+                    ->where('asignaciones.id_camion', '=', NULL)
+                    ->where(function($query) use ($id) {
+                        $query->where('cotizaciones.id_prove_banco1', '=', $id)
+                              ->orWhere('cotizaciones.id_prove_banco2', '=', $id);
+                    })
+                    ->select('cotizaciones.*')
+                    ->get();
+
+        $banco_dinero_entrada = BancoDinero::where('tipo', '=', 'Entrada')
+        ->where(function($query) use ($id) {
+            $query->where('id_banco1', '=', $id)
+                  ->orWhere('id_banco2', '=', $id);
+        })
+        ->whereBetween('fecha_pago', [$startOfWeek, $endOfWeek])
+        ->get();
+
+        $banco_dinero_salida = BancoDinero::where('tipo', '=', 'Salida')
+        ->where(function($query) use ($id) {
+            $query->where('id_banco1', '=', $id)
+                  ->orWhere('id_banco2', '=', $id);
+        })
+        ->whereBetween('fecha_pago', [$startOfWeek, $endOfWeek])
+        ->get();
+
+        $banco_dinero_salida_ope = BancoDineroOpe::where('tipo', '=', 'Salida')
+        ->where('contenedores', '=', NULL)
+        ->where(function($query) use ($id) {
+            $query->where('id_banco1', '=', $id)
+                  ->orWhere('id_banco2', '=', $id);
+        })
+        ->whereBetween('fecha_pago', [$startOfWeek, $endOfWeek])
+        ->get();
+
+        $banco_dinero_salida_ope_varios = BancoDineroOpe::where('tipo', '=', 'Salida')
+        ->where('id_cotizacion', '=', NULL)
+        ->where(function($query) use ($id) {
+            $query->where('id_banco1', '=', $id)
+                  ->orWhere('id_banco2', '=', $id);
+        })
+        ->whereBetween('fecha_pago', [$startOfWeek, $endOfWeek])
+        ->get();
+
+        $gastos_generales = GastosGenerales::where('id_banco1', '=', $id)
+        ->whereBetween('fecha', [$startOfWeek, $endOfWeek])
+        ->get();
+
+        $combined = collect()
+        ->merge($cotizaciones)
+        ->merge($banco_dinero_entrada)
+        ->merge($proveedores)
+        ->merge($banco_dinero_salida_ope)
+        ->merge($banco_dinero_salida_ope_varios)
+        ->merge($banco_dinero_salida)
+        ->merge($gastos_generales)
+        ->sortBy(function ($item) {
+            if (isset($item->fecha_pago)) {
+                return Carbon::parse($item->fecha_pago);
+            } elseif (isset($item->fecha_pago_proveedor)) {
+                return Carbon::parse($item->fecha_pago_proveedor);
+            } elseif (isset($item->fecha)) {
+                return Carbon::parse($item->fecha);
+            }
+            return null;
+        });
+
+        $penultimaTotal = 0;
+        $ultimaTotal = 0;
+
+        foreach ($combined as $item) {
+            if (isset($item->fecha_pago)) {
+                $amount = isset($item->id_banco1) && $item->id_banco1 == $banco->id
+                    ? $item->monto1
+                    : $item->monto2;
+
+                if (!isset($item->id_operador)) {
+                    $penultimaTotal += $amount;
+                } else {
+                    $ultimaTotal += $amount;
+                }
+            } elseif (isset($item->fecha_pago_proveedor)) {
+                $amount = isset($item->id_prove_banco1) && $item->id_prove_banco1 == $banco->id
+                    ? $item->prove_monto1
+                    : $item->prove_monto2;
+                $ultimaTotal += $amount;
+            } elseif (isset($item->fecha)) {
+                $amount = $item->monto1;
+                $penultimaTotal += $amount;
+            }
+        }
+
+        $diferencia = $penultimaTotal - $ultimaTotal;
+
+        $pdf = \PDF::loadView('bancos.pdf_banco', compact('combined', 'startOfWeek', 'fecha', 'banco', 'ultimaTotal', 'penultimaTotal', 'diferencia'));
+         // return $pdf->stream();
+        return $pdf->download('Reporte Banco.pdf');
     }
 }

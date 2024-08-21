@@ -96,6 +96,7 @@ class CuentasPagarController extends Controller
         $cotizacion->dinero_cuenta_prov = $request->get('dinero_cuenta_prov');
         $cotizacion->id_cuenta_prov2 = $request->get('id_cuenta_prov2');
         $cotizacion->dinero_cuenta_prov2 = $request->get('dinero_cuenta_prov2');
+        $cotizacion->fecha_pago_proveedor = date('Y-m-d');
         $cotizacion->update();
 
         return redirect()->back()->with('success', 'Comprobante de pago exitosamente');
@@ -120,7 +121,7 @@ class CuentasPagarController extends Controller
             }
 
             $cotizacion->prove_restante = $nuevoRestante;
-
+            $cotizacion->fecha_pago_proveedor = date('Y-m-d');
             $cotizacion->update();
 
             // Agregar contenedor y abono al array
