@@ -121,8 +121,45 @@
                                                     <b style="color: #c22237">{{ $item->Cliente->nombre }}</b>
                                                 </a>
                                             @elseif(isset($item->Cliente))
+                                                {{-- Provisional --}}
+                                                @if($item->tipo == 'Salida')
+                                                    <a data-bs-toggle="collapse" href="#pagesEntrada{{ $item->id }}" aria-controls="pagesEntrada" role="button" aria-expanded="false">
+                                                        Varios <br> <b style="color: #22c2ba">{{ $item->Cliente2->nombre }}</b>
+                                                    </a>
+                                                    @if ($item->contenedores != null)
+                                                        <div class="collapse " id="pagesEntrada{{ $item->id }}">
+                                                            Contenedores y Abonos
+                                                            <ul>
+                                                                @php
+                                                                    $contenedoresAbonos = json_decode($item->contenedores, true);
+                                                                @endphp
+                                                                @foreach ($contenedoresAbonos as $contenedorAbono)
+                                                                    <li>{{ $contenedorAbono['num_contenedor'] }} - ${{ number_format($contenedorAbono['abono'], 2, '.', ',') }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                    @endif
+                                                @else
+                                                    <a data-bs-toggle="collapse" href="#pagesEntrada{{ $item->id }}" aria-controls="pagesEntrada" role="button" aria-expanded="false">
+                                                        Varios <br> <b>{{ $item->Cliente->nombre }}</b>
+                                                    </a>
+                                                    @if ($item->contenedores != null)
+                                                        <div class="collapse " id="pagesEntrada{{ $item->id }}">
+                                                            Contenedores y Abonos
+                                                            <ul>
+                                                                @php
+                                                                    $contenedoresAbonos = json_decode($item->contenedores, true);
+                                                                @endphp
+                                                                @foreach ($contenedoresAbonos as $contenedorAbono)
+                                                                    <li>{{ $contenedorAbono['num_contenedor'] }} - ${{ number_format($contenedorAbono['abono'], 2, '.', ',') }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                    @endif
+                                                @endif
+                                            @elseif(isset($item->Proveedor))
                                                 <a data-bs-toggle="collapse" href="#pagesEntrada{{ $item->id }}" aria-controls="pagesEntrada" role="button" aria-expanded="false">
-                                                    Varios <br> <b>{{ $item->Cliente->nombre }}</b>
+                                                    Varios <br> <b style="color: #22c2ba">{{ $item->Proveedor->nombre }}</b>
                                                 </a>
                                                 @if ($item->contenedores != null)
                                                     <div class="collapse " id="pagesEntrada{{ $item->id }}">
@@ -164,10 +201,20 @@
                                     </td>
                                     <td class="ps-4 penultima-columna" colspan="2">
                                         @if(!isset($item->id_operador))
-                                            @if (isset($item->id_banco1) && $item->id_banco1 == $banco->id)
-                                                $ {{ number_format($item->monto1, 0, '.', ',') }}
+                                            @if(!isset($item->tipo))
+                                                @if (isset($item->id_banco1) && $item->id_banco1 == $banco->id)
+                                                    $ {{ number_format($item->monto1, 0, '.', ',') }}
+                                                @else
+                                                    $ {{ number_format($item->monto2, 0, '.', ',') }}
+                                                @endif
                                             @else
-                                                $ {{ number_format($item->monto2, 0, '.', ',') }}
+                                                @if ($item->tipo == 'Entrada')
+                                                    @if (isset($item->id_banco1) && $item->id_banco1 == $banco->id)
+                                                        $ {{ number_format($item->monto1, 0, '.', ',') }}
+                                                    @else
+                                                        $ {{ number_format($item->monto2, 0, '.', ',') }}
+                                                    @endif
+                                                @endif
                                             @endif
                                         @endif
                                     </td>
@@ -177,6 +224,14 @@
                                                 $ {{ number_format($item->monto1, 0, '.', ',') }}
                                             @else
                                                 $ {{ number_format($item->monto2, 0, '.', ',') }}
+                                            @endif
+                                        @else
+                                            @if ($item->tipo == 'Salida')
+                                                @if (isset($item->id_banco1) && $item->id_banco1 == $banco->id)
+                                                    $ {{ number_format($item->monto1, 0, '.', ',') }}
+                                                @else
+                                                    $ {{ number_format($item->monto2, 0, '.', ',') }}
+                                                @endif
                                             @endif
                                         @endif
                                     </td>

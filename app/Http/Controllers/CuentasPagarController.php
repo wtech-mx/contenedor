@@ -137,7 +137,7 @@ class CuentasPagarController extends Controller
 
         $banco = new BancoDinero();
         $banco->contenedores = $contenedoresAbonosJson;
-        $banco->id_cliente = $request->get('id_cliente');
+        $banco->id_proveedor = $request->get('id_cliente');
         $banco->monto1 = $request->get('monto1_varios');
         $banco->metodo_pago1 = $request->get('metodo_pago1_varios');
         $banco->id_banco1 = $request->get('id_banco1_varios');

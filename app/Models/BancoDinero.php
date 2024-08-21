@@ -13,6 +13,7 @@ class BancoDinero extends Model
 
     protected $fillable = [
         'id_cliente',
+        'id_proveedor',
         'contenedores',
         'monto1',
         'metodo_pago1',
@@ -29,6 +30,14 @@ class BancoDinero extends Model
     public function Cliente()
     {
         return $this->belongsTo(Client::class, 'id_cliente');
+    }
+    public function Cliente2()
+    {
+        return $this->belongsTo(Proveedor::class, 'id_cliente');
+    }
+    public function Proveedor()
+    {
+        return $this->belongsTo(Proveedor::class, 'id_proveedor');
     }
     public function Banco1()
     {
