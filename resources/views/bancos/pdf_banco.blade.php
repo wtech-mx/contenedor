@@ -104,10 +104,20 @@
                         </td>
                         <td class="penultima-columna">
                             @if(!isset($item->id_operador))
-                                @if (isset($item->id_banco1) && $item->id_banco1 == $banco->id)
-                                    $ {{ number_format($item->monto1, 0, '.', ',') }}
+                                @if(!isset($item->tipo))
+                                    @if (isset($item->id_banco1) && $item->id_banco1 == $banco->id)
+                                        $ {{ number_format($item->monto1, 0, '.', ',') }}
+                                    @else
+                                        $ {{ number_format($item->monto2, 0, '.', ',') }}
+                                    @endif
                                 @else
-                                    $ {{ number_format($item->monto2, 0, '.', ',') }}
+                                    @if ($item->tipo == 'Entrada')
+                                        @if (isset($item->id_banco1) && $item->id_banco1 == $banco->id)
+                                            $ {{ number_format($item->monto1, 0, '.', ',') }}
+                                        @else
+                                            $ {{ number_format($item->monto2, 0, '.', ',') }}
+                                        @endif
+                                    @endif
                                 @endif
                             @endif
                         </td>
@@ -117,6 +127,14 @@
                                     $ {{ number_format($item->monto1, 0, '.', ',') }}
                                 @else
                                     $ {{ number_format($item->monto2, 0, '.', ',') }}
+                                @endif
+                            @else
+                                @if ($item->tipo == 'Salida')
+                                    @if (isset($item->id_banco1) && $item->id_banco1 == $banco->id)
+                                        $ {{ number_format($item->monto1, 0, '.', ',') }}
+                                    @else
+                                        $ {{ number_format($item->monto2, 0, '.', ',') }}
+                                    @endif
                                 @endif
                             @endif
                         </td>
