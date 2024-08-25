@@ -49,6 +49,7 @@
                 <table class="table text-white tabla-completa"  style="color: #000;width: 100%;padding: 30px; margin: 6px; font-size: 12px">
                     <thead>
                         <tr>
+                            <th>Contratista</th>
                             <th>Contenedor</th>
                             <th>Facturado a</th>
                             <th>Destino</th>
@@ -81,6 +82,11 @@
                                 $importeVtaSum += $importe_vta;
                             @endphp
                             <tr>
+                                @if ($cotizacion->DocCotizacion->Asignaciones->id_proveedor == NULL)
+                                    <td>-</td>
+                                @else
+                                    <td>{{ $cotizacion->DocCotizacion->Asignaciones->Proveedor->nombre }}</td>
+                                @endif
                                 <td>{{ $cotizacion->DocCotizacion->num_contenedor }}</td>
                                 <td style="color: #020202; background: yellow;">
                                     @if ($cotizacion->id_subcliente != NULL)
@@ -123,6 +129,20 @@
                         @endforeach
                     </tbody>
                 </table>
+
+                @php
+                    // Filtrar los proveedores únicos en la vista
+                    $proveedores = $cotizaciones->pluck('DocCotizacion.Asignaciones.Proveedor')->unique('id');
+                @endphp
+
+                @foreach ($proveedores as $proveedor)
+                    <div class="totales">
+                        <h3 style="color: #000000; background: rgb(24, 192, 141);">Contratista</h3>
+                        <p>Nombre: <b> {{$proveedor->nombre}} </b></p>
+                        <p>Banco: <b> {{$proveedor->CuentasBancarias->nombre_banco}} </b></p>
+                        <p>Cuenta bancaria: <b> {{$proveedor->CuentasBancarias->cuenta_bancaria}} </b></p>
+                    </div>
+                @endforeach
 
         <div class="totales">
             <h3 style="color: #000000; background: rgb(0, 174, 255);">Totales</h3>

@@ -48,6 +48,7 @@
             <table class="table text-white tabla-completa" style="color: #000;width: 100%;padding: 30px; font-size: 12px">
                 <thead>
                     <tr>
+                        <th>Contratista</th>
                         <th>Contenedor</th>
                         <th>Importe CT</th>
                         <th>A pagar 1</th>
@@ -63,10 +64,10 @@
                     </tr>
                 </thead>
                 <tbody style="text-align: center;font-size: 100%;">
-                    @foreach ($cotizaciones as $cotizacion)
+                    @foreach ($cotizaciones as $item)
                         @php
-                            $total_oficial = ($cotizacion->burreo + $cotizacion->estadia + $cotizacion->otro + $cotizacion->iva + $cotizacion->precio) - $cotizacion->retencion;
-                            $base_factura = ($cotizacion->Contenedor->Cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
+                            $total_oficial = ($item->burreo + $item->estadia + $item->otro + $item->iva + $item->precio) - $item->retencion;
+                            $base_factura = ($item->Contenedor->Cotizacion->base_factura + $item->iva) - $item->retencion;
                             $importe_vta = $total_oficial - $base_factura;
 
                             $importeCT += $total_oficial;
@@ -74,22 +75,30 @@
                             $pagar2 += $importe_vta;
                         @endphp
                         <tr>
-                            <td>{{ $cotizacion->Contenedor->num_contenedor }}</td>
+                            <td>{{ $cotizacion->Proveedor->nombre }}</td>
+                            <td>{{ $item->Contenedor->num_contenedor }}</td>
                             <td>${{ number_format($total_oficial, 2, '.', ',') }}</td>
                             <td>${{ number_format($base_factura, 2, '.', ',') }}</td>
                             <td>${{ number_format($importe_vta, 2, '.', ',') }}</td>
-                            <td>${{ number_format($cotizacion->retencion, 2, '.', ',') }}</td>
-                            <td>${{ number_format($cotizacion->iva, 2, '.', ',') }}</td>
-                            <td>${{ number_format($cotizacion->Contenedor->Cotizacion->base_factura, 2, '.', ',') }}</td>
-                            <td>${{ number_format($cotizacion->precio, 2, '.', ',') }}</td>
-                            <td>${{ number_format($cotizacion->otro, 2, '.', ',') }}</td>
-                            {{-- <td>${{ number_format($cotizacion->Contenedor->Cotizacion->precio_tonelada, 2, '.', ',') }}</td> --}}
-                            <td>${{ number_format($cotizacion->estadia, 2, '.', ',') }}</td>
-                            <td>${{ number_format($cotizacion->burreo, 2, '.', ',') }}</td>
+                            <td>${{ number_format($item->retencion, 2, '.', ',') }}</td>
+                            <td>${{ number_format($item->iva, 2, '.', ',') }}</td>
+                            <td>${{ number_format($item->Contenedor->Cotizacion->base_factura, 2, '.', ',') }}</td>
+                            <td>${{ number_format($item->precio, 2, '.', ',') }}</td>
+                            <td>${{ number_format($item->otro, 2, '.', ',') }}</td>
+                            {{-- <td>${{ number_format($item->Contenedor->item->precio_tonelada, 2, '.', ',') }}</td> --}}
+                            <td>${{ number_format($item->estadia, 2, '.', ',') }}</td>
+                            <td>${{ number_format($item->burreo, 2, '.', ',') }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+
+        <div class="totales">
+            <h3 style="color: #000000; background: rgb(24, 192, 141);">Contratista</h3>
+            <p>Nombre: <b> {{ $cotizacion->Proveedor->nombre }} </b></p>
+            <p>Banco: <b> {{ $cotizacion->Proveedor->CuentasBancarias->nombre_banco }} </b></p>
+            <p>Cuenta bancaria: <b> {{ $cotizacion->Proveedor->CuentasBancarias->cuenta_bancaria }}</b></p>
+        </div>
 
         <div class="totales">
             <h3 style="color: #000000; background: rgb(0, 174, 255);">Totales</h3>

@@ -23,6 +23,11 @@ class Proveedor extends Model
         'id_empresa',
     ];
 
+    public function CuentasBancarias()
+    {
+        return $this->hasOne(CuentasBancarias::class, 'id_proveedores');
+    }
+
     protected static function boot()
     {
         parent::boot();
