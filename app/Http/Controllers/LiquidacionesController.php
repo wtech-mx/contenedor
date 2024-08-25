@@ -33,6 +33,7 @@ class LiquidacionesController extends Controller
         ->where('estatus_pagado', '=', 'Pendiente Pago')
         ->where('restante_pago_operador', '>', '0')
         ->where('id_proveedor', '=', NULL)
+        ->where('id_operador', '=', $id)
         ->get();
 
         $bancos = Bancos::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
