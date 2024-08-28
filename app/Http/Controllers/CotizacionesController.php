@@ -139,7 +139,12 @@ class CotizacionesController extends Controller
         $precio_tonelada = str_replace(',', '', $request->get('precio_tonelada'));
         $cotizaciones->precio_tonelada = $precio_tonelada;
 
-        $total = str_replace(',', '', $request->get('total'));
+        if($request->get('total') == NULL){
+            $total = 0;
+         }else{
+            $total = str_replace(',', '', $request->get('total'));
+        }
+
         $cotizaciones->total = $total;
         $cotizaciones->restante = $cotizaciones->total;
         $cotizaciones->estatus_pago = '0';
