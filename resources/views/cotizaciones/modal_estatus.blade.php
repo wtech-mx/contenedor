@@ -19,8 +19,8 @@
                                 <span class="input-group-text" id="basic-addon1">
                                     <img src="{{ asset('img/icon/semaforos.webp') }}" alt="" width="35px">
                                 </span>
-                                <select class="form-select cliente d-inline-block"  data-toggle="select" id="estatus" name="estatus" value="{{ old('estatus') }}">
-                                    <option>Seleccionar Estatus</option>
+                                <select class="form-select cliente d-inline-block"  data-toggle="select" id="estatus" name="estatus" required>
+                                    <option value="">Seleccionar Estatus</option>
                                     <option value="Pendiente">Pendiente</option>
                                     <option value="Aprobada">Aprobada</option>
                                     <option value="Cancelada">Cancelar</option>
