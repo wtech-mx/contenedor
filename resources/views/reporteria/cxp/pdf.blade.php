@@ -24,6 +24,18 @@
             font-size: 1.2em;
             color: #000;
         }
+        .sin_espacios{
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+        }
+
+        .sin_espacios2{
+            margin: 2px;
+            padding: 0;
+            font-size: 10px;
+        }
+
     </style>
     <head>
         <title>Cuentas por pagar</title>
@@ -37,10 +49,11 @@
         @endphp
 
             <div class="contianer" style="position: relative">
-                <h4>Empresa: {{ $user->Empresa->nombre }}</h4>
-                <h4>Estado de cuenta</h4>
-                <h4>Proveedor: {{ $cotizacion->Proveedor->nombre }}</h4>
+                <h4 class="sin_espacios">Empresa: {{ $user->Empresa->nombre }}</h4>
+                <h4 class="sin_espacios">Estado de cuenta</h4>
+                <h4 class="sin_espacios">Proveedor: {{ $cotizacion->Proveedor->nombre }}</h4>
             </div>
+
             <div class="contianer" style="position: relative">
                 <h5 style="position: absolute;left:75%;">Estado de cuenta por pagar : {{ date("d-m-Y") }}</h5><br>
             </div>
@@ -68,6 +81,7 @@
                             $totalBaseFactura = 0;
                             $totalImporteVTA = 0;
                         @endphp
+
                     @foreach ($cotizaciones as $item)
                         @php
                             $total_oficial = ($item->burreo + $item->estadia + $item->otro + $item->iva + $item->precio) - $item->retencion;
@@ -102,17 +116,17 @@
 
         <div class="totales">
             <h3 style="color: #000000; background: rgb(24, 192, 141);">Contratista</h3>
-            <h4>A pagar 1: ${{ number_format($totalBaseFactura, 2, '.', ',') }}<b></b></h4>
-            <h4>A pagar 2: ${{ number_format($totalImporteVTA, 2, '.', ',') }}<b></b></h4>
+            <h4 class="sin_espacios">A pagar 1: ${{ number_format($totalBaseFactura, 2, '.', ',') }}<b></b></h4 >
+            <h4 class="sin_espacios">A pagar 2: ${{ number_format($totalImporteVTA, 2, '.', ',') }}<b></b></h4>
             @php
                 $contador = 1;
             @endphp
             @foreach ($cotizacion->Proveedor->CuentasBancarias as $cuentas)
-                <p>Cuenta #{{ $contador }}</p>
-                <p>Beneficiario: <b> {{ $cuentas->nombre_beneficiario }} </b></p>
-                <p>Banco: <b> {{ $cuentas->nombre_banco }} </b></p>
-                <p>Cuenta: <b> {{ $cuentas->cuenta_bancaria }}</b></p>
-                <p>Clave: <b> {{ $cuentas->cuenta_clabe }}</b></p>
+                <p class="sin_espacios">Cuenta #{{ $contador }}</p>
+                <p class="sin_espacios">Beneficiario: <b class="sin_espacios">  {{ $cuentas->nombre_beneficiario }} </b></p>
+                <p class="sin_espacios">Banco: <b class="sin_espacios">  {{ $cuentas->nombre_banco }} </b></p>
+                <p class="sin_espacios">Cuenta: <b class="sin_espacios">  {{ $cuentas->cuenta_bancaria }}</b></p>
+                <p class="sin_espacios">Clave: <b class="sin_espacios">  {{ $cuentas->cuenta_clabe }}</b></p>
                 @php
                     $contador++;
                 @endphp
@@ -121,9 +135,9 @@
 
         <div class="totales">
             <h3 style="color: #000000; background: rgb(0, 174, 255);">Totales</h3>
-            <p>A pagar oficial: <b> ${{ number_format($pagar1, 2, '.', ',') }} </b></p>
-            <p>A pagar no oficial: <b> ${{ number_format($pagar2, 2, '.', ',') }} </b></p>
-            <p>Importe CT: <b> ${{ number_format($importeCT, 2, '.', ',') }} </b></p>
+            <p class="sin_espacios">A pagar oficial: <b class="sin_espacios"> ${{ number_format($pagar1, 2, '.', ',') }} </b></p>
+            <p class="sin_espacios">A pagar no oficial: <b class="sin_espacios"> ${{ number_format($pagar2, 2, '.', ',') }} </b></p>
+            <p class="sin_espacios">Importe CT: <b class="sin_espacios"> ${{ number_format($importeCT, 2, '.', ',') }} </b></p>
         </div>
     </body>
 </html>

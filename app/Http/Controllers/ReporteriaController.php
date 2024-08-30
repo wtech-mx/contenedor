@@ -146,7 +146,7 @@ class ReporteriaController extends Controller
         // Devolver el archivo PDF como respuesta
         $filePath = storage_path('app/public/' . $fileName);
         //  return $pdf->stream();
-      return Response::download($filePath, $fileName)->deleteFileAfterSend(true); 
+      return Response::download($filePath, $fileName)->deleteFileAfterSend(true);
     }
 
     // ==================== V I A J E S ====================
@@ -356,7 +356,6 @@ class ReporteriaController extends Controller
         if (empty($cotizacionIds)) {
             return redirect()->back()->with('error', 'se seleccionaron cotizaciones.');
         }
-
 
         $cotizaciones = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
         ->whereIn('cotizaciones.id', $cotizacionIds)
