@@ -114,24 +114,30 @@
                 </tbody>
             </table>
 
-        <div class="totales">
             <h3 style="color: #000000; background: rgb(24, 192, 141);">Contratista</h3>
-            <h4 class="sin_espacios">A pagar 1: ${{ number_format($totalBaseFactura, 2, '.', ',') }}<b></b></h4 >
-            <h4 class="sin_espacios">A pagar 2: ${{ number_format($totalImporteVTA, 2, '.', ',') }}<b></b></h4>
-            @php
-                $contador = 1;
-            @endphp
-            @foreach ($cotizacion->Proveedor->CuentasBancarias as $cuentas)
-                <p class="sin_espacios">Cuenta #{{ $contador }}</p>
-                <p class="sin_espacios">Beneficiario: <b class="sin_espacios">  {{ $cuentas->nombre_beneficiario }} </b></p>
-                <p class="sin_espacios">Banco: <b class="sin_espacios">  {{ $cuentas->nombre_banco }} </b></p>
-                <p class="sin_espacios">Cuenta: <b class="sin_espacios">  {{ $cuentas->cuenta_bancaria }}</b></p>
-                <p class="sin_espacios">Clave: <b class="sin_espacios">  {{ $cuentas->cuenta_clabe }}</b></p>
-                @php
-                    $contador++;
-                @endphp
-            @endforeach
-        </div>
+            <h4>A pagar 1: ${{ number_format($totalBaseFactura, 2, '.', ',') }}<b></b></h4>
+            <h4>A pagar 2: ${{ number_format($totalImporteVTA, 2, '.', ',') }}<b></b></h4>
+            <table class="table text-white tabla-completa" style="color: #000;width: 100%;padding: 30px; font-size: 12px">
+                <tbody style="text-align: center;font-size: 100%;">
+                    @php
+                        $contador = 1;
+                    @endphp
+                    <tr>
+                        @foreach ($cotizacion->Proveedor->CuentasBancarias as $cuentas)
+                            <td>
+                                <p>Cuenta #{{ $contador }}</p>
+                                <p>Beneficiario: <b> {{ $cuentas->nombre_beneficiario }} </b></p>
+                                <p>Banco: <b> {{ $cuentas->nombre_banco }} </b></p>
+                                <p>Cuenta: <b> {{ $cuentas->cuenta_bancaria }}</b></p>
+                                <p>Clave: <b> {{ $cuentas->cuenta_clabe }}</b></p>
+                                @php
+                                    $contador++;
+                                @endphp
+                            </td>
+                        @endforeach
+                    </tr>
+                </tbody>
+            </table>
 
         <div class="totales">
             <h3 style="color: #000000; background: rgb(0, 174, 255);">Totales</h3>
