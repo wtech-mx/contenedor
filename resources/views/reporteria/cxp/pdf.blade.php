@@ -24,6 +24,12 @@
             font-size: 1.2em;
             color: #000;
         }
+
+        .sin_margem{
+            margin: 0;
+            padding: 0;
+        }
+
         .sin_espacios{
             margin: 0;
             padding: 0;
@@ -48,13 +54,13 @@
             $pagar2 = 0;
         @endphp
 
-            <div class="contianer" style="position: relative">
-                <h4 class="sin_espacios">Empresa: {{ $user->Empresa->nombre }}</h4>
-                <h4 class="sin_espacios">Estado de cuenta</h4>
-                <h4 class="sin_espacios">Proveedor: {{ $cotizacion->Proveedor->nombre }}</h4>
+            <div class="contianer sin_margem" style="position: relative">
+                <h4 class="sin_espacios2">Empresa: {{ $user->Empresa->nombre }}</h4>
+                <h4 class="sin_espacios2">Estado de cuenta</h4>
+                <h4 class="sin_espacios2">Proveedor: {{ $cotizacion->Proveedor->nombre }}</h4>
             </div>
 
-            <div class="contianer" style="position: relative">
+            <div class="contianer sin_margem" style="position: relative">
                 <h5 style="position: absolute;left:75%;">Estado de cuenta por pagar : {{ date("d-m-Y") }}</h5><br>
             </div>
 
@@ -114,10 +120,10 @@
                 </tbody>
             </table>
 
-            <h3 style="color: #000000; background: rgb(24, 192, 141);">Contratista</h3>
-            <h4>A pagar 1: ${{ number_format($totalBaseFactura, 2, '.', ',') }}<b></b></h4>
-            <h4>A pagar 2: ${{ number_format($totalImporteVTA, 2, '.', ',') }}<b></b></h4>
-            <table class="table text-white tabla-completa" style="color: #000;width: 100%;padding: 30px; font-size: 12px">
+            <h3 class="sin_margem" style="color: #fff; background: rgb(24, 192, 141);">Contratista</h3>
+            <h4 class="sin_espacios2">A pagar 1: ${{ number_format($totalBaseFactura, 2, '.', ',') }}<b></b></h4>
+            <h4 class="sin_espacios2">A pagar 2: ${{ number_format($totalImporteVTA, 2, '.', ',') }}<b></b></h4>
+            <table class="table text-white tabla-completa sin_margem" style="color: #000;width: 100%;padding: 30px; font-size: 12px">
                 <tbody style="text-align: center;font-size: 100%;">
                     @php
                         $contador = 1;
@@ -140,10 +146,10 @@
             </table>
 
         <div class="totales">
-            <h3 style="color: #000000; background: rgb(0, 174, 255);">Totales</h3>
-            <p class="sin_espacios">A pagar oficial: <b class="sin_espacios"> ${{ number_format($pagar1, 2, '.', ',') }} </b></p>
-            <p class="sin_espacios">A pagar no oficial: <b class="sin_espacios"> ${{ number_format($pagar2, 2, '.', ',') }} </b></p>
-            <p class="sin_espacios">Importe CT: <b class="sin_espacios"> ${{ number_format($importeCT, 2, '.', ',') }} </b></p>
+            <h3 class="sin_margem" style="color: #000000; background: rgb(0, 174, 255);">Totales</h3>
+            <h4 class="sin_espacios2">A pagar oficial: ${{ number_format($pagar1, 2, '.', ',') }} /h4>
+            <h4 class="sin_espacios2">A pagar no oficial: ${{ number_format($pagar2, 2, '.', ',') }}</h4>
+            <h4 class="sin_espacios2">Importe CT:  ${{ number_format($importeCT, 2, '.', ',') }}</h4>
         </div>
     </body>
 </html>
