@@ -64,6 +64,10 @@
                     </tr>
                 </thead>
                 <tbody style="text-align: center;font-size: 100%;">
+                        @php
+                            $totalBaseFactura = 0;
+                            $totalImporteVTA = 0;
+                        @endphp
                     @foreach ($cotizaciones as $item)
                         @php
                             $total_oficial = ($item->burreo + $item->estadia + $item->otro + $item->iva + $item->precio) - $item->retencion;
@@ -73,6 +77,9 @@
                             $importeCT += $total_oficial;
                             $pagar1 += $base_factura;
                             $pagar2 += $importe_vta;
+
+                            $totalBaseFactura += $base_factura;
+                            $totalImporteVTA += $importe_vta;
                         @endphp
                         <tr>
                             <td>{{ $cotizacion->Proveedor->nombre }}</td>
@@ -95,9 +102,21 @@
 
         <div class="totales">
             <h3 style="color: #000000; background: rgb(24, 192, 141);">Contratista</h3>
-            <p>Nombre: <b> {{ $cotizacion->Proveedor->nombre }} </b></p>
-            <p>Banco: <b> {{ $cotizacion->Proveedor->CuentasBancarias->nombre_banco }} </b></p>
-            <p>Cuenta bancaria: <b> {{ $cotizacion->Proveedor->CuentasBancarias->cuenta_bancaria }}</b></p>
+            <h4>A pagar 1: ${{ number_format($totalBaseFactura, 2, '.', ',') }}<b></b></h4>
+            <h4>A pagar 2: ${{ number_format($totalImporteVTA, 2, '.', ',') }}<b></b></h4>
+            @php
+                $contador = 1;
+            @endphp
+            @foreach ($cotizacion->Proveedor->CuentasBancarias as $cuentas)
+                <p>Cuenta #{{ $contador }}</p>
+                <p>Beneficiario: <b> {{ $cuentas->nombre_beneficiario }} </b></p>
+                <p>Banco: <b> {{ $cuentas->nombre_banco }} </b></p>
+                <p>Cuenta: <b> {{ $cuentas->cuenta_bancaria }}</b></p>
+                <p>Clave: <b> {{ $cuentas->cuenta_clabe }}</b></p>
+                @php
+                    $contador++;
+                @endphp
+            @endforeach
         </div>
 
         <div class="totales">

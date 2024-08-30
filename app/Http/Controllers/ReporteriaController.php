@@ -145,7 +145,8 @@ class ReporteriaController extends Controller
 
         // Devolver el archivo PDF como respuesta
         $filePath = storage_path('app/public/' . $fileName);
-        return Response::download($filePath, $fileName)->deleteFileAfterSend(true);        // return $pdf->download('cotizaciones_seleccionadas.pdf');
+        //  return $pdf->stream();
+      return Response::download($filePath, $fileName)->deleteFileAfterSend(true); 
     }
 
     // ==================== V I A J E S ====================
@@ -304,8 +305,8 @@ class ReporteriaController extends Controller
         $gastos = $gastos->get();
 
         $pdf = PDF::loadView('reporteria.utilidad.pdf', compact('cotizaciones', 'fechaCarbon', 'cotizacion', 'user', 'gastos'))->setPaper('a4', 'landscape');
-        return $pdf->stream();
-        // return $pdf->download('cotizaciones_seleccionadas.pdf');
+         // return $pdf->stream();
+       return $pdf->download('cotizaciones_seleccionadas.pdf');
     }
 
     // ==================== D O C U M E N T O S ====================

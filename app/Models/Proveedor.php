@@ -25,7 +25,7 @@ class Proveedor extends Model
 
     public function CuentasBancarias()
     {
-        return $this->hasOne(CuentasBancarias::class, 'id_proveedores');
+        return $this->hasMany(CuentasBancarias::class, 'id_proveedores');
     }
 
     protected static function boot()
