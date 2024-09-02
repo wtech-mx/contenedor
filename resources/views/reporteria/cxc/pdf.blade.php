@@ -24,6 +24,12 @@
             font-size: 1.2em;
             color: #000;
         }
+
+        .margin_cero{
+            padding: 0;
+            margin: 0;
+            font-size: 15px;
+        }
     </style>
     <head>
         <title>Cotizaciones Seleccionadas</title>
@@ -38,9 +44,9 @@
         @endphp
 
                 <div class="contianer" style="position: relative">
-                    <h4>Empresa: {{ $user->Empresa->nombre }}</h4>
-                    <h4>Estado de cuenta</h4>
-                    <h4>Cliente: {{ $cotizacion->Cliente->nombre }}</h4>
+                    <h4 class="margin_cero">Empresa: {{ $user->Empresa->nombre }}</h4>
+                    <h4 class="margin_cero">Estado de cuenta</h4>
+                    <h4 class="margin_cero">Cliente: {{ $cotizacion->Cliente->nombre }}</h4>
                 </div>
                 <div class="contianer" style="position: relative">
                     <h5 style="position: absolute;left:88%;">Generado el : {{ date("d-m-Y") }}</h5><br>
@@ -130,7 +136,7 @@
                     </tbody>
                 </table>
 
-                @php
+                {{-- @php
                     // Filtrar los proveedores únicos en la vista
                     $proveedores = $cotizaciones->pluck('DocCotizacion.Asignaciones.Proveedor')->unique('id');
                 @endphp
@@ -142,13 +148,13 @@
                         <p>Banco: <b> {{$proveedor->CuentasBancarias->nombre_banco}} </b></p>
                         <p>Cuenta bancaria: <b> {{$proveedor->CuentasBancarias->cuenta_bancaria}} </b></p>
                     </div>
-                @endforeach
+                @endforeach --}}
 
         <div class="totales">
-            <h3 style="color: #000000; background: rgb(0, 174, 255);">Totales</h3>
-            <p>Total oficial: <b> ${{ number_format($totalOficialSum, 2, '.', ',') }} </b></p>
-            <p>Total no oficial: <b> ${{ number_format($totalnoofi, 2, '.', ',') }} </b></p>
-            <p>Importe vta: <b> ${{ number_format($importeVtaSum, 2, '.', ',') }} </b></p>
+            <h3 class="margin_cero" style="color: #000000; background: rgb(0, 174, 255);">Totales</h3>
+            <p class="margin_cero">Total oficial: <b class="margin_cero"> ${{ number_format($totalOficialSum, 2, '.', ',') }} </b></p>
+            <p class="margin_cero">Total no oficial: <b class="margin_cero"> ${{ number_format($totalnoofi, 2, '.', ',') }} </b></p>
+            <p class="margin_cero">Importe vta: <b class="margin_cero"> ${{ number_format($importeVtaSum, 2, '.', ',') }} </b></p>
         </div>
     </body>
 </html>

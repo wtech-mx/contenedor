@@ -31,7 +31,12 @@ class ReporteriaController extends Controller
     }
 
     public function advance(Request $request) {
+
         $clientes = Client::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
+
+        $proveedores = Proveedor::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
+
+
         $id_client = $request->id_client;
         $id_subcliente = $request->id_subcliente;
 
@@ -52,7 +57,7 @@ class ReporteriaController extends Controller
             $cotizaciones = $query->get();
         }
 
-        return view('reporteria.cxc.index', compact('clientes', 'cotizaciones'));
+        return view('reporteria.cxc.index', compact('clientes', 'cotizaciones',));
     }
 
     public function getSubclientes($clienteId){
