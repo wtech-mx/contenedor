@@ -862,6 +862,28 @@
                                                 </div>
 
                                                 <div class="col-4 form-group">
+                                                    <label for="name">Base 1</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            <img src="{{ asset('img/icon/factura.png') }}" alt="" width="25px">
+                                                        </span>
+                                                        <input name="base1_proveedor" id="base1_proveedor" type="float" class="form-control" value="{{$documentacion->Asignaciones->base1_proveedor}}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4 form-group">
+                                                    <label for="name">Base 2</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            <img src="{{ asset('img/icon/factura.png.webp') }}" alt="" width="25px">
+                                                        </span>
+                                                        <input name="base2_proveedor" id="base2_proveedor" type="float" class="form-control" value="{{$documentacion->Asignaciones->base2_proveedor}}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4"></div>
+
+                                                <div class="col-4 form-group">
                                                     <label for="name">Otros</label>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon1">

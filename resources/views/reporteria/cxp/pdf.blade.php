@@ -121,8 +121,6 @@
             </table>
 
             <h3 class="sin_margem" style="color: #fff; background: rgb(24, 192, 141);">Contratista</h3>
-            <h4 class="sin_espacios2">A pagar 1: ${{ number_format($totalBaseFactura, 2, '.', ',') }}<b></b></h4>
-            <h4 class="sin_espacios2">A pagar 2: ${{ number_format($totalImporteVTA, 2, '.', ',') }}<b></b></h4>
             <table class="table text-white tabla-completa sin_margem" style="color: #000;width: 100%;padding: 30px; font-size: 12px">
                 <tbody style="text-align: center;font-size: 100%;">
                     @php
@@ -136,6 +134,12 @@
                                 <p>Banco: <b> {{ $cuentas->nombre_banco }} </b></p>
                                 <p>Cuenta: <b> {{ $cuentas->cuenta_bancaria }}</b></p>
                                 <p>Clave: <b> {{ $cuentas->cuenta_clabe }}</b></p>
+                                @if ($contador == 1)
+                                    <h4 class="sin_espacios2">A pagar: ${{ number_format($totalBaseFactura, 2, '.', ',') }}<b></b></h4>
+                                @endif
+                                @if ($contador == 2)
+                                    <h4 class="sin_espacios2">A pagar: ${{ number_format($totalImporteVTA, 2, '.', ',') }}<b></b></h4>
+                                @endif
                                 @php
                                     $contador++;
                                 @endphp
