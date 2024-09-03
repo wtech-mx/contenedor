@@ -1459,98 +1459,119 @@
     </script>
 
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const cantidadSobrepesoInput = document.getElementById('cantidad_sobrepeso_proveedor');
-    const valorSobrepesoInput = document.getElementById('sobrepeso_proveedor');
-    const sobrepesoProbInput = document.getElementById('total_tonelada');
+        document.addEventListener('DOMContentLoaded', function () {
+            const cantidadSobrepesoInput = document.getElementById('cantidad_sobrepeso_proveedor');
+            const valorSobrepesoInput = document.getElementById('sobrepeso_proveedor');
+            const sobrepesoProbInput = document.getElementById('total_tonelada');
 
-    const precioInput = document.getElementById('precio_proveedor');
-    const burreoInput = document.getElementById('burreo_proveedor');
-    const maniobraInput = document.getElementById('maniobra_proveedor');
-    const estadiaInput = document.getElementById('estadia_proveedor');
-    const otroInput = document.getElementById('otro_proveedor');
-    const otro2Input = document.getElementById('otro2');
-    const otro3Input = document.getElementById('otro3');
-    const otro4Input = document.getElementById('otro4');
-    const otro5Input = document.getElementById('otro5');
-    const otro6Input = document.getElementById('otro6');
-    const otro7Input = document.getElementById('otro7');
-    const otro8Input = document.getElementById('otro8');
-    const otro9Input = document.getElementById('otro9');
-    const ivaInput = document.getElementById('iva_proveedor');
-    const retencionInput = document.getElementById('retencion_proveedor');
-    const totalInput = document.getElementById('total_proveedor');
+            const precioInput = document.getElementById('precio_proveedor');
+            const burreoInput = document.getElementById('burreo_proveedor');
+            const maniobraInput = document.getElementById('maniobra_proveedor');
+            const estadiaInput = document.getElementById('estadia_proveedor');
+            const otroInput = document.getElementById('otro_proveedor');
+            const otro2Input = document.getElementById('otro2');
+            const otro3Input = document.getElementById('otro3');
+            const otro4Input = document.getElementById('otro4');
+            const otro5Input = document.getElementById('otro5');
+            const otro6Input = document.getElementById('otro6');
+            const otro7Input = document.getElementById('otro7');
+            const otro8Input = document.getElementById('otro8');
+            const otro9Input = document.getElementById('otro9');
+            const ivaInput = document.getElementById('iva_proveedor');
+            const retencionInput = document.getElementById('retencion_proveedor');
+            const totalInput = document.getElementById('total_proveedor');
 
-    // Función para actualizar el total
-    function updateTotal() {
-        let precio = parseFloat(precioInput.value) || 0;
-        let burreo = parseFloat(burreoInput.value) || 0;
-        let maniobra = parseFloat(maniobraInput.value) || 0;
-        let estadia = parseFloat(estadiaInput.value) || 0;
-        let sobrepesoProb = parseFloat(sobrepesoProbInput.value) || 0;
-        let otro = parseFloat(otroInput.value) || 0;
-        let otro2 = parseFloat(otro2Input.value) || 0;
-        let otro3 = parseFloat(otro3Input.value) || 0;
-        let otro4 = parseFloat(otro4Input.value) || 0;
-        let otro5 = parseFloat(otro5Input.value) || 0;
-        let otro6 = parseFloat(otro6Input.value) || 0;
-        let otro7 = parseFloat(otro7Input.value) || 0;
-        let otro8 = parseFloat(otro8Input.value) || 0;
-        let otro9 = parseFloat(otro9Input.value) || 0;
-        let iva = parseFloat(ivaInput.value) || 0;
-        let retencion = parseFloat(retencionInput.value) || 0;
+            // Función para actualizar el total
+            function updateTotal() {
+                let precio = parseFloat(precioInput.value) || 0;
+                let burreo = parseFloat(burreoInput.value) || 0;
+                let maniobra = parseFloat(maniobraInput.value) || 0;
+                let estadia = parseFloat(estadiaInput.value) || 0;
+                let sobrepesoProb = parseFloat(sobrepesoProbInput.value) || 0;
+                let otro = parseFloat(otroInput.value) || 0;
+                let otro2 = parseFloat(otro2Input.value) || 0;
+                let otro3 = parseFloat(otro3Input.value) || 0;
+                let otro4 = parseFloat(otro4Input.value) || 0;
+                let otro5 = parseFloat(otro5Input.value) || 0;
+                let otro6 = parseFloat(otro6Input.value) || 0;
+                let otro7 = parseFloat(otro7Input.value) || 0;
+                let otro8 = parseFloat(otro8Input.value) || 0;
+                let otro9 = parseFloat(otro9Input.value) || 0;
+                let iva = parseFloat(ivaInput.value) || 0;
+                let retencion = parseFloat(retencionInput.value) || 0;
 
-        // Sumar todos menos retencion
-        let subtotal = precio + burreo + maniobra + estadia + otro +
-                       otro2 + otro3 + otro4 + otro5 + otro6 +
-                       otro7 + otro8 + otro9 + iva + sobrepesoProb;
+                // Sumar todos menos retencion
+                let subtotal = precio + burreo + maniobra + estadia + otro +
+                            otro2 + otro3 + otro4 + otro5 + otro6 +
+                            otro7 + otro8 + otro9 + iva + sobrepesoProb;
 
-        console.log(`Subtotal: ${subtotal}`);
-        // Restar retencion
-        let total = subtotal - retencion;
-        console.log(`Total: ${total}`);
+                console.log(`Subtotal: ${subtotal}`);
+                // Restar retencion
+                let total = subtotal - retencion;
+                console.log(`Total: ${total}`);
 
-        // Actualizar el input de total
-        totalInput.value = total.toFixed(2);
-    }
+                // Actualizar el input de total
+                totalInput.value = total.toFixed(2);
+            }
 
-    // Función para actualizar el resultado y el total
-    function updateResultado() {
-        const cantidadSobrepeso = parseFloat(cantidadSobrepesoInput.value) || 0;
-        const valorSobrepeso = parseFloat(valorSobrepesoInput.value) || 0;
+            // Función para actualizar el resultado y el total
+            function updateResultado() {
+                const cantidadSobrepeso = parseFloat(cantidadSobrepesoInput.value) || 0;
+                const valorSobrepeso = parseFloat(valorSobrepesoInput.value) || 0;
 
-        console.log(`Cantidad sobrepeso: ${cantidadSobrepeso}, Valor sobrepeso: ${valorSobrepeso}`);
+                console.log(`Cantidad sobrepeso: ${cantidadSobrepeso}, Valor sobrepeso: ${valorSobrepeso}`);
 
-        // Multiplicar los valores
-        const resultado = cantidadSobrepeso * valorSobrepeso;
+                // Multiplicar los valores
+                const resultado = cantidadSobrepeso * valorSobrepeso;
 
-        console.log(`Resultado sobrepeso: ${resultado}`);
+                console.log(`Resultado sobrepeso: ${resultado}`);
 
-        // Colocar el resultado en el input correspondiente
-        sobrepesoProbInput.value = resultado.toFixed(2); // Redondear a dos decimales
+                // Colocar el resultado en el input correspondiente
+                sobrepesoProbInput.value = resultado.toFixed(2); // Redondear a dos decimales
 
-        // Actualizar el total
-        updateTotal();
-    }
+                // Actualizar el total
+                updateTotal();
+            }
 
-    // Asignar evento de input a todos los inputs relevantes
-    const allInputs = [
-        precioInput, burreoInput, maniobraInput, estadiaInput, otroInput,
-        otro2Input, otro3Input, otro4Input, otro5Input, otro6Input,
-        otro7Input, otro8Input, otro9Input, ivaInput, retencionInput,
-        valorSobrepesoInput, cantidadSobrepesoInput
-    ];
+            // Asignar evento de input a todos los inputs relevantes
+            const allInputs = [
+                precioInput, burreoInput, maniobraInput, estadiaInput, otroInput,
+                otro2Input, otro3Input, otro4Input, otro5Input, otro6Input,
+                otro7Input, otro8Input, otro9Input, ivaInput, retencionInput,
+                valorSobrepesoInput, cantidadSobrepesoInput
+            ];
 
-    allInputs.forEach(input => {
-        input.addEventListener('input', () => {
+            allInputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    updateResultado();
+                    updateTotal();
+                });
+            });
+
+            // Calcular el resultado y el total iniciales
             updateResultado();
-            updateTotal();
-        });
-    });
 
-    // Calcular el resultado y el total iniciales
-    updateResultado();
-});
+                // Función para calcular base2_proveedor
+            function calcularBase2Proveedor() {
+                // Obtener los valores de los inputs
+                const totalProveedor = parseFloat(document.getElementById('total_proveedor').value) || 0;
+                const base1Proveedor = parseFloat(document.getElementById('base1_proveedor').value) || 0;
+                const ivaProveedor = parseFloat(document.getElementById('iva_proveedor').value) || 0;
+                const retencionProveedor = parseFloat(document.getElementById('retencion_proveedor').value) || 0;
+
+                // Realizar el cálculo
+                const base2Proveedor = (totalProveedor - base1Proveedor - ivaProveedor) + retencionProveedor;
+
+                // Mostrar el resultado en el input de base2_proveedor
+                document.getElementById('base2_proveedor').value = base2Proveedor.toFixed(2);
+            }
+
+            // Agregar eventos de cambio a los inputs para calcular automáticamente
+            document.getElementById('total_proveedor').addEventListener('input', calcularBase2Proveedor);
+            document.getElementById('base1_proveedor').addEventListener('input', calcularBase2Proveedor);
+            document.getElementById('iva_proveedor').addEventListener('input', calcularBase2Proveedor);
+            document.getElementById('retencion_proveedor').addEventListener('input', calcularBase2Proveedor);
+        });
 
     </script>
 

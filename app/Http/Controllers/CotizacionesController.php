@@ -425,7 +425,7 @@ class CotizacionesController extends Controller
                         $asignacion->maniobra = $request->get('maniobra_proveedor');
                         $asignacion->estadia = $request->get('estadia_proveedor');
                         $asignacion->otro = $request->get('otro_proveedor');
-                        $asignacion->sobrepeso_proveedor = $request->get('sobrepeso_proveedor');
+                        $asignacion->sobrepeso_proveedor = $request->get('total_tonelada');
                         $asignacion->base1_proveedor = $request->get('base1_proveedor');
                         $asignacion->base2_proveedor = $request->get('base2_proveedor');
 

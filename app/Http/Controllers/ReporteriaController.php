@@ -119,10 +119,10 @@ class ReporteriaController extends Controller
             ->select('asignaciones.*', 'docum_cotizacion.num_contenedor', 'docum_cotizacion.id_cotizacion', 'cotizaciones.origen', 'cotizaciones.destino', 'cotizaciones.estatus', 'cotizaciones.prove_restante')
             ->get();
 
-            $proveedor = Proveedor::where('id', '=', $id_proveedor)->first();
+            $proveedor_cxp = Proveedor::where('id', '=', $request->id_proveedor)->first();
         }
 
-        return view('reporteria.cxp.index', compact('proveedores', 'cotizaciones', 'proveedor'));
+        return view('reporteria.cxp.index', compact('proveedores', 'cotizaciones', 'proveedor_cxp'));
     }
 
     public function export_cxp(Request $request){
