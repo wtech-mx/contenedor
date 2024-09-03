@@ -151,7 +151,7 @@
 
         <div class="totales">
             <h3 class="sin_margem" style="color: #000000; background: rgb(0, 174, 255);">Totales</h3>
-            <h4 class="sin_espacios2">A pagar oficial: ${{ number_format($pagar1, 2, '.', ',') }} /h4>
+            <h4 class="sin_espacios2">A pagar oficial: ${{ number_format($pagar1, 2, '.', ',') }} </h4>
             <h4 class="sin_espacios2">A pagar no oficial: ${{ number_format($pagar2, 2, '.', ',') }}</h4>
             <h4 class="sin_espacios2">Importe CT:  ${{ number_format($importeCT, 2, '.', ',') }}</h4>
         </div>
