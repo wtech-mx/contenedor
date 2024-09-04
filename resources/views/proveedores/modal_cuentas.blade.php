@@ -13,7 +13,7 @@
                     <div class="col-3  mb-3"><img src="{{ asset('img/icon/metodo-de-pago.webp') }}" alt="" width="20px"><strong>Banco</strong></div>
                     <div class="col-3  mb-3"><img src="{{ asset('img/icon/t debito.webp') }}" alt="" width="20px"><strong>Cuenta</strong></div>
                     <div class="col-2 mb-3"><img src="{{ asset('img/icon/t credito.png.webp') }}" alt="" width="20px"><strong>Clabe</strong></div>
-                    <div class="col-1  mb-3"><img src="{{ asset('img/icon/t credito.png.webp') }}" alt="" width="20px"><strong>.</strong></div>
+                    <div class="col-1  mb-3"><img src="{{ asset('img/icon/borrar.webp') }}" alt="" width="20px"></div>
 
                     @foreach ($cuentas as $cuenta)
                         @if ($cuenta->id_proveedores == $proveedor->id)
@@ -26,7 +26,7 @@
                                 <form action="{{ route('cuentas.borrar', $cuenta->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta cuenta bancaria?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">.</button>
+                                    <button type="submit" class="btn btn-danger"><img src="{{ asset('img/icon/borrar.webp') }}" alt="" width="20px"></button>
                                 </form>
                             </div>
                         @endif
