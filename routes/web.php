@@ -68,7 +68,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('proveedores/create', [App\Http\Controllers\ProveedorController::class, 'store'])->name('store.proveedores');
     Route::post('proveedores/create/cuenta', [App\Http\Controllers\ProveedorController::class, 'cuenta'])->name('cuenta.proveedores');
     Route::patch('proveedores/update/{id}', [App\Http\Controllers\ProveedorController::class, 'update'])->name('update.proveedores');
-
+    Route::delete('proveedores/cuentas/{id}', [App\Http\Controllers\ProveedorController::class, 'destroy'])->name('cuentas.borrar');
     // ==================== E Q U I P O S ====================
     Route::get('equipos/index', [App\Http\Controllers\EquiposController::class, 'index'])->name('index.equipos');
     Route::post('equipos/create', [App\Http\Controllers\EquiposController::class, 'store'])->name('store.equipos');

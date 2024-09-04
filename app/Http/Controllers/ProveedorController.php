@@ -66,4 +66,15 @@ class ProveedorController extends Controller
             ->with('success', 'Proveedor created successfully.');
 
     }
+
+    public function destroy($id){
+    $cuenta = CuentasBancarias::find($id);
+
+    if ($cuenta) {
+        $cuenta->delete();
+        return redirect()->back()->with('success', 'Cuenta bancaria eliminada correctamente.');
+    }
+
+    return redirect()->back()->with('error', 'La cuenta bancaria no fue encontrada.');
+}
 }
