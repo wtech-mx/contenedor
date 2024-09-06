@@ -107,7 +107,7 @@
                         <tr>
                             <td>{{ $cotizacion->Proveedor->nombre }}</td>
                             <td>{{ $item->Contenedor->num_contenedor }}</td>
-                            <td>${{ number_format($importe_vta, 2, '.', ',') }}</td>
+                            <td>${{ number_format($suma_importeCT, 2, '.', ',') }}</td>
                             <td>${{ number_format($total_oficial, 2, '.', ',') }}</td>
                             <td>${{ number_format($base_factura, 2, '.', ',') }}</td>
                             <td>${{ number_format($item->retencion, 2, '.', ',') }}</td>
@@ -133,9 +133,9 @@
                         @foreach ($cotizacion->Proveedor->CuentasBancarias as $cuentas)
                             <td>
                                 Cuenta #{{ $contador }}
-                                Beneficiario: <b> {{ $cuentas->nombre_beneficiario }} </b>
-                                Banco: <b> {{ $cuentas->nombre_banco }} </b>
-                                Cuenta: <b> {{ $cuentas->cuenta_bancaria }}</b>
+                                Beneficiario: <b> {{ $cuentas->nombre_beneficiario }} </b><br>
+                                Banco: <b> {{ $cuentas->nombre_banco }} </b><br>
+                                Cuenta: <b> {{ $cuentas->cuenta_bancaria }}</b><br>
                                 <p>Clave: <b> {{ $cuentas->cuenta_clabe }}</b></p>
                                 @if ($contador == 1)
                                     <h4 class="sin_espacios2">A pagar: ${{ number_format($totalBaseFactura, 2, '.', ',') }}<b></b></h4>
