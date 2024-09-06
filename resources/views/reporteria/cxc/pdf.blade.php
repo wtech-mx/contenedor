@@ -79,8 +79,8 @@
                     <tbody style="text-align: center;font-size: 100%;">
                         @foreach ($cotizaciones as $cotizacion)
                             @php
-                                $total_oficial = ($cotizacion->DocCotizacion->Asignaciones->base1_proveedor + $cotizacion->DocCotizacion->Asignaciones->iva) - $cotizacion->DocCotizacion->Asignaciones->retencion;
-                                $base_taref = $cotizacion->DocCotizacion->Asignaciones->total_proveedor - $cotizacion->DocCotizacion->Asignaciones->base1_proveedor - $cotizacion->DocCotizacion->Asignaciones->iva + $cotizacion->DocCotizacion->Asignaciones->retencion;
+                                $total_oficial = ($cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
+                                $base_taref = $cotizacion->total - $cotizacion->base_factura - $cotizacion->iva + $cotizacion->retencion;
 
                                 $importe_vta = $base_taref + $total_oficial;
 
@@ -105,25 +105,25 @@
                                 <td style="color: #ffffff; background: #2778c4;">{{$cotizacion->destino}}</td>
                                 <td>{{$cotizacion->peso_contenedor}}</td>
                                 <td>{{$cotizacion->tamano}}</td>
-                                <td>$ {{ number_format($cotizacion->DocCotizacion->Asignaciones->burreo, 2, '.', ',')}}</td>
-                                <td>$ {{ number_format($cotizacion->DocCotizacion->Asignaciones->maniobra, 2, '.', ',')}}</td>
-                                <td>$ {{ number_format($cotizacion->DocCotizacion->Asignaciones->sobrepeso_proveedor, 2, '.', ',')}}</td>
-                                <td>$ {{ number_format($cotizacion->DocCotizacion->Asignaciones->otro, 2, '.', ',')}}</td>
-                                <td>$ {{ number_format($cotizacion->DocCotizacion->Asignaciones->precio, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->burreo, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->maniobra, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->sobrepeso, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->otro, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->precio, 2, '.', ',')}}</td>
 
-                                <td>$ {{ number_format($cotizacion->DocCotizacion->Asignaciones->base1_proveedor, 2, '.', ',')}}</td>
-                                <td>$ {{ number_format($cotizacion->DocCotizacion->Asignaciones->iva, 2, '.', ',')}}</td>
-                                <td>$ {{ number_format($cotizacion->DocCotizacion->Asignaciones->retencion, 2, '.', ',')}}</td>
-                                <td>$ {{ number_format($cotizacion->DocCotizacion->Asignaciones->base2_proveedor, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->base_factura, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->iva, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->retencion, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->base_taref, 2, '.', ',')}}</td>
                                 <td>
                                     @php
-                                        $total_oficial = ($cotizacion->DocCotizacion->Asignaciones->base1_proveedor + $cotizacion->DocCotizacion->Asignaciones->iva) - $cotizacion->DocCotizacion->Asignaciones->retencion;
+                                        $total_oficial = ($cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
                                     @endphp
                                     $ {{ number_format($total_oficial, 2, '.', ',')}}
                                 </td>
                                 <td>
                                     @php
-                                        $total_no_ofi = $cotizacion->DocCotizacion->Asignaciones->total_proveedor - $cotizacion->DocCotizacion->Asignaciones->base1_proveedor - $cotizacion->DocCotizacion->Asignaciones->iva + $cotizacion->DocCotizacion->Asignaciones->retencion;
+                                        $total_no_ofi = $cotizacion->total - $cotizacion->base_factura - $cotizacion->iva + $cotizacion->retencion;
                                     @endphp
                                     $ {{ number_format($total_no_ofi, 2, '.', ',')}}</td>
                                 <td>
@@ -167,8 +167,11 @@
 
                                         // Calcula los totales por proveedor
                                         foreach ($cotizacionesProveedor as $cotizacion) {
-                                            $cuenta_1 = $cotizacion->DocCotizacion->Asignaciones->base1_proveedor + $cotizacion->DocCotizacion->Asignaciones->iva - $cotizacion->DocCotizacion->Asignaciones->retencion;
-                                            $cuenta_2 = $cotizacion->DocCotizacion->Asignaciones->total_proveedor - $cotizacion->DocCotizacion->Asignaciones->base1_proveedor - $cotizacion->DocCotizacion->Asignaciones->iva + $cotizacion->DocCotizacion->Asignaciones->retencion;
+                                            $total_oficial = ($cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
+                                            $base_taref = $cotizacion->total - $cotizacion->base_factura - $cotizacion->iva + $cotizacion->retencion;
+
+                                            $cuenta_1 = $cotizacion->DocCotizacion->Asignaciones->base_factura + $cotizacion->DocCotizacion->Asignaciones->iva - $cotizacion->DocCotizacion->Asignaciones->retencion;
+                                            $cuenta_2 = $cotizacion->DocCotizacion->Asignaciones->total - $cotizacion->DocCotizacion->Asignaciones->base_factura - $cotizacion->DocCotizacion->Asignaciones->iva + $cotizacion->DocCotizacion->Asignaciones->retencion;
 
                                             $totalCuenta1 += $cuenta_1;
                                             $totalCuenta2 += $cuenta_2;
@@ -178,16 +181,16 @@
                                 <tr>
                                     @foreach ($proveedor->CuentasBancarias as $cuenta)
                                         <td>
-                                            <p>Cuenta #{{ $contador }}</p>
-                                            <p>Beneficiario: <b>{{ $cuenta->nombre_beneficiario }}</b></p>
-                                            <p>Banco: <b>{{ $cuenta->nombre_banco }}</b></p>
-                                            <p>Cuenta: <b>{{ $cuenta->cuenta_bancaria }}</b></p>
-                                            <p>Clave: <b>{{ $cuenta->cuenta_clabe }}</b></p>
+                                            Cuenta #{{ $contador }} <br>
+                                            Beneficiario: <b>{{ $cuenta->nombre_beneficiario }}</b><br>
+                                            Banco: <b>{{ $cuenta->nombre_banco }}</b><br>
+                                            Cuenta: <b>{{ $cuenta->cuenta_bancaria }}</b><br>
+                                           <p>Clave: <b>{{ $cuenta->cuenta_clabe }}</b></p>
                                             @if ($contador == 1)
-                                                <p class="sin_espacios2">A pagar:<b>${{ number_format($totalCuenta1, 2, '.', ',') }}</b></p>
+                                                <p class="sin_espacios2">A pagar:<b>${{ number_format($totalCuenta1, 2, '.', ',') }}</b>
                                             @endif
                                             @if ($contador == 2)
-                                                <p class="sin_espacios2">A pagar:<b>${{ number_format($totalCuenta2, 2, '.', ',') }}</b></p>
+                                                <p class="sin_espacios2">A pagar:<b>${{ number_format($totalCuenta2, 2, '.', ',') }}</b>
                                             @endif
                                         </td>
                                         @php

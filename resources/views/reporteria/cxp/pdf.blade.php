@@ -86,17 +86,20 @@
                         @php
                             $totalBaseFactura = 0;
                             $totalImporteVTA = 0;
+                            $base_factura = 0;
                         @endphp
 
                     @foreach ($cotizaciones as $item)
                         @php
-                            $total_oficial = ($item->burreo + $item->estadia + $item->otro + $item->iva + $item->precio) - $item->retencion;
-                            $base_factura = ($item->Contenedor->Cotizacion->base_factura + $item->iva) - $item->retencion;
-                            $importe_vta = $total_oficial - $base_factura;
+                            $total_oficial = ($item->base1_proveedor + $item->iva) - $item->retencion;
+                            $base_factura = $item->total_proveedor - $item->base1_proveedor - $item->iva + $item->retencion;
 
-                            $importeCT += $total_oficial;
-                            $pagar1 += $base_factura;
-                            $pagar2 += $importe_vta;
+                            $importe_vta = $base_factura - $total_oficial;
+                            $suma_importeCT = $base_factura + $total_oficial;
+
+                            $importeCT += $suma_importeCT;
+                            $pagar1 += $total_oficial;
+                            $pagar2 += $base_factura;
 
                             $totalBaseFactura += $base_factura;
                             $totalImporteVTA += $importe_vta;
@@ -104,12 +107,12 @@
                         <tr>
                             <td>{{ $cotizacion->Proveedor->nombre }}</td>
                             <td>{{ $item->Contenedor->num_contenedor }}</td>
+                            <td>${{ number_format($importe_vta, 2, '.', ',') }}</td>
                             <td>${{ number_format($total_oficial, 2, '.', ',') }}</td>
                             <td>${{ number_format($base_factura, 2, '.', ',') }}</td>
-                            <td>${{ number_format($importe_vta, 2, '.', ',') }}</td>
                             <td>${{ number_format($item->retencion, 2, '.', ',') }}</td>
                             <td>${{ number_format($item->iva, 2, '.', ',') }}</td>
-                            <td>${{ number_format($item->Contenedor->Cotizacion->base_factura, 2, '.', ',') }}</td>
+                            <td>${{ number_format($item->base1_proveedor, 2, '.', ',') }}</td>
                             <td>${{ number_format($item->precio, 2, '.', ',') }}</td>
                             <td>${{ number_format($item->otro, 2, '.', ',') }}</td>
                             {{-- <td>${{ number_format($item->Contenedor->item->precio_tonelada, 2, '.', ',') }}</td> --}}
@@ -129,10 +132,10 @@
                     <tr>
                         @foreach ($cotizacion->Proveedor->CuentasBancarias as $cuentas)
                             <td>
-                                <p>Cuenta #{{ $contador }}</p>
-                                <p>Beneficiario: <b> {{ $cuentas->nombre_beneficiario }} </b></p>
-                                <p>Banco: <b> {{ $cuentas->nombre_banco }} </b></p>
-                                <p>Cuenta: <b> {{ $cuentas->cuenta_bancaria }}</b></p>
+                                Cuenta #{{ $contador }}
+                                Beneficiario: <b> {{ $cuentas->nombre_beneficiario }} </b>
+                                Banco: <b> {{ $cuentas->nombre_banco }} </b>
+                                Cuenta: <b> {{ $cuentas->cuenta_bancaria }}</b>
                                 <p>Clave: <b> {{ $cuentas->cuenta_clabe }}</b></p>
                                 @if ($contador == 1)
                                     <h4 class="sin_espacios2">A pagar: ${{ number_format($totalBaseFactura, 2, '.', ',') }}<b></b></h4>
