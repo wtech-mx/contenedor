@@ -43,7 +43,8 @@ class ReporteriaController extends Controller
         $cotizaciones = [];
 
         if ($id_client !== null) {
-            $query = Cotizaciones::where('id_cliente', $id_client)
+            $query = Cotizaciones::where('id_empresa' ,'=',auth()->user()->id_empresa)
+            ->where('id_cliente', $id_client)
                 ->where(function($query){
                     $query->where('estatus', '=', 'Aprobada')
                           ->orWhere('estatus', '=', 'Finalizado');
@@ -109,6 +110,7 @@ class ReporteriaController extends Controller
         if ($id_proveedor !== null) {
             $cotizaciones = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
             ->join('asignaciones', 'docum_cotizacion.id', '=', 'asignaciones.id_contenedor')
+            ->where('cotizaciones.id_empresa' ,'=',auth()->user()->id_empresa)
             ->where('asignaciones.id_camion', '=', NULL)
             ->where(function($query) {
                 $query->where('cotizaciones.estatus', '=', 'Aprobada')
