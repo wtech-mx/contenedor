@@ -138,10 +138,10 @@
                                 Cuenta: <b> {{ $cuentas->cuenta_bancaria }}</b><br>
                                 <p>Clave: <b> {{ $cuentas->cuenta_clabe }}</b></p>
                                 @if ($contador == 1)
-                                    <h4 class="sin_espacios2">A pagar: ${{ number_format($totalBaseFactura, 2, '.', ',') }}<b></b></h4>
+                                    <h4 class="sin_espacios2">A pagar: ${{ number_format($pagar1, 2, '.', ',') }}<b></b></h4>
                                 @endif
                                 @if ($contador == 2)
-                                    <h4 class="sin_espacios2">A pagar: ${{ number_format($totalImporteVTA, 2, '.', ',') }}<b></b></h4>
+                                    <h4 class="sin_espacios2">A pagar: ${{ number_format($pagar2, 2, '.', ',') }}<b></b></h4>
                                 @endif
                                 @php
                                     $contador++;
