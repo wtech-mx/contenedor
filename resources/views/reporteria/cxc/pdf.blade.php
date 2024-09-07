@@ -170,8 +170,8 @@
                                             $total_oficial = ($cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
                                             $base_taref = $cotizacion->total - $cotizacion->base_factura - $cotizacion->iva + $cotizacion->retencion;
 
-                                            $cuenta_1 = $cotizacion->DocCotizacion->Asignaciones->base_factura + $cotizacion->DocCotizacion->Asignaciones->iva - $cotizacion->DocCotizacion->Asignaciones->retencion;
-                                            $cuenta_2 = $cotizacion->DocCotizacion->Asignaciones->total - $cotizacion->DocCotizacion->Asignaciones->base_factura - $cotizacion->DocCotizacion->Asignaciones->iva + $cotizacion->DocCotizacion->Asignaciones->retencion;
+                                            $cuenta_1 = $cotizacion->base_factura + $cotizacion->iva - $cotizacion->retencion;
+                                            $cuenta_2 = $cotizacion->total - $cotizacion->base_factura - $cotizacion->iva + $cotizacion->retencion;
 
                                             $totalCuenta1 += $cuenta_1;
                                             $totalCuenta2 += $cuenta_2;
