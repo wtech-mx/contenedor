@@ -42,6 +42,17 @@
             font-size: 10px;
         }
 
+        .margin_cero{
+            padding: 0;
+            margin: 0;
+            font-size: 15px;
+        }
+        .contianer{
+            padding: 0;
+            margin: -40px;
+        }
+
+
     </style>
     <head>
         <title>Cuentas por pagar</title>
@@ -54,17 +65,17 @@
             $pagar2 = 0;
         @endphp
 
-            <div class="contianer sin_margem" style="position: relative">
+            <div class="contianer sin_margem" style="margin: -40px;">
                 <h4 class="sin_espacios2">Empresa: {{ $user->Empresa->nombre }}</h4>
                 <h4 class="sin_espacios2">Estado de cuenta</h4>
                 <h4 class="sin_espacios2">Proveedor: {{ $cotizacion->Proveedor->nombre }}</h4>
             </div>
 
             <div class="contianer sin_margem" style="position: relative">
-                <h5 style="position: absolute;left:75%;">Estado de cuenta por pagar : {{ date("d-m-Y") }}</h5><br>
+                <h5 style="position: absolute;left:75%;top:-5%;">Estado de cuenta por pagar : {{ date("d-m-Y") }}</h5><br>
             </div>
 
-            <table class="table text-white tabla-completa" style="color: #000;width: 100%;padding: 30px; font-size: 12px">
+            <table class="table text-white tabla-completa" style="color: #000;width: 100%;padding: 5px; font-size: 12px">
                 <thead>
                     <tr>
                         <th>Contratista</th>
@@ -124,16 +135,16 @@
             </table>
 
             <h3 class="sin_margem" style="color: #fff; background: rgb(24, 192, 141);">Contratista</h3>
-            <table class="table text-white tabla-completa sin_margem" style="color: #000;width: 100%;padding: 30px; font-size: 12px">
-                <tbody style="text-align: center;font-size: 100%;">
+            <table class="table text-white tabla-completa sin_margem" style="color: #000;width: 100%;padding: 5px; font-size: 12px;margin-top:5px">
+                <tbody style="text-align: left;font-size: 100%;">
                     @php
                         $contador = 1;
                     @endphp
                     <tr>
                         @foreach ($cotizacion->Proveedor->CuentasBancarias as $cuentas)
-                            <td>
+                            <td style="padding: 0; margin: 0; border: none;display:inline-block;">
                                 Cuenta #{{ $contador }}
-                                Beneficiario: <b> {{ $cuentas->nombre_beneficiario }} </b><br>
+                                Beneficiario: <br> <b> {{ $cuentas->nombre_beneficiario }} </b><br>
                                 Banco: <b> {{ $cuentas->nombre_banco }} </b><br>
                                 Cuenta: <b> {{ $cuentas->cuenta_bancaria }}</b><br>
                                 <p>Clave: <b> {{ $cuentas->cuenta_clabe }}</b></p>

@@ -167,7 +167,7 @@
                     var a = document.createElement('a');
                     a.style.display = 'none';
                     a.href = url;
-                    a.download = 'cotizaciones_seleccionadas.pdf';
+                    a.download = 'Cuentas_por_coborar_{{  date('d-m-Y'); }}.pdf';
                     document.body.appendChild(a);
 
                     // Simular el clic en el enlace para iniciar la descarga

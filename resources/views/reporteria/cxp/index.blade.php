@@ -52,7 +52,7 @@
                                 <form id="exportForm" action="{{ route('cotizaciones_cxp.export') }}" method="POST">
                                     @csrf
                                     @if(Route::currentRouteName() != 'index_cxp.reporteria')
-                                        <h3> {{$proveedor_cxp->nombre}} </h3>
+                                        <h3> {{$proveedor->nombre}} </h3>
                                     @endif
                                     <table class="table table-flush" id="datatable-search">
                                         <thead class="thead">
@@ -166,7 +166,7 @@
                     var a = document.createElement('a');
                     a.style.display = 'none';
                     a.href = url;
-                    a.download = 'cotizaciones_seleccionadas.pdf';
+                    a.download = 'Cuentas_por_pagar_{{  date('d-m-Y'); }}.pdf';
                     document.body.appendChild(a);
 
                     // Simular el clic en el enlace para iniciar la descarga

@@ -30,9 +30,14 @@
             margin: 0;
             font-size: 15px;
         }
+        .contianer{
+            padding: 0;
+            margin: -40px;
+        }
+
     </style>
     <head>
-        <title>Cotizaciones Seleccionadas</title>
+        <title>Cuentas por coborar</title>
     </head>
 
     <body>
@@ -48,11 +53,12 @@
                     <h4 class="margin_cero">Estado de cuenta</h4>
                     <h4 class="margin_cero">Cliente: {{ $cotizacion->Cliente->nombre }}</h4>
                 </div>
+
                 <div class="contianer" style="position: relative">
-                    <h5 style="position: absolute;left:88%;">Generado el : {{ date("d-m-Y") }}</h5><br>
+                    <h5 style="position: absolute;left:80%;top:-5%;">Generado el : {{ date("d-m-Y") }}</h5><br>
                 </div>
 
-                <table class="table text-white tabla-completa"  style="color: #000;width: 100%;padding: 30px; margin: 6px; font-size: 12px">
+                <table class="table text-white tabla-completa"  style="color: #000;width: 100%;padding: 10px; margin: 0px; font-size: 12px">
                     <thead>
                         <tr>
                             <th>Contratista</th>
@@ -148,60 +154,58 @@
                     $cotizacionesPorProveedor = $cotizaciones->groupBy('DocCotizacion.Asignaciones.id_proveedor');
                 @endphp
 
-                @foreach ($proveedoresConCuentas as $proveedor)
-                    <h3>Proveedor: {{ $proveedor->nombre }}</h3>
+<table class="table text-white tabla-completa sin_margem" style="color: #000;width: 100%;padding: 0px; font-size: 12px; border-collapse: collapse;">
+    <tbody style="text-align: left;font-size: 100%;">
+        <tr>
+            @foreach ($proveedoresConCuentas as $proveedor)
+                <td style="padding: 0; margin: 0; border: none;display:inline-block;">
+                    <h3 style="margin: 10px; padding: 10px;">Proveedor: {{ $proveedor->nombre }}</h3>
                     @if ($proveedor->CuentasBancarias->isEmpty())
-                        <p>No hay cuentas bancarias registradas para este proveedor.</p>
+                    <p style="margin: 0; padding: 0;">No hay cuentas bancarias registradas para este proveedor.</p>
                     @else
-                        <table class="table text-white tabla-completa sin_margem" style="color: #000;width: 100%;padding: 30px; font-size: 12px">
-                            <tbody style="text-align: center;font-size: 100%;">
-                                @php
-                                    $contador = 1;
-
-                                    $totalCuenta1 = 0;
-                                    $totalCuenta2 = 0;
-
-                                    // Revisa si hay cotizaciones para este proveedor
-                                    if (isset($cotizacionesPorProveedor[$proveedor->id])) {
-                                        $cotizacionesProveedor = $cotizacionesPorProveedor[$proveedor->id];
-
-                                        // Calcula los totales por proveedor
-                                        foreach ($cotizacionesProveedor as $cotizacion) {
-                                            $total_oficial = ($cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
-                                            $base_taref = $cotizacion->total - $cotizacion->base_factura - $cotizacion->iva + $cotizacion->retencion;
-
-                                            $cuenta_1 = $cotizacion->base_factura + $cotizacion->iva - $cotizacion->retencion;
-                                            $cuenta_2 = $cotizacion->total - $cotizacion->base_factura - $cotizacion->iva + $cotizacion->retencion;
-
-                                            $totalCuenta1 += $cuenta_1;
-                                            $totalCuenta2 += $cuenta_2;
-                                        }
+                        <table style="width: 100%; font-size: 12px; margin-bottom: 0; border-collapse: collapse;">
+                            @php
+                                $contador = 1;
+                                $totalCuenta1 = 0;
+                                $totalCuenta2 = 0;
+                                if (isset($cotizacionesPorProveedor[$proveedor->id])) {
+                                    $cotizacionesProveedor = $cotizacionesPorProveedor[$proveedor->id];
+                                    foreach ($cotizacionesProveedor as $cotizacion) {
+                                        $cuenta_1 = $cotizacion->base_factura + $cotizacion->iva - $cotizacion->retencion;
+                                        $cuenta_2 = $cotizacion->total - $cotizacion->base_factura - $cotizacion->iva + $cotizacion->retencion;
+                                        $totalCuenta1 += $cuenta_1;
+                                        $totalCuenta2 += $cuenta_2;
                                     }
-                                @endphp
-                                <tr>
-                                    @foreach ($proveedor->CuentasBancarias as $cuenta)
-                                        <td>
-                                            Cuenta #{{ $contador }} <br>
-                                            Beneficiario: <b>{{ $cuenta->nombre_beneficiario }}</b><br>
-                                            Banco: <b>{{ $cuenta->nombre_banco }}</b><br>
-                                            Cuenta: <b>{{ $cuenta->cuenta_bancaria }}</b><br>
-                                           <p>Clave: <b>{{ $cuenta->cuenta_clabe }}</b></p>
-                                            @if ($contador == 1)
-                                                <p class="sin_espacios2">A pagar:<b>${{ number_format($totalCuenta1, 2, '.', ',') }}</b>
-                                            @endif
-                                            @if ($contador == 2)
-                                                <p class="sin_espacios2">A pagar:<b>${{ number_format($totalCuenta2, 2, '.', ',') }}</b>
-                                            @endif
-                                        </td>
-                                        @php
-                                            $contador++;
-                                        @endphp
-                                    @endforeach
-                                </tr>
-                            </tbody>
+                                }
+                            @endphp
+                            <tr>
+                                @foreach ($proveedor->CuentasBancarias as $cuenta)
+                                    <td style="padding: 0 5px; margin: 0; border: none;display:inline-block;">
+                                        Cuenta #{{ $contador }}<br>
+                                        Beneficiario: <br> <b>{{ $cuenta->nombre_beneficiario }}</b><br>
+                                        Banco: <b>{{ $cuenta->nombre_banco }}</b><br>
+                                        Cuenta: <b>{{ $cuenta->cuenta_bancaria }}</b><br>
+                                        Clave: <b>{{ $cuenta->cuenta_clabe }}</b><br>
+                                        @if ($contador == 1)
+                                            A pagar: <b>${{ number_format($totalCuenta1, 2, '.', ',') }}</b>
+                                        @elseif ($contador == 2)
+                                            A pagar: <b>${{ number_format($totalCuenta2, 2, '.', ',') }}</b>
+                                        @endif
+                                    </td>
+                                    @php
+                                        $contador++;
+                                    @endphp
+                                @endforeach
+                            </tr>
                         </table>
                     @endif
-                @endforeach
+                </td>
+            @endforeach
+        </tr>
+    </tbody>
+</table>
+
+
 
         <div class="totales">
             <h3 class="margin_cero" style="color: #000000; background: rgb(0, 174, 255);">Totales</h3>
