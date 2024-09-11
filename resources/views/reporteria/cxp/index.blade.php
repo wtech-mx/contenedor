@@ -141,7 +141,9 @@
             }
         });
 
-        $('#exportButton').on('click', function() {
+        $('#exportButton').on('click', function(event) {
+            event.preventDefault(); // Evita el comportamiento predeterminado del formulario
+
             const selectedIds = table.rows('.selected').data().toArray().map(row => row[1]); // Obtener los IDs seleccionados
 
             console.log(selectedIds); // Verificar en la consola del navegador
@@ -155,8 +157,8 @@
                     selected_ids: selectedIds
                 },
                 xhrFields: {
-                        responseType: 'blob' // Indicar que esperamos una respuesta tipo blob (archivo)
-                    },
+                    responseType: 'blob' // Indicar que esperamos una respuesta tipo blob (archivo)
+                },
                 success: function(response) {
                     // Crear un objeto URL del blob recibido
                     var blob = new Blob([response], { type: 'application/pdf' });
@@ -166,7 +168,7 @@
                     var a = document.createElement('a');
                     a.style.display = 'none';
                     a.href = url;
-                    a.download = 'Cuentas_por_pagar_{{  date('d-m-Y'); }}.pdf';
+                    a.download = 'Cuentas_por_pagar_{{ date('d-m-Y') }}.pdf';
                     document.body.appendChild(a);
 
                     // Simular el clic en el enlace para iniciar la descarga
@@ -174,12 +176,9 @@
 
                     // Limpiar después de la descarga
                     window.URL.revokeObjectURL(url);
-
-                    // Alerta opcional para indicar que se ha descargado correctamente
-                    alert('El archivo se ha descargado correctamente.');
-
-                    // Opcional: eliminar el elemento <a> después de la descarga
                     document.body.removeChild(a);
+
+                    alert('El archivo se ha descargado correctamente.');
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -187,6 +186,7 @@
                 }
             });
         });
+
     });
 
     </script>

@@ -95,11 +95,11 @@
                                 $importeVtaSum += $importe_vta;
                             @endphp
                             <tr>
-                                @if ($cotizacion->DocCotizacion->Asignaciones->id_proveedor == NULL)
-                                    <td>-</td>
-                                @else
-                                    <td>{{ $cotizacion->DocCotizacion->Asignaciones->Proveedor->nombre }}</td>
-                                @endif
+                                @if (optional($cotizacion->DocCotizacion->Asignaciones)->id_proveedor == NULL)
+                                <td>-</td>
+                            @else
+                                <td>{{ optional($cotizacion->DocCotizacion->Asignaciones->Proveedor)->nombre }}</td>
+                            @endif
                                 <td>{{ $cotizacion->DocCotizacion->num_contenedor }}</td>
                                 <td style="color: #020202; background: yellow;">
                                     @if ($cotizacion->id_subcliente != NULL)
