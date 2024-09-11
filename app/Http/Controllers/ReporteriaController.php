@@ -215,9 +215,9 @@ class ReporteriaController extends Controller
         $fechaCarbon = Carbon::parse($fecha);
 
         $cotizacionIds = $request->input('cotizacion_ids', []);
-        if (empty($cotizacionIds)) {
-            return redirect()->back()->with('error', 'No se seleccionaron cotizaciones.');
-        }
+        // if (empty($cotizacionIds)) {
+        //     return redirect()->back()->with('error', 'No se seleccionaron cotizaciones.');
+        // }
 
         $cotizaciones = Asignaciones::whereIn('id', $cotizacionIds)->get();
         $bancos_oficiales = Bancos::where('tipo', '=', 'Oficial')->get();
