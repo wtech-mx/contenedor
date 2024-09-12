@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="contianer" style="position: relative">
-                    <h5 style="position: absolute;left:80%;top:-5%;">Generado el : {{ date("d-m-Y") }}</h5><br>
+                    <h5 style="position: absolute;left:80%;top:-5%;">Cuentas por Cobrar : {{ date("d-m-Y") }}</h5><br>
                 </div>
 
                 <table class="table text-white tabla-completa"  style="color: #000;width: 100%;padding: 10px; margin: 0px; font-size: 12px">
