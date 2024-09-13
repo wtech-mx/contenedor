@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asignaciones;
+use App\Models\BancoDinero;
 use App\Models\Bancos;
 use App\Models\Client;
 use App\Models\Cotizaciones;
@@ -58,7 +59,7 @@ class ReporteriaController extends Controller
             $cotizaciones = $query->get();
         }
 
-        return view('reporteria.cxc.index', compact('clientes', 'cotizaciones',));
+        return view('reporteria.cxc.index', compact('clientes', 'cotizaciones'));
     }
 
     public function getSubclientes($clienteId){
@@ -375,5 +376,178 @@ class ReporteriaController extends Controller
         $pdf = PDF::loadView('reporteria.documentos.pdf', compact('cotizaciones', 'fechaCarbon', 'cotizacion', 'user'))->setPaper('a4', 'landscape');
         return $pdf->stream();
         // return $pdf->download('cotizaciones_seleccionadas.pdf');
+    }
+
+    // ==================== L I Q U I D A D O S CXC ====================
+    public function index_liquidados_cxc(){
+
+        $clientes = Client::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
+
+        $subclientes = Subclientes::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
+
+        return view('reporteria.liquidados.cxc.index', compact('clientes', 'subclientes'));
+    }
+
+    public function advance_liquidados_cxc(Request $request) {
+
+        $clientes = Client::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
+
+        $proveedores = Proveedor::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
+
+
+        $id_client = $request->id_client;
+        $id_subcliente = $request->id_subcliente;
+
+        $cotizaciones = [];
+
+        if ($id_client !== null) {
+            $query = Cotizaciones::where('id_empresa', '=', auth()->user()->id_empresa)
+                ->where('id_cliente', $id_client)
+                ->where(function ($query) {
+                    $query->where('estatus', '=', 'Aprobada')
+                        ->orWhere('estatus', '=', 'Finalizado');
+                })
+                ->where('restante', '<=', 0);
+
+            if ($id_subcliente !== null && $id_subcliente !== '') {
+                $query->where('id_subcliente', $id_subcliente);
+            }
+
+            $cotizaciones = $query->get();
+
+            // Obtener los números de contenedor de las cotizaciones seleccionadas
+            $contenedores = $cotizaciones->pluck('DocCotizacion.num_contenedor')->toArray();
+
+            // Buscar en banco_dinero donde los contenedores contengan los números de las cotizaciones
+            $registrosBanco = BancoDinero::where('tipo', 'Entrada')
+            ->whereJsonContains('contenedores', function ($query) use ($contenedores) {
+                foreach ($contenedores as $contenedor) {
+                    $query->orWhereJsonContains('contenedores->num_contenedor', $contenedor);
+                }
+            })->get();
+        }
+
+        return view('reporteria.liquidados.cxc.index', compact('clientes', 'cotizaciones', 'registrosBanco'));
+    }
+
+    public function export_liquidados_cxc(Request $request)
+    {
+        $fecha = date('Y-m-d');
+        $fechaCarbon = Carbon::parse($fecha);
+
+        // Obtener los IDs de cotizaciones seleccionadas desde la solicitud
+        $cotizacionIds = $request->input('selected_ids', []);
+        if (empty($cotizacionIds)) {
+            return redirect()->back()->with('error', 'No se seleccionaron cotizaciones.');
+        }
+
+        // Obtener las cotizaciones seleccionadas
+        $cotizaciones = Cotizaciones::whereIn('id', $cotizacionIds)->get();
+
+        // Obtener los números de contenedor de las cotizaciones seleccionadas
+        $contenedores = $cotizaciones->pluck('DocCotizacion.num_contenedor')->toArray();
+
+        // Obtener los registros de BancoDinero con tipo 'Entrada' relacionados a los números de contenedor
+        $registrosBanco = BancoDinero::where('tipo', 'Entrada')
+            ->whereJsonContains('contenedores', function ($query) use ($contenedores) {
+                foreach ($contenedores as $contenedor) {
+                    $query->orWhereJsonContains('contenedores->num_contenedor', $contenedor);
+                }
+            })->get();
+
+        $bancos_oficiales = Bancos::where('tipo', '=', 'Oficial')->get();
+        $bancos_no_oficiales = Bancos::where('tipo', '=', 'No Oficial')->get();
+        $user = User::where('id', '=', auth()->user()->id)->first();
+        $cotizacion_first = Cotizaciones::where('id', $cotizacionIds)->first();
+        // Generar el PDF con los datos necesarios
+        $pdf = PDF::loadView('reporteria.liquidados.cxc.pdf', compact('cotizaciones', 'fechaCarbon', 'bancos_oficiales', 'bancos_no_oficiales', 'registrosBanco', 'user', 'cotizacion_first'))
+            ->setPaper([0, 0, 595, 1200], 'landscape');
+
+        // Generar el nombre del archivo
+        $fileName = 'cxc_' . implode('_', $cotizacionIds) . '.pdf';
+
+        // Guardar el PDF en la carpeta storage
+        $pdf->save(storage_path('app/public/' . $fileName));
+
+        // Devolver el archivo PDF como respuesta
+        $filePath = storage_path('app/public/' . $fileName);
+        return Response::download($filePath, $fileName)->deleteFileAfterSend(true);
+    }
+
+    // ==================== L I Q U I D A D O S CXP ====================
+
+    public function index_liquidados_cxp(){
+
+        $proveedores = Proveedor::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
+
+        return view('reporteria.liquidados.cxp.index', compact('proveedores'));
+    }
+
+    public function advance_liquidados_cxp(Request $request) {
+
+        $proveedores = Proveedor::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
+        $id_proveedor = $request->id_proveedor;
+
+        if ($id_proveedor !== null) {
+            $cotizaciones = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
+            ->join('asignaciones', 'docum_cotizacion.id', '=', 'asignaciones.id_contenedor')
+            ->where('cotizaciones.id_empresa' ,'=',auth()->user()->id_empresa)
+            ->where('asignaciones.id_camion', '=', NULL)
+            ->where(function($query) {
+                $query->where('cotizaciones.estatus', '=', 'Aprobada')
+                    ->orWhere('cotizaciones.estatus', '=', 'Finalizado');
+            })
+            ->where('asignaciones.id_proveedor', '=', $id_proveedor)
+            ->where('cotizaciones.prove_restante', '=', 0)
+            ->select('asignaciones.*', 'docum_cotizacion.num_contenedor', 'docum_cotizacion.id_cotizacion', 'cotizaciones.origen', 'cotizaciones.destino', 'cotizaciones.estatus', 'cotizaciones.prove_restante')
+            ->get();
+            $proveedor_cxp = Proveedor::where('id', '=', $request->id_proveedor)->first();
+        }
+
+        return view('reporteria.liquidados.cxp.index', compact('proveedores', 'cotizaciones', 'proveedor_cxp'));
+    }
+
+    public function export_liquidados_cxp(Request $request)
+    {
+        $fecha = date('Y-m-d');
+        $fechaCarbon = Carbon::parse($fecha);
+
+        $cotizacionIds = $request->input('selected_ids', []);
+        if (empty($cotizacionIds)) {
+            return redirect()->back()->with('error', 'No se seleccionaron cotizaciones.');
+        }
+
+        // Obtener las cotizaciones seleccionadas
+        $cotizaciones = Asignaciones::whereIn('id', $cotizacionIds)->get();
+
+        // Obtener los números de contenedor relacionados a las cotizaciones seleccionadas
+        $contenedores = $cotizaciones->pluck('DocumCotizacion.num_contenedor')->toArray();
+
+        // Obtener los registros de BancoDinero con tipo 'Salida' relacionados a los números de contenedor
+        $registrosBanco = BancoDinero::where('tipo', 'Salida')
+            ->whereJsonContains('contenedores', function ($query) use ($contenedores) {
+                foreach ($contenedores as $contenedor) {
+                    $query->orWhereJsonContains('contenedores->num_contenedor', $contenedor);
+                }
+            })->get();
+
+        $bancos_oficiales = Bancos::where('tipo', '=', 'Oficial')->get();
+        $bancos_no_oficiales = Bancos::where('tipo', '=', 'No Oficial')->get();
+
+        $user = User::where('id', '=', auth()->user()->id)->first();
+        $cotizacion = Asignaciones::where('id', $cotizacionIds)->first();
+
+        // Generar el PDF con los datos necesarios
+        $pdf = PDF::loadView('reporteria.liquidados.cxp.pdf', compact('cotizaciones', 'fechaCarbon', 'bancos_oficiales', 'bancos_no_oficiales', 'registrosBanco', 'user', 'cotizacion'))
+            ->setPaper('a4', 'landscape');
+
+        $fileName = 'cxp_' . implode('_', $cotizacionIds) . '.pdf';
+
+        // Guardar el PDF en la carpeta storage
+        $pdf->save(storage_path('app/public/' . $fileName));
+
+        // Devolver el archivo PDF como respuesta
+        $filePath = storage_path('app/public/' . $fileName);
+        return Response::download($filePath, $fileName)->deleteFileAfterSend(true);
     }
 }

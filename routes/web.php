@@ -154,6 +154,13 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('reporteria/documentos/buscador', [App\Http\Controllers\ReporteriaController::class, 'advance_documentos'])->name('advance_documentos.buscador');
     Route::post('reporteria/documentos/export', [App\Http\Controllers\ReporteriaController::class, 'export_documentos'])->name('export_documentos.export');
 
+    Route::get('reporteria/liquidados/cxc', [App\Http\Controllers\ReporteriaController::class, 'index_liquidados_cxc'])->name('index_liquidados_cxc.reporteria');
+    Route::get('reporteria/liquidados/cxc/buscador', [App\Http\Controllers\ReporteriaController::class, 'advance_liquidados_cxc'])->name('advance_liquidados.buscador');
+    Route::post('reporteria/liquidados/cxc/export', [App\Http\Controllers\ReporteriaController::class, 'export_liquidados_cxc'])->name('liquidados_cxc.export');
+
+    Route::get('reporteria/liquidados/cxp', [App\Http\Controllers\ReporteriaController::class, 'index_liquidados_cxp'])->name('index_liquidados_cxp.reporteria');
+    Route::get('reporteria/liquidados/cxp/buscador', [App\Http\Controllers\ReporteriaController::class, 'advance_liquidados_cxp'])->name('advance_liquidados_cxp.buscador');
+    Route::post('reporteria/liquidados/cxp/export', [App\Http\Controllers\ReporteriaController::class, 'export_liquidados_cxp'])->name('liquidados_cxp.export');
     // ==================== L I Q U I D A C I O N E S ====================
     Route::get('liquidaciones', [App\Http\Controllers\LiquidacionesController::class, 'index'])->name('index.liquidacion');
     Route::get('liquidaciones/show/{id}', [App\Http\Controllers\LiquidacionesController::class, 'show'])->name('show.liquidacion');

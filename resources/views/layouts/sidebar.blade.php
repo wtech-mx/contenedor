@@ -161,6 +161,16 @@
                             <span class="sidenav-mini-icon"> P </span>
                             <span class="sidenav-normal">Reporte de documentos</span>
                         </a>
+
+                        <a class="nav-link {{ (Request::is('reporteria/liquidados/cxc*') ? 'show' : '') }}" href="{{ route('index_liquidados_cxc.reporteria') }}">
+                            <span class="sidenav-mini-icon"> P </span>
+                            <span class="sidenav-normal">Liquidados cxc</span>
+                        </a>
+
+                        <a class="nav-link {{ (Request::is('reporteria/liquidados/cxp*') ? 'show' : '') }}" href="{{ route('index_liquidados_cxp.reporteria') }}">
+                            <span class="sidenav-mini-icon"> P </span>
+                            <span class="sidenav-normal">Liquidados cxp</span>
+                        </a>
                     </li>
                 </ul>
             </div>

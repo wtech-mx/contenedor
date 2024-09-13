@@ -72,6 +72,7 @@
                             <th>Sobre peso</th>
                             <th>Otro</th>
                             <th>Precio venta</th>
+                            <th>Precio viaje</th>
 
                             <th style="color: #000000; border-radius:3px; background: #56d1f7;">Base factura</th>
                             <th style="color: #000000; border-radius:3px; background: #56d1f7;">IVA</th>
@@ -116,6 +117,7 @@
                                 <td>$ {{ number_format($cotizacion->sobrepeso, 2, '.', ',')}}</td>
                                 <td>$ {{ number_format($cotizacion->otro, 2, '.', ',')}}</td>
                                 <td>$ {{ number_format($cotizacion->precio, 2, '.', ',')}}</td>
+                                <td>$ {{ number_format($cotizacion->precio_viaje, 2, '.', ',')}}</td>
 
                                 <td>$ {{ number_format($cotizacion->base_factura, 2, '.', ',')}}</td>
                                 <td>$ {{ number_format($cotizacion->iva, 2, '.', ',')}}</td>
