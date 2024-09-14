@@ -50,6 +50,7 @@ class ReporteriaController extends Controller
                     $query->where('estatus', '=', 'Aprobada')
                           ->orWhere('estatus', '=', 'Finalizado');
                 })
+                ->where('estatus_pago', '=', '0')
                 ->where('restante', '>', 0);
 
             if ($id_subcliente !== null && $id_subcliente !== '') {
