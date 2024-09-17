@@ -186,10 +186,10 @@ class ReporteriaController extends Controller
             $fin = Carbon::parse($request->fecha_hasta)->endOfDay();
 
             $asignaciones = $asignaciones->where(function($query) use ($inicio, $fin) {
-                $query->whereBetween('asignaciones.fecha_inicio', [$inicio, $fin])
+                $query->whereBetween('asignaciones.fehca_inicio_guard', [$inicio, $fin])
                       ->orWhere(function($query) use ($inicio, $fin) {
-                          $query->where('asignaciones.fecha_inicio', '>=', $inicio)
-                                ->where('asignaciones.fecha_inicio', '<=', $fin);
+                          $query->where('asignaciones.fehca_inicio_guard', '>=', $inicio)
+                                ->where('asignaciones.fehca_inicio_guard', '<=', $fin);
                       });
             });
 
