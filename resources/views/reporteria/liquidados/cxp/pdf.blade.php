@@ -85,6 +85,8 @@
                         <th>A pagar 2</th>
                         <th>Forma de Pago</th>
                         <th>Abono</th>
+                        <th>Fecha de planeación</th>
+                        <th>Fecha de pago</th>
                     </tr>
                 </thead>
                 <tbody style="text-align: center;font-size: 100%;">
@@ -142,6 +144,22 @@
                                 @endforeach
                                 {{ $item->Contenedor->Cotizacion->prove_monto1 }} <br>
                                 {{ $item->Contenedor->Cotizacion->prove_monto2 }}
+                            </td>
+                            <td>{{ \Carbon\Carbon::parse($item->fehca_inicio_guard)->translatedFormat('d F Y') }} <br>
+                                {{ \Carbon\Carbon::parse($item->fehca_fin_guard)->translatedFormat('d F Y') }}
+                            </td>
+                            <td>
+                                @foreach ($registrosBanco as $registro)
+                                    @php
+                                        $contenedores = json_decode($registro->contenedores, true);
+                                        $contenedorEncontrado = collect($contenedores)->firstWhere('num_contenedor', $item->Contenedor->num_contenedor);
+                                    @endphp
+
+                                    @if ($contenedorEncontrado)
+                                        {{ $registro->fecha_pago }} <br>
+                                    @endif
+                                @endforeach
+                                {{$item->Contenedor->Cotizacion->fecha_pago_proveedor}}
                             </td>
                         </tr>
                     @endforeach

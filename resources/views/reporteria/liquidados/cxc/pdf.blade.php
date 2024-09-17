@@ -34,7 +34,6 @@
             padding: 0;
             margin: -40px;
         }
-
     </style>
     <head>
         <title>Liquidados CxC</title>
@@ -63,17 +62,13 @@
                         <tr>
                             <th>Contratista</th>
                             <th>Contenedor</th>
-                            <th>Facturado a</th>
-                            <th>Destino</th>
-                            <th>Peso</th>
-                            <th>Tamaño contenedor</th>
-
                             <th style="color: #000000; border-radius:3px; background: yellow;">Total oficial</th>
                             <th style="color: #000000; border-radius:3px; background: #fb6340;">Total no oficial</th>
                             <th>Importe VTA</th>
-
                             <th>Forma de Pago</th>
                             <th>Abono</th>
+                            <th>Fecha de planeación</th>
+                            <th>Fecha de pago</th>
                         </tr>
                     </thead>
                     <tbody style="text-align: center;font-size: 100%;">
@@ -95,16 +90,6 @@
                                 <td>{{ optional($cotizacion->DocCotizacion->Asignaciones->Proveedor)->nombre }}</td>
                             @endif
                                 <td>{{ $cotizacion->DocCotizacion->num_contenedor }}</td>
-                                <td style="color: #020202; background: yellow;">
-                                    @if ($cotizacion->id_subcliente != NULL)
-                                    {{ $cotizacion->Subcliente->nombre }}
-                                    @else
-
-                                    @endif
-                                </td>
-                                <td style="color: #ffffff; background: #2778c4;">{{$cotizacion->destino}}</td>
-                                <td>{{$cotizacion->peso_contenedor}}</td>
-                                <td>{{$cotizacion->tamano}}</td>
                                 <td>
                                     @php
                                         $total_oficial = ($cotizacion->base_factura + $cotizacion->iva) - $cotizacion->retencion;
@@ -149,6 +134,22 @@
                                     @endforeach
                                     {{$cotizacion->monto1}}<br>
                                     {{$cotizacion->monto2}}
+                                </td>
+                                <td>{{ \Carbon\Carbon::parse($cotizacion->DocCotizacion->Asignaciones->fehca_inicio_guard)->translatedFormat('d F Y') }} <br>
+                                    {{ \Carbon\Carbon::parse($cotizacion->DocCotizacion->Asignaciones->fehca_fin_guard)->translatedFormat('d F Y') }}
+                                </td>
+                                <td>
+                                    @foreach ($registrosBanco as $registro)
+                                        @php
+                                            $contenedores = json_decode($registro->contenedores, true);
+                                            $contenedorEncontrado = collect($contenedores)->firstWhere('num_contenedor', $cotizacion->DocCotizacion->num_contenedor);
+                                        @endphp
+
+                                        @if ($contenedorEncontrado)
+                                            {{ $registro->fecha_pago }} <br>
+                                        @endif
+                                    @endforeach
+                                    {{$cotizacion->fecha_pago}}
                                 </td>
                             </tr>
                         @endforeach
