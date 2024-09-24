@@ -221,6 +221,26 @@
                                     </div>
                                 </div>
 
+                                <div class="col-6 form-group">
+                                    <label for="name">Base 1</label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <img src="{{ asset('img/icon/factura.png') }}" alt="" width="25px">
+                                        </span>
+                                        <input name="base_factura" id="base_factura_{{$cotizacion->id}}" type="float" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-6 form-group">
+                                    <label for="name">Base 2</label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <img src="{{ asset('img/icon/factura.png.webp') }}" alt="" width="25px">
+                                        </span>
+                                        <input name="base_taref" id="base_taref_{{$cotizacion->id}}" type="float" class="form-control">
+                                    </div>
+                                </div>
+
                                 <div class="col-4 form-group">
                                     <label for="name">Sobrepeso</label>
                                     <div class="input-group mb-3">

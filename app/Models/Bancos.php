@@ -19,6 +19,7 @@ class Bancos extends Model
         'cuenta_bancaria',
         'clabe',
         'saldo_inicial',
+        'saldo',
         'tipo',
         'id_empresa',
     ];

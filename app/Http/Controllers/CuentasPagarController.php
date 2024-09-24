@@ -29,15 +29,18 @@ class CuentasPagarController extends Controller
         ->pluck('cotizaciones.id');
 
         $cotizacionesPorCliente = Cotizaciones::whereIn('id', $cotizacionIds)
-            ->with(['DocCotizacion.Asignaciones.Proveedor']) // Carga las relaciones necesarias
-            ->get()
-            ->groupBy('DocCotizacion.Asignaciones.id_proveedor')
-            ->map(function ($group) {
-                return [
-                    'id_proveedor' => $group->first()->DocCotizacion->Asignaciones->id_proveedor,
-                    'total_cotizaciones' => $group->count(),
-                    'proveedor' => $group->first()->DocCotizacion->Asignaciones->Proveedor,
-                ];
+        ->with(['DocCotizacion.Asignaciones.Proveedor']) // Carga las relaciones necesarias
+        ->get()
+        ->groupBy('DocCotizacion.Asignaciones.id_proveedor')
+        ->map(function ($group) {
+            $totalRestante = $group->sum('prove_restante'); // Suma los valores de prove_restante
+
+            return [
+                'id_proveedor' => $group->first()->DocCotizacion->Asignaciones->id_proveedor,
+                'total_cotizaciones' => $group->count(),
+                'proveedor' => $group->first()->DocCotizacion->Asignaciones->Proveedor,
+                'total_restante_formateado' => number_format($totalRestante, 0, '.', ','), // Formatea la suma
+            ];
         });
         return view('cuentas_pagar.index', compact('cotizacionesPorCliente'));
     }

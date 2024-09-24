@@ -29,10 +29,11 @@ Cuentas Pagar
                             <table class="table table-striped table-hover table_id" id="datatable-search">
                                 <thead class="thead">
                                     <tr>
-										<th>Nombre</th>
-										<th>Telefono</th>
-										<th>Viajes a deber</th>
-                                        <th>Acciones</th>
+										<th><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px"> Nombre</th>
+										<th><img src="{{ asset('img/icon/phone.webp') }}" alt="" width="25px"> Telefono</th>
+										<th><img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px"> # Total de viajes</th>
+                                        <th><img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px"> Importe</th>
+                                        <th><img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px"> Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,6 +42,7 @@ Cuentas Pagar
 											<td>{{ $item['proveedor']->nombre }}</td>
 											<td>{{ $item['proveedor']->telefono }}</td>
 											<td>{{ $item['total_cotizaciones'] }}</td>
+                                            <td>${{ $item['total_restante_formateado'] }}</td>
                                             <td>
                                                 <a class="btn btn-xs btn-success" href="{{ route('show.pagar', $item['id_proveedor']) }}">
                                                     <i class="fa fa-fw fa-edit"></i> Ver

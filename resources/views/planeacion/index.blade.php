@@ -549,23 +549,42 @@ use Carbon\Carbon;
                 var cantidadsob = parseFloat($('#cantidad_sobrepeso_proveedor_' + cotizacionId).val()) || 0;
 
                 var sobre = cantidadsob * sobrepeso;
-
                 var total = precio + burreo + maniobra + estadia + otro + iva + sobre - retencion;
-
+                console.log('total', total);
                 $('#total_proveedor_' + cotizacionId).val(total.toFixed(2));
+            }
+
+            function calcularBaseTaref(cotizacionId) {
+                const total = parseFloat(document.getElementById('total_proveedor_' + cotizacionId).value) || 0;
+                const baseFactura = parseFloat(document.getElementById('base_factura_' + cotizacionId).value) || 0;
+                const iva = parseFloat(document.getElementById('iva_proveedor_' + cotizacionId).value) || 0;
+                const retencion = parseFloat(document.getElementById('retencion_proveedor_' + cotizacionId).value) || 0;
+
+                const baseTaref = (total - baseFactura - iva) + retencion;
+                console.log('baseTaref', baseTaref);
+                document.getElementById('base_taref_' + cotizacionId).value = baseTaref.toFixed(2);
             }
 
             @foreach($cotizaciones as $cotizacion)
                 (function(cotizacionId) {
+                    // Eventos para calcular el total
                     $('#precio_proveedor_' + cotizacionId + ', #burreo_proveedor_' + cotizacionId + ', #maniobra_proveedor_' + cotizacionId + ', #estadia_proveedor_' + cotizacionId + ', #otro_proveedor_' + cotizacionId + ', #iva_proveedor_' + cotizacionId + ', #sobrepeso_proveedor_' + cotizacionId + ', #retencion_proveedor_' + cotizacionId).on('input', function() {
                         calculateTotal(cotizacionId);
+                        calcularBaseTaref(cotizacionId);
                     });
 
-                    // Call calculateTotal on page load to set the initial value
+                    // Eventos para calcular base_taref
+                    $('#total_proveedor_' + cotizacionId + ', #base_factura_' + cotizacionId + ', #iva_proveedor_' + cotizacionId + ', #retencion_proveedor_' + cotizacionId).on('input', function() {
+                        calcularBaseTaref(cotizacionId);
+                    });
+
+                    // Llamar a las funciones al cargar la página
                     calculateTotal(cotizacionId);
+                    calcularBaseTaref(cotizacionId);
                 })('{{$cotizacion->id}}');
             @endforeach
         });
+
 
     </script>
 

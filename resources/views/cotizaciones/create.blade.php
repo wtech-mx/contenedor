@@ -405,6 +405,27 @@
 
             // Calcular sobrepeso inicialmente al cargar la página
             calcularSobrepeso();
+
+            // Función para calcular base_taref
+            function calcularBaseTaref() {
+                // Obtener los valores de los inputs
+                const total = parseFloat(document.getElementById('total').value) || 0;
+                const baseFactura = parseFloat(document.getElementById('base_factura').value) || 0;
+                const iva = parseFloat(document.getElementById('iva').value) || 0;
+                const retencion = parseFloat(document.getElementById('retencion').value) || 0;
+
+                // Realizar el cálculo
+                const baseTaref = (total - baseFactura - iva) + retencion;
+
+                // Mostrar el resultado en el input de base_taref
+                document.getElementById('base_taref').value = baseTaref.toFixed(2);
+            }
+
+            // Agregar eventos de cambio a los inputs para calcular automáticamente
+            document.getElementById('total').addEventListener('input', calcularBaseTaref);
+            document.getElementById('base_factura').addEventListener('input', calcularBaseTaref);
+            document.getElementById('iva').addEventListener('input', calcularBaseTaref);
+            document.getElementById('retencion').addEventListener('input', calcularBaseTaref);
         });
 
         $(document).ready(function() {

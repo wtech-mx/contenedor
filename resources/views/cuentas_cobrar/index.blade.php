@@ -33,7 +33,8 @@ Cuentas Cobrar
 
 										<th><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px"> Nombre</th>
 										<th><img src="{{ asset('img/icon/phone.webp') }}" alt="" width="25px"> Telefono</th>
-										<th><img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px"> Viajes por cobrar</th>
+										<th><img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px"> # Total de viajes</th>
+                                        <th><img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px"> Importe</th>
                                         <th><img src="{{ asset('img/icon/edit.png') }}" alt="" width="25px"> Acciones</th>
                                     </tr>
                                 </thead>
@@ -45,6 +46,7 @@ Cuentas Cobrar
 											<td>{{ $item->Cliente->nombre }}</td>
 											<td>{{ $item->Cliente->telefono }}</td>
 											<td>{{ $item->total_cotizaciones }}</td>
+                                            <td>${{ number_format($item->total_restante, 0, '.', ',') }}</td>
                                             <td>
                                                 <a class="btn btn-xs btn-success" href="{{ route('show.cobrar', $item->id_cliente) }}">
                                                     <i class="fa fa-fw fa-edit"></i> Ver

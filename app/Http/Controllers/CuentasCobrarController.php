@@ -15,13 +15,17 @@ class CuentasCobrarController extends Controller
     public function index(){
         $cotizacionesPorCliente = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
         ->where('cotizaciones.estatus_pago', '=', '0')
-        ->where('cotizaciones.id_empresa', '=',auth()->user()->id_empresa)
+        ->where('cotizaciones.id_empresa', '=', auth()->user()->id_empresa)
         ->where('cotizaciones.restante', '>', 0)
         ->where(function($query) {
             $query->where('cotizaciones.estatus', '=', 'Aprobada')
                   ->orWhere('cotizaciones.estatus', '=', 'Finalizado');
         })
-        ->select('cotizaciones.id_cliente', DB::raw('COUNT(*) as total_cotizaciones'))
+        ->select(
+            'cotizaciones.id_cliente',
+            DB::raw('COUNT(*) as total_cotizaciones'),
+            DB::raw('SUM(cotizaciones.restante) as total_restante') // Sumar la columna restante
+        )
         ->groupBy('cotizaciones.id_cliente')
         ->get();
 
