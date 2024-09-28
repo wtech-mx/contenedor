@@ -1324,10 +1324,10 @@
             // Función para calcular base_taref
             function calcularBaseTaref() {
                 // Obtener los valores de los inputs
-                const total = parseFloat(document.getElementById('total').value) || 0;
-                const baseFactura = parseFloat(document.getElementById('base_factura').value) || 0;
-                const iva = parseFloat(document.getElementById('cot_iva').value) || 0;
-                const retencion = parseFloat(document.getElementById('cot_retencion').value) || 0;
+                const total = parseFloat(document.getElementById('total').value.replace(/,/g, '')) || 0;
+                const baseFactura = parseFloat(document.getElementById('base_factura').value.replace(/,/g, '')) || 0;
+                const iva = parseFloat(document.getElementById('cot_iva').value.replace(/,/g, '')) || 0;
+                const retencion = parseFloat(document.getElementById('cot_retencion').value.replace(/,/g, '')) || 0;
 
                 // Realizar el cálculo
                 const baseTaref = (total - baseFactura - iva) + retencion;
