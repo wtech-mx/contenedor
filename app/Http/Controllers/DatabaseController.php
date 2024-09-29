@@ -27,7 +27,9 @@ class DatabaseController extends Controller
         $dumpFileName = "{$databaseName}_backup_{$fechaActual}.sql";
         $dumpFile = storage_path("app/{$dumpFileName}");
 
-        $mysqldumpPath = 'C:\laragon\bin\mysql\mysql-8.0.30-winx64\bin\mysqldump.exe';
+        // $mysqldumpPath = 'C:\laragon\bin\mysql\mysql-8.0.30-winx64\bin\mysqldump.exe';
+        $mysqldumpPath = '/bin/mysqldump';
+
 
         $command = [
             $mysqldumpPath,
