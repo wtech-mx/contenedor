@@ -186,3 +186,6 @@ Route::view('/especialists', 'livewire.especialists.index')->middleware('auth');
 |--------------------------------------------------------------------------*/
 Route::get('/configuracion/{id}', [App\Http\Controllers\ConfiguracionController::class, 'index'])->name('index.configuracion');
 Route::patch('/configuracion/update/{id}', [App\Http\Controllers\ConfiguracionController::class, 'update'])->name('update.configuracion');
+
+// En routes/web.php
+Route::get('/descargar-db', [App\Http\Controllers\DatabaseController::class, 'descargarBaseDeDatos'])->name('descargar.db');
