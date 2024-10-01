@@ -82,10 +82,9 @@ class ReporteriaController extends Controller
         $user = User::where('id', '=', auth()->user()->id)->first();
 
         $cotizaciones = Cotizaciones::whereIn('id', $cotizacionIds)->get();
-        $bancos_oficiales = Bancos::where('tipo', '=', 'Oficial')->get();
-        $bancos_no_oficiales = Bancos::where('tipo', '=', 'No Oficial')->get();
+        $bancos_oficiales = Bancos::where('id_empresa', '=', auth()->user()->id_empresa)->get();
 
-        $pdf = PDF::loadView('reporteria.cxc.pdf', compact('cotizaciones', 'fechaCarbon', 'bancos_oficiales', 'bancos_no_oficiales', 'cotizacion', 'user'))->setPaper([0, 0, 595, 1200], 'landscape');
+        $pdf = PDF::loadView('reporteria.cxc.pdf', compact('cotizaciones', 'fechaCarbon', 'bancos_oficiales', 'cotizacion', 'user'))->setPaper([0, 0, 595, 1200], 'landscape');
 
         // Generar el nombre del archivo
         $fileName = 'cxc_' . implode('_', $cotizacionIds) . '.pdf';

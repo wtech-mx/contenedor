@@ -145,64 +145,33 @@
                     </tbody>
                 </table>
 
-                @php
-                    // Recopila los IDs de los proveedores únicos de las cotizaciones, excluyendo NULL
-                    $proveedoresIds = $cotizaciones->pluck('DocCotizacion.Asignaciones.id_proveedor')->filter()->unique();
-                    // Carga los proveedores con sus cuentas bancarias usando los IDs recopilados
-                    $proveedoresConCuentas = App\Models\Proveedor::whereIn('id', $proveedoresIds)
-                                            ->with('CuentasBancarias')
-                                            ->get();
-
-                    $cotizacionesPorProveedor = $cotizaciones->groupBy('DocCotizacion.Asignaciones.id_proveedor');
-                @endphp
-
 <table class="table text-white tabla-completa sin_margem" style="color: #000;width: 100%;padding: 0px; font-size: 12px; border-collapse: collapse;">
     <tbody style="text-align: left;font-size: 100%;">
         <tr>
-            @foreach ($proveedoresConCuentas as $proveedor)
-                <td style="padding: 0; margin: 0; border: none;display:inline-block;">
-                    <h3 style="margin: 10px; padding: 10px;">Proveedor: {{ $proveedor->nombre }}</h3>
-                    @if ($proveedor->CuentasBancarias->isEmpty())
-                    <p style="margin: 0; padding: 0;">No hay cuentas bancarias registradas para este proveedor.</p>
-                    @else
-                        <table style="width: 100%; font-size: 12px; margin-bottom: 0; border-collapse: collapse;">
+                <table style="width: 100%; font-size: 12px; margin-bottom: 0; border-collapse: collapse;">
+                    @php
+                        $contador = 1;
+                    @endphp
+                    <tr>
+                        @foreach ($bancos_oficiales as $cuenta)
+                            <td style="padding: 0 5px; margin: 0; border: none;display:inline-block;">
+                                Cuenta #{{ $contador }}<br>
+                                Beneficiario: <br> <b>{{ $cuenta->nombre_beneficiario }}</b><br>
+                                Banco: <b>{{ $cuenta->nombre_banco }}</b><br>
+                                Cuenta: <b>{{ $cuenta->cuenta_bancaria }}</b><br>
+                                Clave: <b>{{ $cuenta->clabe }}</b><br>
+                                @if ($contador == 1)
+                                    A pagar: <b>${{ number_format($totalOficialSum, 2, '.', ',') }}</b>
+                                @elseif ($contador == 2)
+                                    A pagar: <b>${{ number_format($totalnoofi, 2, '.', ',') }}</b>
+                                @endif
+                            </td>
                             @php
-                                $contador = 1;
-                                $totalCuenta1 = 0;
-                                $totalCuenta2 = 0;
-                                if (isset($cotizacionesPorProveedor[$proveedor->id])) {
-                                    $cotizacionesProveedor = $cotizacionesPorProveedor[$proveedor->id];
-                                    foreach ($cotizacionesProveedor as $cotizacion) {
-                                        $cuenta_1 = $cotizacion->base_factura + $cotizacion->iva - $cotizacion->retencion;
-                                        $cuenta_2 = $cotizacion->total - $cotizacion->base_factura - $cotizacion->iva + $cotizacion->retencion;
-                                        $totalCuenta1 += $cuenta_1;
-                                        $totalCuenta2 += $cuenta_2;
-                                    }
-                                }
+                                $contador++;
                             @endphp
-                            <tr>
-                                @foreach ($proveedor->CuentasBancarias as $cuenta)
-                                    <td style="padding: 0 5px; margin: 0; border: none;display:inline-block;">
-                                        Cuenta #{{ $contador }}<br>
-                                        Beneficiario: <br> <b>{{ $cuenta->nombre_beneficiario }}</b><br>
-                                        Banco: <b>{{ $cuenta->nombre_banco }}</b><br>
-                                        Cuenta: <b>{{ $cuenta->cuenta_bancaria }}</b><br>
-                                        Clave: <b>{{ $cuenta->cuenta_clabe }}</b><br>
-                                        @if ($contador == 1)
-                                            A pagar: <b>${{ number_format($totalCuenta1, 2, '.', ',') }}</b>
-                                        @elseif ($contador == 2)
-                                            A pagar: <b>${{ number_format($totalCuenta2, 2, '.', ',') }}</b>
-                                        @endif
-                                    </td>
-                                    @php
-                                        $contador++;
-                                    @endphp
-                                @endforeach
-                            </tr>
-                        </table>
-                    @endif
-                </td>
-            @endforeach
+                        @endforeach
+                    </tr>
+                </table>
         </tr>
     </tbody>
 </table>
