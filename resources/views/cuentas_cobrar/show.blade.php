@@ -22,6 +22,9 @@
                             <img class="icon_search" src="{{ asset('img/icon/depositar.png') }}" alt="" width="25px"> Cobrar varios
                         </a>
 
+                        <h5># Total de viajes: <b>{{$cotizacion->total_cotizaciones}}</b></h5>
+                        <h5>Importe: <b>${{ number_format($cotizacion->total_restante, 0, '.', ',') }}</b></h5>
+
                         <div class="collapse container_filter " id="collapseFilter" style="background: #ffffff;">
                             <form method="POST" action="{{ route('update_varios.cobrar') }}" enctype="multipart/form-data" role="form">
                                 @csrf

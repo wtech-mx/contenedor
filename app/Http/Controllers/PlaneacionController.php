@@ -239,7 +239,8 @@ class PlaneacionController extends Controller
             $asignaciones->cantidad_banco1_dinero_viaje = $request->get('cantidad_banco1_dinero_viaje');
             $asignaciones->id_banco2_dinero_viaje = $request->get('id_banco2_dinero_viaje');
             $asignaciones->cantidad_banco2_dinero_viaje = $request->get('cantidad_banco2_dinero_viaje');
-
+            $asignaciones->base1_proveedor = $request->get('base_factura');
+            $asignaciones->base2_proveedor = $request->get('base_taref');
             if($request->get('sueldo_viaje') > $request->get('dinero_viaje')){
             $resta = $request->get('sueldo_viaje') - $request->get('dinero_viaje');
             $asignaciones->pago_operador = $resta;
@@ -294,7 +295,8 @@ class PlaneacionController extends Controller
             $asignaciones->cantidad_banco1_dinero_viaje = $request->get('cantidad_banco1_dinero_viaje');
             $asignaciones->id_banco2_dinero_viaje = $request->get('id_banco2_dinero_viaje');
             $asignaciones->cantidad_banco2_dinero_viaje = $request->get('cantidad_banco2_dinero_viaje');
-
+            $asignaciones->base1_proveedor = $request->get('base_factura');
+            $asignaciones->base2_proveedor = $request->get('base_taref');
             if($request->get('sueldo_viaje') > $request->get('dinero_viaje')){
             $resta = $request->get('sueldo_viaje') - $request->get('dinero_viaje');
             $asignaciones->pago_operador = $resta;

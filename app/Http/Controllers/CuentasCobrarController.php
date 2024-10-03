@@ -46,9 +46,26 @@ class CuentasCobrarController extends Controller
         ->select('cotizaciones.*')
         ->get();
 
+        $cotizacion = Cotizaciones::join('docum_cotizacion', 'cotizaciones.id', '=', 'docum_cotizacion.id_cotizacion')
+        ->where('cotizaciones.id_empresa', '=', auth()->user()->id_empresa)
+        ->where('cotizaciones.estatus_pago', '=', '0')
+        ->where('cotizaciones.restante', '>', 0)
+        ->where(function($query) {
+            $query->where('cotizaciones.estatus', '=', 'Aprobada')
+                  ->orWhere('cotizaciones.estatus', '=', 'Finalizado');
+        })
+        ->where('cotizaciones.id_cliente', '=', $id)
+        ->select(
+            'cotizaciones.id_cliente',
+            DB::raw('COUNT(*) as total_cotizaciones'),
+            DB::raw('SUM(cotizaciones.restante) as total_restante') // Sumar la columna restante
+        )
+        ->groupBy('cotizaciones.id_cliente') // Agrupa por el ID de cotización
+        ->first();
+
         $bancos = Bancos::where('id_empresa' ,'=',auth()->user()->id_empresa)->get();
 
-        return view('cuentas_cobrar.show', compact('cotizacionesPorPagar', 'bancos', 'cliente'));
+        return view('cuentas_cobrar.show', compact('cotizacionesPorPagar', 'bancos', 'cliente', 'cotizacion'));
     }
 
     public function update(Request $request, $id){

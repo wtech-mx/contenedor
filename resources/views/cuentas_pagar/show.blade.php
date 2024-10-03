@@ -24,6 +24,11 @@
                         </a>
                     </div>
 
+                    @foreach($cotizacionesAgrupadas as $agrupacion)
+                        <h5># Total de viajes: <b>{{ $agrupacion['total_cotizaciones'] }}</b></h5>
+                        <h5>Importe: <b>${{ $agrupacion['total_restante_formateado'] }}</b></h5>
+                    @endforeach
+
                     <div class="collapse container_filter p-3" id="collapseFilter" style="background: #ffffff;">
                         <form method="POST" action="{{ route('update_varios.pagar') }}" enctype="multipart/form-data" role="form">
                             @csrf

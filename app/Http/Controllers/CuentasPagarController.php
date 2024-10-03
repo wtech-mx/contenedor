@@ -57,14 +57,39 @@ class CuentasPagarController extends Controller
         ->where('cotizaciones.id_empresa', '=', auth()->user()->id_empresa)
         ->where('asignaciones.id_proveedor', '=', $id)
         ->where('cotizaciones.prove_restante', '>', 0)
-        ->select('asignaciones.*', 'docum_cotizacion.num_contenedor', 'docum_cotizacion.id_cotizacion', 'cotizaciones.estatus', 'cotizaciones.prove_restante', 'cotizaciones.id_cuenta_prov', 'cotizaciones.dinero_cuenta_prov', 'cotizaciones.id_cuenta_prov2', 'cotizaciones.dinero_cuenta_prov2')
+        ->select(
+            'asignaciones.*',
+            'docum_cotizacion.num_contenedor',
+            'docum_cotizacion.id_cotizacion',
+            'cotizaciones.estatus',
+            'cotizaciones.prove_restante',
+            'cotizaciones.id_cuenta_prov',
+            'cotizaciones.dinero_cuenta_prov',
+            'cotizaciones.id_cuenta_prov2',
+            'cotizaciones.dinero_cuenta_prov2'
+        )
         ->get();
+
+        // Agrupar por proveedor y calcular los totales
+        $cotizacionesAgrupadas = $cotizacionesPorPagar->groupBy('asignaciones.id_proveedor')->map(function ($group) {
+            // Sumar el total restante
+            $totalRestante = $group->sum('prove_restante');
+
+            // Contar el total de cotizaciones
+            $totalCotizaciones = $group->count();
+
+            return [
+                'total_cotizaciones' => $totalCotizaciones,
+                'total_restante_formateado' => number_format($totalRestante, 0, '.', ','),
+                'cotizaciones' => $group // Esto mantiene las cotizaciones para mostrarlas si es necesario
+            ];
+        });
 
         $bancos = Bancos::where('id_empresa', '=',auth()->user()->id_empresa)->get();
         $cliente = Proveedor::where('id', '=', $id)->first();
         $banco_proveedor = CuentasBancarias::where('id_proveedores', '=', $cliente->id)->get();
 
-        return view('cuentas_pagar.show', compact('cotizacionesPorPagar', 'bancos', 'cliente', 'banco_proveedor'));
+        return view('cuentas_pagar.show', compact('cotizacionesPorPagar', 'bancos', 'cliente', 'banco_proveedor', 'cotizacionesAgrupadas'));
     }
 
     public function update(Request $request, $id){

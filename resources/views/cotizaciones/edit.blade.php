@@ -576,7 +576,7 @@
 
                                         <div class="col-2">
                                             <div class="form-group">
-                                                <label>¿Boleta Vacio?</label><br>
+                                                <label>¿Prealta?</label><br>
                                                 @if ($documentacion->boleta_vacio == 'si')
                                                     <input class="form-check-input" type="radio" name="boleta_vacio" value="si" id="option_si" checked> Sí<br>
                                                     <input class="form-check-input" type="radio" name="boleta_vacio" value="no" id="option_no"> No
@@ -647,7 +647,7 @@
 
                                         <div class="col-2">
                                             <div class="form-group">
-                                                <label>¿EIR?</label><br>
+                                                <label>Comprobante de vacio?</label><br>
                                                 @if ($documentacion->eir == 'si')
                                                     <input class="form-check-input" type="radio" name="eir" value="si" id="eir_si" checked> Sí<br>
                                                     <input class="form-check-input" type="radio" name="eir" value="no" id="eir_no"> No

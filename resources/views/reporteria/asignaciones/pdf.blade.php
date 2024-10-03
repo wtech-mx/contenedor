@@ -70,8 +70,8 @@
                             <td>{{$cotizacion->Contenedor->Cotizacion->origen}}</td>
                             <td>{{$cotizacion->Contenedor->Cotizacion->destino}}</td>
                             <td>{{$cotizacion->Contenedor->Cotizacion->estatus}}</td>
-                            <td>{{ Carbon::parse($cotizacion->fecha_inicio)->format('d-m-Y') }}</td>
-                            <td>{{ Carbon::parse($cotizacion->fecha_fin)->format('d-m-Y') }}</td>
+                            <td>{{ Carbon::parse($cotizacion->fehca_inicio_guard)->format('d-m-Y') }}</td>
+                            <td>{{ Carbon::parse($cotizacion->fehca_fin_guard)->format('d-m-Y') }}</td>
                         </tr>
                     @endforeach
                 </tbody>

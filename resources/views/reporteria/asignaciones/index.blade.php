@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Buscador
+    Viajes
 @endsection
 
 @section('content')
@@ -54,6 +54,15 @@
                                                                     <option selected value="">seleccionar cliente</option>
                                                                 </select>
                                                             </div>
+                                                            <div class="col-3">
+                                                                <label for="user_id">Buscar proveedor:</label>
+                                                                <select class="form-control proveedor" name="id_proveedor" id="id_proveedor">
+                                                                    <option selected value="">seleccionar proveedor</option>
+                                                                    @foreach($proveedores as $proveedor)
+                                                                        <option value="{{ $proveedor->id }}">{{ $proveedor->nombre }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
                                                             <div class="col-3 mb-5">
                                                                 <br>
                                                                 <button class="btn btn-sm mb-0 mt-sm-0 mt-1" type="submit" style="background-color: #F82018; color: #ffffff;">Buscar</button>
@@ -78,6 +87,8 @@
                                                 <th><img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">Origen</th>
                                                 <th><img src="{{ asset('img/icon/origen.png') }}" alt="" width="25px">Destino</th>
                                                 <th><img src="{{ asset('img/icon/contenedor.png') }}" alt="" width="25px"># Contenedor</th>
+                                                <th><img src="{{ asset('img/icon/calendar-dar.webp') }}" alt="" width="25px">Fecha salida</th>
+                                                <th><img src="{{ asset('img/icon/calendario.webp') }}" alt="" width="25px">Fecha llegada</th>
                                                 <th><img src="{{ asset('img/icon/semaforos.webp') }}" alt="" width="25px">Estatus</th>
                                             </tr>
                                         </thead>
@@ -99,6 +110,8 @@
                                                         <td>{{$cotizacion->Contenedor->Cotizacion->origen}}</td>
                                                         <td>{{$cotizacion->Contenedor->Cotizacion->destino}}</td>
                                                         <td>{{$cotizacion->Contenedor->num_contenedor}}</td>
+                                                        <td>{{ Carbon\Carbon::parse($cotizacion->fehca_inicio_guard)->format('d-m-Y') }}</td>
+                                                        <td>{{ Carbon\Carbon::parse($cotizacion->fehca_fin_guard)->format('d-m-Y') }}</td>
                                                         <td>
                                                             @can('cotizaciones-estatus')
                                                                 @if ($cotizacion->Contenedor->Cotizacion->estatus == 'Aprobada')
@@ -133,6 +146,7 @@
     <script>
         $(document).ready(function() {
             $('.cliente').select2();
+            $('.proveedor').select2();
         });
 
         const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {

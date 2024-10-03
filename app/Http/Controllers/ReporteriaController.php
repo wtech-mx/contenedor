@@ -163,16 +163,19 @@ class ReporteriaController extends Controller
         $clientes = Client::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
 
         $subclientes = Subclientes::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
+        $proveedores = Proveedor::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
 
-        return view('reporteria.asignaciones.index', compact('clientes', 'subclientes'));
+        return view('reporteria.asignaciones.index', compact('clientes', 'subclientes', 'proveedores'));
     }
 
     public function advance_viajes(Request $request) {
         $clientes = Client::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
         $subclientes = Subclientes::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
+        $proveedores = Proveedor::where('id_empresa' ,'=',auth()->user()->id_empresa)->orderBy('created_at', 'desc')->get();
 
         $id_client = $request->id_client;
         $id_subcliente = $request->id_subcliente;
+        $id_proveedor = $request->id_proveedor;
 
         $asignaciones = Asignaciones::
         join('docum_cotizacion', 'asignaciones.id_contenedor', '=', 'docum_cotizacion.id') // Unir con la tabla 'docum_cotizacion' primero
@@ -202,13 +205,17 @@ class ReporteriaController extends Controller
             }
         }
 
+        if ($id_proveedor !== null) {
+            $asignaciones = $asignaciones->where('asignaciones.id_proveedor', $id_proveedor);
+        }
+
         if ($request->estatus) {
             $asignaciones = $asignaciones->where('cotizaciones.estatus', '=', $request->estatus);
         }
 
         $asignaciones = $asignaciones->get();
 
-        return view('reporteria.asignaciones.index', compact('asignaciones', 'clientes', 'subclientes'));
+        return view('reporteria.asignaciones.index', compact('asignaciones', 'clientes', 'subclientes', 'proveedores'));
     }
 
     public function export_viajes(Request $request){

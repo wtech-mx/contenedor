@@ -61,6 +61,7 @@
                 <table class="table text-white tabla-completa"  style="color: #000;width: 100%;padding: 10px; margin: 0px; font-size: 12px">
                     <thead>
                         <tr>
+                            <th>Fecha inicio</th>
                             <th>Contratista</th>
                             <th>Contenedor</th>
                             <th>Facturado a</th>
@@ -96,11 +97,12 @@
                                 $importeVtaSum += $importe_vta;
                             @endphp
                             <tr>
+                                <td>{{$cotizacion->DocCotizacion->Asignaciones->fehca_inicio_guard}}</td>
                                 @if (optional($cotizacion->DocCotizacion->Asignaciones)->id_proveedor == NULL)
-                                <td>-</td>
-                            @else
-                                <td>{{ optional($cotizacion->DocCotizacion->Asignaciones->Proveedor)->nombre }}</td>
-                            @endif
+                                    <td>-</td>
+                                @else
+                                    <td>{{ optional($cotizacion->DocCotizacion->Asignaciones->Proveedor)->nombre }}</td>
+                                @endif
                                 <td>{{ $cotizacion->DocCotizacion->num_contenedor }}</td>
                                 <td style="color: #020202; background: yellow;">
                                     @if ($cotizacion->id_subcliente != NULL)
@@ -145,38 +147,36 @@
                     </tbody>
                 </table>
 
-<table class="table text-white tabla-completa sin_margem" style="color: #000;width: 100%;padding: 0px; font-size: 12px; border-collapse: collapse;">
-    <tbody style="text-align: left;font-size: 100%;">
-        <tr>
-                <table style="width: 100%; font-size: 12px; margin-bottom: 0; border-collapse: collapse;">
-                    @php
-                        $contador = 1;
-                    @endphp
-                    <tr>
-                        @foreach ($bancos_oficiales as $cuenta)
-                            <td style="padding: 0 5px; margin: 0; border: none;display:inline-block;">
-                                Cuenta #{{ $contador }}<br>
-                                Beneficiario: <br> <b>{{ $cuenta->nombre_beneficiario }}</b><br>
-                                Banco: <b>{{ $cuenta->nombre_banco }}</b><br>
-                                Cuenta: <b>{{ $cuenta->cuenta_bancaria }}</b><br>
-                                Clave: <b>{{ $cuenta->clabe }}</b><br>
-                                @if ($contador == 1)
-                                    A pagar: <b>${{ number_format($totalOficialSum, 2, '.', ',') }}</b>
-                                @elseif ($contador == 2)
-                                    A pagar: <b>${{ number_format($totalnoofi, 2, '.', ',') }}</b>
-                                @endif
-                            </td>
-                            @php
-                                $contador++;
-                            @endphp
-                        @endforeach
-                    </tr>
+                <table class="table text-white tabla-completa sin_margem" style="color: #000;width: 100%;padding: 0px; font-size: 12px; border-collapse: collapse;">
+                    <tbody style="text-align: left;font-size: 100%;">
+                        <tr>
+                            <table style="width: 100%; font-size: 12px; margin-bottom: 0; border-collapse: collapse;">
+                                @php
+                                    $contador = 1;
+                                @endphp
+                                <tr>
+                                    @foreach ($bancos_oficiales as $cuenta)
+                                        <td style="padding: 0 5px; margin: 0; border: none;display:inline-block;">
+                                            Cuenta #{{ $contador }}<br>
+                                            Beneficiario: <br> <b>{{ $cuenta->nombre_beneficiario }}</b><br>
+                                            Banco: <b>{{ $cuenta->nombre_banco }}</b><br>
+                                            Cuenta: <b>{{ $cuenta->cuenta_bancaria }}</b><br>
+                                            Clave: <b>{{ $cuenta->clabe }}</b><br>
+                                            @if ($contador == 1)
+                                                A pagar: <b>${{ number_format($totalOficialSum, 2, '.', ',') }}</b>
+                                            @elseif ($contador == 2)
+                                                A pagar: <b>${{ number_format($totalnoofi, 2, '.', ',') }}</b>
+                                            @endif
+                                        </td>
+                                        @php
+                                            $contador++;
+                                        @endphp
+                                    @endforeach
+                                </tr>
+                            </table>
+                        </tr>
+                    </tbody>
                 </table>
-        </tr>
-    </tbody>
-</table>
-
-
 
         <div class="totales">
             <h3 class="margin_cero" style="color: #000000; background: rgb(0, 174, 255);">Totales</h3>
