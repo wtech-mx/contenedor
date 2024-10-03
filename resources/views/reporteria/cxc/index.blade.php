@@ -62,6 +62,7 @@
                                     <tr>
                                         <th></th>
                                         <th>#</th>
+                                        <th>Fecha inicio</th>
                                         <th><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px">Cliente</th>
                                         <th><img src="{{ asset('img/icon/user_predeterminado.webp') }}" alt="" width="25px">Subcliente</th>
                                         <th><img src="{{ asset('img/icon/gps.webp') }}" alt="" width="25px">Origen</th>
@@ -77,6 +78,9 @@
                                     <tr>
                                         <td><input type="checkbox" name="cotizacion_ids[]" value="{{ $cotizacion->id }}" class="select-checkbox visually-hidden"></td>
                                         <td>{{$cotizacion->id}}</td>
+                                        <td>
+                                            {{ Carbon\Carbon::parse($cotizacion->DocCotizacion->Asignaciones->fehca_inicio_guard)->format('d-m-Y') }}
+                                        </td>
                                         <td>{{$cotizacion->Cliente->nombre}}</td>
                                         <td>{{$cotizacion->Subcliente->nombre ?? '-'}}</td>
                                         <td>{{$cotizacion->origen}}</td>
