@@ -97,7 +97,9 @@
                                 $importeVtaSum += $importe_vta;
                             @endphp
                             <tr>
-                                <td>{{$cotizacion->DocCotizacion->Asignaciones->fehca_inicio_guard}}</td>
+                                <td>
+                                    {{ Carbon\Carbon::parse($cotizacion->DocCotizacion->Asignaciones->fehca_inicio_guard)->format('d-m-Y') }}
+                                </td>
                                 @if (optional($cotizacion->DocCotizacion->Asignaciones)->id_proveedor == NULL)
                                     <td>-</td>
                                 @else
