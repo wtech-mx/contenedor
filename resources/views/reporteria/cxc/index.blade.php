@@ -79,8 +79,9 @@
                                         <td><input type="checkbox" name="cotizacion_ids[]" value="{{ $cotizacion->id }}" class="select-checkbox visually-hidden"></td>
                                         <td>{{$cotizacion->id}}</td>
                                         <td>
-                                            {{ Carbon\Carbon::parse($cotizacion->DocCotizacion->Asignaciones->fehca_inicio_guard)->format('d-m-Y') }}
+                                            {{ optional($cotizacion->DocCotizacion->Asignaciones)->fehca_inicio_guard ? Carbon\Carbon::parse($cotizacion->DocCotizacion->Asignaciones->fehca_inicio_guard)->format('d-m-Y') : 'Sin fecha' }}
                                         </td>
+
                                         <td>{{$cotizacion->Cliente->nombre}}</td>
                                         <td>{{$cotizacion->Subcliente->nombre ?? '-'}}</td>
                                         <td>{{$cotizacion->origen}}</td>
